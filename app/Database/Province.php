@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Province extends Model
 {
   public $timestamps = false;
-  protected $table = 'city';
-  protected $primaryKey = 'city_id';
+  protected $table = 'province';
+  protected $primaryKey = 'province_id';
   public $incrementing = false;
 
   public function getAllProvince( $sort = null, $request = null )

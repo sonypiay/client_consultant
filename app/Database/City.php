@@ -50,12 +50,12 @@ class City extends Model
     $city_name = $request->city_name;
     $city_id = $request->city_id;
     $province = $request->province;
-    $res = [ 'statusCode' => 200, 'errorMessage' => '' ];
+    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $check_id = $this->where('city_id', $city_id);
     if( $check_id->count() == 1 )
     {
-      $res = [ 'statusCode' => 409, 'errorMessage' => 'Duplicate ID. ID already exists!' ];
+      $res = [ 'responseCode' => 409, 'responseMessage' => 'Duplicate ID. ID already exists!' ];
     }
     else
     {
@@ -73,7 +73,7 @@ class City extends Model
     $city_name = $request->city_name;
     $city_id = $request->city_id;
     $province = $request->province;
-    $res = [ 'statusCode' => 200, 'errorMessage' => '' ];
+    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $getcity = $this->getCity( $id );
     $getcity->city_name = $city_name;
@@ -88,7 +88,7 @@ class City extends Model
       $check_id = $this->where('city_id', $city_id);
       if( $check_id->count() == 1 )
       {
-        $res = [ 'statusCode' => 409, 'errorMessage' => 'Duplicate ID. ID already exists!' ];
+        $res = [ 'responseCode' => 409, 'responseMessage' => 'Duplicate ID. ID already exists!' ];
       }
       else
       {
