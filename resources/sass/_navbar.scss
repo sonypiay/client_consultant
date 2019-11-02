@@ -4,14 +4,14 @@
   .navbarhomepage {
     .uk-logo {
       color: #ffffff;
-      @include global_font_style( 700, 26px, normal, 0.4px, normal );
+      @include global_font_style( 700, 26px, normal, 0.4px );
       text-transform: capitalize;
     }
     .navhomepage {
       li {
         a {
           color: #ffffff;
-          @include global_font_style( 700, 16px, normal, 0.4px, normal );
+          @include global_font_style( 700, 16px, normal, 0.4px );
           text-transform: capitalize;
         }
       }

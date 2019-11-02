@@ -20,52 +20,13 @@ $color-base: #25C4F2;
   background: rgba( 37, 196, 242, $opacity );
 }
 
-@mixin global_font_style( $weight, $size, $stretch, $spacing, $height )
+@mixin global_font_style( $weight, $size, $stretch, $spacing )
 {
   font-weight: $weight;
   font-size: $size;
   font-stretch: $stretch;
   letter-spacing: $spacing;
-  line-height: $height;
   font-family: $font-base;
 }
 
-@mixin global_input_style()
-{
-  .gl-label {
-    color: #333333;
-    @include global_font_style( 400, 14px, normal, 0.4px, normal );
-  }
-  .gl-input-default {
-    background: #ffffff;
-    border: 1px solid #ffffff;
-    border-radius: 30px;
-    color: #333333;
-    @include global_font_style( 400, 14px, normal, 0.4px, normal );
-    &:hover, &:focus {
-      border: 1px solid lighten( $color-base, 35% );
-      background: lighten( $color-base, 35% );
-    }
-  }
-  .gl-button-default {
-    border-radius: 10px;
-    border: 1px solid $color-base;
-    color: $color-base;
-    @include global_font_style( 400, 14px, normal, 0.4px, normal );
-    &:hover, &:focus {
-      background: $color-base;
-      color: #ffffff;
-    }
-  }
-
-  .gl-button-primary {
-    border-radius: 10px;
-    background: $color-base;
-    color: $color-base;
-    @include global_font_style( 400, 14px, normal, 0.4px, normal );
-    &:hover, &:focus {
-      background: lighten( $color-base, 10% );
-      color: #ffffff;
-    }
-  }
-}
+@import 'forms';

@@ -13,10 +13,15 @@ use App\Database\EventSchedule;
 
 class PagesController extends Controller
 {
-  // homepage
   public function homepage( Request $request )
   {
     $data['request'] = $request;
     return response()->view('Frontend.pages.homepage', $data);
+  }
+
+  public function client_register_page( Request $request )
+  {
+    $data['request'] = $request;
+    return response()->view('Frontend.pages.clients.register', $data);
   }
 }

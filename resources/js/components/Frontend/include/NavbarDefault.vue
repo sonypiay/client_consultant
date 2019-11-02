@@ -1,15 +1,15 @@
 <template>
   <div>
-    <header class="headerhomepage">
+    <header class="header">
       <div class="uk-container">
-        <nav class="uk-navbar navbarhomepage" uk-navbar>
+        <nav class="uk-navbar navbar" uk-navbar>
           <div class="uk-navbar-left">
             <a class="uk-navbar-item uk-logo">Logo</a>
           </div>
           <div class="uk-navbar-right">
-            <ul class="uk-navbar-nav navhomepage">
-              <li><a :href="$root.url + 'signup/client'">Become a Client</a></li>
-              <li><a :href="$root.url + 'signup/consultant'">Become a Consultant</a></li>
+            <ul class="uk-navbar-nav nav">
+              <li><a :href="$root.url + 'join/client'">Become a Client</a></li>
+              <li><a :href="$root.url + 'join/consultant'">Become a Consultant</a></li>
             </ul>
           </div>
         </nav>

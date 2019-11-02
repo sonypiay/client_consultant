@@ -1,0 +1,41 @@
+@mixin global_input_style()
+{
+  .gl-label {
+    color: #333333;
+    @include global_font_style( 400, 14px, normal, 0.4px );
+  }
+  .gl-input-default {
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    color: #333333;
+    @include global_font_style( 400, 14px, normal, 0.4px );
+    &:hover, &:focus {
+      border: 1px solid lighten( $color-base, 5% );
+      background: lighten( $color-base, 41% );
+    }
+  }
+  .gl-button-default {
+    background: #ffffff;
+    border-radius: 6px;
+    border: 1px solid $color-base;
+    color: $color-base;
+    text-transform: capitalize;
+    @include global_font_style( 400, 14px, normal, 0.4px );
+    &:hover, &:focus {
+      background: $color-base;
+      color: #ffffff;
+    }
+  }
+
+  .gl-button-primary {
+    border-radius: 10px;
+    background: $color-base;
+    color: $color-base;
+    @include global_font_style( 400, 14px, normal, 0.4px );
+    &:hover, &:focus {
+      background: lighten( $color-base, 10% );
+      color: #ffffff;
+    }
+  }
+}

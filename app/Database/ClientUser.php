@@ -73,7 +73,6 @@ class ClientUser extends Model
     $client_email = $request->client_email;
     $client_password = $request->client_password;
     $client_type = $request->client_type;
-    $city = $request->city;
     $hash_password = Hash::make( $client_password );
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
@@ -92,7 +91,6 @@ class ClientUser extends Model
       $this->client_email = $client_email;
       $this->client_password = $hash_password;
       $this->client_type = $client_type;
-      $this->city_id = $city;
       $this->save();
     }
 

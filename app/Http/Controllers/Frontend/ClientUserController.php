@@ -11,7 +11,7 @@ use Hash;
 
 class ClientUserController extends Controller
 {
-  public function index( ClientUser $clientUser )
+  public function register( ClientUser $clientUser )
   {
     return $clientUser->getClientId();
   }

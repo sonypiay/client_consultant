@@ -13,7 +13,11 @@ window.moment = require('moment');
 // navbar component
 Vue.component('navbar-homepage', require('./components/Frontend/include/NavbarHomepage.vue').default);
 
+// homepage
 Vue.component('homepage-component', require('./components/Frontend/Homepage.vue').default);
+
+// client user
+Vue.component('client-register-page', require('./components/Frontend/clients/Register.vue').default);
 
 const app = new Vue({
     el: '#app',
