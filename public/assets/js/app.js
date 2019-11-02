@@ -1911,6 +1911,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
@@ -1932,30 +1937,51 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     doRegister: function doRegister() {
+      var _this = this;
+
       this.messages.errors = {};
       this.messages.successMessage = '';
       this.messages.errorMessage = '';
       this.messages.iserror = false;
+      var forms = this.forms;
 
-      if (this.forms.fullname === '') {
+      if (forms.fullname === '') {
         this.messages.errors.fullname = 'Please fill your name';
         this.messages.iserror = true;
       }
 
-      if (this.forms.email === '') {
+      if (forms.email === '') {
         this.messages.errors.email = 'Please enter your email';
         this.messages.iserror = true;
       }
 
-      if (this.forms.password === '') {
+      if (forms.password === '') {
         this.messages.errors.password = 'This field is required.';
         this.messages.iserror = true;
       }
 
       if (this.messages.iserror === true) return false;
+      this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + 'signup/client/create_account'
+        url: this.$root.url + '/signup/client/create_account',
+        params: {
+          client_name: forms.fullname,
+          client_email: forms.email,
+          client_password: forms.password,
+          client_type: forms.type
+        }
+      }).then(function (res) {
+        swal({
+          text: 'You have successfully signed up',
+          icon: 'success'
+        });
+        setTimeout(function () {
+          document.location = _this.$root.url + '/client/dashboard';
+        }, 2000);
+      })["catch"](function (err) {
+        if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.successMessage = err.response.data.responseMessage;
+        _this.forms.submit = 'Create Account';
       });
     }
   }
@@ -55571,7 +55597,7 @@ var render = function() {
         staticClass: "uk-background-cover uk-height-viewport",
         style: {
           "background-image":
-            "url(" + _vm.$root.url + "assets/images/banner/homepage.jpg" + ")"
+            "url(" + _vm.$root.url + "/assets/images/banner/homepage.jpg" + ")"
         }
       },
       [
@@ -55639,7 +55665,10 @@ var render = function() {
     _c("div", { staticClass: "uk-container" }, [
       _c(
         "div",
-        { staticClass: "uk-width-2-5 uk-align-center uk-margin-large-top" },
+        {
+          staticClass:
+            "uk-width-2-5 uk-align-center uk-margin-top uk-margin-bottom"
+        },
         [
           _c(
             "div",
@@ -55650,12 +55679,47 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.successMessage,
+                      expression: "messages.successMessage"
+                    }
+                  ],
+                  staticClass: "uk-alert-success",
+                  attrs: { "uk-alert": "" }
+                },
+                [_vm._v(_vm._s(_vm.messages.successMessage))]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errorMessage,
+                      expression: "messages.errorMessage"
+                    }
+                  ],
+                  staticClass: "uk-alert-danger",
+                  attrs: { "uk-alert": "" }
+                },
+                [_vm._v(_vm._s(_vm.messages.errorMessage))]
+              ),
+              _vm._v(" "),
+              _c(
                 "form",
                 {
                   staticClass: "uk-form-stacked uk-margin-top",
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
+                      return _vm.doRegister($event)
                     }
                   }
                 },
@@ -55687,12 +55751,28 @@ var render = function() {
                           }
                         }
                       })
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.messages.errors.fullname,
+                            expression: "messages.errors.fullname"
+                          }
+                        ],
+                        staticClass: "uk-text-small uk-text-danger"
+                      },
+                      [_vm._v(_vm._s(_vm.messages.errors.fullname))]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Email")
+                      _vm._v("Email Account")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -55701,23 +55781,39 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.forms.fullname,
-                            expression: "forms.fullname"
+                            value: _vm.forms.email,
+                            expression: "forms.email"
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: { type: "text", placeholder: "Fullname" },
-                        domProps: { value: _vm.forms.fullname },
+                        attrs: { type: "email", placeholder: "Email Account" },
+                        domProps: { value: _vm.forms.email },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.forms, "fullname", $event.target.value)
+                            _vm.$set(_vm.forms, "email", $event.target.value)
                           }
                         }
                       })
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.messages.errors.email,
+                            expression: "messages.errors.email"
+                          }
+                        ],
+                        staticClass: "uk-text-small uk-text-danger"
+                      },
+                      [_vm._v(_vm._s(_vm.messages.errors.email))]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
@@ -55731,23 +55827,42 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.forms.fullname,
-                            expression: "forms.fullname"
+                            value: _vm.forms.password,
+                            expression: "forms.password"
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: { type: "text", placeholder: "Fullname" },
-                        domProps: { value: _vm.forms.fullname },
+                        attrs: {
+                          type: "password",
+                          placeholder: "Create Password"
+                        },
+                        domProps: { value: _vm.forms.password },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.forms, "fullname", $event.target.value)
+                            _vm.$set(_vm.forms, "password", $event.target.value)
                           }
                         }
                       })
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.messages.errors.password,
+                            expression: "messages.errors.password"
+                          }
+                        ],
+                        staticClass: "uk-text-small uk-text-danger"
+                      },
+                      [_vm._v(_vm._s(_vm.messages.errors.password))]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
@@ -55870,7 +55985,7 @@ var render = function() {
                 _c("li", [
                   _c(
                     "a",
-                    { attrs: { href: _vm.$root.url + "signup/client" } },
+                    { attrs: { href: _vm.$root.url + "/signup/client" } },
                     [_vm._v("Become a Client")]
                   )
                 ]),
@@ -55878,7 +55993,7 @@ var render = function() {
                 _c("li", [
                   _c(
                     "a",
-                    { attrs: { href: _vm.$root.url + "signup/consultant" } },
+                    { attrs: { href: _vm.$root.url + "/signup/consultant" } },
                     [_vm._v("Become a Consultant")]
                   )
                 ])
@@ -68068,7 +68183,7 @@ Vue.component('client-register-page', __webpack_require__(/*! ./components/Front
 var app = new Vue({
   el: '#app',
   data: {
-    url: document.URL
+    url: document.location.origin
   }
 });
 

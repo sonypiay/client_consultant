@@ -66,7 +66,7 @@ class ClientUser extends Model
     }
   }
 
-  public function signUp( $request )
+  public function signup( $request )
   {
     $client_id = $this->getClientId();
     $client_name = $request->client_name;

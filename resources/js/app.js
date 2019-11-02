@@ -22,6 +22,6 @@ Vue.component('client-register-page', require('./components/Frontend/clients/Reg
 const app = new Vue({
     el: '#app',
     data: {
-      url: document.URL
+      url: document.location.origin
     }
 });

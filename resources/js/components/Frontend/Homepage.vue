@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="uk-background-cover uk-height-viewport" :style="{'background-image': 'url(' + $root.url + 'assets/images/banner/homepage.jpg' + ')'}">
+    <div class="uk-background-cover uk-height-viewport" :style="{'background-image': 'url(' + $root.url + '/assets/images/banner/homepage.jpg' + ')'}">
       <div class="uk-overlay uk-position-cover uk-padding-remove banner-homepage-overlay">
         <navbar-homepage />
         <div class="uk-width-2-3 uk-align-center uk-text-center banner-find-consultant">

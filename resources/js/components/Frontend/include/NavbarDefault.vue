@@ -8,8 +8,8 @@
           </div>
           <div class="uk-navbar-right">
             <ul class="uk-navbar-nav nav">
-              <li><a :href="$root.url + 'join/client'">Become a Client</a></li>
-              <li><a :href="$root.url + 'join/consultant'">Become a Consultant</a></li>
+              <li><a :href="$root.url + '/join/client'">Become a Client</a></li>
+              <li><a :href="$root.url + '/join/consultant'">Become a Consultant</a></li>
             </ul>
           </div>
         </nav>

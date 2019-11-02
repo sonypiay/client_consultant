@@ -11,8 +11,9 @@ use Hash;
 
 class ClientUserController extends Controller
 {
-  public function register( ClientUser $clientUser )
+  public function register( Request $request, ClientUser $clientUser )
   {
-    return $clientUser->getClientId();
+    $res = $clientUser->signup( $request );
+    return response()->json( $res, $res['responseCode'] );
   }
 }
