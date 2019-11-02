@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'Frontend\ClientUserController@index');
+Route::get('/', 'Frontend\PagesController@homepage')->name('homepage');

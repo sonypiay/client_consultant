@@ -4,6 +4,7 @@ namespace App\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ClientUser extends Model
 {
@@ -131,6 +132,30 @@ class ClientUser extends Model
         $getclient->save();
       }
     }
+    return $res;
+  }
+
+  public function upload_photo( $request )
+  {
+    $photo = $request->photo;
+    $path_image = 'avatar/client';
+    $storage = Storage::disk('assets');
+    $getclient = $this->getProfile();
+    $filename = $photo->hashName();
+
+    if( ! empty( $getclient->client_photo ) )
+    {
+      if( $storage->exists( $path_image . '/' . $getclient->client_photo ) )
+        $storage->delete( $path_image . '/' . $getclient->client_photo );
+    }
+
+    $getclient->client_photo = $filename;
+    if( ! $getclient->save() )
+      $res = ['responseCode' => 500, 'responseMessage' => 'Whoops, something when wrong.'];
+
+    $storage->putFileAs( $path_image, $photo, $filename );
+
+    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
     return $res;
   }
 
