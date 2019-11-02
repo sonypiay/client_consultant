@@ -96,7 +96,7 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/signup/client/create_account',
+        url: this.$root.url + '/client/create_account',
         params: {
           client_name: forms.fullname,
           client_email: forms.email,

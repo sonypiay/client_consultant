@@ -18,6 +18,8 @@ Vue.component('homepage-component', require('./components/Frontend/Homepage.vue'
 
 // client user
 Vue.component('client-register-page', require('./components/Frontend/clients/Register.vue').default);
+Vue.component('client-login-page', require('./components/Frontend/clients/Login.vue').default);
+Vue.component('client-dashboard-page', require('./components/Frontend/clients/Dashboard.vue').default);
 
 const app = new Vue({
     el: '#app',

@@ -13,7 +13,9 @@
 
 Route::get('/', 'Frontend\PagesController@homepage')->name('homepage');
 
-Route::group(['prefix' => 'signup'], function() {
-  Route::get('/client', 'Frontend\PagesController@client_register_page')->name('client_register_page');
-  Route::post('/client/create_account', 'Frontend\ClientUserController@register');
+Route::group(['prefix' => 'client'], function() {
+  Route::get('/dashboard', 'Frontend\PagesController@client_dashboard_page')->name('client_dashboard_page');
+  Route::get('/login', 'Frontend\PagesController@client_login_page')->name('client_login_page');
+  Route::get('/signup', 'Frontend\PagesController@client_register_page')->name('client_register_page');
+  Route::post('/create_account', 'Frontend\ClientUserController@register');
 });

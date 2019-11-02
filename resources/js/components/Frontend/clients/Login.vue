@@ -96,7 +96,7 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/signup/client/create_account',
+        url: this.$root.url + '/client/create_account',
         params: {
           client_name: forms.fullname,
           client_email: forms.email,
@@ -104,13 +104,16 @@ export default {
           client_type: forms.type
         }
       }).then( res => {
-        swal({ text: 'You have successfully signed up', icon: 'success' });
+        let message = 'You have successfully signed up.';
+        this.messages.successMessage = message;
+        swal({ text: message, icon: 'success' });
+
         setTimeout(() => {
           document.location = this.$root.url + '/client/dashboard';
         }, 2000);
       }).catch( err => {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
-        else this.messages.successMessage = err.response.data.responseMessage;
+        else this.messages.errorMessage = err.response.data.responseMessage;
         this.forms.submit = 'Create Account';
       });
     }
