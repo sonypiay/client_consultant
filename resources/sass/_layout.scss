@@ -1,0 +1,35 @@
+html, body { font-family: $font-base; }
+
+@import 'navbar';
+
+@include global_input_style();
+
+.banner-homepage-overlay {
+  @include color_background_base( 0.9 );
+  .banner-find-consultant {
+    margin-top: 7rem;
+    .banner-text {
+      color: #ffffff;
+      @include global_font_style(200, 42px, normal, 0.4px, normal);
+    }
+    .banner-search-form {
+      margin-top: 1rem;
+      border: 2px solid #ffffff;
+      background: transparent;
+      border-radius: 30px;
+      color: #333333;
+      @include global_font_style( 400, 14px, normal, 0.4px, normal );
+      text-align: center;
+      &:hover, &:focus {
+        border: 1px solid lighten( $color-base, 35% );
+        background: lighten( $color-base, 35% );
+        &::placeholder {
+          color: #333333;
+        }
+      }
+      &::placeholder {
+        color: #ffffff;
+      }
+    }
+  }
+}

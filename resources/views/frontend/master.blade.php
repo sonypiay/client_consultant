@@ -5,7 +5,6 @@
   <title>Laravel</title>
 </head>
 <body>
-  @include('frontend.layout.navbar-header')
   <div id="app">
     @yield('content')
   </div>

@@ -1,0 +1,20 @@
+.headerhomepage {
+  background: transparent;
+  //border-bottom: 1px solid darken( $color-base, 10% );
+  .navbarhomepage {
+    .uk-logo {
+      color: #ffffff;
+      @include global_font_style( 700, 26px, normal, 0.4px, normal );
+      text-transform: capitalize;
+    }
+    .navhomepage {
+      li {
+        a {
+          color: #ffffff;
+          @include global_font_style( 700, 16px, normal, 0.4px, normal );
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+}
