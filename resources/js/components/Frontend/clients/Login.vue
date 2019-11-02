@@ -104,16 +104,13 @@ export default {
           client_type: forms.type
         }
       }).then( res => {
-        let message = 'You have successfully signed up.';
-        this.messages.successMessage = message;
-        swal({ text: message, icon: 'success' });
-
+        swal({ text: 'You have successfully signed up', icon: 'success' });
         setTimeout(() => {
           document.location = this.$root.url + '/client/dashboard';
         }, 2000);
       }).catch( err => {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
-        else this.messages.errorMessage = err.response.data.responseMessage;
+        else this.messages.successMessage = err.response.data.responseMessage;
         this.forms.submit = 'Create Account';
       });
     }

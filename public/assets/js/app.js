@@ -1972,15 +1972,17 @@ __webpack_require__.r(__webpack_exports__);
           client_type: forms.type
         }
       }).then(function (res) {
+        var message = 'You have successfully signed up.';
+        _this.messages.successMessage = message;
         swal({
-          text: 'You have successfully signed up',
+          text: message,
           icon: 'success'
         });
         setTimeout(function () {
           document.location = _this.$root.url + '/client/dashboard';
         }, 2000);
       })["catch"](function (err) {
-        if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.successMessage = err.response.data.responseMessage;
+        if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
         _this.forms.submit = 'Create Account';
       });
     }

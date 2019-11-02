@@ -92,6 +92,13 @@ class ClientUser extends Model
       $this->client_password = $hash_password;
       $this->client_type = $client_type;
       $this->save();
+
+      $getclient = $this->where('client_email', $client_email)->first();
+
+      session()->put('isClient', true);
+      session()->put('clientId', $getclient->client_id);
+      session()->put('clientLogin', date('Y-m-d H:i:s'));
+      session()->put('clientIp', $request->server('REMOTE_ADDR'));
     }
 
     return $res;
