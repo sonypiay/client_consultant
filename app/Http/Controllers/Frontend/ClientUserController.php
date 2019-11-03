@@ -38,4 +38,10 @@ class ClientUserController extends Controller
 
     return redirect()->route('client_login_page');
   }
+
+  public function change_password( Request $request, ClientUser $clientUser )
+  {
+    $res = $clientUser->changePassword( $request );
+    return response()->json( $res, $res['responseCode'] );
+  }
 }

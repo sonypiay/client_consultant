@@ -17,6 +17,7 @@ class PagesController extends Controller
   {
     $data['request'] = $request;
     $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
+    $data['getuser'] = [];
 
     if( session()->has('isClient') )
     {
@@ -60,6 +61,8 @@ class PagesController extends Controller
 
     $data['request'] = $request;
     $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
+    $data['getuser'] = [];
+
     if( session()->has('isClient') )
     {
       $client = new ClientUser;
@@ -82,7 +85,8 @@ class PagesController extends Controller
     $data['request'] = $request;
     $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
     $data['getcity'] = $city->getAllCity();
-    
+    $data['getuser'] = [];
+
     if( session()->has('isClient') )
     {
       $client = new ClientUser;

@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="uk-card uk-card-default uk-card-body card-panel">
-      <div class="uk-card-title uk-text-left card-panel-title">
-        Account Information
-      </div>
+      <div class="uk-card-title uk-text-left card-panel-title">Account Information</div>
       <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>{{ messages.errorMessage }}</div>
       <form class="uk-form-stacked uk-margin-top" @submit.prevent="saveProfile">
         <div class="uk-margin">

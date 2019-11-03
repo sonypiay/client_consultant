@@ -1940,8 +1940,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['getuser', 'getcity'],
   data: function data() {
@@ -2103,7 +2101,85 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      forms: {
+        password: '',
+        confirmpassword: '',
+        submit: 'Change Password'
+      },
+      messages: {
+        errors: {},
+        successMessage: '',
+        errorMessage: '',
+        iserror: false
+      }
+    };
+  },
+  methods: {
+    changePassword: function changePassword() {
+      var _this = this;
+
+      this.messages = {
+        errors: {},
+        successMessage: '',
+        errorMessage: '',
+        iserror: false
+      };
+      var msg_form = 'This field is required';
+
+      if (this.forms.password === '') {
+        this.messages.errors.password = msg_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.forms.password !== this.forms.confirmpassword) {
+        this.messages.errors.confirmpassword = 'Your password did not match.';
+        this.messages.iserror = true;
+      }
+
+      if (this.messages.iserror === true) return false;
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'put',
+        url: this.$root.url + '/client/change_password',
+        params: {
+          password: this.forms.password
+        }
+      }).then(function (res) {
+        _this.messages.successMessage = 'Your password has been changed';
+        _this.forms.submit = 'Change Password';
+      })["catch"](function (err) {
+        _this.forms.submit = 'Change Password';
+        _this.messages.errorMessage = err.response.statusText;
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -56264,7 +56340,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "uk-card-title uk-text-left card-panel-title" },
-          [_vm._v("\n      Account Information\n    ")]
+          [_vm._v("Account Information")]
         ),
         _vm._v(" "),
         _c(
@@ -56800,7 +56876,170 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n  Edit Password\n")])
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "uk-card uk-card-default uk-card-body card-panel" },
+      [
+        _c(
+          "div",
+          { staticClass: "uk-card-title uk-text-left card-panel-title" },
+          [_vm._v("Change Password")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.errorMessage,
+                expression: "messages.errorMessage"
+              }
+            ],
+            staticClass: "uk-alert-danger",
+            attrs: { "uk-alert": "" }
+          },
+          [_vm._v(_vm._s(_vm.messages.errorMessage))]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.successMessage,
+                expression: "messages.successMessage"
+              }
+            ],
+            staticClass: "uk-alert-success",
+            attrs: { "uk-alert": "" }
+          },
+          [_vm._v(_vm._s(_vm.messages.successMessage))]
+        ),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "uk-form-stacked uk-margin-top",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.changePassword($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("New Password")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.password,
+                      expression: "forms.password"
+                    }
+                  ],
+                  staticClass: "uk-input gl-input-default",
+                  attrs: { type: "password" },
+                  domProps: { value: _vm.forms.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "password", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.password,
+                      expression: "messages.errors.password"
+                    }
+                  ],
+                  staticClass: "uk-text-small uk-text-danger"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.password))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("New Password Confirmation")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.confirmpassword,
+                      expression: "forms.confirmpassword"
+                    }
+                  ],
+                  staticClass: "uk-input gl-input-default",
+                  attrs: { type: "password" },
+                  domProps: { value: _vm.forms.confirmpassword },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.forms,
+                        "confirmpassword",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.confirmpassword,
+                      expression: "messages.errors.confirmpassword"
+                    }
+                  ],
+                  staticClass: "uk-text-small uk-text-danger"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.confirmpassword))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("button", {
+                staticClass: "uk-button uk-button-primary gl-button-primary",
+                domProps: { innerHTML: _vm._s(_vm.forms.submit) }
+              })
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -56913,7 +57152,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                  Edit Password\n                "
+                                "\n                  Change Password\n                "
                               )
                             ]
                           )

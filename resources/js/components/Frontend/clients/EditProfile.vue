@@ -25,7 +25,7 @@
                 </li>
                 <li>
                   <a :class="{'active': navpage === 'edit_password'}" @click="navpage = 'edit_password'">
-                    Edit Password
+                    Change Password
                   </a>
                 </li>
               </ul>
