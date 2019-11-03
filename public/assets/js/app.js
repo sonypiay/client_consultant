@@ -3265,6 +3265,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser']
 });
@@ -60120,6 +60162,99 @@ var render = function() {
                       )
                     ])
                   ])
+                : _vm.haslogin.isLogin === true &&
+                  _vm.haslogin.user === "consultant"
+                ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                    _c("li", [
+                      _c(
+                        "a",
+                        { attrs: { href: _vm.$root.url + "/client/signin" } },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.getuser.consultant_fullname) +
+                              "\n                "
+                          ),
+                          _c("span", {
+                            staticClass: "uk-margin-small-left",
+                            attrs: {
+                              "uk-icon": "icon: chevron-down; ratio: 0.7"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
+                          attrs: { "uk-dropdown": "mode: click;" }
+                        },
+                        [
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
+                            },
+                            [
+                              _vm._m(4),
+                              _vm._v(" "),
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _vm._m(6),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url + "/client/edit_profile"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: cog; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Edit Profile & Settings\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: _vm.$root.url + "/client/logout"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: sign-out; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Logout\n                    "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
                 : _vm._e()
             ])
           ]
@@ -60135,6 +60270,48 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-navbar-left" }, [
       _c("a", { staticClass: "uk-navbar-item uk-logo" }, [_vm._v("Logo")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: file-edit; ratio: 0.8" }
+        }),
+        _vm._v("\n                      My Request\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: bell; ratio: 0.8" }
+        }),
+        _vm._v("\n                      Notification\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
+        }),
+        _vm._v("\n                      Messages\n                    ")
+      ])
     ])
   },
   function() {
