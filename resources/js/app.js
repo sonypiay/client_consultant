@@ -23,6 +23,12 @@ Vue.component('client-login-page', require('./components/Frontend/clients/Login.
 Vue.component('client-dashboard-page', require('./components/Frontend/clients/Dashboard.vue').default);
 Vue.component('client-editprofile-page', require('./components/Frontend/clients/EditProfile.vue').default);
 
+// consultant user
+Vue.component('consultant-register-page', require('./components/Frontend/consultant/Register.vue').default);
+Vue.component('consultant-login-page', require('./components/Frontend/consultant/Login.vue').default);
+Vue.component('consultant-dashboard-page', require('./components/Frontend/consultant/Dashboard.vue').default);
+Vue.component('consultant-editprofile-page', require('./components/Frontend/consultant/EditProfile.vue').default);
+
 const app = new Vue({
     el: '#app',
     data: {

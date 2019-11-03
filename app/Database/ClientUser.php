@@ -112,10 +112,9 @@ class ClientUser extends Model
     $address = $request->address;
     $phone_number = $request->phone_number;
     $city = $request->city;
-    $client_id = session()->has('clientId') ? session()->get('clientId') : null;
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
-    $getclient = $this->getProfile( $client_id );
+    $getclient = $this->getProfile();
     $getclient->client_fullname = $fullname;
     $getclient->client_type = $type;
     $getclient->client_phone_number = $phone_number;
@@ -156,9 +155,8 @@ class ClientUser extends Model
     $password = $request->password;
     $hash_password = Hash::make( $password );
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
-    $client_id = session()->has('clientId') ? session()->get('clientId') : null;
 
-    $getclient = $this->getProfile( $client_id );
+    $getclient = $this->getProfile();
     $getclient->client_password = $hash_password;
     $getclient->save();
 
