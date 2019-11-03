@@ -40,6 +40,7 @@ class ClientUser extends Model
       'client_user.client_gender',
       'client_user.client_photo',
       'client_user.client_type',
+      'client_user.client_address',
       'client_user.created_at',
       'client_user.updated_at',
       'city.city_id',
@@ -54,8 +55,7 @@ class ClientUser extends Model
     {
       if( ! session()->has('isClient') ) return false;
       else {
-        return $query->select('client_user.client_password')
-        ->where('client_user.client_id', session()->get('clientId'))
+        return $query->where('client_user.client_id', session()->get('clientId'))
         ->first();
       }
     }
@@ -104,39 +104,26 @@ class ClientUser extends Model
     return $res;
   }
 
-  public function saveProfie( $request )
+  public function saveProfile( $request )
   {
-    $client_name = $request->client_name;
-    $client_email = $request->client_email;
-    $client_type = $request->client_type;
-    $client_gender = $request->client_gender;
+    $fullname = $request->fullname;
+    $type = $request->type;
+    $gender = $request->gender;
+    $address = $request->address;
+    $phone_number = $request->phone_number;
     $city = $request->city;
     $client_id = session()->has('clientId') ? session()->get('clientId') : null;
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $getclient = $this->getProfile( $client_id );
-    $getclient->client_fullname = $client_name;
-    $getclient->client_type = $client_type;
+    $getclient->client_fullname = $fullname;
+    $getclient->client_type = $type;
+    $getclient->client_phone_number = $phone_number;
+    $getclient->client_address = $address;
     $getclient->city_id = $city;
-    if( $client_type === 'individual' ) $getclient->client_gender = $client_gender;
+    if( $type === 'individual' ) $getclient->client_gender = $gender;
+    $getclient->save();
 
-    if( $getclient->client_email == $client_email )
-    {
-      $getclient->save();
-    }
-    else
-    {
-      $check_email = $this->where('client_email', $client_id);
-      if( $check_email->count() == 1 )
-      {
-        $res = ['responseCode' => 409, 'responseMessage' => $client_email . ' already exists.'];
-      }
-      else
-      {
-        $getclient->client_email = $client_email;
-        $getclient->save();
-      }
-    }
     return $res;
   }
 
@@ -182,7 +169,6 @@ class ClientUser extends Model
   {
     $client_email = $request->client_email;
     $client_password = $request->client_password;
-    $client_id = session()->has('clientId') ? session()->get('clientId') : null;
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $validate = $this->where('client_email', $client_email);
@@ -199,9 +185,8 @@ class ClientUser extends Model
       }
       else
       {
-        $getclient = $this->getProfile( $client_id );
         session()->put('isClient', true);
-        session()->put('clientId', $getclient->client_id);
+        session()->put('clientId', $result->client_id);
         session()->put('clientLogin', date('Y-m-d H:i:s'));
         session()->put('clientIp', $request->server('REMOTE_ADDR'));
       }

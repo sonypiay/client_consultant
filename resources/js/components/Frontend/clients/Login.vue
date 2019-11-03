@@ -1,45 +1,32 @@
 <template>
   <div class="uk-height-viewport bg">
     <div class="uk-container">
-      <div class="uk-width-2-5 uk-align-center uk-margin-top uk-margin-bottom">
+      <div class="uk-width-2-5 uk-align-center uk-margin-large-top uk-margin-bottom">
         <div class="uk-card uk-card-body uk-card-default card-panel">
-          <div class="uk-card-title card-panel-title">Sign up as Client</div>
+          <div class="uk-card-title card-panel-title">Sign in as Client</div>
           <div v-show="messages.successMessage" class="uk-alert-success" uk-alert>{{ messages.successMessage }}</div>
           <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>{{ messages.errorMessage }}</div>
-          <form class="uk-form-stacked uk-margin-top" @submit.prevent="doRegister">
-            <div class="uk-margin">
-              <label class="uk-form-label gl-label">Fullname</label>
-              <div class="uk-form-controls">
-                <input type="text" v-model="forms.fullname" placeholder="Fullname" class="uk-input gl-input-default" />
-              </div>
-              <div v-show="messages.errors.fullname" class="uk-text-small uk-text-danger">{{ messages.errors.fullname }}</div>
-            </div>
+          <form class="uk-form-stacked uk-margin-top" @submit.prevent="doLogin">
             <div class="uk-margin">
               <label class="uk-form-label gl-label">Email Account</label>
               <div class="uk-form-controls">
-                <input type="email" v-model="forms.email" placeholder="Email Account" class="uk-input gl-input-default" />
+                <input type="email" v-model="forms.email" placeholder="Enter your email account" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.email" class="uk-text-small uk-text-danger">{{ messages.errors.email }}</div>
             </div>
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Create Password</label>
+              <label class="uk-form-label gl-label">Password</label>
               <div class="uk-form-controls">
-                <input type="password" v-model="forms.password" placeholder="Create Password" class="uk-input gl-input-default" />
+                <input type="password" v-model="forms.password" placeholder="Enter your password" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.password" class="uk-text-small uk-text-danger">{{ messages.errors.password }}</div>
-            </div>
-            <div class="uk-margin">
-              <div class="uk-form-controls">
-                <label><input class="uk-radio" type="radio" v-model="forms.type" value="individual" :checked="forms.type === 'individual'" /> Individual</label>
-                <label class="uk-margin-left"><input class="uk-radio" type="radio" v-model="forms.type" value="company" /> Company</label>
-              </div>
             </div>
             <div class="uk-margin">
               <button class="uk-width-1-1 uk-button uk-button-primary gl-button-default" v-html="forms.submit"></button>
             </div>
           </form>
           <div class="uk-text-center uk-margin-small-top card-link">
-            <a :href="$root.url + 'signin/client'">Already have account? Sign in now</a>
+            <a :href="$root.url + '/client/signup'">Don't have account? Sign up now</a>
           </div>
         </div>
       </div>
@@ -53,11 +40,9 @@ export default {
   data() {
     return {
       forms: {
-        fullname: '',
         email: '',
         password: '',
-        type: 'individual',
-        submit: 'Create Account'
+        submit: 'Sign in'
       },
       messages: {
         errors: {},
@@ -68,7 +53,7 @@ export default {
     }
   },
   methods: {
-    doRegister()
+    doLogin()
     {
       this.messages.errors = {};
       this.messages.successMessage = '';
@@ -76,11 +61,6 @@ export default {
       this.messages.iserror = false;
       let forms = this.forms;
 
-      if( forms.fullname === '' )
-      {
-        this.messages.errors.fullname = 'Please fill your name';
-        this.messages.iserror = true;
-      }
       if( forms.email === '' )
       {
         this.messages.errors.email = 'Please enter your email';
@@ -96,15 +76,13 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/client/create_account',
+        url: this.$root.url + '/client/signin',
         params: {
-          client_name: forms.fullname,
           client_email: forms.email,
           client_password: forms.password,
-          client_type: forms.type
         }
       }).then( res => {
-        let message = 'You have successfully signed up.';
+        let message = 'You have successfully signed in.';
         this.messages.successMessage = message;
         swal({ text: message, icon: 'success' });
 

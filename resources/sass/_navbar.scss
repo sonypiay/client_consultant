@@ -18,3 +18,70 @@
     }
   }
 }
+
+.headerdefault {
+  background: #ffffff;
+  //border-bottom: 1px solid darken( $color-base, 10% );
+  .navbardefault {
+    .uk-logo {
+      color: #333333;
+      @include global_font_style( 700, 26px, normal, 0.4px );
+      text-transform: capitalize;
+    }
+    .navdefault {
+      li {
+        a {
+          color: #333333;
+          @include global_font_style( 700, 16px, normal, 0.4px );
+          text-transform: capitalize;
+        }
+        .navbar-dropdown-default {
+          border-radius: 10px;
+          .nav-dropdown-default {
+            li {
+              a {
+                color: #333333;
+                @include global_font_style( 600, 12px, normal, 0.4px );
+                text-transform: capitalize;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.navbar-event {
+  border-bottom: 1px solid #dddddd;
+  .nav-event {
+    li {
+      padding: 0;
+      a {
+        color: #333333;
+        @include global_font_style( 300, 14px, normal, 0.4px );
+        text-transform: capitalize;
+      }
+      .active {
+        border-bottom: 2px solid $color-base;
+        color: $color-base;
+      }
+    }
+  }
+}
+
+.nav-profile {
+  li {
+    a {
+      color: #333333;
+      @include global_font_style( 400, 14px, normal, 0.4px );
+      text-transform: capitalize;
+      padding: 10px 16px;
+    }
+    .active {
+      border-left: 2px solid $color-base;
+      color: $color-base;
+      background: lighten( $color-base, 40% );
+    }
+  }
+}

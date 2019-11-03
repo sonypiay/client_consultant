@@ -20,6 +20,15 @@ $color-base: #25C4F2;
   background: rgba( 37, 196, 242, $opacity );
 }
 
+@mixin color_gradient_base()
+{
+  background: #25c4f2; /* Old browsers */
+  background: -moz-linear-gradient(left,  #25c4f2 0%, #81d7ef 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left,  #25c4f2 0%,#81d7ef 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right,  #25c4f2 0%,#81d7ef 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#25c4f2', endColorstr='#81d7ef',GradientType=1 ); /* IE6-9 */
+}
+
 @mixin global_font_style( $weight, $size, $stretch, $spacing )
 {
   font-weight: $weight;

@@ -16,6 +16,16 @@ class PagesController extends Controller
   public function homepage( Request $request )
   {
     $data['request'] = $request;
+    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
+
+    if( session()->has('isClient') )
+    {
+      $client = new ClientUser;
+      $data['hasLogin']['user'] = 'client';
+      $data['hasLogin']['isLogin'] = true;
+      $data['getuser'] = $client->getProfile();
+    }
+
     return response()->view('frontend.pages.homepage', $data);
   }
 
@@ -49,6 +59,38 @@ class PagesController extends Controller
     }
 
     $data['request'] = $request;
+    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
+    if( session()->has('isClient') )
+    {
+      $client = new ClientUser;
+      $data['hasLogin']['user'] = 'client';
+      $data['hasLogin']['isLogin'] = true;
+      $data['getuser'] = $client->getProfile();
+    }
+
     return response()->view('frontend.pages.clients.dashboard', $data);
+  }
+
+  public function client_edit_profile( Request $request )
+  {
+    if( ! session()->has('isClient') )
+    {
+      return redirect()->route('client_login_page');
+    }
+
+    $city = new City;
+    $data['request'] = $request;
+    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
+    $data['getcity'] = $city->getAllCity();
+    
+    if( session()->has('isClient') )
+    {
+      $client = new ClientUser;
+      $data['hasLogin']['user'] = 'client';
+      $data['hasLogin']['isLogin'] = true;
+      $data['getuser'] = $client->getProfile();
+    }
+
+    return response()->view('frontend.pages.clients.editprofile', $data);
   }
 }

@@ -39,7 +39,7 @@
             </div>
           </form>
           <div class="uk-text-center uk-margin-small-top card-link">
-            <a :href="$root.url + 'signin/client'">Already have account? Sign in now</a>
+            <a :href="$root.url + '/client/signin'">Already have account? Sign in now</a>
           </div>
         </div>
       </div>

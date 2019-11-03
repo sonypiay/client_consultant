@@ -16,4 +16,26 @@ class ClientUserController extends Controller
     $res = $clientUser->signup( $request );
     return response()->json( $res, $res['responseCode'] );
   }
+
+  public function login( Request $request, ClientUser $clientUser )
+  {
+    $res = $clientUser->login( $request );
+    return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function save_profile( Request $request, ClientUser $clientUser )
+  {
+    $res = $clientUser->saveProfile( $request );
+    return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function logout( ClientUser $clientUser )
+  {
+    if( session()->has('isClient') )
+    {
+      $clientUser->logout();
+    }
+
+    return redirect()->route('client_login_page');
+  }
 }

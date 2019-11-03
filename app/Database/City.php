@@ -14,19 +14,17 @@ class City extends Model
   public function getAllCity( $sort = null, $request = null )
   {
     $sort = $sort === null ? 'asc' : $sort;
+    $query = $this->join('province', 'city.province_id', '=', 'province.province_id')
+    ->orderBy('city.city_name', $sort);
+
     if( $request === null )
     {
-      return $this->join('province', 'city_id.province_id', '=', 'province.province_id')
-      ->orderBy('city.city_name', $sort)
-      ->get();
+      return $query->get();
     }
     else
     {
       $keywords = $request->keywords;
       $limit = $request->limit;
-
-      $query = $this->join('province', 'city_id.province_id', '=', 'province.province_id')
-      ->orderBy('city.city_name', $sort);
 
       if( ! empty( $keywords ) )
       {

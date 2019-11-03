@@ -27,10 +27,88 @@ body {
   text-transform: capitalize;
 }
 
-.gl-label {
+.headerdefault {
+  background: #ffffff;
+}
+
+.headerdefault .navbardefault .uk-logo {
+  color: #333333;
+  font-weight: 700;
+  font-size: 26px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
+}
+
+.headerdefault .navbardefault .navdefault li a {
+  color: #333333;
+  font-weight: 700;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default {
+  border-radius: 10px;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .nav-dropdown-default li a {
+  color: #333333;
+  font-weight: 600;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
+}
+
+.navbar-event {
+  border-bottom: 1px solid #dddddd;
+}
+
+.navbar-event .nav-event li {
+  padding: 0;
+}
+
+.navbar-event .nav-event li a {
+  color: #333333;
+  font-weight: 300;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
+}
+
+.navbar-event .nav-event li .active {
+  border-bottom: 2px solid #25C4F2;
+  color: #25C4F2;
+}
+
+.nav-profile li a {
   color: #333333;
   font-weight: 400;
   font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
+  padding: 10px 16px;
+}
+
+.nav-profile li .active {
+  border-left: 2px solid #25C4F2;
+  color: #25C4F2;
+  background: #e6f8fd;
+}
+
+.gl-label {
+  color: #333333;
+  font-weight: 400;
+  font-size: 13px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
@@ -74,14 +152,15 @@ body {
 }
 
 .gl-button-primary {
-  border-radius: 10px;
+  border-radius: 6px;
   background: #25C4F2;
-  color: #25C4F2;
+  color: #ffffff;
   font-weight: 400;
   font-size: 14px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
 }
 
 .gl-button-primary:hover,
@@ -168,6 +247,38 @@ body {
   color: #ffffff;
 }
 
+.banner-index_header {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 56px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  background: #25c4f2;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: -webkit-gradient(linear, left top, right top, from(#25c4f2), to(#81d7ef));
+  background: linear-gradient(to right, #25c4f2 0%, #81d7ef 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#25c4f2", endColorstr="#81d7ef",GradientType=1 );
+  /* IE6-9 */
+  height: 100px;
+}
+
+.banner-index_editprofile {
+  height: 150px;
+  background: #25c4f2;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: -webkit-gradient(linear, left top, right top, from(#25c4f2), to(#81d7ef));
+  background: linear-gradient(to right, #25c4f2 0%, #81d7ef 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#25c4f2", endColorstr="#81d7ef",GradientType=1 );
+  /* IE6-9 */
+}
+
 .card-panel {
   border-radius: 10px;
   font-weight: 400;
@@ -187,6 +298,30 @@ body {
 }
 
 .card-panel .card-link a {
+  color: #333333;
+  font-weight: 400;
+  font-size: 13px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: center;
+}
+
+.container-editprofile {
+  margin-top: -3rem;
+}
+
+.container-editprofile .sidebar-profile .profile-name {
+  color: #333333;
+  font-weight: 700;
+  font-size: 18px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: center;
+}
+
+.container-editprofile .sidebar-profile .profile-join {
   color: #333333;
   font-weight: 400;
   font-size: 13px;

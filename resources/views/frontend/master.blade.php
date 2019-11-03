@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   @include('frontend.includes.meta-header')
-  <title>Laravel</title>
+  <title>@yield('title')</title>
 </head>
 <body>
   <div id="app">

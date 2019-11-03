@@ -34,6 +34,17 @@ html, body { font-family: $font-base; }
   }
 }
 
+.banner-index_header {
+  color: #ffffff;
+  @include global_font_style( 700, 56px, normal, 0.4px );
+  @include color_gradient_base();
+  height: 100px;
+}
+.banner-index_editprofile {
+  height: 150px;
+  @include color_gradient_base();
+}
+
 .card-panel {
   border-radius: 10px;
   @include global_font_style( 400, 14px, normal, 0.4px );
@@ -43,6 +54,22 @@ html, body { font-family: $font-base; }
   }
   .card-link {
     a {
+      color: #333333;
+      @include global_font_style( 400, 13px, normal, 0.4px );
+      text-align: center;
+    }
+  }
+}
+
+.container-editprofile {
+  margin-top: -3rem;
+  .sidebar-profile {
+    .profile-name {
+      color: #333333;
+      @include global_font_style( 700, 18px, normal, 0.4px );
+      text-align: center;
+    }
+    .profile-join {
       color: #333333;
       @include global_font_style( 400, 13px, normal, 0.4px );
       text-align: center;
