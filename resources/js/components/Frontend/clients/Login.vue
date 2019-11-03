@@ -92,7 +92,7 @@ export default {
       }).catch( err => {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
-        this.forms.submit = 'Create Account';
+        this.forms.submit = 'Sign in';
       });
     }
   }

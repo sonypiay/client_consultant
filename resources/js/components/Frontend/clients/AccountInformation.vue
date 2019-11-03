@@ -14,7 +14,7 @@
         <div class="uk-margin">
           <label class="uk-form-label gl-label">Email</label>
           <div class="uk-form-controls">
-            <input type="text" v-model="forms.email" class="uk-input gl-input-default" disabled />
+            <input type="text" v-model="forms.email" class="uk-input gl-input-default" />
           </div>
         </div>
         <div class="uk-margin">
@@ -143,7 +143,8 @@ export default {
           phone_number: f.phone_number,
           address: f.address,
           city: f.city,
-          gender: f.gender
+          gender: f.gender,
+          email: f.email
         }
       }).then( res => {
         let msg = 'Profile updated';
@@ -154,7 +155,8 @@ export default {
           document.location = '';
         }, 2000);
       }).catch( err => {
-        this.messages.errorMessage = err.response.statusText;
+        if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
+        else this.messages.errorMessage = err.response.data.responseMessage;
         f.submit = '<span uk-spinner></span>';
       });
     }

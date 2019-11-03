@@ -2,7 +2,7 @@
   <div class="uk-margin-top">
     <h3 class="upcoming-request_title">Upcoming Requests</h3>
     <div class="upcoming-request_leadtext">
-      Here are the moments you will capture with SweetEscape soon.
+      Here are the requests you created.
     </div>
   </div>
 </template>

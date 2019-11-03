@@ -112,6 +112,7 @@ class ClientUser extends Model
     $address = $request->address;
     $phone_number = $request->phone_number;
     $city = $request->city;
+    $email = $request->email;
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $getclient = $this->getProfile();
@@ -121,6 +122,29 @@ class ClientUser extends Model
     $getclient->client_address = $address;
     $getclient->city_id = $city;
     if( $type === 'individual' ) $getclient->client_gender = $gender;
+    else $getclient->client_gender = null;
+
+    if( $getclient->client_email === $email )
+    {
+      $getclient->save();
+    }
+    else
+    {
+      $check_email = $this->where('client_email', $email);
+      if( $check_email->count() == 1 )
+      {
+        $res = [
+          'responseCode' => 409,
+          'responseMessage' => $email . ' has already taken!'
+        ];
+      }
+      else
+      {
+        $getclient->client_email = $email;
+        $getclient->save();
+      }
+    }
+
     $getclient->save();
 
     return $res;

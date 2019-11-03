@@ -11,7 +11,7 @@
           <div class="uk-width-1-4">
             <nav class="uk-card uk-card-body uk-card-default card-panel">
               <div class="uk-text-center uk-margin-bottom sidebar-profile">
-                <div class="profile-name">{{ getuser.client_fullname }}</div>
+                <div class="profile-name">{{ getuser.consultant_fullname }}</div>
                 <div class="profile-join">
                   Member since
                   {{ $root.formatDate( getuser.created_at, 'DD MMM, YYYY' ) }}

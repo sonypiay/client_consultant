@@ -2011,7 +2011,8 @@ __webpack_require__.r(__webpack_exports__);
           phone_number: f.phone_number,
           address: f.address,
           city: f.city,
-          gender: f.gender
+          gender: f.gender,
+          email: f.email
         }
       }).then(function (res) {
         var msg = 'Profile updated';
@@ -2024,7 +2025,7 @@ __webpack_require__.r(__webpack_exports__);
           document.location = '';
         }, 2000);
       })["catch"](function (err) {
-        _this.messages.errorMessage = err.response.statusText;
+        if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
         f.submit = '<span uk-spinner></span>';
       });
     }
@@ -2043,8 +2044,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UpcomingRequest_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingRequest.vue */ "./resources/js/components/Frontend/clients/UpcomingRequest.vue");
-//
-//
 //
 //
 //
@@ -2360,7 +2359,7 @@ __webpack_require__.r(__webpack_exports__);
         }, 2000);
       })["catch"](function (err) {
         if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
-        _this.forms.submit = 'Create Account';
+        _this.forms.submit = 'Sign in';
       });
     }
   }
@@ -2606,17 +2605,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['getuser', 'getcity'],
   data: function data() {
     return {
       forms: {
-        fullname: this.getuser.client_fullname,
-        email: this.getuser.client_email,
-        phone_number: this.getuser.client_phone_number === null ? '' : this.getuser.client_phone_number,
-        gender: this.getuser.client_gender === null ? '' : this.getuser.client_gender,
-        type: this.getuser.client_type,
-        address: this.getuser.client_address === null ? '' : this.getuser.client_address,
+        fullname: this.getuser.consultant_fullname,
+        email: this.getuser.consultant_email,
+        phone_number: this.getuser.consultant_phone_number === null ? '' : this.getuser.consultant_phone_number,
+        gender: this.getuser.consultant_gender === null ? '' : this.getuser.consultant_gender,
+        type: this.getuser.consultant_type,
+        address: this.getuser.consultant_address === null ? '' : this.getuser.consultant_address,
         city: this.getuser.city_id === null ? '' : this.getuser.city_id,
         submit: 'Save Changes'
       },
@@ -2646,6 +2646,11 @@ __webpack_require__.r(__webpack_exports__);
         this.messages.iserror = true;
       }
 
+      if (f.email === '') {
+        this.messages.errors.email = message_form;
+        this.messages.iserror = true;
+      }
+
       if (f.phone_number === '') {
         this.messages.errors.phone_number = message_form;
         this.messages.iserror = true;
@@ -2670,9 +2675,10 @@ __webpack_require__.r(__webpack_exports__);
       f.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_profile',
+        url: this.$root.url + '/consultant/save_profile',
         params: {
           fullname: f.fullname,
+          email: f.email,
           type: f.type,
           phone_number: f.phone_number,
           address: f.address,
@@ -2708,9 +2714,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UpcomingRequest_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingRequest.vue */ "./resources/js/components/Frontend/consultant/UpcomingRequest.vue");
-//
-//
+/* harmony import */ var _UpcomingAppointment_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingAppointment.vue */ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue");
 //
 //
 //
@@ -2741,7 +2745,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   components: {
-    'upcoming-request': _UpcomingRequest_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    'upcoming-appointment': _UpcomingAppointment_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
@@ -2832,7 +2836,7 @@ __webpack_require__.r(__webpack_exports__);
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/change_password',
+        url: this.$root.url + '/consultant/change_password',
         params: {
           password: this.forms.password
         }
@@ -3009,10 +3013,10 @@ __webpack_require__.r(__webpack_exports__);
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/client/signin',
+        url: this.$root.url + '/consultant/signin',
         params: {
-          client_email: forms.email,
-          client_password: forms.password
+          email: forms.email,
+          password: forms.password
         }
       }).then(function (res) {
         var message = 'You have successfully signed in.';
@@ -3022,11 +3026,11 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'success'
         });
         setTimeout(function () {
-          document.location = _this.$root.url + '/client/dashboard';
+          document.location = _this.$root.url + '/consultant/dashboard';
         }, 2000);
       })["catch"](function (err) {
         if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
-        _this.forms.submit = 'Create Account';
+        _this.forms.submit = 'Sign in';
       });
     }
   }
@@ -3140,12 +3144,12 @@ __webpack_require__.r(__webpack_exports__);
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/client/create_account',
+        url: this.$root.url + '/consultant/create_account',
         params: {
-          client_name: forms.fullname,
-          client_email: forms.email,
-          client_password: forms.password,
-          client_type: forms.type
+          fullname: forms.fullname,
+          email: forms.email,
+          password: forms.password,
+          type: forms.type
         }
       }).then(function (res) {
         var message = 'You have successfully signed up.';
@@ -3155,7 +3159,7 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'success'
         });
         setTimeout(function () {
-          document.location = _this.$root.url + '/client/dashboard';
+          document.location = _this.$root.url + '/consultant/dashboard';
         }, 2000);
       })["catch"](function (err) {
         if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
@@ -3167,10 +3171,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -57240,7 +57244,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "uk-input gl-input-default",
-                  attrs: { type: "text", disabled: "" },
+                  attrs: { type: "text" },
                   domProps: { value: _vm.forms.email },
                   on: {
                     input: function($event) {
@@ -57655,9 +57659,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [
-        _vm._v("\n      My Requests\n    ")
-      ])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("My Requests")])
     ])
   }
 ]
@@ -58559,9 +58561,7 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "upcoming-request_leadtext" }, [
-        _vm._v(
-          "\n    Here are the moments you will capture with SweetEscape soon.\n  "
-        )
+        _vm._v("\n    Here are the requests you created.\n  ")
       ])
     ])
   }
@@ -58689,7 +58689,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "uk-input gl-input-default",
-                  attrs: { type: "text", disabled: "" },
+                  attrs: { type: "text" },
                   domProps: { value: _vm.forms.email },
                   on: {
                     input: function($event) {
@@ -58700,7 +58700,23 @@ var render = function() {
                     }
                   }
                 })
-              ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.email,
+                      expression: "messages.errors.email"
+                    }
+                  ],
+                  staticClass: "uk-text-danger uk-text-small"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.email))]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
@@ -58751,7 +58767,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Client Type")
+                _vm._v("Consultant Type")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -59058,7 +59074,7 @@ var render = function() {
                     class: { active: _vm.navevent === "upcoming" },
                     attrs: { href: "#" }
                   },
-                  [_vm._v("Upcoming Request")]
+                  [_vm._v("Upcoming Appointment")]
                 )
               ]),
               _vm._v(" "),
@@ -59069,7 +59085,7 @@ var render = function() {
                     class: { active: _vm.navevent === "completed" },
                     attrs: { href: "#" }
                   },
-                  [_vm._v("Completed Request")]
+                  [_vm._v("Completed Appointment")]
                 )
               ])
             ])
@@ -59081,7 +59097,7 @@ var render = function() {
         "div",
         { staticClass: "uk-container" },
         [
-          _c("upcoming-request", {
+          _c("upcoming-appointment", {
             directives: [
               {
                 name: "show",
@@ -59104,9 +59120,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [
-        _vm._v("\n      My Requests\n    ")
-      ])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("My Appointment")])
     ])
   }
 ]
@@ -59349,7 +59363,7 @@ var render = function() {
                       },
                       [
                         _c("div", { staticClass: "profile-name" }, [
-                          _vm._v(_vm._s(_vm.getuser.client_fullname))
+                          _vm._v(_vm._s(_vm.getuser.consultant_fullname))
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "profile-join" }, [
@@ -59491,7 +59505,7 @@ var render = function() {
             { staticClass: "uk-card uk-card-body uk-card-default card-panel" },
             [
               _c("div", { staticClass: "uk-card-title card-panel-title" }, [
-                _vm._v("Sign in as Client")
+                _vm._v("Sign in as Consultant")
               ]),
               _vm._v(" "),
               _c(
@@ -59654,7 +59668,7 @@ var render = function() {
                 [
                   _c(
                     "a",
-                    { attrs: { href: _vm.$root.url + "/client/signup" } },
+                    { attrs: { href: _vm.$root.url + "/consultant/signup" } },
                     [_vm._v("Don't have account? Sign up now")]
                   )
                 ]
@@ -59702,7 +59716,7 @@ var render = function() {
             { staticClass: "uk-card uk-card-body uk-card-default card-panel" },
             [
               _c("div", { staticClass: "uk-card-title card-panel-title" }, [
-                _vm._v("Sign up as Client")
+                _vm._v("Sign up as Consultant")
               ]),
               _vm._v(" "),
               _c(
@@ -59961,7 +59975,7 @@ var render = function() {
                 [
                   _c(
                     "a",
-                    { attrs: { href: _vm.$root.url + "/client/signin" } },
+                    { attrs: { href: _vm.$root.url + "/consultant/signin" } },
                     [_vm._v("Already have account? Sign in now")]
                   )
                 ]
@@ -59980,10 +59994,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true&":
-/*!**************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true& ***!
-  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -60004,13 +60018,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-margin-top" }, [
       _c("h3", { staticClass: "upcoming-request_title" }, [
-        _vm._v("Upcoming Requests")
+        _vm._v("Upcoming Appointment")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "upcoming-request_leadtext" }, [
-        _vm._v(
-          "\n    Here are the moments you will capture with SweetEscape soon.\n  "
-        )
+        _vm._v("\n    Here are the appointment you created.\n  ")
       ])
     ])
   }
@@ -60049,28 +60061,7 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "uk-navbar-right" }, [
-              _vm.haslogin.isLogin === false
-                ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
-                    _c("li", [
-                      _c(
-                        "a",
-                        { attrs: { href: _vm.$root.url + "/client/signin" } },
-                        [_vm._v("Sign in as Client")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: _vm.$root.url + "/consultant/signin" }
-                        },
-                        [_vm._v("Sign in as Consultant")]
-                      )
-                    ])
-                  ])
-                : _vm.haslogin.isLogin === true &&
-                  _vm.haslogin.user === "client"
+              _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
                 ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
                     _c("li", [
                       _c(
@@ -60168,7 +60159,9 @@ var render = function() {
                     _c("li", [
                       _c(
                         "a",
-                        { attrs: { href: _vm.$root.url + "/client/signin" } },
+                        {
+                          attrs: { href: _vm.$root.url + "/consultant/signin" }
+                        },
                         [
                           _vm._v(
                             "\n                " +
@@ -60211,7 +60204,8 @@ var render = function() {
                                   {
                                     attrs: {
                                       href:
-                                        _vm.$root.url + "/client/edit_profile"
+                                        _vm.$root.url +
+                                        "/consultant/edit_profile"
                                     }
                                   },
                                   [
@@ -60233,7 +60227,7 @@ var render = function() {
                                   "a",
                                   {
                                     attrs: {
-                                      href: _vm.$root.url + "/client/logout"
+                                      href: _vm.$root.url + "/consultant/logout"
                                     }
                                   },
                                   [
@@ -60255,7 +60249,25 @@ var render = function() {
                       )
                     ])
                   ])
-                : _vm._e()
+                : _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                    _c("li", [
+                      _c(
+                        "a",
+                        { attrs: { href: _vm.$root.url + "/client/signin" } },
+                        [_vm._v("Log in Client")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: _vm.$root.url + "/consultant/signin" }
+                        },
+                        [_vm._v("Log in Consultant")]
+                      )
+                    ])
+                  ])
             ])
           ]
         )
@@ -60324,7 +60336,7 @@ var staticRenderFns = [
           staticClass: "uk-margin-small-right",
           attrs: { "uk-icon": "icon: file-edit; ratio: 0.8" }
         }),
-        _vm._v("\n                      My Request\n                    ")
+        _vm._v("\n                      My Appointment\n                    ")
       ])
     ])
   },
@@ -60396,7 +60408,7 @@ var render = function() {
                   _c(
                     "a",
                     { attrs: { href: _vm.$root.url + "/client/signin" } },
-                    [_vm._v("Sign in as Client")]
+                    [_vm._v("Log in Client")]
                   )
                 ]),
                 _vm._v(" "),
@@ -60404,7 +60416,7 @@ var render = function() {
                   _c(
                     "a",
                     { attrs: { href: _vm.$root.url + "/consultant/signin" } },
-                    [_vm._v("Sign in as Consultant")]
+                    [_vm._v("Log in Consultant")]
                   )
                 ])
               ])
@@ -73706,17 +73718,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Frontend/consultant/UpcomingRequest.vue":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/Frontend/consultant/UpcomingRequest.vue ***!
-  \*************************************************************************/
+/***/ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/UpcomingAppointment.vue ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UpcomingRequest_vue_vue_type_template_id_7eb8be21_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true& */ "./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true&");
-/* harmony import */ var _UpcomingRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpcomingRequest.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=script&lang=js&");
+/* harmony import */ var _UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& */ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&");
+/* harmony import */ var _UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpcomingAppointment.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -73726,50 +73738,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _UpcomingRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _UpcomingRequest_vue_vue_type_template_id_7eb8be21_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _UpcomingRequest_vue_vue_type_template_id_7eb8be21_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "7eb8be21",
+  "0a7f5231",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/Frontend/consultant/UpcomingRequest.vue"
+component.options.__file = "resources/js/components/Frontend/consultant/UpcomingAppointment.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************!*\
-  !*** ./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************/
+/***/ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpcomingRequest.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingRequest_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpcomingAppointment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true&":
-/*!********************************************************************************************************************!*\
-  !*** ./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true& ***!
-  \********************************************************************************************************************/
+/***/ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& ***!
+  \************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingRequest_vue_vue_type_template_id_7eb8be21_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingRequest.vue?vue&type=template&id=7eb8be21&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingRequest_vue_vue_type_template_id_7eb8be21_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingRequest_vue_vue_type_template_id_7eb8be21_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

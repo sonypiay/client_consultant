@@ -5,9 +5,7 @@
     :getuser="getuser" />
 
     <div class="uk-padding banner-index_header">
-      <div class="uk-container">
-        My Requests
-      </div>
+      <div class="uk-container">My Requests</div>
     </div>
     <div class="navbar-event">
       <div class="uk-container">

@@ -3,7 +3,7 @@
     <div class="uk-container">
       <div class="uk-width-2-5 uk-align-center uk-margin-large-top uk-margin-bottom">
         <div class="uk-card uk-card-body uk-card-default card-panel">
-          <div class="uk-card-title card-panel-title">Sign in as Client</div>
+          <div class="uk-card-title card-panel-title">Sign in as Consultant</div>
           <div v-show="messages.successMessage" class="uk-alert-success" uk-alert>{{ messages.successMessage }}</div>
           <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>{{ messages.errorMessage }}</div>
           <form class="uk-form-stacked uk-margin-top" @submit.prevent="doLogin">
@@ -26,7 +26,7 @@
             </div>
           </form>
           <div class="uk-text-center uk-margin-small-top card-link">
-            <a :href="$root.url + '/client/signup'">Don't have account? Sign up now</a>
+            <a :href="$root.url + '/consultant/signup'">Don't have account? Sign up now</a>
           </div>
         </div>
       </div>
@@ -76,10 +76,10 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/client/signin',
+        url: this.$root.url + '/consultant/signin',
         params: {
-          client_email: forms.email,
-          client_password: forms.password,
+          email: forms.email,
+          password: forms.password,
         }
       }).then( res => {
         let message = 'You have successfully signed in.';
@@ -87,12 +87,12 @@ export default {
         swal({ text: message, icon: 'success' });
 
         setTimeout(() => {
-          document.location = this.$root.url + '/client/dashboard';
+          document.location = this.$root.url + '/consultant/dashboard';
         }, 2000);
       }).catch( err => {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
-        this.forms.submit = 'Create Account';
+        this.forms.submit = 'Sign in';
       });
     }
   }

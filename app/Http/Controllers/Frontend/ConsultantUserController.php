@@ -4,42 +4,42 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Database\ConsultanUser;
+use App\Database\ConsultantUser;
 use DB;
 use Storage;
 use Hash;
 
 class ConsultantUserController extends Controller
 {
-  public function register( Request $request, ConsultanUser $consultantUser )
+  public function register( Request $request, ConsultantUser $consultantUser )
   {
     $res = $consultantUser->signup( $request );
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function login( Request $request, ConsultanUser $consultantUser )
+  public function login( Request $request, ConsultantUser $consultantUser )
   {
     $res = $consultantUser->login( $request );
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function save_profile( Request $request, ConsultanUser $consultantUser )
+  public function save_profile( Request $request, ConsultantUser $consultantUser )
   {
     $res = $consultantUser->saveProfile( $request );
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function logout( ConsultanUser $consultantUser )
+  public function logout( ConsultantUser $consultantUser )
   {
-    if( session()->has('isClient') )
+    if( session()->has('isConsultant') )
     {
       $consultantUser->logout();
     }
 
-    return redirect()->route('client_login_page');
+    return redirect()->route('homepage');
   }
 
-  public function change_password( Request $request, ConsultanUser $consultantUser )
+  public function change_password( Request $request, ConsultantUser $consultantUser )
   {
     $res = $consultantUser->changePassword( $request );
     return response()->json( $res, $res['responseCode'] );

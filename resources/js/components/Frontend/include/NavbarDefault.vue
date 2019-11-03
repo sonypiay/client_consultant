@@ -7,11 +7,7 @@
             <a class="uk-navbar-item uk-logo">Logo</a>
           </div>
           <div class="uk-navbar-right">
-            <ul v-if="haslogin.isLogin === false" class="uk-navbar-nav navdefault">
-              <li><a :href="$root.url + '/client/signin'">Sign in as Client</a></li>
-              <li><a :href="$root.url + '/consultant/signin'">Sign in as Consultant</a></li>
-            </ul>
-            <ul v-else-if="haslogin.isLogin === true && haslogin.user === 'client'" class="uk-navbar-nav navdefault">
+            <ul v-if="haslogin.isLogin === true && haslogin.user === 'client'" class="uk-navbar-nav navdefault">
               <li>
                 <a :href="$root.url + '/client/signin'">
                   {{ getuser.client_fullname }}
@@ -55,7 +51,7 @@
             </ul>
             <ul v-else-if="haslogin.isLogin === true && haslogin.user === 'consultant'" class="uk-navbar-nav navdefault">
               <li>
-                <a :href="$root.url + '/client/signin'">
+                <a :href="$root.url + '/consultant/signin'">
                   {{ getuser.consultant_fullname }}
                   <span class="uk-margin-small-left" uk-icon="icon: chevron-down; ratio: 0.7"></span>
                 </a>
@@ -64,7 +60,7 @@
                     <li>
                       <a href="#">
                         <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
-                        My Request
+                        My Appointment
                       </a>
                     </li>
                     <li>
@@ -80,13 +76,13 @@
                       </a>
                     </li>
                     <li>
-                      <a :href="$root.url + '/client/edit_profile'">
+                      <a :href="$root.url + '/consultant/edit_profile'">
                         <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 0.8"></span>
                         Edit Profile &amp; Settings
                       </a>
                     </li>
                     <li>
-                      <a :href="$root.url + '/client/logout'">
+                      <a :href="$root.url + '/consultant/logout'">
                         <span class="uk-margin-small-right" uk-icon="icon: sign-out; ratio: 0.8"></span>
                         Logout
                       </a>
@@ -94,6 +90,10 @@
                   </ul>
                 </div>
               </li>
+            </ul>
+            <ul v-else class="uk-navbar-nav navdefault">
+              <li><a :href="$root.url + '/client/signin'">Log in Client</a></li>
+              <li><a :href="$root.url + '/consultant/signin'">Log in Consultant</a></li>
             </ul>
           </div>
         </nav>

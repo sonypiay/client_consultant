@@ -70,7 +70,7 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/change_password',
+        url: this.$root.url + '/consultant/change_password',
         params: { password: this.forms.password }
       }).then( res => {
         this.messages.successMessage = 'Your password has been changed';

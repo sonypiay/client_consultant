@@ -60,11 +60,43 @@ class PagesController extends Controller
     return response()->view('frontend.pages.clients.login', $data);
   }
 
+  public function client_dashboard_page( Request $request )
+  {
+    if( ! session()->has('isClient') )
+    {
+      return redirect()->route('client_login_page');
+    }
+
+    $client = new ClientUser;
+    $data['request'] = $request;
+    $data['hasLogin']['user'] = 'client';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $client->getProfile();
+    return response()->view('frontend.pages.clients.dashboard', $data);
+  }
+
+  public function client_edit_profile( Request $request )
+  {
+    if( ! session()->has('isClient') )
+    {
+      return redirect()->route('client_login_page');
+    }
+
+    $city = new City;
+    $client = new ClientUser;
+    $data['request'] = $request;
+    $data['getcity'] = $city->getAllCity();
+    $data['hasLogin']['user'] = 'client';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $client->getProfile();
+    return response()->view('frontend.pages.clients.editprofile', $data);
+  }
+
   public function consultant_register_page( Request $request )
   {
     if( session()->has('isConsultant') )
     {
-      return redirect()->route('dashboard_page');
+      return redirect()->route('consultant_dashboard_page');
     }
 
     $data['request'] = $request;
@@ -75,83 +107,42 @@ class PagesController extends Controller
   {
     if( session()->has('isConsultant') )
     {
-      return redirect()->route('dashboard_page');
+      return redirect()->route('consultant_dashboard_page');
     }
 
     $data['request'] = $request;
-    return response()->view('frontend.pages.clients.login', $data);
+    return response()->view('frontend.pages.consultant.login', $data);
   }
 
-  public function dashboard_page( Request $request )
+  public function consultant_dashboard_page( Request $request )
   {
-    if( ! session()->has('isClient') )
-    {
-      return redirect()->route('client_login_page');
-    }
-
     if( ! session()->has('isConsultant') )
     {
       return redirect()->route('consultant_login_page');
     }
 
+    $consultant = new ConsultantUser;
     $data['request'] = $request;
-    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
-    $data['getuser'] = [];
-
-    if( session()->has('isClient') )
-    {
-      $client = new ClientUser;
-      $data['hasLogin']['user'] = 'client';
-      $data['hasLogin']['isLogin'] = true;
-      $data['getuser'] = $client->getProfile();
-      return response()->view('frontend.pages.clients.dashboard', $data);
-    }
-
-    if( session()->has('isConsultant') )
-    {
-      $consultant = new ConsultantUser;
-      $data['hasLogin']['user'] = 'consultant';
-      $data['hasLogin']['isLogin'] = true;
-      $data['getuser'] = $consultant->getProfile();
-      return response()->view('frontend.pages.consultant.dashboard', $data);
-    }
-
+    $data['hasLogin']['user'] = 'consultant';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $consultant->getProfile();
+    return response()->view('frontend.pages.consultant.dashboard', $data);
   }
 
-  public function client_edit_profile( Request $request )
+  public function consultant_edit_profile( Request $request )
   {
-    if( ! session()->has('isClient') )
-    {
-      return redirect()->route('client_login_page');
-    }
-
     if( ! session()->has('isConsultant') )
     {
       return redirect()->route('consultant_login_page');
     }
 
     $city = new City;
+    $consultant = new ConsultantUser;
     $data['request'] = $request;
-    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
     $data['getcity'] = $city->getAllCity();
-    $data['getuser'] = [];
-
-    if( session()->has('isClient') )
-    {
-      $client = new ClientUser;
-      $data['hasLogin']['user'] = 'client';
-      $data['hasLogin']['isLogin'] = true;
-      $data['getuser'] = $client->getProfile();
-      return response()->view('frontend.pages.clients.editprofile', $data);
-    }
-
-    if( session()->has('isConsultant') )
-    {
-      $consultant = new ConsultantUser;
-      $data['hasLogin']['user'] = 'consultant';
-      $data['hasLogin']['isLogin'] = true;
-      $data['getuser'] = $consultant->getProfile();
-      return response()->view('frontend.pages.consultant.editprofile', $data);
-    }
+    $data['hasLogin']['user'] = 'consultant';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $consultant->getProfile();
+    return response()->view('frontend.pages.consultant.editprofile', $data);
   }
 }

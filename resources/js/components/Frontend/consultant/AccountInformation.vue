@@ -14,8 +14,9 @@
         <div class="uk-margin">
           <label class="uk-form-label gl-label">Email</label>
           <div class="uk-form-controls">
-            <input type="text" v-model="forms.email" class="uk-input gl-input-default" disabled />
+            <input type="text" v-model="forms.email" class="uk-input gl-input-default" />
           </div>
+          <div v-show="messages.errors.email" class="uk-text-danger uk-text-small">{{ messages.errors.email }}</div>
         </div>
         <div class="uk-margin">
           <label class="uk-form-label gl-label">Phone Number</label>
@@ -25,7 +26,7 @@
           <div v-show="messages.errors.phone_number" class="uk-text-danger uk-text-small">{{ messages.errors.phone_number }}</div>
         </div>
         <div class="uk-margin">
-          <label class="uk-form-label gl-label">Client Type</label>
+          <label class="uk-form-label gl-label">Consultant Type</label>
           <div class="uk-form-controls">
             <label><input class="uk-radio" type="radio" v-model="forms.type" value="individual" :checked="forms.type === 'individual'" /> Individual</label>
             <label class="uk-margin-left"><input class="uk-radio" type="radio" v-model="forms.type" value="company" /> Company</label>
@@ -76,12 +77,12 @@ export default {
   data() {
     return {
       forms: {
-        fullname: this.getuser.client_fullname,
-        email: this.getuser.client_email,
-        phone_number: this.getuser.client_phone_number === null ? '' : this.getuser.client_phone_number,
-        gender: this.getuser.client_gender === null ? '' : this.getuser.client_gender,
-        type: this.getuser.client_type,
-        address: this.getuser.client_address === null ? '' : this.getuser.client_address,
+        fullname: this.getuser.consultant_fullname,
+        email: this.getuser.consultant_email,
+        phone_number: this.getuser.consultant_phone_number === null ? '' : this.getuser.consultant_phone_number,
+        gender: this.getuser.consultant_gender === null ? '' : this.getuser.consultant_gender,
+        type: this.getuser.consultant_type,
+        address: this.getuser.consultant_address === null ? '' : this.getuser.consultant_address,
         city: this.getuser.city_id === null ? '' : this.getuser.city_id,
         submit: 'Save Changes'
       },
@@ -111,6 +112,11 @@ export default {
         this.messages.errors.fullname = message_form;
         this.messages.iserror = true;
       }
+      if( f.email === '' )
+      {
+        this.messages.errors.email = message_form;
+        this.messages.iserror = true;
+      }
       if( f.phone_number === '' )
       {
         this.messages.errors.phone_number = message_form;
@@ -136,9 +142,10 @@ export default {
       f.submit = '<span uk-spinner></span>'
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_profile',
+        url: this.$root.url + '/consultant/save_profile',
         params: {
           fullname: f.fullname,
+          email: f.email,
           type: f.type,
           phone_number: f.phone_number,
           address: f.address,
@@ -150,9 +157,7 @@ export default {
         this.messages.successMessage = msg;
 
         swal({ text: msg, icon: 'success' });
-        setTimeout(() => {
-          document.location = '';
-        }, 2000);
+        setTimeout(() => { document.location = ''; }, 2000);
       }).catch( err => {
         this.messages.errorMessage = err.response.statusText;
         f.submit = '<span uk-spinner></span>';
