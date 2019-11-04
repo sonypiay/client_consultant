@@ -49,6 +49,10 @@ const app = new Vue({
         var string = str.replace(/(<([^>]+)>)/ig, "");
         string = string.substring(0, len);
         return string;
+      },
+      padNumber( str, len )
+      {
+        return (Array(len + 1).join('0') + str.toString()).slice(-len);
       }
     }
 });

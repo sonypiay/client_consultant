@@ -7,7 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 
 <!-- style -->
-<link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/css/all.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/css/all.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/vendor/overlayscrollbar/css/OverlayScrollbars.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/vendor/uikit/css/uikit.min.css') }}" media="screen" />
 <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}" media="screen" />
 <!-- style -->
@@ -15,4 +16,5 @@
 <!-- js -->
 <script type="text/javascript" src="{{ asset('assets/vendor/uikit/js/uikit.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/vendor/uikit/js/uikit-icons.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/vendor/overlayscrollbar/js/OverlayScrollbars.min.js') }}"></script>
 <!-- js -->

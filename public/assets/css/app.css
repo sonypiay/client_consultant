@@ -453,3 +453,44 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
+.dropdown-timepicker {
+  border-radius: 6px;
+}
+
+.dropdown-timepicker .dropdown-timepicker-header {
+  color: #666666;
+  font-weight: 300;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  border-bottom: 2px solid #dddddd;
+}
+
+.dropdown-timepicker .dropdown-timepicker-content {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.dropdown-timepicker .dropdown-timepicker-content .nav-timepicker li a {
+  color: #333333;
+  font-weight: 400;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  border-radius: 6px;
+  padding: 8px 16px;
+}
+
+.dropdown-timepicker .dropdown-timepicker-content .nav-timepicker li a:hover,
+.dropdown-timepicker .dropdown-timepicker-content .nav-timepicker li a:active {
+  background: #25C4F2;
+  color: #ffffff;
+}
+
+.dropdown-timepicker .dropdown-timepicker-content .nav-timepicker li .active {
+  background: #25C4F2;
+  color: #ffffff;
+}
+

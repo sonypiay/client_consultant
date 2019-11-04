@@ -78,7 +78,6 @@
             </div>
             <div class="uk-float-right">
               <button uk-toggle="target: #modal-add-request" class="uk-button uk-button-default gl-button-default">
-                <span class="fas fa-plus"></span>
                 Request Service
               </button>
             </div>

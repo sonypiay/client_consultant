@@ -2227,7 +2227,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+document.addEventListener("DOMContentLoaded", function () {
+  OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['getuser', 'getconsultant', 'haslogin'],
   components: {
@@ -2240,18 +2293,37 @@ __webpack_require__.r(__webpack_exports__);
         popover: {
           placement: 'bottom',
           visibility: 'click'
-        },
-        attrs: [{
-          highlight: {
-            color: 'purple',
-            fillMode: 'light'
-          }
-        }]
+        }
       },
       forms: {
-        selectedDate: new Date()
+        selectedDate: new Date(),
+        timepicker: {
+          selected: '',
+          isSelecting: false,
+          hours: '',
+          minute: ''
+        },
+        description: '',
+        submit: 'Create Request'
       }
     };
+  },
+  methods: {
+    onSelectedTime: function onSelectedTime(val, time) {
+      var str = this.$root.padNumber(val, 2);
+      if (time === 'hours') this.forms.timepicker.hours = str;
+      if (time === 'minute') this.forms.timepicker.minute = str;
+    }
+  },
+  computed: {
+    selectedTime: function selectedTime() {
+      var hours = this.forms.timepicker.hours;
+      var minute = this.forms.timepicker.minute;
+      if (hours === '') hours = 'HH';
+      if (minute === '') minute = 'mm';
+      this.forms.timepicker.selected = hours + ':' + minute;
+      return this.forms.timepicker.selected;
+    }
   }
 });
 
@@ -3431,7 +3503,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _clients_AddRequest_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../clients/AddRequest.vue */ "./resources/js/components/Frontend/clients/AddRequest.vue");
-//
 //
 //
 //
@@ -58386,8 +58457,7 @@ var render = function() {
                     {
                       attrs: {
                         "min-date": _vm.datepicker.mindate,
-                        popover: _vm.datepicker.popover,
-                        attributes: _vm.datepicker.attrs
+                        popover: _vm.datepicker.popover
                       },
                       model: {
                         value: _vm.forms.selectedDate,
@@ -58398,7 +58468,7 @@ var render = function() {
                       }
                     },
                     [
-                      _c("div", { staticClass: "uk-inline" }, [
+                      _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
                         _c("span", {
                           staticClass: "uk-form-icon",
                           attrs: { "uk-icon": "calendar" }
@@ -58407,13 +58477,222 @@ var render = function() {
                         _c("input", {
                           staticClass: "uk-width-1-1 uk-input gl-input-default",
                           attrs: { type: "text", readonly: "" },
-                          domProps: { value: _vm.forms.selectedDate }
+                          domProps: {
+                            value: _vm.$root.formatDate(
+                              _vm.forms.selectedDate,
+                              "ddd, DD MMMM YYYY"
+                            )
+                          }
                         })
                       ])
                     ]
                   )
                 ],
                 1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("Select Time")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
+                  _c("a", {
+                    staticClass: "uk-form-icon",
+                    attrs: { "uk-icon": "clock" }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedTime,
+                        expression: "selectedTime"
+                      }
+                    ],
+                    staticClass: "uk-width-1-1 uk-input gl-input-default",
+                    attrs: { type: "text", readonly: "" },
+                    domProps: { value: _vm.selectedTime },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.selectedTime = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "uk-width-large dropdown-timepicker",
+                    attrs: { "uk-dropdown": "mode: click;" }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "uk-dropdown-grid uk-child-width-1-2",
+                        attrs: { "uk-grid": "" }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "div",
+                            { staticClass: "dropdown-timepicker-header" },
+                            [_vm._v("Hours")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "dropdown-timepicker-content" },
+                            [
+                              _c(
+                                "ul",
+                                {
+                                  staticClass:
+                                    "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
+                                },
+                                _vm._l(23, function(i) {
+                                  return _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        class: {
+                                          active:
+                                            _vm.$root.padNumber(i, 2) ===
+                                            _vm.forms.timepicker.hours
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.onSelectedTime(
+                                              i,
+                                              "hours"
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                          " +
+                                            _vm._s(_vm.$root.padNumber(i, 2)) +
+                                            "\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "div",
+                            { staticClass: "dropdown-timepicker-header" },
+                            [_vm._v("Minute")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "dropdown-timepicker-content" },
+                            [
+                              _c(
+                                "ul",
+                                {
+                                  staticClass:
+                                    "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
+                                },
+                                _vm._l(59, function(i) {
+                                  return _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        class: {
+                                          active:
+                                            _vm.$root.padNumber(i, 2) ===
+                                            _vm.forms.timepicker.minute
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.onSelectedTime(
+                                              i,
+                                              "minute"
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                          " +
+                                            _vm._s(_vm.$root.padNumber(i, 2)) +
+                                            "\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("Description")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.description,
+                      expression: "forms.description"
+                    }
+                  ],
+                  staticClass: "uk-textarea uk-height-small gl-input-default",
+                  attrs: { placeholder: "Enter a description" },
+                  domProps: { value: _vm.forms.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "description", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("button", {
+                staticClass: "uk-button uk-button-default gl-button-default",
+                domProps: { innerHTML: _vm._s(_vm.forms.submit) }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.$root.padNumber(4, 2)) +
+                  "\n        "
               )
             ])
           ]
@@ -61189,10 +61468,7 @@ var staticRenderFns = [
           staticClass: "uk-button uk-button-default gl-button-default",
           attrs: { "uk-toggle": "target: #modal-add-request" }
         },
-        [
-          _c("span", { staticClass: "fas fa-plus" }),
-          _vm._v("\n              Request Service\n            ")
-        ]
+        [_vm._v("\n              Request Service\n            ")]
       )
     ])
   },
@@ -73819,6 +74095,9 @@ var app = new Vue({
       var string = str.replace(/(<([^>]+)>)/ig, "");
       string = string.substring(0, len);
       return string;
+    },
+    padNumber: function padNumber(str, len) {
+      return (Array(len + 1).join('0') + str.toString()).slice(-len);
     }
   }
 });
