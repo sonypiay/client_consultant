@@ -2277,6 +2277,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -2329,7 +2339,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       var message_form = 'This field must be required';
 
-      if (this.forms.timepicker.hours === '' && this.forms.timepicker.minute) {
+      if (this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '') {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
@@ -58466,6 +58476,7 @@ var render = function() {
             on: {
               submit: function($event) {
                 $event.preventDefault()
+                return _vm.onCreateRequest($event)
               }
             }
           },
@@ -58586,20 +58597,20 @@ var render = function() {
                                   staticClass:
                                     "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
                                 },
-                                _vm._l(23, function(i) {
-                                  return _c("li", [
+                                [
+                                  _c("li", [
                                     _c(
                                       "a",
                                       {
                                         class: {
                                           active:
-                                            _vm.$root.padNumber(i, 2) ===
+                                            _vm.$root.padNumber(0, 2) ===
                                             _vm.forms.timepicker.hours
                                         },
                                         on: {
                                           click: function($event) {
                                             return _vm.onSelectedTime(
-                                              i,
+                                              0,
                                               "hours"
                                             )
                                           }
@@ -58608,14 +58619,46 @@ var render = function() {
                                       [
                                         _vm._v(
                                           "\n                          " +
-                                            _vm._s(_vm.$root.padNumber(i, 2)) +
+                                            _vm._s(_vm.$root.padNumber(0, 2)) +
                                             "\n                        "
                                         )
                                       ]
                                     )
-                                  ])
-                                }),
-                                0
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(23, function(i) {
+                                    return _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          class: {
+                                            active:
+                                              _vm.$root.padNumber(i, 2) ===
+                                              _vm.forms.timepicker.hours
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.onSelectedTime(
+                                                i,
+                                                "hours"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                          " +
+                                              _vm._s(
+                                                _vm.$root.padNumber(i, 2)
+                                              ) +
+                                              "\n                        "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  })
+                                ],
+                                2
                               )
                             ]
                           )
@@ -58638,20 +58681,20 @@ var render = function() {
                                   staticClass:
                                     "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
                                 },
-                                _vm._l(59, function(i) {
-                                  return _c("li", [
+                                [
+                                  _c("li", [
                                     _c(
                                       "a",
                                       {
                                         class: {
                                           active:
-                                            _vm.$root.padNumber(i, 2) ===
+                                            _vm.$root.padNumber(0, 2) ===
                                             _vm.forms.timepicker.minute
                                         },
                                         on: {
                                           click: function($event) {
                                             return _vm.onSelectedTime(
-                                              i,
+                                              0,
                                               "minute"
                                             )
                                           }
@@ -58660,14 +58703,46 @@ var render = function() {
                                       [
                                         _vm._v(
                                           "\n                          " +
-                                            _vm._s(_vm.$root.padNumber(i, 2)) +
+                                            _vm._s(_vm.$root.padNumber(0, 2)) +
                                             "\n                        "
                                         )
                                       ]
                                     )
-                                  ])
-                                }),
-                                0
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(59, function(i) {
+                                    return _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          class: {
+                                            active:
+                                              _vm.$root.padNumber(i, 2) ===
+                                              _vm.forms.timepicker.minute
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.onSelectedTime(
+                                                i,
+                                                "minute"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                          " +
+                                              _vm._s(
+                                                _vm.$root.padNumber(i, 2)
+                                              ) +
+                                              "\n                        "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  })
+                                ],
+                                2
                               )
                             ]
                           )

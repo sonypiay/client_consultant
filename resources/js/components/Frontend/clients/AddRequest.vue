@@ -4,7 +4,7 @@
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">Add Request Service</div>
-        <form class="uk-form-stacked" @submit.prevent="">
+        <form class="uk-form-stacked" @submit.prevent="onCreateRequest">
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Select Date</label>
             <div class="uk-form-controls">
@@ -35,6 +35,11 @@
                     <div class="dropdown-timepicker-header">Hours</div>
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
+                        <li>
+                          <a :class="{'active': $root.padNumber( 0, 2 ) === forms.timepicker.hours}" @click="onSelectedTime( 0, 'hours' )">
+                            {{ $root.padNumber( 0, 2 ) }}
+                          </a>
+                        </li>
                         <li v-for="i in 23">
                           <a :class="{'active': $root.padNumber( i, 2 ) === forms.timepicker.hours}" @click="onSelectedTime( i, 'hours' )">
                             {{ $root.padNumber( i, 2 ) }}
@@ -47,6 +52,11 @@
                     <div class="dropdown-timepicker-header">Minute</div>
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
+                        <li>
+                          <a :class="{'active': $root.padNumber( 0, 2 ) === forms.timepicker.minute}" @click="onSelectedTime( 0, 'minute' )">
+                            {{ $root.padNumber( 0, 2 ) }}
+                          </a>
+                        </li>
                         <li v-for="i in 59">
                           <a :class="{'active': $root.padNumber( i, 2 ) === forms.timepicker.minute}" @click="onSelectedTime( i, 'minute' )">
                             {{ $root.padNumber( i, 2 ) }}
@@ -136,7 +146,7 @@ export default {
         iserror: false
       }
       let message_form = 'This field must be required';
-      if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute )
+      if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '' )
       {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
