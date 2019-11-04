@@ -23,6 +23,7 @@
     text-transform: capitalize;
     @include global_font_style( 400, 14px, normal, 0.4px );
     &:hover, &:focus {
+      border: 1px solid $color-base;
       background: $color-base;
       color: #ffffff;
     }

@@ -4,6 +4,12 @@
     :haslogin="haslogin"
     :getuser="getuser" />
 
+    <client-add-request
+    :getuser="getuser"
+    :getconsultant="getconsultant"
+    :haslogin="haslogin"
+    />
+
     <div class="uk-padding banner-index_header"></div>
     <div class="uk-container uk-margin-large-bottom container-profile-consultant">
       <div class="uk-grid-small" uk-grid>
@@ -56,17 +62,30 @@
         </div>
         <div class="uk-width-expand">
           <div class="uk-card uk-card-body uk-card-default card-consultant">
-            <div class="consultant-profile-name">
-              {{ getconsultant.consultant_fullname }}
-            </div>
-            <div class="consultant-profile-rating">
-              <div class="uk-text-middle">
-                <span v-for="n in 5">
-                  <i class="fas fa-star icon-rating"></i>
-                </span>
-                <span class="rating-level"><i class="fas fa-smile-beam"></i> Excellent</span>
-                <span class="rating-value">5/5 (10 feedbacks)</span>
+            <div class="uk-float-left">
+              <div class="consultant-profile-name">
+                {{ getconsultant.consultant_fullname }}
               </div>
+              <div class="consultant-profile-rating">
+                <div class="uk-text-middle">
+                  <span v-for="n in 5">
+                    <i class="fas fa-star icon-rating"></i>
+                  </span>
+                  <span class="rating-level"><i class="fas fa-smile-beam"></i> Excellent</span>
+                  <span class="rating-value">5/5 (10 feedbacks)</span>
+                </div>
+              </div>
+            </div>
+            <div class="uk-float-right">
+              <button uk-toggle="target: #modal-add-request" class="uk-button uk-button-default gl-button-default">
+                <span class="fas fa-plus"></span>
+                Request Service
+              </button>
+            </div>
+          </div>
+          <div class="uk-card uk-card-body uk-card-default uk-margin-top card-panel">
+            <div class="card-panel-feedbacks">
+              <div class="uk-card-title feedbacks-title">Feedbacks</div>
             </div>
           </div>
         </div>
@@ -76,15 +95,19 @@
 </template>
 
 <script>
+import ClientAddRequest from './../clients/AddRequest.vue';
 export default {
   props: [
     'haslogin',
     'getuser',
     'getconsultant'
   ],
+  components: {
+    'client-add-request': ClientAddRequest
+  },
   data() {
     return {
-      forms: {}
+
     }
   }
 }

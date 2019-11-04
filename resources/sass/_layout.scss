@@ -137,3 +137,18 @@ html, body { font-family: $font-base; }
     }
   }
 }
+
+.card-panel-feedbacks {
+  .feedbacks-title {
+    color: #666666;
+    @include global_font_style( 700, 22px, normal, 0.4px );
+  }
+}
+
+.modal-dialog {
+  border-radius: 6px;
+  .modal-title {
+    color: #666666;
+    @include global_font_style( 200, 24px, normal, 0.4px );
+  }
+}

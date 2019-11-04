@@ -147,6 +147,7 @@ body {
 
 .gl-button-default:hover,
 .gl-button-default:focus {
+  border: 1px solid #25C4F2;
   background: #25C4F2;
   color: #ffffff;
 }
@@ -425,6 +426,28 @@ body {
   color: #888888;
   font-weight: 400;
   font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-panel-feedbacks .feedbacks-title {
+  color: #666666;
+  font-weight: 700;
+  font-size: 22px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.modal-dialog {
+  border-radius: 6px;
+}
+
+.modal-dialog .modal-title {
+  color: #666666;
+  font-weight: 200;
+  font-size: 24px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
