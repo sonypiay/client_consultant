@@ -81,11 +81,11 @@ CREATE TABLE `client_user` (
   UNIQUE KEY `seqid` (`seqid`),
   KEY `fk_client_city` (`city_id`),
   CONSTRAINT `fk_client_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `client_user` */
 
-insert  into `client_user`(`client_id`,`client_fullname`,`client_email`,`client_phone_number`,`client_password`,`client_gender`,`client_photo`,`client_type`,`client_address`,`city_id`,`seqid`,`created_at`,`updated_at`) values ('CL0001','Sony Darmawan','sonypiay@mail.com','08561969052','$2y$10$uI5NzdNTpizKB0pSHHGWUOiov05Y6oGdbnmFGBl9x.NHAxWZfuMfK','L',NULL,'individual','Jl. Jendral Sudirman Kavling 10 - 11, Gedung Midplaza 2 lantai 8','JKP',1,'2019-11-02 19:05:06','2019-11-03 08:37:42');
+insert  into `client_user`(`client_id`,`client_fullname`,`client_email`,`client_phone_number`,`client_password`,`client_gender`,`client_photo`,`client_type`,`client_address`,`city_id`,`seqid`,`created_at`,`updated_at`) values ('CL0001','Sony Darmawan','sonypiay@mail.com','08561969052','$2y$10$QHeHTZLaY5U1OdCQ0BYmN.un2VkD//tdqKlESE9z6DZQQVLCyJThO','L',NULL,'individual','Jl. Jendral Sudirman Kavling 10 - 11, Gedung Midplaza 2 lantai 8','JKP',1,'2019-11-02 19:05:06','2019-11-03 18:07:36'),('CL0002','Ridwan Dwi Saputra','ridwan_dwi@gmail.com','08561969052','$2y$10$BU.7pZMxjv2otZzZYLLBl.S7X7kBLL5uWxAz3z7YXVYFRHhvmp.CC','L',NULL,'individual','Depok','DPK',2,'2019-11-03 19:51:05','2019-11-03 19:56:55');
 
 /*Table structure for table `consultant_user` */
 
@@ -98,17 +98,25 @@ CREATE TABLE `consultant_user` (
   `consultant_password` varchar(60) NOT NULL,
   `consultant_phone_number` varchar(64) DEFAULT NULL,
   `consultant_gender` enum('L','P') DEFAULT 'L',
+  `consultant_biography` text DEFAULT NULL,
   `consultant_photo` varchar(64) DEFAULT NULL,
+  `consultant_address` text DEFAULT NULL,
+  `consultant_type` enum('company','individual') NOT NULL,
   `city_id` char(3) DEFAULT NULL,
+  `rating` float DEFAULT NULL,
+  `seqid` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`consultant_id`),
   UNIQUE KEY `consultant_email` (`consultant_email`),
+  UNIQUE KEY `seqid` (`seqid`),
   KEY `fk_consultant_city` (`city_id`),
   CONSTRAINT `fk_consultant_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `consultant_user` */
+
+insert  into `consultant_user`(`consultant_id`,`consultant_fullname`,`consultant_email`,`consultant_password`,`consultant_phone_number`,`consultant_gender`,`consultant_biography`,`consultant_photo`,`consultant_address`,`consultant_type`,`city_id`,`rating`,`seqid`,`created_at`,`updated_at`) values ('CLT0001','Rizqy Caesario','rizqycaesario@gmail.com','$2y$10$TBysW6oQEIvfv2k9.vmt9eXv6Ny50mfaNepRTVgbeCGWTjGw5HidO','08561969052','L',NULL,NULL,'Tambora, Jakarta Barat','individual','JKB',NULL,1,'2019-11-03 19:29:57','2019-11-03 19:58:09'),('CLT0002','Muhammad Ilham','ilham272727@gmail.com','$2y$10$0QKznwrQaqv81jsVDpftc.SEGi7Ms.jzMQtsFOyiSaOqxrtfC3UCy','02189483749','L',NULL,NULL,'Cempaka Baru, Jakarta Pusat','individual','JKP',NULL,2,'2019-11-04 07:18:55','2019-11-04 09:10:05');
 
 /*Table structure for table `event_schedule` */
 
@@ -133,6 +141,26 @@ CREATE TABLE `event_schedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `event_schedule` */
+
+/*Table structure for table `feedbacks` */
+
+DROP TABLE IF EXISTS `feedbacks`;
+
+CREATE TABLE `feedbacks` (
+  `fd_id` varchar(7) NOT NULL,
+  `rate` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `comments` text NOT NULL,
+  `comments_reply` text DEFAULT NULL,
+  `consultant_id` varchar(7) NOT NULL,
+  `level_feedback` enum('excellent','good','neutral','poor','disappointed') DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`fd_id`),
+  KEY `fk_fd_consult_idx` (`consultant_id`),
+  CONSTRAINT `fk_fd_consult_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `feedbacks` */
 
 /*Table structure for table `province` */
 
