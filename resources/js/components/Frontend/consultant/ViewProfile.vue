@@ -77,9 +77,9 @@
               </div>
             </div>
             <div class="uk-float-right">
-              <button uk-toggle="target: #modal-add-request" class="uk-button uk-button-default gl-button-default">
+              <a @click="showAddRequest()" class="uk-button uk-button-default gl-button-default">
                 Request Service
-              </button>
+              </a>
             </div>
           </div>
           <div class="uk-card uk-card-body uk-card-default uk-margin-top card-panel">
@@ -104,9 +104,23 @@ export default {
   components: {
     'client-add-request': ClientAddRequest
   },
-  data() {
-    return {
-
+  methods: {
+    showAddRequest()
+    {
+      let modal = UIkit.modal('#modal-add-request');
+      if( this.haslogin.isLogin === true && this.haslogin.user === 'client' )
+      {
+        modal.show();
+      }
+      else
+      {
+        swal({
+          title: 'Whoops',
+          text: 'You have to sign in first.',
+          icon: 'warning',
+          dangerMode: true
+        });
+      }
     }
   }
 }

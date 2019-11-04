@@ -3641,8 +3641,21 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     'client-add-request': _clients_AddRequest_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {};
+  methods: {
+    showAddRequest: function showAddRequest() {
+      var modal = UIkit.modal('#modal-add-request');
+
+      if (this.haslogin.isLogin === true && this.haslogin.user === 'client') {
+        modal.show();
+      } else {
+        swal({
+          title: 'Whoops',
+          text: 'You have to sign in first.',
+          icon: 'warning',
+          dangerMode: true
+        });
+      }
+    }
   }
 });
 
@@ -61560,11 +61573,29 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c("div", { staticClass: "uk-float-right" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "uk-button uk-button-default gl-button-default",
+                          on: {
+                            click: function($event) {
+                              return _vm.showAddRequest()
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n              Request Service\n            "
+                          )
+                        ]
+                      )
+                    ])
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(1)
               ])
             ]
           )
@@ -61582,21 +61613,6 @@ var staticRenderFns = [
     return _c("span", { staticClass: "rating-level" }, [
       _c("i", { staticClass: "fas fa-smile-beam" }),
       _vm._v(" Excellent")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-float-right" }, [
-      _c(
-        "button",
-        {
-          staticClass: "uk-button uk-button-default gl-button-default",
-          attrs: { "uk-toggle": "target: #modal-add-request" }
-        },
-        [_vm._v("\n              Request Service\n            ")]
-      )
     ])
   },
   function() {
