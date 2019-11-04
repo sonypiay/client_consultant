@@ -13,9 +13,9 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no upcoming request.
+            You have no upcoming appointment.
           </div>
-          <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
+          <a class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
