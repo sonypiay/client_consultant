@@ -11,8 +11,9 @@
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': navevent === 'upcoming'}" href="#">Upcoming Appointment</a></li>
-            <li><a :class="{'active': navevent === 'completed'}" href="#">Completed Appointment</a></li>
+            <li><a :class="{'active': navevent === 'upcoming'}" href="#">Upcoming Request</a></li>
+            <li><a :class="{'active': navevent === 'upcoming'}" href="#">Accepted Request</a></li>
+            <li><a :class="{'active': navevent === 'completed'}" href="#">Completed Request</a></li>
           </ul>
         </nav>
       </div>

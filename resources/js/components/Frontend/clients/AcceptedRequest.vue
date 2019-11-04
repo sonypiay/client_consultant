@@ -13,7 +13,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no upcoming request.
+            You have no accepted request.
           </div>
           <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
         </div>
@@ -75,7 +75,7 @@ export default {
     showUpcomingRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/client/request_list?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/client/request_list/accept?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({

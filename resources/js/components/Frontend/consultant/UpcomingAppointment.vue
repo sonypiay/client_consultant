@@ -9,9 +9,12 @@
           {{ messages.errorMessage }}
         </div>
         <div v-if="getrequest.total === 0" class="no-request-list">
-          <p class="uk-margin-remove">
+          <div class="uk-margin-remove">
+            <div class="uk-margin-remove">
+              <span class="far fa-frown"></span>
+            </div>
             You have no upcoming request.
-          </p>
+          </div>
           <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
