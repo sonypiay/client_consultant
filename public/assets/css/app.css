@@ -331,3 +331,102 @@ body {
   text-align: center;
 }
 
+.container-profile-consultant {
+  margin-top: -7rem;
+}
+
+.card-consultant {
+  border-radius: 10px;
+}
+
+.card-consultant .consultant-panel-body .consultant-name {
+  color: #333333;
+  font-weight: 700;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .consultant-panel-body .consultant-name a {
+  color: #25C4F2;
+  font-weight: 700;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .consultant-panel-body .consultant-location {
+  color: #888888;
+  font-weight: 400;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .consultant-panel-body .consultant-rating {
+  color: #888888;
+  font-weight: 400;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .consultant-panel-body .consultant-rating .icon-rating {
+  color: #ffed4a;
+}
+
+.card-consultant .nav-profile-consultant li a,
+.card-consultant .nav-profile-consultant li .nav-profile-title {
+  color: #333333;
+  font-weight: 700;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .nav-profile-consultant li .nav-profile-content {
+  color: #888888;
+  font-weight: 400;
+  font-size: 13px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .consultant-profile-name {
+  color: #25C4F2;
+  font-weight: 700;
+  font-size: 36px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .consultant-profile-rating .icon-rating {
+  color: #ffed4a;
+  font-size: 14px;
+}
+
+.card-consultant .consultant-profile-rating .rating-level {
+  color: #888888;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-consultant .consultant-profile-rating .rating-value {
+  color: #888888;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+

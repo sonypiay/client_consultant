@@ -41,6 +41,7 @@ class ConsultantUser extends Model
       'consultant_user.consultant_photo',
       'consultant_user.consultant_type',
       'consultant_user.consultant_address',
+      'consultant_user.consultant_biography',
       'consultant_user.created_at',
       'consultant_user.updated_at',
       'city.city_id',
@@ -223,5 +224,54 @@ class ConsultantUser extends Model
     session()->forget('consultanttIp');
 
     return session()->flush();
+  }
+
+  public function search_consultant( $request )
+  {
+    $keywords = $request->keywords;
+    $limit = $request->limit;
+    $sorting = $request->sorting;
+    $whereClauses = [];
+
+    $query = $this->select(
+      'consultant_user.consultant_id',
+      'consultant_user.consultant_fullname',
+      'consultant_user.consultant_email',
+      'consultant_user.consultant_phone_number',
+      'consultant_user.consultant_gender',
+      'consultant_user.consultant_photo',
+      'consultant_user.consultant_type',
+      'consultant_user.consultant_address',
+      'consultant_user.created_at',
+      'consultant_user.updated_at',
+      'consultant_user.rating',
+      'city.city_id',
+      'city.city_name',
+      'province.province_id',
+      'province.province_name'
+    )
+    ->leftJoin('city', 'consultant_user.city_id', '=', 'city.city_id')
+    ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
+
+    if( ! empty( $keywords ) )
+    {
+      $query = $query->where('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%');
+    }
+
+    if( $sorting == 'latest' )
+    {
+      $query = $query->orderBy('consultant_user.created_at', 'desc');
+    }
+    else if( $sorting == 'asc' )
+    {
+      $query = $query->orderBy('consultant_user.consultant_fullname', 'asc');
+    }
+    else
+    {
+      $query = $query->orderBy('consultant_user.consultant_fullname', 'desc');
+    }
+
+    $result = $query->paginate( $limit );
+    return $result;
   }
 }

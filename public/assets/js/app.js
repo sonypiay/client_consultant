@@ -1857,7 +1857,161 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'userid']
+  props: ['haslogin', 'userid'],
+  data: function data() {
+    return {
+      forms: {
+        keywords: ''
+      }
+    };
+  },
+  methods: {
+    searchConsultant: function searchConsultant() {
+      var url = this.$root.url + '/search?keywords=' + this.forms.keywords;
+      document.location = url;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/SearchConsultant.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/SearchConsultant.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['haslogin', 'getuser', 'keywords'],
+  data: function data() {
+    return {
+      forms: {
+        keywords: this.keywords === '' ? '' : this.keywords,
+        limit: 10,
+        sorting: 'latest'
+      },
+      getconsultant: {
+        isLoading: false,
+        total: 0,
+        results: [],
+        paginate: {
+          current_page: 1,
+          last_page: 1,
+          prev_page_url: '',
+          next_page_url: ''
+        }
+      },
+      messages: {
+        errorMessage: ''
+      }
+    };
+  },
+  methods: {
+    showConsultant: function showConsultant(p) {
+      var _this = this;
+
+      //console.dir( document );
+      this.getconsultant.isLoading = true;
+      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&sorting=' + this.forms.sorting;
+      var url = this.$root.url + '/search/consultant?page=' + this.getconsultant.paginate.current_page + '&' + param;
+      if (p !== undefined) url = p + '&' + param;
+      axios({
+        method: 'get',
+        url: url
+      }).then(function (res) {
+        var result = res.data;
+        _this.getconsultant.total = result.total;
+        _this.getconsultant.results = result.data;
+        _this.getconsultant.isLoading = false;
+        _this.getconsultant.paginate = {
+          current_page: result.current_page,
+          last_page: result.last_page,
+          prev_page_url: result.prev_page_url,
+          next_page_url: result.next_page_url
+        };
+      })["catch"](function (err) {
+        _this.getconsultant.isLoading = false;
+        _this.messages.errorMessage = err.response.statusText;
+      });
+      var urlbar = this.$root.url + '/search?page=' + this.getconsultant.paginate.current_page + '&' + param;
+      window.history.pushState(null, null, urlbar);
+    }
+  },
+  mounted: function mounted() {
+    this.showConsultant();
+  }
 });
 
 /***/ }),
@@ -3193,6 +3347,103 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   data: function data() {
     return {};
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['haslogin', 'getuser', 'getconsultant'],
+  data: function data() {
+    return {
+      forms: {}
+    };
   }
 });
 
@@ -57087,7 +57338,50 @@ var render = function() {
               attrs: { haslogin: _vm.haslogin, userid: _vm.userid }
             }),
             _vm._v(" "),
-            _vm._m(0)
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-width-2-3 uk-align-center uk-text-center banner-find-consultant"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.keywords,
+                      expression: "forms.keywords"
+                    }
+                  ],
+                  staticClass: "uk-width-2-3 uk-input banner-search-form",
+                  attrs: {
+                    type: "search",
+                    placeholder: "Enter your keywords..."
+                  },
+                  domProps: { value: _vm.forms.keywords },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.searchConsultant()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "keywords", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            )
           ],
           1
         )
@@ -57100,25 +57394,359 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "uk-width-2-3 uk-align-center uk-text-center banner-find-consultant"
-      },
-      [
-        _c("div", { staticClass: "banner-text" }, [
-          _vm._v("\n          Find a professional consultant you needs. "),
-          _c("br"),
-          _vm._v("Make your appointment today.\n        ")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "uk-width-2-3 uk-input banner-search-form",
-          attrs: { type: "search", placeholder: "Enter your keywords..." }
-        })
-      ]
-    )
+    return _c("div", { staticClass: "banner-text" }, [
+      _vm._v("\n          Find a professional consultant you needs. "),
+      _c("br"),
+      _vm._v("Make your appointment today.\n        ")
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("navbar-default", {
+        attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
+      }),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "uk-container uk-margin-top uk-margin-large-bottom" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-child-width-auto",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.forms.sorting,
+                        expression: "forms.sorting"
+                      }
+                    ],
+                    staticClass: "uk-select gl-input-default",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.forms,
+                            "sorting",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        function($event) {
+                          return _vm.showConsultant()
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "latest" } }, [
+                      _vm._v("Latest Consultant")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "asc" } }, [
+                      _vm._v("A to Z")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "desc" } }, [
+                      _vm._v("Z to A")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.forms.limit,
+                        expression: "forms.limit"
+                      }
+                    ],
+                    staticClass: "uk-select gl-input-default",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.forms,
+                            "limit",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        function($event) {
+                          return _vm.showConsultant()
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "10" } }, [
+                      _vm._v("10 rows")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "20" } }, [
+                      _vm._v("20 rows")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "50" } }, [
+                      _vm._v("50 rows")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.keywords,
+                      expression: "forms.keywords"
+                    }
+                  ],
+                  staticClass: "uk-input gl-input-default",
+                  attrs: {
+                    type: "search",
+                    placeholder: "Find consultant name...."
+                  },
+                  domProps: { value: _vm.forms.keywords },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.showConsultant()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "keywords", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm.getconsultant.isLoading
+            ? _c("div", { staticClass: "uk-margin-top uk-text-center" }, [
+                _c("span", { attrs: { "uk-spinner": "" } }),
+                _vm._v(" load content...\n    ")
+              ])
+            : _c("div", [
+                _vm.getconsultant.errorMessage
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "uk-alert-danger uk-margin-top",
+                        attrs: { "uk-alert": "" }
+                      },
+                      [
+                        _vm._v(
+                          "\n        " +
+                            _vm._s(_vm.getconsultant.errorMessage) +
+                            "\n      "
+                        )
+                      ]
+                    )
+                  : _c("div", [
+                      _vm.getconsultant.total == 0
+                        ? _c("div", { staticClass: "uk-margin-top" }, [
+                            _vm._v(
+                              "\n          No consultant is available\n        "
+                            )
+                          ])
+                        : _c(
+                            "div",
+                            {
+                              staticClass:
+                                "uk-grid-medium uk-margin-top uk-grid-match",
+                              attrs: { "uk-grid": "" }
+                            },
+                            _vm._l(_vm.getconsultant.results, function(
+                              consultant
+                            ) {
+                              return _c(
+                                "div",
+                                { staticClass: "uk-width-1-4" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "uk-card uk-card-default uk-card-body card-consultant"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "consultant-panel-header"
+                                        },
+                                        [
+                                          _c("img", {
+                                            staticClass: "uk-border-circle",
+                                            attrs: {
+                                              src:
+                                                _vm.$root.url +
+                                                "/assets/images/avatar/avatar.jpg",
+                                              alt: ""
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "uk-margin-top uk-text-center consultant-panel-body"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "consultant-name" },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  attrs: {
+                                                    href:
+                                                      _vm.$root.url +
+                                                      "/consultant/profile/" +
+                                                      consultant.consultant_id
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                    " +
+                                                      _vm._s(
+                                                        consultant.consultant_fullname
+                                                      ) +
+                                                      "\n                  "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "consultant-location"
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(consultant.city_name)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "consultant-rating",
+                                              attrs: {
+                                                "uk-tooltip": "Excellent"
+                                              }
+                                            },
+                                            _vm._l(5, function(n) {
+                                              return _c("span", [
+                                                _c("i", {
+                                                  staticClass: "icon-rating",
+                                                  attrs: {
+                                                    "uk-icon":
+                                                      "icon: star; ratio: 1"
+                                                  }
+                                                })
+                                              ])
+                                            }),
+                                            0
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                    ])
+              ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-padding banner-index_header" }, [
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Find Consultant")])
+    ])
   }
 ]
 render._withStripped = true
@@ -60024,6 +60652,293 @@ var staticRenderFns = [
       _c("div", { staticClass: "upcoming-request_leadtext" }, [
         _vm._v("\n    Here are the appointment you created.\n  ")
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("navbar-default", {
+        attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-padding banner-index_header" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "uk-container uk-margin-large-bottom container-profile-consultant"
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "uk-grid-small", attrs: { "uk-grid": "" } },
+            [
+              _c("div", { staticClass: "uk-width-1-4" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-card uk-card-body uk-card-default card-consultant"
+                  },
+                  [
+                    _c("div", { staticClass: "uk-text-center" }, [
+                      _c("img", {
+                        staticClass: "uk-width-5-6 uk-border-circle",
+                        attrs: {
+                          src:
+                            _vm.$root.url + "/assets/images/avatar/avatar.jpg",
+                          alt: ""
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      {
+                        staticClass: "uk-list-divider nav-profile-consultant",
+                        attrs: { "uk-accordion": "multiple: true" }
+                      },
+                      [
+                        _c("li", { staticClass: "uk-open" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-accordion-title nav-profile-title",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("Profile")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "uk-accordion-content nav-profile-content"
+                            },
+                            [
+                              _vm.getconsultant.consultant_biography
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.getconsultant.consultant_biography
+                                      )
+                                    )
+                                  ])
+                                : _c("span", [
+                                    _c("i", [
+                                      _vm._v("No profile description yet")
+                                    ])
+                                  ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "uk-open" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-accordion-title nav-profile-title",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("Type")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "uk-accordion-content nav-profile-content"
+                            },
+                            [
+                              _vm.getconsultant.consultant_type === "individual"
+                                ? _c("span", [_vm._v("Individual")])
+                                : _c("span", [_c("i", [_vm._v("Company")])])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value:
+                                  _vm.getconsultant.consultant_type ===
+                                  "individual",
+                                expression:
+                                  "getconsultant.consultant_type === 'individual'"
+                              }
+                            ],
+                            staticClass: "uk-open"
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "uk-accordion-title nav-profile-title",
+                                attrs: { href: "#" }
+                              },
+                              [_vm._v("Gender")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "uk-accordion-content nav-profile-content"
+                              },
+                              [
+                                _vm.getconsultant.consultant_gender === "L"
+                                  ? _c("span", [_vm._v("Male")])
+                                  : _vm.getconsultant.consultant_gender === "P"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                  Female\n                "
+                                      )
+                                    ])
+                                  : _c("span", [
+                                      _c("i", [_vm._v("No described yet.")])
+                                    ])
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "uk-open" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-accordion-title nav-profile-title",
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v("Email")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "uk-accordion-content nav-profile-content"
+                            },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.getconsultant.consultant_email,
+                                      expression:
+                                        "getconsultant.consultant_email"
+                                    }
+                                  ]
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(
+                                        _vm.getconsultant.consultant_email
+                                      ) +
+                                      "\n                "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-expand" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-card uk-card-body uk-card-default card-consultant"
+                  },
+                  [
+                    _c("div", { staticClass: "consultant-profile-name" }, [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(_vm.getconsultant.consultant_fullname) +
+                          "\n          "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "consultant-profile-rating" }, [
+                      _c(
+                        "div",
+                        { staticClass: "uk-text-middle" },
+                        [
+                          _vm._l(5, function(n) {
+                            return _c("span", [
+                              _c("i", {
+                                staticClass: "fas fa-star icon-rating"
+                              })
+                            ])
+                          }),
+                          _vm._v(" "),
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "rating-value" }, [
+                            _vm._v("5/5 (10 feedbacks)")
+                          ])
+                        ],
+                        2
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "rating-level" }, [
+      _c("i", { staticClass: "fas fa-smile-beam" }),
+      _vm._v(" Excellent")
     ])
   }
 ]
@@ -72598,9 +73513,9 @@ window.swal = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/d
 window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"); // navbar component
 
 Vue.component('navbar-homepage', __webpack_require__(/*! ./components/Frontend/include/NavbarHomepage.vue */ "./resources/js/components/Frontend/include/NavbarHomepage.vue")["default"]);
-Vue.component('navbar-default', __webpack_require__(/*! ./components/Frontend/include/NavbarDefault.vue */ "./resources/js/components/Frontend/include/NavbarDefault.vue")["default"]); // homepage
-
-Vue.component('homepage-component', __webpack_require__(/*! ./components/Frontend/Homepage.vue */ "./resources/js/components/Frontend/Homepage.vue")["default"]); // client user
+Vue.component('navbar-default', __webpack_require__(/*! ./components/Frontend/include/NavbarDefault.vue */ "./resources/js/components/Frontend/include/NavbarDefault.vue")["default"]);
+Vue.component('homepage-component', __webpack_require__(/*! ./components/Frontend/Homepage.vue */ "./resources/js/components/Frontend/Homepage.vue")["default"]);
+Vue.component('search-consultant', __webpack_require__(/*! ./components/Frontend/SearchConsultant.vue */ "./resources/js/components/Frontend/SearchConsultant.vue")["default"]); // client user
 
 Vue.component('client-register-page', __webpack_require__(/*! ./components/Frontend/clients/Register.vue */ "./resources/js/components/Frontend/clients/Register.vue")["default"]);
 Vue.component('client-login-page', __webpack_require__(/*! ./components/Frontend/clients/Login.vue */ "./resources/js/components/Frontend/clients/Login.vue")["default"]);
@@ -72611,6 +73526,7 @@ Vue.component('consultant-register-page', __webpack_require__(/*! ./components/F
 Vue.component('consultant-login-page', __webpack_require__(/*! ./components/Frontend/consultant/Login.vue */ "./resources/js/components/Frontend/consultant/Login.vue")["default"]);
 Vue.component('consultant-dashboard-page', __webpack_require__(/*! ./components/Frontend/consultant/Dashboard.vue */ "./resources/js/components/Frontend/consultant/Dashboard.vue")["default"]);
 Vue.component('consultant-editprofile-page', __webpack_require__(/*! ./components/Frontend/consultant/EditProfile.vue */ "./resources/js/components/Frontend/consultant/EditProfile.vue")["default"]);
+Vue.component('consultant-viewprofile-page', __webpack_require__(/*! ./components/Frontend/consultant/ViewProfile.vue */ "./resources/js/components/Frontend/consultant/ViewProfile.vue")["default"]);
 var app = new Vue({
   el: '#app',
   data: {
@@ -72744,6 +73660,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Homepage_vue_vue_type_template_id_4d34db10_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Homepage_vue_vue_type_template_id_4d34db10_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/SearchConsultant.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/Frontend/SearchConsultant.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SearchConsultant_vue_vue_type_template_id_1f19e4e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true& */ "./resources/js/components/Frontend/SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true&");
+/* harmony import */ var _SearchConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchConsultant.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/SearchConsultant.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SearchConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SearchConsultant_vue_vue_type_template_id_1f19e4e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchConsultant_vue_vue_type_template_id_1f19e4e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1f19e4e5",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Frontend/SearchConsultant.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/SearchConsultant.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/SearchConsultant.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchConsultant.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/SearchConsultant.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchConsultant_vue_vue_type_template_id_1f19e4e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/SearchConsultant.vue?vue&type=template&id=1f19e4e5&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchConsultant_vue_vue_type_template_id_1f19e4e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchConsultant_vue_vue_type_template_id_1f19e4e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -73782,6 +74767,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/consultant/ViewProfile.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/ViewProfile.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewProfile_vue_vue_type_template_id_8e751bdc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true& */ "./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true&");
+/* harmony import */ var _ViewProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewProfile.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ViewProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ViewProfile_vue_vue_type_template_id_8e751bdc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewProfile_vue_vue_type_template_id_8e751bdc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "8e751bdc",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Frontend/consultant/ViewProfile.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewProfile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewProfile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewProfile_vue_vue_type_template_id_8e751bdc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/ViewProfile.vue?vue&type=template&id=8e751bdc&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewProfile_vue_vue_type_template_id_8e751bdc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewProfile_vue_vue_type_template_id_8e751bdc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

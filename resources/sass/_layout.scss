@@ -76,3 +76,64 @@ html, body { font-family: $font-base; }
     }
   }
 }
+
+.container-profile-consultant {
+  margin-top: -7rem;
+}
+.card-consultant {
+  border-radius: 10px;
+  .consultant-panel-header {}
+  .consultant-panel-body {
+    .consultant-name {
+      color: #333333;
+      @include global_font_style( 700, 16px, normal, 0.4px );
+      a {
+        color: $color-base;
+        @include global_font_style( 700, 16px, normal, 0.4px );
+      }
+    }
+    .consultant-location {
+      color: #888888;
+      @include global_font_style( 400, 12px, normal, 0.4px );
+    }
+    .consultant-rating {
+      color: #888888;
+      @include global_font_style( 400, 12px, normal, 0.4px );
+      .icon-rating {
+        color: $color-rating;
+      }
+    }
+  }
+
+  .nav-profile-consultant {
+    li {
+      a, .nav-profile-title {
+        color: #333333;
+        @include global_font_style( 700, 16px, normal, 0.4px );
+      }
+      .nav-profile-content {
+        color: #888888;
+        @include global_font_style( 400, 13px, normal, 0.4px );
+      }
+    }
+  }
+
+  .consultant-profile-name {
+    color: $color-base;
+    @include global_font_style( 700, 36px, normal, 0.4px );
+  }
+  .consultant-profile-rating {
+    .icon-rating {
+      color: $color-rating;
+      font-size: 14px;
+    }
+    .rating-level {
+      color: #888888;
+      @include global_font_style( 400, 14px, normal, 0.4px );
+    }
+    .rating-value {
+      color: #888888;
+      @include global_font_style( 400, 14px, normal, 0.4px );
+    }
+  }
+}

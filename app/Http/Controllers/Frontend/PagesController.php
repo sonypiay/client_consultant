@@ -145,4 +145,46 @@ class PagesController extends Controller
     $data['getuser'] = $consultant->getProfile();
     return response()->view('frontend.pages.consultant.editprofile', $data);
   }
+
+  public function search_consultant( Request $request )
+  {
+    $data['request'] = $request;
+    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
+    $data['getuser'] = [];
+
+    if( session()->has('isClient') )
+    {
+      $client = new ClientUser;
+      $data['hasLogin']['user'] = 'client';
+      $data['hasLogin']['isLogin'] = true;
+      $data['getuser'] = $client->getProfile();
+    }
+    return response()->view('frontend.pages.search_consultant', $data);
+  }
+
+  public function view_profile_consultant( Request $request, $id )
+  {
+    $data['request'] = $request;
+    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
+    $data['getuser'] = [];
+    $consultant = new ConsultantUser;
+
+    if( session()->has('isClient') )
+    {
+      $client = new ClientUser;
+      $data['hasLogin']['user'] = 'client';
+      $data['hasLogin']['isLogin'] = true;
+      $data['getuser'] = $client->getProfile();
+    }
+
+    if( session()->has('isConsultant') )
+    {
+      $data['hasLogin']['user'] = 'consultant';
+      $data['hasLogin']['isLogin'] = true;
+      $data['getuser'] = $consultant->getProfile();
+    }
+
+    $data['getconsultant'] = $consultant->getProfile( $id );
+    return response()->view('frontend.pages.consultant.view_profile', $data);
+  }
 }

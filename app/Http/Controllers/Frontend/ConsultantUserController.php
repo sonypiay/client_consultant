@@ -44,4 +44,10 @@ class ConsultantUserController extends Controller
     $res = $consultantUser->changePassword( $request );
     return response()->json( $res, $res['responseCode'] );
   }
+
+  public function search_consultant( Request $request, ConsultantUser $consultantUser )
+  {
+    $res = $consultantUser->search_consultant( $request );
+    return response()->json( $res, 200 );
+  }
 }

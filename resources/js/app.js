@@ -14,8 +14,8 @@ window.moment = require('moment');
 Vue.component('navbar-homepage', require('./components/Frontend/include/NavbarHomepage.vue').default);
 Vue.component('navbar-default', require('./components/Frontend/include/NavbarDefault.vue').default);
 
-// homepage
 Vue.component('homepage-component', require('./components/Frontend/Homepage.vue').default);
+Vue.component('search-consultant', require('./components/Frontend/SearchConsultant.vue').default);
 
 // client user
 Vue.component('client-register-page', require('./components/Frontend/clients/Register.vue').default);
@@ -28,6 +28,7 @@ Vue.component('consultant-register-page', require('./components/Frontend/consult
 Vue.component('consultant-login-page', require('./components/Frontend/consultant/Login.vue').default);
 Vue.component('consultant-dashboard-page', require('./components/Frontend/consultant/Dashboard.vue').default);
 Vue.component('consultant-editprofile-page', require('./components/Frontend/consultant/EditProfile.vue').default);
+Vue.component('consultant-viewprofile-page', require('./components/Frontend/consultant/ViewProfile.vue').default);
 
 const app = new Vue({
     el: '#app',

@@ -9,7 +9,7 @@
           <div class="banner-text">
             Find a professional consultant you needs. <br>Make your appointment today.
           </div>
-          <input type="search" class="uk-width-2-3 uk-input banner-search-form" placeholder="Enter your keywords..." />
+          <input @keyup.enter="searchConsultant()" v-model="forms.keywords" type="search" class="uk-width-2-3 uk-input banner-search-form" placeholder="Enter your keywords..." />
         </div>
       </div>
     </div>
@@ -21,7 +21,21 @@ export default {
   props: [
     'haslogin',
     'userid'
-  ]
+  ],
+  data() {
+    return {
+      forms: {
+        keywords: ''
+      }
+    }
+  },
+  methods: {
+    searchConsultant()
+    {
+      let url = this.$root.url + '/search?keywords=' + this.forms.keywords;
+      document.location = url;
+    }
+  }
 }
 </script>
 
