@@ -2286,6 +2286,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -2330,6 +2336,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (time === 'minute') this.forms.timepicker.minute = str;
     },
     onCreateRequest: function onCreateRequest() {
+      var _this = this;
+
       this.messages = {
         errors: {},
         errorMessage: '',
@@ -2349,6 +2357,37 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (this.messages.iserror === true) return false;
+      var datepicker = this.$root.formatDate(this.forms.datepicker, 'YYYY-MM-DD');
+      var schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
+      var consult_id = this.getconsultant.consultant_id;
+      var client_id = this.getuser.client_id;
+      var description = this.forms.description;
+      var created_by = 'client';
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/client/add_request',
+        params: {
+          schedule_date: schedule_date,
+          consult_id: consult_id,
+          client_id: client_id,
+          description: description,
+          created_by: created_by
+        }
+      }).then(function (res) {
+        var message = 'Request has been successfully created.';
+        _this.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success'
+        });
+        setTimeout(function () {
+          document.location = _this.$root.url + '/client/dashboard';
+        }, 2000);
+      })["catch"](function (err) {
+        _this.forms.submit = 'Create Request';
+        if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
+      });
     }
   },
   computed: {
@@ -58541,6 +58580,48 @@ var render = function() {
         _c("div", { staticClass: "modal-title" }, [
           _vm._v("Add Request Service")
         ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.successMessage,
+                expression: "messages.successMessage"
+              }
+            ],
+            staticClass: "uk-margin-top uk-alert-success",
+            attrs: { "uk-alert": "" }
+          },
+          [
+            _vm._v(
+              "\n        " + _vm._s(_vm.messages.successMessage) + "\n      "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.errorMessage,
+                expression: "messages.errorMessage"
+              }
+            ],
+            staticClass: "uk-margin-top uk-alert-danger",
+            attrs: { "uk-alert": "" }
+          },
+          [
+            _vm._v(
+              "\n        " + _vm._s(_vm.messages.errorMessage) + "\n      "
+            )
+          ]
+        ),
         _vm._v(" "),
         _c(
           "form",

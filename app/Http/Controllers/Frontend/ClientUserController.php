@@ -51,4 +51,10 @@ class ClientUserController extends Controller
     $res = $appointment->upcomingRequest();
     return response()->json( $res, 200 );
   }
+
+  public function add_request( Request $request, AppointmentRequest $appointment )
+  {
+    $res = $appointment->addRequest( $request );
+    return response()->json( $res, 200 );
+  }
 }

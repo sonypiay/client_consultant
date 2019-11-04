@@ -4,6 +4,12 @@
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">Add Request Service</div>
+        <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
+          {{ messages.successMessage }}
+        </div>
+        <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
+          {{ messages.errorMessage }}
+        </div>
         <form class="uk-form-stacked" @submit.prevent="onCreateRequest">
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Select Date</label>
@@ -158,6 +164,37 @@ export default {
       }
 
       if( this.messages.iserror === true ) return false;
+      let datepicker = this.$root.formatDate( this.forms.datepicker, 'YYYY-MM-DD' );
+      let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
+      let consult_id = this.getconsultant.consultant_id;
+      let client_id = this.getuser.client_id;
+      let description = this.forms.description;
+      let created_by = 'client';
+
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/client/add_request',
+        params: {
+          schedule_date: schedule_date,
+          consult_id: consult_id,
+          client_id: client_id,
+          description: description,
+          created_by: created_by
+        }
+      }).then( res => {
+        let message = 'Request has been successfully created.'
+        this.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success'
+        });
+        setTimeout(() => { document.location = this.$root.url + '/client/dashboard'; }, 2000);
+      }).catch( err => {
+        this.forms.submit = 'Create Request';
+        if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
+        else this.messages.errorMessage = err.response.data.responseMessage;
+      });
     }
   },
   computed: {

@@ -24,6 +24,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/request_list', 'Frontend\ClientUserController@request_list');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');
+  Route::post('/add_request', 'Frontend\ClientUserController@add_request');
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
 });

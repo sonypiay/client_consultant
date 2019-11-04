@@ -55,8 +55,38 @@ class AppointmentRequest extends Model
     {
       $query = $query->where('consultant_user.consultant_id', session()->get('consultantId'));
     }
-    
+
     $result = $query->paginate( 4 );
     return $result;
+  }
+
+  public function addRequest( $request )
+  {
+    $schedule_date = $request->schedule_date;
+    $description = $request->description;
+    $consult_id = $request->consult_id;
+    $client_id = $request->client_id;
+    $created_by = $request->created_by;
+    $apt_id = $this->getId();
+    $res = ['responseCode' => 200, 'responseMessage' => ''];
+
+    if( ! session()->has('isClient') )
+    {
+      $res = [
+        'responseCode' => 401,
+        'responseMessage' => 'You have to sign in first.'
+      ];
+    }
+    else
+    {
+      $this->apt_id = $apt_id;
+      $this->client_id = $client_id;
+      $this->consult_id = $consult_id;
+      $this->created_by = $created_by;
+      $this->schedule_date = $schedule_date;
+      $this->description = $description;
+      $this->save();
+    }
+    return $res;
   }
 }
