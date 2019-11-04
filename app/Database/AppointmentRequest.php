@@ -81,7 +81,7 @@ class AppointmentRequest extends Model
     {
       $this->apt_id = $apt_id;
       $this->client_id = $client_id;
-      $this->consult_id = $consult_id;
+      $this->consultant_id = $consult_id;
       $this->created_by = $created_by;
       $this->schedule_date = $schedule_date;
       $this->description = $description;
