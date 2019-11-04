@@ -504,3 +504,66 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
+.container-request-list .card-request-list {
+  border-radius: 6px;
+  border: 1px solid #dddddd;
+  background: #f9f9f9;
+}
+
+.container-request-list .card-request-list .request-time {
+  color: #333333;
+  font-weight: 200;
+  font-size: 52px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.container-request-list .card-request-list .request-date {
+  color: #333333;
+  font-weight: 300;
+  font-size: 24px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  margin-top: -0.7rem;
+}
+
+.container-request-list .card-request-list .request-pic {
+  color: #888888;
+  font-weight: 300;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.container-request-list .card-request-list .request-icon {
+  color: #333333;
+}
+
+.container-request-list .card-request-list .request-icon:hover,
+.container-request-list .card-request-list .request-icon:active {
+  color: #25C4F2;
+}
+
+.container-request-list .card-request-list:hover {
+  border: 1px solid #25C4F2;
+  background: #25c4f2;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: -webkit-gradient(linear, left top, right top, from(#25c4f2), to(#81d7ef));
+  background: linear-gradient(to right, #25c4f2 0%, #81d7ef 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#25c4f2", endColorstr="#81d7ef",GradientType=1 );
+  /* IE6-9 */
+}
+
+.container-request-list .card-request-list:hover .request-time,
+.container-request-list .card-request-list:hover .request-date,
+.container-request-list .card-request-list:hover .request-pic,
+.container-request-list .card-request-list:hover .request-icon {
+  color: #ffffff;
+}
+

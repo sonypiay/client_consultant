@@ -190,4 +190,34 @@ html, body { font-family: $font-base; }
     color: #333333;
     @include global_font_style( 200, 28px, normal, 0.4px );
   }
+  .card-request-list {
+    border-radius: 6px;
+    border: 1px solid #dddddd;
+    background: #f9f9f9;
+    .request-time {
+      color: #333333;
+      @include global_font_style( 200, 52px, normal, 0.4px );
+    }
+    .request-date {
+      color: #333333;
+      @include global_font_style( 300, 24px, normal, 0.4px );
+      margin-top: -0.7rem;
+    }
+    .request-pic {
+      color: #888888;
+      @include global_font_style( 300, 16px, normal, 0.4px );
+    }
+    .request-icon {
+      color: #333333;
+      &:hover, &:active { color: $color-base; }
+    }
+    &:hover {
+      border: 1px solid $color-base;
+      @include color_gradient_base();
+      .request-time,
+      .request-date,
+      .request-pic,
+      .request-icon { color: #ffffff; }
+    }
+  }
 }

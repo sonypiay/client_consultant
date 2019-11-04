@@ -164,7 +164,7 @@ export default {
       }
 
       if( this.messages.iserror === true ) return false;
-      let datepicker = this.$root.formatDate( this.forms.datepicker, 'YYYY-MM-DD' );
+      let datepicker = this.$root.formatDate( this.forms.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
       let consult_id = this.getconsultant.consultant_id;
       let client_id = this.getuser.client_id;

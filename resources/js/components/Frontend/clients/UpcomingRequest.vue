@@ -18,6 +18,34 @@
           </p>
           <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
         </div>
+        <div v-else class="uk-grid-medium" uk-grid>
+          <div v-for="req in getrequest.results" class="uk-width-1-3">
+            <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
+              <div class="uk-margin-small">
+                <div class="request-time">{{ $root.formatDate( req.schedule_date, 'HH:mm' ) }}</div>
+                <div class="request-date">{{ $root.formatDate( req.schedule_date, 'DD MMMM YYYY' ) }}</div>
+              </div>
+              <div class="uk-margin-small">
+                <div class="request-pic">
+                  {{ req.consultant_fullname }}
+                </div>
+              </div>
+              <div class="uk-margin-small">
+                <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                  <div>
+                    <a uk-icon="pencil" class="request-icon"></a>
+                  </div>
+                  <div>
+                    <a uk-icon="forward" class="request-icon"></a>
+                  </div>
+                  <div>
+                    <a uk-icon="trash" class="request-icon"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
