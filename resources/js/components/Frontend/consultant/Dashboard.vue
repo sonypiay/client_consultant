@@ -7,27 +7,13 @@
     <div class="uk-padding banner-index_header">
       <div class="uk-container">My Appointment</div>
     </div>
-    <div class="navbar-event">
-      <div class="uk-container">
-        <nav class="uk-navbar">
-          <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': navevent === 'upcoming'}" href="#">Upcoming Request</a></li>
-            <li><a :class="{'active': navevent === 'upcoming'}" href="#">Accepted Request</a></li>
-            <li><a :class="{'active': navevent === 'completed'}" href="#">Completed Request</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-
-    <div class="uk-container uk-margin-large-bottom">
-      <upcoming-appointment v-show="navevent === 'upcoming'" />
-    </div>
+    <request-appointment />
   </div>
 </template>
 
 <script>
 
-import UpcomingAppointment from './UpcomingAppointment.vue';
+import RequestAppointment from './RequestAppointment.vue';
 
 export default {
   props: [
@@ -35,15 +21,7 @@ export default {
     'getuser'
   ],
   components: {
-    'upcoming-appointment': UpcomingAppointment
-  },
-  data() {
-    return {
-      navevent: 'upcoming'
-    }
+    'request-appointment': RequestAppointment
   }
 }
 </script>
-
-<style lang="css" scoped>
-</style>

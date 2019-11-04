@@ -2925,6 +2925,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
@@ -2980,6 +2996,45 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         _this.getrequest.isLoading = false;
         _this.messages.errorMessage = err.response.statusText;
+      });
+    },
+    onApprovalRequest: function onApprovalRequest(id, approval) {
+      var _this2 = this;
+
+      var confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      swal({
+        title: 'Confirmation',
+        text: confirmation,
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            value: true,
+            text: 'Yes'
+          },
+          cancel: 'Cancel'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'put',
+            url: _this2.$root.url + '/client/approval_request/' + id + '/' + approval
+          }).then(function (res) {
+            var message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
+            swal({
+              text: message,
+              icon: 'success'
+            });
+            setTimeout(function () {
+              _this2.showUpcomingRequest();
+            }, 1000);
+          })["catch"](function (err) {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
       });
     }
   },
@@ -3177,21 +3232,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UpcomingAppointment_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingAppointment.vue */ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _RequestAppointment_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RequestAppointment.vue */ "./resources/js/components/Frontend/consultant/RequestAppointment.vue");
 //
 //
 //
@@ -3209,12 +3250,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   components: {
-    'upcoming-appointment': _UpcomingAppointment_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {
-      navevent: 'upcoming'
-    };
+    'request-appointment': _RequestAppointment_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -3635,10 +3671,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3712,10 +3748,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
     return {
+      status_request: 'upcoming',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -3736,8 +3785,18 @@ __webpack_require__.r(__webpack_exports__);
     showUpcomingRequest: function showUpcomingRequest(p) {
       var _this = this;
 
+      var status_request;
+
+      if (this.status_request === 'upcoming') {
+        status_request = 'waiting_respond';
+      }
+
+      if (this.status_request === 'accepted') {
+        status_request = 'accept';
+      }
+
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/consultant/request_list?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/consultant/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -60209,6 +60268,69 @@ var render = function() {
                               "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
                           },
                           [
+                            _c("div", { staticClass: "uk-float-right" }, [
+                              _c("a", {
+                                staticClass: "request-icon",
+                                attrs: { "uk-icon": "more-vertical" }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "dropdown-request-nav",
+                                  attrs: {
+                                    "uk-dropdown": "mode: click; pos: left"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "ul",
+                                    {
+                                      staticClass:
+                                        "uk-nav uk-dropdown-nav request-nav"
+                                    },
+                                    [
+                                      _vm._m(1, true),
+                                      _vm._v(" "),
+                                      _c(
+                                        "li",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value:
+                                                req.created_by === "client",
+                                              expression:
+                                                "req.created_by === 'client'"
+                                            }
+                                          ]
+                                        },
+                                        [_vm._m(2, true)]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "li",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value:
+                                                req.created_by === "client",
+                                              expression:
+                                                "req.created_by === 'client'"
+                                            }
+                                          ]
+                                        },
+                                        [_vm._m(3, true)]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
                             _c("div", { staticClass: "uk-margin-small" }, [
                               _c("div", { staticClass: "request-time" }, [
                                 _vm._v(
@@ -60243,7 +60365,56 @@ var render = function() {
                               ])
                             ]),
                             _vm._v(" "),
-                            _vm._m(1, true)
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: req.created_by === "consultant",
+                                    expression:
+                                      "req.created_by === 'consultant'"
+                                  }
+                                ],
+                                staticClass: "uk-margin-small"
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onApprovalRequest(
+                                          req.apt_id,
+                                          "accept"
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Accept")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onApprovalRequest(
+                                          req.apt_id,
+                                          "reject"
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Decline")]
+                                )
+                              ]
+                            )
                           ]
                         )
                       ])
@@ -60268,36 +60439,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-margin-small" }, [
-      _c(
-        "div",
-        {
-          staticClass: "uk-grid-small uk-child-width-auto",
-          attrs: { "uk-grid": "" }
-        },
-        [
-          _c("div", [
-            _c("a", {
-              staticClass: "request-icon",
-              attrs: { "uk-icon": "pencil" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c("a", {
-              staticClass: "request-icon",
-              attrs: { "uk-icon": "forward" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c("a", {
-              staticClass: "request-icon",
-              attrs: { "uk-icon": "trash" }
-            })
-          ])
-        ]
-      )
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: forward; ratio: 0.8" }
+        }),
+        _vm._v("\n                      View\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("span", {
+        staticClass: "uk-margin-small-right",
+        attrs: { "uk-icon": "icon: pencil; ratio: 0.8" }
+      }),
+      _vm._v("\n                      Edit\n                    ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("span", {
+        staticClass: "uk-margin-small-right",
+        attrs: { "uk-icon": "icon: trash; ratio: 0.8" }
+      }),
+      _vm._v("\n                      Delete\n                    ")
     ])
   }
 ]
@@ -60774,10 +60947,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c& ***!
+  \********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -60798,64 +60971,7 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "navbar-event" }, [
-        _c("div", { staticClass: "uk-container" }, [
-          _c("nav", { staticClass: "uk-navbar" }, [
-            _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.navevent === "upcoming" },
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Upcoming Request")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.navevent === "upcoming" },
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Accepted Request")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.navevent === "completed" },
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Completed Request")]
-                )
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "uk-container uk-margin-large-bottom" },
-        [
-          _c("upcoming-appointment", {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.navevent === "upcoming",
-                expression: "navevent === 'upcoming'"
-              }
-            ]
-          })
-        ],
-        1
-      )
+      _c("request-appointment")
     ],
     1
   )
@@ -61740,10 +61856,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&":
-/*!******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& ***!
-  \******************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -61756,212 +61872,279 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "uk-margin-large-top container-request-list" }, [
-      _vm.getrequest.isLoading
-        ? _c("div", { staticClass: "uk-text-center" }, [
-            _c("span", { attrs: { "uk-spinner": "" } })
-          ])
-        : _c("div", [
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.messages.errorMessage,
-                    expression: "messages.errorMessage"
+    _c("div", { staticClass: "navbar-event" }, [
+      _c("div", { staticClass: "uk-container" }, [
+        _c("nav", { staticClass: "uk-navbar" }, [
+          _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
+            _c("li", [
+              _c(
+                "a",
+                {
+                  class: { active: _vm.status_request === "upcoming" },
+                  on: {
+                    click: function($event) {
+                      _vm.status_request = "upcoming"
+                      _vm.showUpcomingRequest()
+                    }
                   }
-                ],
-                staticClass: "uk-alert-danger",
-                attrs: { "uk-alert": "" }
-              },
-              [
-                _vm._v(
-                  "\n        " + _vm._s(_vm.messages.errorMessage) + "\n      "
-                )
-              ]
-            ),
+                },
+                [_vm._v("Upcoming Request")]
+              )
+            ]),
             _vm._v(" "),
-            _vm.getrequest.total === 0
-              ? _c("div", { staticClass: "no-request-list" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "a",
+            _c("li", [
+              _c(
+                "a",
+                {
+                  class: { active: _vm.status_request === "accepted" },
+                  on: {
+                    click: function($event) {
+                      _vm.status_request = "accepted"
+                      _vm.showUpcomingRequest()
+                    }
+                  }
+                },
+                [_vm._v("Accepted Request")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  class: { active: _vm.status_request === "completed" },
+                  attrs: { href: "#" }
+                },
+                [_vm._v("Completed Request")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
+      },
+      [
+        _vm.getrequest.isLoading
+          ? _c("div", { staticClass: "uk-text-center" }, [
+              _c("span", { attrs: { "uk-spinner": "" } })
+            ])
+          : _c("div", [
+              _c(
+                "div",
+                {
+                  directives: [
                     {
-                      staticClass:
-                        "uk-button uk-button-primary gl-button-primary"
-                    },
-                    [_vm._v("Create Appointment")]
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errorMessage,
+                      expression: "messages.errorMessage"
+                    }
+                  ],
+                  staticClass: "uk-alert-danger",
+                  attrs: { "uk-alert": "" }
+                },
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.messages.errorMessage) +
+                      "\n      "
                   )
-                ])
-              : _c(
-                  "div",
-                  { staticClass: "uk-grid-medium", attrs: { "uk-grid": "" } },
-                  _vm._l(_vm.getrequest.results, function(req) {
-                    return _c("div", { staticClass: "uk-width-1-3" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
-                        },
-                        [
-                          _c("div", { staticClass: "uk-float-right" }, [
-                            _c("a", {
-                              staticClass: "request-icon",
-                              attrs: { "uk-icon": "more-vertical" }
-                            }),
+                ]
+              ),
+              _vm._v(" "),
+              _vm.getrequest.total === 0
+                ? _c("div", { staticClass: "no-request-list" }, [
+                    _c("div", { staticClass: "uk-margin-remove" }, [
+                      _vm._m(0),
+                      _vm._v(
+                        "\n          You have no " +
+                          _vm._s(_vm.status_request) +
+                          " appointment.\n        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "uk-button uk-button-primary gl-button-primary"
+                      },
+                      [_vm._v("Create Appointment")]
+                    )
+                  ])
+                : _c(
+                    "div",
+                    { staticClass: "uk-grid-medium", attrs: { "uk-grid": "" } },
+                    _vm._l(_vm.getrequest.results, function(req) {
+                      return _c("div", { staticClass: "uk-width-1-3" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
+                          },
+                          [
+                            _c("div", { staticClass: "uk-float-right" }, [
+                              _c("a", {
+                                staticClass: "request-icon",
+                                attrs: { "uk-icon": "more-vertical" }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "dropdown-request-nav",
+                                  attrs: {
+                                    "uk-dropdown": "mode: click; pos: left"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "ul",
+                                    {
+                                      staticClass:
+                                        "uk-nav uk-dropdown-nav request-nav"
+                                    },
+                                    [
+                                      _vm._m(1, true),
+                                      _vm._v(" "),
+                                      _c(
+                                        "li",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value:
+                                                req.created_by === "consultant",
+                                              expression:
+                                                "req.created_by === 'consultant'"
+                                            }
+                                          ]
+                                        },
+                                        [_vm._m(2, true)]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "li",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value:
+                                                req.created_by === "consultant",
+                                              expression:
+                                                "req.created_by === 'consultant'"
+                                            }
+                                          ]
+                                        },
+                                        [_vm._m(3, true)]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "uk-margin-small" }, [
+                              _c("div", { staticClass: "request-time" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.$root.formatDate(
+                                      req.schedule_date,
+                                      "HH:mm"
+                                    )
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "request-date" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.$root.formatDate(
+                                      req.schedule_date,
+                                      "DD MMMM YYYY"
+                                    )
+                                  )
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "uk-margin-small" }, [
+                              _c("div", { staticClass: "request-pic" }, [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(req.client_fullname) +
+                                    "\n              "
+                                )
+                              ])
+                            ]),
                             _vm._v(" "),
                             _c(
                               "div",
                               {
-                                staticClass: "dropdown-request-nav",
-                                attrs: {
-                                  "uk-dropdown": "mode: click; pos: left"
-                                }
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: req.created_by === "client",
+                                    expression: "req.created_by === 'client'"
+                                  }
+                                ],
+                                staticClass: "uk-margin-small"
                               },
                               [
                                 _c(
-                                  "ul",
+                                  "a",
                                   {
                                     staticClass:
-                                      "uk-nav uk-dropdown-nav request-nav"
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onApprovalRequest(
+                                          req.apt_id,
+                                          "accept"
+                                        )
+                                      }
+                                    }
                                   },
-                                  [
-                                    _vm._m(1, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "li",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "show",
-                                            rawName: "v-show",
-                                            value:
-                                              req.created_by === "consultant",
-                                            expression:
-                                              "req.created_by === 'consultant'"
-                                          }
-                                        ]
-                                      },
-                                      [_vm._m(2, true)]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "li",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "show",
-                                            rawName: "v-show",
-                                            value:
-                                              req.created_by === "consultant",
-                                            expression:
-                                              "req.created_by === 'consultant'"
-                                          }
-                                        ]
-                                      },
-                                      [_vm._m(3, true)]
-                                    )
-                                  ]
+                                  [_vm._v("Accept")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onApprovalRequest(
+                                          req.apt_id,
+                                          "reject"
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Decline")]
                                 )
                               ]
                             )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "uk-margin-small" }, [
-                            _c("div", { staticClass: "request-time" }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.$root.formatDate(
-                                    req.schedule_date,
-                                    "HH:mm"
-                                  )
-                                )
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "request-date" }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.$root.formatDate(
-                                    req.schedule_date,
-                                    "DD MMMM YYYY"
-                                  )
-                                )
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "uk-margin-small" }, [
-                            _c("div", { staticClass: "request-pic" }, [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(req.client_fullname) +
-                                  "\n              "
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: req.created_by === "client",
-                                  expression: "req.created_by === 'client'"
-                                }
-                              ],
-                              staticClass: "uk-margin-small"
-                            },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.onApprovalRequest(
-                                        req.apt_id,
-                                        "accept"
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("Accept")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.onApprovalRequest(
-                                        req.apt_id,
-                                        "reject"
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("Decline")]
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ])
-                  }),
-                  0
-                )
-          ])
-    ])
+                          ]
+                        )
+                      ])
+                    }),
+                    0
+                  )
+            ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -61970,10 +62153,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-margin-remove" }, [
-      _c("div", { staticClass: "uk-margin-remove" }, [
-        _c("span", { staticClass: "far fa-frown" })
-      ]),
-      _vm._v("\n          You have no upcoming appointment.\n        ")
+      _c("span", { staticClass: "far fa-frown" })
     ])
   },
   function() {
@@ -75814,7 +75994,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Dashboard_vue_vue_type_template_id_4eec923c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=4eec923c&scoped=true& */ "./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&scoped=true&");
+/* harmony import */ var _Dashboard_vue_vue_type_template_id_4eec923c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=4eec923c& */ "./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&");
 /* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -75826,11 +76006,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Dashboard_vue_vue_type_template_id_4eec923c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Dashboard_vue_vue_type_template_id_4eec923c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Dashboard_vue_vue_type_template_id_4eec923c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Dashboard_vue_vue_type_template_id_4eec923c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "4eec923c",
+  null,
   null
   
 )
@@ -75856,19 +76036,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&scoped=true&":
-/*!**************************************************************************************************************!*\
-  !*** ./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&scoped=true& ***!
-  \**************************************************************************************************************/
+/***/ "./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c& ***!
+  \**************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_4eec923c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=template&id=4eec923c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_4eec923c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_4eec923c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Dashboard.vue?vue&type=template&id=4eec923c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/Dashboard.vue?vue&type=template&id=4eec923c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_4eec923c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_4eec923c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_4eec923c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -76186,17 +76366,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/Frontend/consultant/UpcomingAppointment.vue ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/Frontend/consultant/RequestAppointment.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/RequestAppointment.vue ***!
+  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& */ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&");
-/* harmony import */ var _UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpcomingAppointment.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&");
+/* harmony import */ var _RequestAppointment_vue_vue_type_template_id_6135e532_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true& */ "./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true&");
+/* harmony import */ var _RequestAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RequestAppointment.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -76206,50 +76386,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _RequestAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RequestAppointment_vue_vue_type_template_id_6135e532_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RequestAppointment_vue_vue_type_template_id_6135e532_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "0a7f5231",
+  "6135e532",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/Frontend/consultant/UpcomingAppointment.vue"
+component.options.__file = "resources/js/components/Frontend/consultant/RequestAppointment.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************!*\
-  !*** ./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************/
+/***/ "./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpcomingAppointment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RequestAppointment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestAppointment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&":
-/*!************************************************************************************************************************!*\
-  !*** ./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& ***!
-  \************************************************************************************************************************/
+/***/ "./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true&":
+/*!***********************************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true& ***!
+  \***********************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/UpcomingAppointment.vue?vue&type=template&id=0a7f5231&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestAppointment_vue_vue_type_template_id_6135e532_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/consultant/RequestAppointment.vue?vue&type=template&id=6135e532&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestAppointment_vue_vue_type_template_id_6135e532_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpcomingAppointment_vue_vue_type_template_id_0a7f5231_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestAppointment_vue_vue_type_template_id_6135e532_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -25,9 +25,9 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no {{ status_request }} request.
+            You have no {{ status_request }} appointment.
           </div>
-          <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
+          <a class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
@@ -42,13 +42,13 @@
                         View
                       </a>
                     </li>
-                    <li v-show="req.created_by === 'client'">
+                    <li v-show="req.created_by === 'consultant'">
                       <a href="#">
                         <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                         Edit
                       </a>
                     </li>
-                    <li v-show="req.created_by === 'client'">
+                    <li v-show="req.created_by === 'consultant'">
                       <a href="#">
                         <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                         Delete
@@ -63,10 +63,10 @@
               </div>
               <div class="uk-margin-small">
                 <div class="request-pic">
-                  {{ req.consultant_fullname }}
+                  {{ req.client_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'consultant'" class="uk-margin-small">
+              <div v-show="req.created_by === 'client'" class="uk-margin-small">
                 <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onApprovalRequest( req.apt_id, 'reject')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
@@ -114,7 +114,7 @@ export default {
       }
 
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/client/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/consultant/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({
@@ -152,7 +152,7 @@ export default {
         {
           axios({
             method: 'put',
-            url: this.$root.url + '/client/approval_request/' + id + '/' + approval
+            url: this.$root.url + '/consultant/approval_request/' + id + '/' + approval
           }).then( res => {
             let message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
             swal({
