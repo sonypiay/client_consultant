@@ -211,13 +211,21 @@ html, body { font-family: $font-base; }
       color: #333333;
       &:hover, &:active { color: $color-base; }
     }
-    &:hover {
-      border: 1px solid $color-base;
-      @include color_gradient_base();
-      .request-time,
-      .request-date,
-      .request-pic,
-      .request-icon { color: #ffffff; }
+    .dropdown-request-nav {
+      border-radius: 6px;
+      padding: 0;
+      .request-nav {
+        li {
+          a {
+            color: #333333;
+            @include global_font_style( 300, 13px, normal, 0.4px );
+            padding: 10px 16px;
+            &:hover, &:active {
+              color: $color-base;
+            }
+          }
+        }
+      }
     }
   }
 }

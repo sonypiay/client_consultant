@@ -40,4 +40,13 @@
       color: #ffffff;
     }
   }
+
+  .gl-button-success {
+    background: $green;
+    &:hover, &:active { background: lighten( $green, 10% ); }
+  }
+  .gl-button-danger {
+    background: $red;
+    &:hover, &:active { background: lighten( $red, 10% ); }
+  }
 }

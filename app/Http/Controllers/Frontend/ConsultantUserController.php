@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\ConsultantUser;
+use App\Database\AppointmentRequest;
 use DB;
 use Storage;
 use Hash;
@@ -49,5 +50,17 @@ class ConsultantUserController extends Controller
   {
     $res = $consultantUser->search_consultant( $request );
     return response()->json( $res, 200 );
+  }
+
+  public function request_list( AppointmentRequest $appointment, $status = null )
+  {
+    $res = $appointment->upcomingRequest( $status );
+    return response()->json( $res, 200 );
+  }
+
+  public function approval_request( AppointmentRequest $appointment, $id, $approval )
+  {
+    $res = $appointment->approvalRequest( $id, $approval );
+    return response()->json( $res, $res['responseCode'] );
   }
 }

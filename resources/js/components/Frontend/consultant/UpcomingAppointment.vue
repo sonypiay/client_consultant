@@ -1,8 +1,64 @@
 <template>
-  <div class="uk-margin-top">
-    <h3 class="upcoming-request_title">Upcoming Appointment</h3>
-    <div class="upcoming-request_leadtext">
-      Here are the appointment you created.
+  <div>
+    <div class="uk-margin-large-top container-request-list">
+      <div v-if="getrequest.isLoading" class="uk-text-center">
+        <span uk-spinner></span>
+      </div>
+      <div v-else>
+        <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>
+          {{ messages.errorMessage }}
+        </div>
+        <div v-if="getrequest.total === 0" class="no-request-list">
+          <p class="uk-margin-remove">
+            You have no upcoming request.
+          </p>
+          <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
+        </div>
+        <div v-else class="uk-grid-medium" uk-grid>
+          <div v-for="req in getrequest.results" class="uk-width-1-3">
+            <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
+              <div class="uk-float-right">
+                <a uk-icon="more-vertical" class="request-icon"></a>
+                <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
+                  <ul class="uk-nav uk-dropdown-nav request-nav">
+                    <li>
+                      <a href="#">
+                        <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
+                        View
+                      </a>
+                    </li>
+                    <li v-show="req.created_by === 'consultant'">
+                      <a href="#">
+                        <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
+                        Edit
+                      </a>
+                    </li>
+                    <li v-show="req.created_by === 'consultant'">
+                      <a href="#">
+                        <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
+                        Delete
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="uk-margin-small">
+                <div class="request-time">{{ $root.formatDate( req.schedule_date, 'HH:mm' ) }}</div>
+                <div class="request-date">{{ $root.formatDate( req.schedule_date, 'DD MMMM YYYY' ) }}</div>
+              </div>
+              <div class="uk-margin-small">
+                <div class="request-pic">
+                  {{ req.client_fullname }}
+                </div>
+              </div>
+              <div v-show="req.created_by === 'client'" class="uk-margin-small">
+                <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
+                <a @click="onApprovalRequest( req.apt_id, 'reject')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -12,8 +68,85 @@ export default {
   props: [],
   data() {
     return {
-
+      getrequest: {
+        isLoading: false,
+        total: 0,
+        results: [],
+        paginate: {
+          current_page: 1,
+          last_page: 1,
+          prev_page_url: '',
+          next_page_url: ''
+        }
+      },
+      messages: {
+        errorMessage: ''
+      }
     }
+  },
+  methods: {
+    showUpcomingRequest( p )
+    {
+      this.getrequest.isLoading = true;
+      let url = this.$root.url + '/consultant/request_list?page=' + this.getrequest.paginate.current_page;
+      if( p !== undefined ) url = p;
+
+      axios({
+        method: 'get',
+        url: url
+      }).then( res => {
+        let result = res.data;
+        this.getrequest.total = result.total;
+        this.getrequest.results = result.data;
+        this.getrequest.isLoading = false;
+        this.getrequest.paginate = {
+          current_page: result.current_page,
+          last_page: result.last_page,
+          prev_page_url: result.prev_page_url,
+          next_page_url: result.next_page_url
+        };
+      }).catch( err => {
+        this.getrequest.isLoading = false;
+        this.messages.errorMessage = err.response.statusText;
+      });
+    },
+    onApprovalRequest( id, approval )
+    {
+      let confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      swal({
+        title: 'Confirmation',
+        text: confirmation,
+        icon: 'warning',
+        buttons: {
+          confirm: { value: true, text: 'Yes' },
+          cancel: 'Cancel'
+        }
+      }).then( val => {
+        if( val )
+        {
+          axios({
+            method: 'put',
+            url: this.$root.url + '/consultant/approval_request/' + id + '/' + approval
+          }).then( res => {
+            let message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
+            swal({
+              text: message,
+              icon: 'success'
+            });
+            setTimeout(() => { this.showUpcomingRequest(); }, 1000);
+          }).catch( err => {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      });
+    }
+  },
+  mounted() {
+    this.showUpcomingRequest();
   }
 }
 </script>

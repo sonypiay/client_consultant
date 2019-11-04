@@ -46,9 +46,9 @@ class ClientUserController extends Controller
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function request_list( AppointmentRequest $appointment )
+  public function request_list( AppointmentRequest $appointment, $status = null )
   {
-    $res = $appointment->upcomingRequest();
+    $res = $appointment->upcomingRequest( $status );
     return response()->json( $res, 200 );
   }
 

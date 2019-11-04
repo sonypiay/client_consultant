@@ -28,8 +28,9 @@ class AppointmentRequest extends Model
     return $this->generateId();
   }
 
-  public function upcomingRequest()
+  public function upcomingRequest( $status = null )
   {
+    $status = $status === null ? 'waiting_respond' : $status;
     $query = $this->select(
       'appointment_request.apt_id',
       'appointment_request.client_id',
@@ -45,7 +46,7 @@ class AppointmentRequest extends Model
     )
     ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
     ->join('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
-    ->where('appointment_request.status_request', 'waiting_respond');
+    ->where('appointment_request.status_request', $status);
 
     if( session()->has('isClient') )
     {
@@ -87,6 +88,21 @@ class AppointmentRequest extends Model
       $this->description = $description;
       $this->save();
     }
+    return $res;
+  }
+
+  public function approvalRequest( $id, $approval )
+  {
+    $apt = $this->where('apt_id', $id);
+    $res = ['responseCode' => 200, 'responseMessage' => ''];
+
+    if( $apt->count() == 1 )
+    {
+      $update = $apt->first();
+      $update->status_request = $approval;
+      $update->save();
+    }
+
     return $res;
   }
 }

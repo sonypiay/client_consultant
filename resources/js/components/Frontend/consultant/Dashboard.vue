@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="uk-container">
+    <div class="uk-container uk-margin-large-bottom">
       <upcoming-appointment v-show="navevent === 'upcoming'" />
     </div>
   </div>
