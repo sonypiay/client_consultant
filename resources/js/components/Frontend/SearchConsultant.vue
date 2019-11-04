@@ -100,7 +100,6 @@ export default {
   methods: {
     showConsultant( p )
     {
-      //console.dir( document );
       this.getconsultant.isLoading = true;
       let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&sorting=' + this.forms.sorting;
       let url = this.$root.url + '/search/consultant?page=' + this.getconsultant.paginate.current_page + '&' + param;

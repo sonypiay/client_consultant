@@ -183,3 +183,11 @@ html, body { font-family: $font-base; }
     }
   }
 }
+
+.container-request-list {
+  .no-request-list {
+    text-align: center;
+    color: #333333;
+    @include global_font_style( 200, 28px, normal, 0.4px );
+  }
+}

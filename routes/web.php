@@ -21,6 +21,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/signup', 'Frontend\PagesController@client_register_page')->name('client_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
   Route::get('/logout', 'Frontend\ClientUserController@logout');
+  Route::get('/request_list', 'Frontend\ClientUserController@request_list');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');

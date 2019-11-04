@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\ClientUser;
+use App\Database\AppointmentRequest;
 use DB;
 use Storage;
 use Hash;
@@ -43,5 +44,11 @@ class ClientUserController extends Controller
   {
     $res = $clientUser->changePassword( $request );
     return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function request_list( AppointmentRequest $appointment )
+  {
+    $res = $appointment->upcomingRequest();
+    return response()->json( $res, 200 );
   }
 }

@@ -1982,7 +1982,6 @@ __webpack_require__.r(__webpack_exports__);
     showConsultant: function showConsultant(p) {
       var _this = this;
 
-      //console.dir( document );
       this.getconsultant.isLoading = true;
       var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&sorting=' + this.forms.sorting;
       var url = this.$root.url + '/search/consultant?page=' + this.getconsultant.paginate.current_page + '&' + param;
@@ -2850,10 +2849,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
-    return {};
+    return {
+      getrequest: {
+        isLoading: false,
+        total: 0,
+        results: [],
+        paginate: {
+          current_page: 1,
+          last_page: 1,
+          prev_page_url: '',
+          next_page_url: ''
+        }
+      },
+      messages: {
+        errorMessage: ''
+      }
+    };
+  },
+  methods: {
+    showUpcomingRequest: function showUpcomingRequest(p) {
+      var _this = this;
+
+      this.getrequest.isLoading = true;
+      var url = this.$root.url + '/client/request_list?page=' + this.getrequest.paginate.current_page;
+      if (p !== undefined) url = p;
+      axios({
+        method: 'get',
+        url: url
+      }).then(function (res) {
+        var result = res.data;
+        _this.getrequest.total = result.total;
+        _this.getrequest.results = result.data;
+        _this.getrequest.isLoading = false;
+        _this.getrequest.paginate = {
+          current_page: result.current_page,
+          last_page: result.last_page,
+          prev_page_url: result.prev_page_url,
+          next_page_url: result.next_page_url
+        };
+      })["catch"](function (err) {
+        _this.getrequest.isLoading = false;
+        _this.messages.errorMessage = err.response.statusText;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.showUpcomingRequest();
   }
 });
 
@@ -58904,7 +58964,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "uk-container" },
+        { staticClass: "uk-container uk-margin-large-bottom" },
         [
           _c("upcoming-request", {
             directives: [
@@ -59818,24 +59878,64 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-margin-top" }, [
-      _c("h3", { staticClass: "upcoming-request_title" }, [
-        _vm._v("Upcoming Requests")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "upcoming-request_leadtext" }, [
-        _vm._v("\n    Here are the requests you created.\n  ")
-      ])
+  return _c("div", { staticClass: "uk-margin-top" }, [
+    _c("h3", { staticClass: " upcoming-request_title" }, [
+      _vm._v("Upcoming Requests")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "upcoming-request_leadtext" }, [
+      _vm._v("\n    Here are the requests you created.\n  ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "uk-margin-top container-request-list" }, [
+      _vm.getrequest.isLoading
+        ? _c("div", { staticClass: "uk-text-center" }, [
+            _c("span", { attrs: { "uk-spinner": "" } })
+          ])
+        : _c("div", [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.messages.errorMessage,
+                    expression: "messages.errorMessage"
+                  }
+                ],
+                staticClass: "uk-alert-danger",
+                attrs: { "uk-alert": "" }
+              },
+              [
+                _vm._v(
+                  "\n        " + _vm._s(_vm.messages.errorMessage) + "\n      "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.getrequest.total === 0
+              ? _c("div", { staticClass: "no-request-list" }, [
+                  _c("p", { staticClass: "uk-margin-remove" }, [
+                    _vm._v("\n          You don't have any request\n        ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "uk-button uk-button-primary gl-button-primary",
+                      attrs: { href: _vm.$root.url + "/search" }
+                    },
+                    [_vm._v("Find consultant")]
+                  )
+                ])
+              : _vm._e()
+          ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

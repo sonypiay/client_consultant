@@ -494,3 +494,13 @@ body {
   color: #ffffff;
 }
 
+.container-request-list .no-request-list {
+  text-align: center;
+  color: #333333;
+  font-weight: 200;
+  font-size: 28px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+

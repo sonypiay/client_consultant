@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="uk-container">
+    <div class="uk-container uk-margin-large-bottom">
       <upcoming-request v-show="navevent === 'upcoming'" />
     </div>
   </div>
