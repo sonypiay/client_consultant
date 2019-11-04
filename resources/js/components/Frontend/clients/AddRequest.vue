@@ -11,6 +11,7 @@
               <v-date-picker v-model="forms.selectedDate"
               :min-date="datepicker.mindate"
               :popover="datepicker.popover"
+              :columns="2"
               >
               <div class="uk-width-1-1 uk-inline">
                 <span class="uk-form-icon" uk-icon="calendar"></span>
@@ -57,18 +58,17 @@
                 </div>
               </div>
             </div>
+            <div v-show="messages.errors.timepicker" class="uk-text-small uk-text-danger">{{ messages.errors.timepicker }}</div>
           </div>
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Description</label>
             <div class="uk-form-controls">
               <textarea class="uk-textarea uk-height-small gl-input-default" v-model="forms.description" placeholder="Enter a description"></textarea>
             </div>
+            <div v-show="messages.errors.description" class="uk-text-small uk-text-danger">{{ messages.errors.description }}</div>
           </div>
           <div class="uk-margin">
             <button class="uk-button uk-button-default gl-button-default" v-html="forms.submit"></button>
-          </div>
-          <div class="uk-margin">
-            {{ $root.padNumber( 4, 2 ) }}
           </div>
         </form>
       </div>
@@ -111,6 +111,12 @@ export default {
         },
         description: '',
         submit: 'Create Request'
+      },
+      messages: {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
       }
     }
   },
@@ -120,6 +126,28 @@ export default {
       let str = this.$root.padNumber( val, 2 );
       if( time === 'hours' ) this.forms.timepicker.hours = str;
       if( time === 'minute' ) this.forms.timepicker.minute = str;
+    },
+    onCreateRequest()
+    {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      }
+      let message_form = 'This field must be required';
+      if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute )
+      {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+      if( this.forms.description === '' )
+      {
+        this.messages.errors.description = message_form;
+        this.messages.iserror = true;
+      }
+
+      if( this.messages.iserror === true ) return false;
     }
   },
   computed: {

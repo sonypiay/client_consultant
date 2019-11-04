@@ -2305,6 +2305,12 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         description: '',
         submit: 'Create Request'
+      },
+      messages: {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
       }
     };
   },
@@ -2313,6 +2319,27 @@ document.addEventListener("DOMContentLoaded", function () {
       var str = this.$root.padNumber(val, 2);
       if (time === 'hours') this.forms.timepicker.hours = str;
       if (time === 'minute') this.forms.timepicker.minute = str;
+    },
+    onCreateRequest: function onCreateRequest() {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var message_form = 'This field must be required';
+
+      if (this.forms.timepicker.hours === '' && this.forms.timepicker.minute) {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.forms.description === '') {
+        this.messages.errors.description = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.messages.iserror === true) return false;
     }
   },
   computed: {
@@ -58457,7 +58484,8 @@ var render = function() {
                     {
                       attrs: {
                         "min-date": _vm.datepicker.mindate,
-                        popover: _vm.datepicker.popover
+                        popover: _vm.datepicker.popover,
+                        columns: 2
                       },
                       model: {
                         value: _vm.forms.selectedDate,
@@ -58648,7 +58676,23 @@ var render = function() {
                     )
                   ]
                 )
-              ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.timepicker,
+                      expression: "messages.errors.timepicker"
+                    }
+                  ],
+                  staticClass: "uk-text-small uk-text-danger"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.timepicker))]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
@@ -58678,7 +58722,23 @@ var render = function() {
                     }
                   }
                 })
-              ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.description,
+                      expression: "messages.errors.description"
+                    }
+                  ],
+                  staticClass: "uk-text-small uk-text-danger"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.description))]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
@@ -58686,14 +58746,6 @@ var render = function() {
                 staticClass: "uk-button uk-button-default gl-button-default",
                 domProps: { innerHTML: _vm._s(_vm.forms.submit) }
               })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-margin" }, [
-              _vm._v(
-                "\n          " +
-                  _vm._s(_vm.$root.padNumber(4, 2)) +
-                  "\n        "
-              )
             ])
           ]
         )
