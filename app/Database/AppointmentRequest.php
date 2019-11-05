@@ -95,7 +95,7 @@ class AppointmentRequest extends Model
         $consultant = new ConsultantUser;
         $getconsult = $consultant->getProfile( $consult_id );
         $data_notif['notif_message'] = 'You have a new request appointment from ' . $getconsult->consultant_fullname;
-        $data_notif['consultant_id'] = $consult_id;
+        $data_notif['client_id'] = $client_id;
       }
 
       $this->apt_id = $apt_id;
@@ -126,8 +126,27 @@ class AppointmentRequest extends Model
     if( $apt->count() == 1 )
     {
       $update = $apt->first();
+      $notification = new Notification;
+      $data_notif = [
+        'parent_id' => $apt_id,
+        'notif_date' => date('Y-m-d H:i:s'),
+        'notif_read' => 'N',
+        'notif_type' => 'request',
+        'notif_message' => 'Your request #' . $id . ' has been accepted'
+      ];
+
+      if( $created_by === 'client' )
+      {
+        $data_notif['consultant_id'] = $update->consultant_id;
+      }
+      else
+      {
+        $data_notif['client_id'] = $update->client_id;
+      }
+
       $update->status_request = $approval;
       $update->save();
+      $notification->addNotification( $data_notif );
     }
 
     return $res;
