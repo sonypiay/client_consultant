@@ -28,14 +28,14 @@
           <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.limit">
-                <option value="10">6 rows</option>
+                <option value="6">6 rows</option>
                 <option value="12">12 rows</option>
                 <option value="24">24 rows</option>
                 <option value="36">36 rows</option>
               </select>
             </div>
             <div>
-              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Find by id, consultant name...">
+              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Find by id, consultant name..." @keyup.enter="showRequest()" />
             </div>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
@@ -181,8 +181,9 @@ export default {
     showRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/client/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page;
-      if( p !== undefined ) url = p;
+      let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
+      let url = this.$root.url + '/client/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
+      if( p !== undefined ) url = p + '&' + param;
 
       axios({
         method: 'get',

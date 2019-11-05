@@ -35,8 +35,8 @@ class AppointmentRequest extends Model
   {
     $whereClauses = [];
     $status = $status === null ? 'all' : $status;
-    $keywords = $request !== null ? ( isset( $request->keywords ) ? '' : $request->keywords ) : '';
-    $limit = $request !== null ? ( isset( $request->limit ) ? 6 : $request->limit ) : 6;
+    $keywords = $request !== null ? ( isset( $request->keywords ) ? $request->keywords : '' ) : '';
+    $limit = $request !== null ? ( isset( $request->limit ) ? $request->limit : 6 ) : 6;
 
     $query = $this->select(
       'appointment_request.apt_id',
