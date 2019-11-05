@@ -37,9 +37,10 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/signin', 'Frontend\PagesController@consultant_login_page')->name('consultant_login_page');
   Route::get('/signup', 'Frontend\PagesController@consultant_register_page')->name('consultant_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@consultant_edit_profile')->name('consultant_edit_profile');
+  Route::get('/profile/{id}', 'Frontend\PagesController@view_profile_consultant')->name('view_profile_consultant');
+  Route::get('/myappointment', 'Frontend\PagesController@consultant_appointment_page')->name('consultant_appointment_page');
   Route::get('/logout', 'Frontend\ConsultantUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ConsultantUserController@request_list');
-  Route::get('/profile/{id}', 'Frontend\PagesController@view_profile_consultant')->name('view_profile_consultant');
   Route::get('/notification', 'Frontend\ConsultantUserController@get_notification');
   Route::post('/create_account', 'Frontend\ConsultantUserController@register');
   Route::post('/signin', 'Frontend\ConsultantUserController@login');

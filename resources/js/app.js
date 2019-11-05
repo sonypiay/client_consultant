@@ -29,6 +29,7 @@ Vue.component('consultant-login-page', require('./components/Frontend/consultant
 Vue.component('consultant-dashboard-page', require('./components/Frontend/consultant/Dashboard.vue').default);
 Vue.component('consultant-editprofile-page', require('./components/Frontend/consultant/EditProfile.vue').default);
 Vue.component('consultant-viewprofile-page', require('./components/Frontend/consultant/ViewProfile.vue').default);
+Vue.component('consultant-view-appointment', require('./components/Frontend/consultant/MyAppointment.vue').default);
 
 const app = new Vue({
     el: '#app',

@@ -1,15 +1,22 @@
 <template>
   <div>
+    <navbar-default
+    :haslogin="haslogin"
+    :getuser="getuser" />
+
+    <div class="uk-padding banner-index_header">
+      <div class="uk-container">My Appointment</div>
+    </div>
     <div class="navbar-event">
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'all'}" @click="status_request = 'all'; showUpcomingRequest()">All Appointment</a></li>
-            <li><a :class="{'active': status_request === 'waiting_respond'}" @click="status_request = 'waiting_respond'; showUpcomingRequest()">Upcoming Appointment</a></li>
-            <li><a :class="{'active': status_request === 'accept'}" @click="status_request = 'accept'; showUpcomingRequest()">Accepted Appointment</a></li>
-            <li><a :class="{'active': status_request === 'decline'}" @click="status_request = 'decline'; showUpcomingRequest()">Declined Appointment</a></li>
-            <li><a :class="{'active': status_request === 'cancel'}" @click="status_request = 'cancel'; showUpcomingRequest()">Canceled Appointment</a></li>
-            <li><a :class="{'active': status_request === 'done'}" @click="status_request = 'done'; showUpcomingRequest()">Canceled Appointment</a></li>
+            <li><a :class="{'active': status_request === 'all'}" @click="status_request = 'all'; showRequest()">All Appointment</a></li>
+            <li><a :class="{'active': status_request === 'waiting_respond'}" @click="status_request = 'waiting_respond'; showRequest()">Upcoming Appointment</a></li>
+            <li><a :class="{'active': status_request === 'accept'}" @click="status_request = 'accept'; showRequest()">Accepted Appointment</a></li>
+            <li><a :class="{'active': status_request === 'decline'}" @click="status_request = 'decline'; showRequest()">Declined Appointment</a></li>
+            <li><a :class="{'active': status_request === 'cancel'}" @click="status_request = 'cancel'; showRequest()">Canceled Appointment</a></li>
+            <li><a :class="{'active': status_request === 'done'}" @click="status_request = 'done'; showRequest()">Completed Appointment</a></li>
           </ul>
         </nav>
       </div>
@@ -28,7 +35,13 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no {{ status_request }} appointment.
+            You have no
+            <span v-if="status_request === 'waiting_respond'">upcoming</span>
+            <span v-else-if="status_request === 'accept'">accepted</span>
+            <span v-else-if="status_request === 'decline'">declined</span>
+            <span v-else-if="status_request === 'cancel'">canceled</span>
+            <span v-else-if="status_request === 'done'">completed</span>
+            <span v-else>any</span> appointment.
           </div>
           <a class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
         </div>
@@ -69,7 +82,7 @@
                   {{ req.client_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'client'" class="uk-margin-small">
+              <div v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'" class="uk-margin-small">
                 <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onApprovalRequest( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
@@ -83,10 +96,13 @@
 
 <script>
 export default {
-  props: [],
+  props: [
+    'haslogin',
+    'getuser'
+  ],
   data() {
     return {
-      status_request: 'upcoming',
+      status_request: 'all',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -106,18 +122,8 @@ export default {
   methods: {
     showRequest( p )
     {
-      let status_request;
-      if( this.status_request === 'upcoming' )
-      {
-        status_request = 'waiting_respond';
-      }
-      if( this.status_request === 'accepted' )
-      {
-        status_request = 'accept';
-      }
-
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/consultant/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/consultant/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({

@@ -33,6 +33,7 @@ class AppointmentRequest extends Model
 
   public function upcomingRequest( $status = null )
   {
+    $whereClauses = [];
     $status = $status === null ? 'all' : $status;
     $query = $this->select(
       'appointment_request.apt_id',
@@ -52,18 +53,18 @@ class AppointmentRequest extends Model
 
     if( $status !== 'all' )
     {
-      $query = $query->where('appointment_request.status_request', $status);
+      array_push( $whereClauses, ['appointment_request.status_request', $status]);
     }
-
     if( session()->has('isClient') )
     {
-      $query = $query->where('client_user.client_id', session()->get('clientId'));
+      array_push( $whereClauses, ['client_user.client_id', session()->get('clientId')]);
     }
     if( session()->has('isConsultant') )
     {
-      $query = $query->where('consultant_user.consultant_id', session()->get('consultantId'));
+      array_push( $whereClauses, ['consultant_user.consultant_id', session()->get('consultantId')]);
     }
 
+    $query = $query->where($whereClauses);
     $result = $query->paginate( 4 );
     return $result;
   }

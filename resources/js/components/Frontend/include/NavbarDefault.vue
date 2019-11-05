@@ -52,7 +52,7 @@
                     <li>
                       <a href="#">
                         <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
-                        My Request
+                        My Appointment
                       </a>
                     </li>
                     <li>
@@ -126,7 +126,7 @@
                 <div class="uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
                   <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default">
                     <li>
-                      <a href="#">
+                      <a :href="$root.url + '/consultant/myappointment'">
                         <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
                         My Appointment
                       </a>
