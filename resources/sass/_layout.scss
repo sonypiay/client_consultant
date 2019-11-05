@@ -194,6 +194,10 @@ html, body { font-family: $font-base; }
     border-radius: 6px;
     border: 1px solid #dddddd;
     background: #f9f9f9;
+    .request-id {
+      color: #666666;
+      @include global_font_style( 400, 12px, normal, 0.4px );
+    }
     .request-time {
       color: #333333;
       @include global_font_style( 200, 52px, normal, 0.4px );

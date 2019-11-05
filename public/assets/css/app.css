@@ -568,6 +568,15 @@ body {
   background: #f9f9f9;
 }
 
+.container-request-list .card-request-list .request-id {
+  color: #666666;
+  font-weight: 400;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
 .container-request-list .card-request-list .request-time {
   color: #333333;
   font-weight: 200;

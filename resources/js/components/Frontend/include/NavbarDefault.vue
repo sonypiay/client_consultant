@@ -9,6 +9,34 @@
           <div class="uk-navbar-right">
             <ul v-if="haslogin.isLogin === true && haslogin.user === 'client'" class="uk-navbar-nav navdefault">
               <li>
+                <a href="#">
+                  <span uk-icon="bell"></span>
+                </a>
+                <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
+                  <div class="uk-clearfix">
+                    <a class="uk-float-right markas-read">Mark as read</a>
+                  </div>
+                  <div class="uk-margin-bottom uk-overflow-auto navbar-dropdown-notification">
+                    <div v-if="getnotification.total === 0">
+                      <span uk-icon="info"></span> <br />
+                      You have no notification.
+                    </div>
+                    <div v-else>
+                      <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
+                        <li v-for="notif in getnotification.results">
+                          <a href="#">
+                            <div v-show="notif.notif_type === 'request'" class="uk-margin-remove uk-text-muted uk-text-small">
+                              {{ notif.parent_id }}
+                            </div>
+                            {{ notif.notif_message }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
                 <a :href="$root.url + '/client/signin'">
                   {{ getuser.client_fullname }}
                   <span class="uk-margin-small-left" uk-icon="icon: chevron-down; ratio: 0.7"></span>
@@ -67,6 +95,9 @@
                       <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
                         <li v-for="notif in getnotification.results">
                           <a href="#">
+                            <div v-show="notif.notif_type === 'request'" class="uk-margin-remove uk-text-muted uk-text-small">
+                              {{ notif.parent_id }}
+                            </div>
                             {{ notif.notif_message }}
                           </a>
                         </li>
