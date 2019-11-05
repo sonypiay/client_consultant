@@ -131,7 +131,7 @@ class AppointmentRequest extends Model
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
-      if( $created_by === 'client' )
+      if( $getrequest->created_by === 'client' )
       {
         $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled.';
         $data_notif['consultant_id'] = $getrequest->consultant_id;
@@ -142,7 +142,7 @@ class AppointmentRequest extends Model
         $data_notif['client_id'] = $getrequest->client_id;
       }
 
-      $getrequest->status_request = 'N';
+      $getrequest->status_request = 'waiting_respond';
       $getrequest->schedule_date = $schedule_date;
       $getrequest->description = $description;
       $getrequest->save();

@@ -3424,33 +3424,30 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.messages.iserror === true) return false;
       var datepicker = this.$root.formatDate(this.forms.selectedDate, 'YYYY-MM-DD');
       var schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
-      var consult_id = this.getconsultant.consultant_id;
-      var client_id = this.getuser.client_id;
       var description = this.forms.description;
-      var created_by = 'client';
       this.forms.submit = '<span uk-spinner></span>';
       axios({
-        method: 'post',
-        url: this.$root.url + '/client/add_request',
+        method: 'put',
+        url: this.$root.url + '/client/save_request/' + this.forms.id,
         params: {
           schedule_date: schedule_date,
-          consult_id: consult_id,
-          client_id: client_id,
-          description: description,
-          created_by: created_by
+          description: description
         }
       }).then(function (res) {
-        var message = 'Request has been successfully created.';
+        var message = 'Request ' + id + ' updated.';
         _this3.messages.successMessage = message;
         swal({
           text: message,
-          icon: 'success'
+          icon: 'success',
+          timer: 2000
         });
         setTimeout(function () {
-          document.location = _this3.$root.url + '/client/dashboard';
+          _this3.showUpcomingRequest();
+
+          UIkit.modal('#modal-edit-request').hide();
         }, 2000);
       })["catch"](function (err) {
-        _this3.forms.submit = 'Create Request';
+        _this3.forms.submit = 'Save Changes';
         if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
       });
     }
@@ -61155,7 +61152,7 @@ var render = function() {
         _c(
           "form",
           {
-            staticClass: "uk-form-stacked",
+            staticClass: "uk-form-stacked uk-margin-top",
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -63514,7 +63511,7 @@ var render = function() {
                                       click: function($event) {
                                         return _vm.onApprovalRequest(
                                           req.apt_id,
-                                          "reject"
+                                          "decline"
                                         )
                                       }
                                     }

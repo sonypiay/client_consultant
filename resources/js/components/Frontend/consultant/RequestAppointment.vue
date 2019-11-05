@@ -68,7 +68,7 @@
               </div>
               <div v-show="req.created_by === 'client'" class="uk-margin-small">
                 <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onApprovalRequest( req.apt_id, 'reject')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+                <a @click="onApprovalRequest( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
             </div>
           </div>

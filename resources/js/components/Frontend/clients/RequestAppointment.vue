@@ -11,7 +11,7 @@
         <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
           {{ messages.errorMessage }}
         </div>
-        <form class="uk-form-stacked" @submit.prevent="onSaveRequest">
+        <form class="uk-form-stacked uk-margin-top" @submit.prevent="onSaveRequest">
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Select Date</label>
             <div class="uk-form-controls">
@@ -326,6 +326,7 @@ export default {
         successMessage: '',
         iserror: false
       }
+
       let message_form = 'This field must be required';
       if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '' )
       {
@@ -341,32 +342,30 @@ export default {
       if( this.messages.iserror === true ) return false;
       let datepicker = this.$root.formatDate( this.forms.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
-      let consult_id = this.getconsultant.consultant_id;
-      let client_id = this.getuser.client_id;
       let description = this.forms.description;
-      let created_by = 'client';
 
       this.forms.submit = '<span uk-spinner></span>';
       axios({
-        method: 'post',
-        url: this.$root.url + '/client/add_request',
+        method: 'put',
+        url: this.$root.url + '/client/save_request/' + this.forms.id,
         params: {
           schedule_date: schedule_date,
-          consult_id: consult_id,
-          client_id: client_id,
-          description: description,
-          created_by: created_by
+          description: description
         }
       }).then( res => {
-        let message = 'Request has been successfully created.'
+        let message = 'Request ' + id + ' updated.';
         this.messages.successMessage = message;
         swal({
           text: message,
-          icon: 'success'
+          icon: 'success',
+          timer: 2000
         });
-        setTimeout(() => { document.location = this.$root.url + '/client/dashboard'; }, 2000);
+        setTimeout(() => {
+          this.showUpcomingRequest();
+          UIkit.modal('#modal-edit-request').hide();
+        }, 2000);
       }).catch( err => {
-        this.forms.submit = 'Create Request';
+        this.forms.submit = 'Save Changes';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });

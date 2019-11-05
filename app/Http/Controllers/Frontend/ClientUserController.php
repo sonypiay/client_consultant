@@ -64,4 +64,10 @@ class ClientUserController extends Controller
     $userid = session()->has('isClient') ? session()->get('clientId') : '';
     return response()->json( $notification->get_notification( $userid ) );
   }
+
+  public function save_request( Request $request, AppointmentRequest $appointment, $id )
+  {
+    $res = $appointment->saveRequest( $id, $request );
+    return response()->json( $res, 200 );
+  }
 }
