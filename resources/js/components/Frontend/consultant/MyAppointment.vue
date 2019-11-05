@@ -7,7 +7,7 @@
     <div class="uk-padding banner-index_header">
       <div class="uk-container">My Appointment</div>
     </div>
-    <div class="navbar-event">
+    <!--<div class="navbar-event">
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
@@ -20,10 +20,34 @@
           </ul>
         </nav>
       </div>
-    </div>
+    </div>-->
 
-    <div class="uk-container uk-margin-large-top uk-margin-large-bottom container-request-list">
-      <div class="uk-clearfix">
+    <div class="uk-container uk-margin-top uk-margin-large-bottom container-request-list">
+      <div class="uk-clearfix uk-margin-bottom">
+        <div class="uk-float-left">
+          <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
+            <div>
+              <select class="uk-select gl-input-default" v-model="forms.limit">
+                <option value="10">10 rows</option>
+                <option value="10">20 rows</option>
+                <option value="10">50 rows</option>
+              </select>
+            </div>
+            <div>
+              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Find by id, consultant name...">
+            </div>
+            <div>
+              <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
+                <option value="all">All Status</option>
+                <option value="waiting_respond">Upcoming</option>
+                <option value="accept">Accepted</option>
+                <option value="decline">Declined</option>
+                <option value="cancel">Canceled</option>
+                <option value="done">Completed</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="uk-float-right">
           <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Make Appointment</a>
         </div>
@@ -42,16 +66,16 @@
               <span class="far fa-frown"></span>
             </div>
             You have no
-            <span v-if="status_request === 'waiting_respond'">upcoming</span>
-            <span v-else-if="status_request === 'accept'">accepted</span>
-            <span v-else-if="status_request === 'decline'">declined</span>
-            <span v-else-if="status_request === 'cancel'">canceled</span>
-            <span v-else-if="status_request === 'done'">completed</span>
+            <span v-if="forms.status_request === 'waiting_respond'">upcoming</span>
+            <span v-else-if="forms.status_request === 'accept'">accepted</span>
+            <span v-else-if="forms.status_request === 'decline'">declined</span>
+            <span v-else-if="forms.status_request === 'cancel'">canceled</span>
+            <span v-else-if="forms.status_request === 'done'">completed</span>
             <span v-else>any</span> appointment.
           </div>
           <a class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
         </div>
-        <div v-else class="uk-grid-medium" uk-grid>
+        <div v-else class="uk-grid-medium uk-grid-match" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
               <div class="uk-float-right">
@@ -89,11 +113,11 @@
                 </div>
               </div>
               <div v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'" class="uk-margin-small">
-                <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onApprovalRequest( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
+                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
               <div v-show="req.status_request === 'accept'" class="uk-margin-small">
-                <a @click="markAsDone( req.apt_id )" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Mark as Completed</a>
+                <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Mark as Completed</a>
               </div>
             </div>
           </div>
@@ -111,7 +135,6 @@ export default {
   ],
   data() {
     return {
-      status_request: 'all',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -123,8 +146,16 @@ export default {
           next_page_url: ''
         }
       },
+      forms: {
+        keywords: '',
+        limit: 10,
+        status_request: 'all'
+      },
       messages: {
-        errorMessage: ''
+        errors: {},
+        successMessage: '',
+        errorMessage: '',
+        iserror: false
       }
     }
   },
@@ -132,7 +163,7 @@ export default {
     showRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/consultant/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/consultant/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({
@@ -157,6 +188,7 @@ export default {
     onUpdateStatus( id, status )
     {
       let confirmation;
+      let message;
 
       switch (status) {
         case 'accept':

@@ -4064,11 +4064,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
     return {
-      status_request: 'all',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -4080,8 +4103,16 @@ __webpack_require__.r(__webpack_exports__);
           next_page_url: ''
         }
       },
+      forms: {
+        keywords: '',
+        limit: 10,
+        status_request: 'all'
+      },
       messages: {
-        errorMessage: ''
+        errors: {},
+        successMessage: '',
+        errorMessage: '',
+        iserror: false
       }
     };
   },
@@ -4090,7 +4121,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/consultant/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/consultant/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -4115,6 +4146,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var confirmation;
+      var message;
 
       switch (status) {
         case 'accept':
@@ -63183,118 +63215,167 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "navbar-event" }, [
-        _c("div", { staticClass: "uk-container" }, [
-          _c("nav", { staticClass: "uk-navbar" }, [
-            _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "all" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "all"
-                        _vm.showRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("All Appointment")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "waiting_respond" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "waiting_respond"
-                        _vm.showRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Upcoming Appointment")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "accept" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "accept"
-                        _vm.showRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Accepted Appointment")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "decline" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "decline"
-                        _vm.showRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Declined Appointment")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "cancel" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "cancel"
-                        _vm.showRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Canceled Appointment")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "done" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "done"
-                        _vm.showRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Completed Appointment")]
-                )
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
       _c(
         "div",
         {
           staticClass:
-            "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
+            "uk-container uk-margin-top uk-margin-large-bottom container-request-list"
         },
         [
-          _c("div", { staticClass: "uk-clearfix" }, [
+          _c("div", { staticClass: "uk-clearfix uk-margin-bottom" }, [
+            _c("div", { staticClass: "uk-float-left" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "uk-grid uk-grid-small uk-child-width-auto",
+                  attrs: { "uk-grid": "" }
+                },
+                [
+                  _c("div", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.forms.limit,
+                            expression: "forms.limit"
+                          }
+                        ],
+                        staticClass: "uk-select gl-input-default",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.forms,
+                              "limit",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "10" } }, [
+                          _vm._v("10 rows")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "10" } }, [
+                          _vm._v("20 rows")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "10" } }, [
+                          _vm._v("50 rows")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.forms.keywords,
+                          expression: "forms.keywords"
+                        }
+                      ],
+                      staticClass: "uk-input gl-input-default",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Find by id, consultant name..."
+                      },
+                      domProps: { value: _vm.forms.keywords },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.forms, "keywords", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.forms.status_request,
+                            expression: "forms.status_request"
+                          }
+                        ],
+                        staticClass: "uk-select gl-input-default",
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.forms,
+                                "status_request",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            function($event) {
+                              return _vm.showRequest()
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "all" } }, [
+                          _vm._v("All Status")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "waiting_respond" } }, [
+                          _vm._v("Upcoming")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "accept" } }, [
+                          _vm._v("Accepted")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "decline" } }, [
+                          _vm._v("Declined")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "cancel" } }, [
+                          _vm._v("Canceled")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "done" } }, [
+                          _vm._v("Completed")
+                        ])
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "uk-float-right" }, [
               _c(
                 "a",
@@ -63344,15 +63425,15 @@ var render = function() {
                       _c("div", { staticClass: "uk-margin-remove" }, [
                         _vm._m(1),
                         _vm._v("\n          You have no\n          "),
-                        _vm.status_request === "waiting_respond"
+                        _vm.forms.status_request === "waiting_respond"
                           ? _c("span", [_vm._v("upcoming")])
-                          : _vm.status_request === "accept"
+                          : _vm.forms.status_request === "accept"
                           ? _c("span", [_vm._v("accepted")])
-                          : _vm.status_request === "decline"
+                          : _vm.forms.status_request === "decline"
                           ? _c("span", [_vm._v("declined")])
-                          : _vm.status_request === "cancel"
+                          : _vm.forms.status_request === "cancel"
                           ? _c("span", [_vm._v("canceled")])
-                          : _vm.status_request === "done"
+                          : _vm.forms.status_request === "done"
                           ? _c("span", [_vm._v("completed")])
                           : _c("span", [_vm._v("any")]),
                         _vm._v(" appointment.\n        ")
@@ -63370,7 +63451,7 @@ var render = function() {
                   : _c(
                       "div",
                       {
-                        staticClass: "uk-grid-medium",
+                        staticClass: "uk-grid-medium uk-grid-match",
                         attrs: { "uk-grid": "" }
                       },
                       _vm._l(_vm.getrequest.results, function(req) {
@@ -63530,7 +63611,7 @@ var render = function() {
                                         "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
                                       on: {
                                         click: function($event) {
-                                          return _vm.onApprovalRequest(
+                                          return _vm.onUpdateStatus(
                                             req.apt_id,
                                             "accept"
                                           )
@@ -63547,7 +63628,7 @@ var render = function() {
                                         "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
                                       on: {
                                         click: function($event) {
-                                          return _vm.onApprovalRequest(
+                                          return _vm.onUpdateStatus(
                                             req.apt_id,
                                             "decline"
                                           )
@@ -63581,7 +63662,10 @@ var render = function() {
                                         "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
                                       on: {
                                         click: function($event) {
-                                          return _vm.markAsDone(req.apt_id)
+                                          return _vm.onUpdateStatus(
+                                            req.apt_id,
+                                            "done"
+                                          )
                                         }
                                       }
                                     },
