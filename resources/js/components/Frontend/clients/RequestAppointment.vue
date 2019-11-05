@@ -95,9 +95,7 @@
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'upcoming'}" @click="status_request = 'upcoming'; showUpcomingRequest()">Upcoming Request</a></li>
-            <li><a :class="{'active': status_request === 'accepted'}" @click="status_request = 'accepted'; showUpcomingRequest()">Accepted Request</a></li>
-            <li><a :class="{'active': status_request === 'completed'}" href="#">Completed Request</a></li>
+            <li><a :class="{'active': status_request === 'upcoming'}" @click="status_request = 'upcoming'; showUpcomingRequest()">Upcoming Appointment</a></li>
           </ul>
         </nav>
       </div>

@@ -5,6 +5,8 @@
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
             <li><a :class="{'active': status_request === 'upcoming'}" @click="status_request = 'upcoming'; showUpcomingRequest()">Upcoming Appointment</a></li>
+            <li><a :class="{'active': status_request === 'accepted'}" @click="status_request = 'accepted'; showUpcomingRequest()">Accepted Appointment</a></li>
+            <li><a :class="{'active': status_request === 'declined'}" @click="status_request = 'declined'; showUpcomingRequest()">Declined Appointment</a></li>
           </ul>
         </nav>
       </div>
@@ -99,7 +101,7 @@ export default {
     }
   },
   methods: {
-    showUpcomingRequest( p )
+    showRequest( p )
     {
       let status_request;
       if( this.status_request === 'upcoming' )
@@ -157,7 +159,7 @@ export default {
               text: message,
               icon: 'success'
             });
-            setTimeout(() => { this.showUpcomingRequest(); }, 1000);
+            setTimeout(() => { this.showRequest(); }, 1000);
           }).catch( err => {
             swal({
               text: err.response.statusText,
@@ -170,7 +172,7 @@ export default {
     }
   },
   mounted() {
-    this.showUpcomingRequest();
+    this.showRequest();
   }
 }
 </script>

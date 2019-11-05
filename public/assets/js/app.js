@@ -3255,8 +3255,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -4104,8 +4102,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -59801,7 +59797,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("My Requests")])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("My Appointment")])
     ])
   }
 ]
@@ -61553,34 +61549,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Upcoming Request")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  class: { active: _vm.status_request === "accepted" },
-                  on: {
-                    click: function($event) {
-                      _vm.status_request = "accepted"
-                      _vm.showUpcomingRequest()
-                    }
-                  }
-                },
-                [_vm._v("Accepted Request")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  class: { active: _vm.status_request === "completed" },
-                  attrs: { href: "#" }
-                },
-                [_vm._v("Completed Request")]
+                [_vm._v("Upcoming Appointment")]
               )
             ])
           ])
@@ -63302,34 +63271,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Upcoming Request")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  class: { active: _vm.status_request === "accepted" },
-                  on: {
-                    click: function($event) {
-                      _vm.status_request = "accepted"
-                      _vm.showUpcomingRequest()
-                    }
-                  }
-                },
-                [_vm._v("Accepted Request")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                {
-                  class: { active: _vm.status_request === "completed" },
-                  attrs: { href: "#" }
-                },
-                [_vm._v("Completed Request")]
+                [_vm._v("Upcoming Appointment")]
               )
             ])
           ])
