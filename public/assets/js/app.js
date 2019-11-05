@@ -4108,8 +4108,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+document.addEventListener("DOMContentLoaded", function () {
+  OverlayScrollbars(document.querySelector(".navbar-dropdown-notification"), {});
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser']
+  props: ['haslogin', 'getuser'],
+  data: function data() {
+    return {
+      getnotification: {
+        total: 0,
+        results: []
+      }
+    };
+  },
+  methods: {
+    showNotification: function showNotification() {
+      var _this = this;
+
+      var url = this.$root.url + '/' + this.haslogin.user + '/notification';
+      axios({
+        method: 'get',
+        url: url
+      }).then(function (res) {
+        var result = res.data;
+        _this.getnotification.total = result.total;
+        _this.getnotification.results = result.data;
+        console.log(_this.getnotification);
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.showNotification();
+  }
 });
 
 /***/ }),
@@ -62663,6 +62720,69 @@ var render = function() {
                   _vm.haslogin.user === "consultant"
                 ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
                     _c("li", [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default",
+                          attrs: {
+                            "uk-dropdown": "mode: click; pos: bottom-center"
+                          }
+                        },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "uk-margin-bottom uk-overflow-auto navbar-dropdown-notification"
+                            },
+                            [
+                              _vm.getnotification.total === 0
+                                ? _c("div", [
+                                    _c("span", {
+                                      attrs: { "uk-icon": "info" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("br"),
+                                    _vm._v(
+                                      "\n                    You have no notification.\n                  "
+                                    )
+                                  ])
+                                : _c("div", [
+                                    _c(
+                                      "ul",
+                                      {
+                                        staticClass:
+                                          "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                      },
+                                      _vm._l(
+                                        _vm.getnotification.results,
+                                        function(notif) {
+                                          return _c("li", [
+                                            _c("a", { attrs: { href: "#" } }, [
+                                              _vm._v(
+                                                "\n                          " +
+                                                  _vm._s(notif.notif_message) +
+                                                  "\n                        "
+                                              )
+                                            ])
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  ])
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
                       _c(
                         "a",
                         {
@@ -62688,7 +62808,9 @@ var render = function() {
                         {
                           staticClass:
                             "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
-                          attrs: { "uk-dropdown": "mode: click;" }
+                          attrs: {
+                            "uk-dropdown": "mode: click; pos: bottom-center"
+                          }
                         },
                         [
                           _c(
@@ -62698,11 +62820,11 @@ var render = function() {
                                 "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
                             },
                             [
-                              _vm._m(4),
-                              _vm._v(" "),
-                              _vm._m(5),
-                              _vm._v(" "),
                               _vm._m(6),
+                              _vm._v(" "),
+                              _vm._m(7),
+                              _vm._v(" "),
+                              _vm._m(8),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -62829,6 +62951,24 @@ var staticRenderFns = [
           attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
         }),
         _vm._v("\n                      Messages\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("span", { attrs: { "uk-icon": "bell" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix" }, [
+      _c("a", { staticClass: "uk-float-right markas-read" }, [
+        _vm._v("Mark as read")
       ])
     ])
   },

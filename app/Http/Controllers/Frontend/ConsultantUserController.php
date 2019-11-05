@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\ConsultantUser;
 use App\Database\AppointmentRequest;
+use App\Database\Notification;
 use DB;
 use Storage;
 use Hash;
@@ -62,5 +63,11 @@ class ConsultantUserController extends Controller
   {
     $res = $appointment->approvalRequest( $id, $approval );
     return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function get_notification( Notification $notification )
+  {
+    $userid = session()->has('isConsultant') ? session()->get('consultantId') : '';
+    return response()->json( $notification->get_notification( $userid ) );
   }
 }

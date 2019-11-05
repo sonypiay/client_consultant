@@ -36,13 +36,37 @@
           text-transform: capitalize;
         }
         .navbar-dropdown-default {
-          border-radius: 10px;
+          border-radius: 6px;
+          .navbar-dropdown-notification {
+            height: 150px;
+            overflow-y: scroll;
+            .no-notification {
+              margin-top: 3.8rem;
+              @include global_font_style( 400, 13px, normal, 0.4px );
+              color: #888888;
+            }
+          }
+          .markas-read {
+            color: #888888;
+            @include global_font_style( 700, 12px, normal, 0.4px );
+            text-decoration: none;
+            &:hover, &:active { color: $color-base; }
+          }
           .nav-dropdown-default {
             li {
               a {
                 color: #333333;
                 @include global_font_style( 600, 12px, normal, 0.4px );
                 text-transform: capitalize;
+              }
+            }
+          }
+          .nav-dropdown-notification {
+            li {
+              a {
+                color: #333333;
+                @include global_font_style( 600, 12px, normal, 0.4px );
+                text-transform: none !important;
               }
             }
           }
