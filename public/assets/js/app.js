@@ -4128,19 +4128,23 @@ __webpack_require__.r(__webpack_exports__);
 
       switch (status) {
         case 'accept':
-          confirmation = 'Are you sure want to accept this appointment?';
+          confirmation = 'Are you sure want to accept this request?';
+          message = 'Request has been accepted.';
           break;
 
         case 'decline':
-          confirmation = 'Are you sure want to decline this appointment?';
+          confirmation = 'Are you sure want to decline this request?';
+          message = 'Request has been declined.';
           break;
 
         case 'cancel':
-          confirmation = 'Are you sure want to cancel this appointment?';
+          confirmation = 'Are you sure want to cancel this request?';
+          message = 'Request has been canceled.';
           break;
 
         default:
           confirmation = 'Are you sure want to mark this as completed?';
+          message = 'Request has been completed.';
       }
 
       swal({
@@ -4158,9 +4162,8 @@ __webpack_require__.r(__webpack_exports__);
         if (val) {
           axios({
             method: 'put',
-            url: _this2.$root.url + '/consultant/approval_request/' + id + '/' + approval
+            url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id
           }).then(function (res) {
-            var message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
             swal({
               text: message,
               icon: 'success'

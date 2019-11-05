@@ -164,7 +164,7 @@ class AppointmentRequest extends Model
     return $res;
   }
 
-  public function approvalRequest( $id, $approval )
+  public function updateStatus( $id, $status )
   {
     $apt = $this->where('apt_id', $id);
     $res = ['responseCode' => 200, 'responseMessage' => ''];
@@ -173,7 +173,20 @@ class AppointmentRequest extends Model
     {
       $update = $apt->first();
       $notification = new Notification;
-      $notif_message = $approval === 'accept' ? 'Your request #' . $id . ' has been accepted' : 'Your request #' . $id . ' has been declined';
+      switch ($status) {
+        case 'accept':
+          $notif_message = 'Your request #' . $id . ' has been accepted';
+          break;
+        case 'decline':
+          $notif_message = 'Your request #' . $id . ' has been declined';
+          break;
+        case 'cancel':
+          $notif_message = 'Your request #' . $id . ' has been canceled';
+          break;
+        default:
+          $notif_message = 'Your request #' . $id . ' has been completed';
+          break;
+      }
 
       $data_notif = [
         'parent_id' => $id,

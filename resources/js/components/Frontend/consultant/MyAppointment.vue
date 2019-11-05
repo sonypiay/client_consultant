@@ -157,19 +157,25 @@ export default {
     onUpdateStatus( id, status )
     {
       let confirmation;
+
       switch (status) {
         case 'accept':
-          confirmation = 'Are you sure want to accept this appointment?';
+          confirmation = 'Are you sure want to accept this request?';
+          message = 'Request has been accepted.';
           break;
         case 'decline':
-          confirmation = 'Are you sure want to decline this appointment?';
+          confirmation = 'Are you sure want to decline this request?';
+          message = 'Request has been declined.';
           break;
         case 'cancel':
-          confirmation = 'Are you sure want to cancel this appointment?';
+          confirmation = 'Are you sure want to cancel this request?';
+          message = 'Request has been canceled.';
           break;
         default:
           confirmation = 'Are you sure want to mark this as completed?';
+          message = 'Request has been completed.';
       }
+
       swal({
         title: 'Confirmation',
         text: confirmation,
@@ -183,9 +189,8 @@ export default {
         {
           axios({
             method: 'put',
-            url: this.$root.url + '/consultant/approval_request/' + id + '/' + approval
+            url: this.$root.url + '/consultant/status_appointment/' + status + '/' + id
           }).then( res => {
-            let message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
             swal({
               text: message,
               icon: 'success'
