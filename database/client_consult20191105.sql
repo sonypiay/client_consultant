@@ -39,11 +39,11 @@ CREATE TABLE `appointment_request` (
   KEY `fk_req_consultant_idx` (`consultant_id`),
   CONSTRAINT `fk_req_client_idx` FOREIGN KEY (`client_id`) REFERENCES `client_user` (`client_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_req_consultant_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `appointment_request` */
 
-insert  into `appointment_request`(`apt_id`,`client_id`,`consultant_id`,`created_by`,`schedule_date`,`location`,`additional_file`,`description`,`status_request`,`created_at`,`updated_at`,`seqid`) values ('APT1911040001','CL0001','CLT0002','client','2019-11-11 14:00:00',NULL,NULL,'Lorem ipsum dolor sit amet','waiting_respond','2019-11-04 19:09:32','2019-11-04 19:09:32',1),('APT1911040002','CL0001','CLT0001','client','2019-11-15 09:00:00',NULL,NULL,'Lorem ipsum dolor sit amet','accept','2019-11-04 19:10:05','2019-11-04 19:41:09',2);
+insert  into `appointment_request`(`apt_id`,`client_id`,`consultant_id`,`created_by`,`schedule_date`,`location`,`additional_file`,`description`,`status_request`,`created_at`,`updated_at`,`seqid`) values ('APT1911050001','CL0001','CLT0001','client','2019-11-09 10:00:00',NULL,NULL,'Hello world','accept','2019-11-05 16:08:32','2019-11-05 19:37:04',1),('APT1911050002','CL0002','CLT0001','client','2019-11-15 10:00:00',NULL,NULL,'testing','accept','2019-11-05 19:43:03','2019-11-05 19:44:31',2),('APT1911050003','CL0002','CLT0002','client','2019-11-18 10:30:00',NULL,NULL,'Jawa Ipsum gelung kalung ayam manah jawah, luh bebed kancing. Sapu sima peksi susu piring tuwi enjing mucal dipun pendhet wos? Peksi cariyos, sakit suku epek-epek ngulemi pedhang, untu manah nyukani maesa. Bidal minggat supena ngulemi? Peksi dhateng, kangge; kinten nyepeng ayam toya peksi, \"sima wilujeng maos sirah kuping ngadeg dolan makarya.\" Jejeran wawarat embok saweg mantun ajrih benang ningali gujeng pedhang tumut swanten awon.','decline','2019-11-05 19:43:22','2019-11-05 21:58:17',3),('APT1911050004','CL0002','CLT0003','client','2019-11-23 13:00:00',NULL,NULL,'testing','waiting_respond','2019-11-05 19:43:45','2019-11-05 19:43:45',4);
 
 /*Table structure for table `city` */
 
@@ -165,6 +165,30 @@ CREATE TABLE `feedbacks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `feedbacks` */
+
+/*Table structure for table `notification` */
+
+DROP TABLE IF EXISTS `notification`;
+
+CREATE TABLE `notification` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `notif_type` enum('chat','request','feedback') DEFAULT NULL,
+  `client_id` varchar(7) DEFAULT NULL,
+  `consultant_id` varchar(7) DEFAULT NULL,
+  `notif_message` text NOT NULL,
+  `parent_id` varchar(13) NOT NULL,
+  `notif_read` enum('R','N') DEFAULT NULL,
+  `notif_date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_notif_client_idx` (`client_id`),
+  KEY `fk_notif_consultan_idx` (`consultant_id`),
+  CONSTRAINT `fk_notif_client_idx` FOREIGN KEY (`client_id`) REFERENCES `client_user` (`client_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_notif_consultan_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `notification` */
+
+insert  into `notification`(`id`,`notif_type`,`client_id`,`consultant_id`,`notif_message`,`parent_id`,`notif_read`,`notif_date`) values (1,'request',NULL,'CLT0001','You have a new request appointment from Sony Darmawan','APT1911050001','R','2019-11-05 16:08:32'),(2,'request','CL0001',NULL,'Your request #APT1911050001 has been accepted','APT1911050001','N','2019-11-05 19:37:04'),(3,'request',NULL,'CLT0001','You have a new request appointment from Ridwan Dwi Saputra','APT1911050002','R','2019-11-05 19:43:03'),(4,'request',NULL,'CLT0002','You have a new request appointment from Ridwan Dwi Saputra','APT1911050003','N','2019-11-05 19:43:22'),(5,'request',NULL,'CLT0003','You have a new request appointment from Ridwan Dwi Saputra','APT1911050004','N','2019-11-05 19:43:45'),(6,'request','CL0002',NULL,'Your request #APT1911050002 has been accepted','APT1911050002','R','2019-11-05 19:44:31'),(7,'request',NULL,'CLT0002','Request APT1911050003 has been rescheduled.','APT1911050003','N','2019-11-05 21:54:57'),(8,'request','CL0002',NULL,'Your request #APT1911050003 has been declined','APT1911050003','R','2019-11-05 21:58:17');
 
 /*Table structure for table `province` */
 
