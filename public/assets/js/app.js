@@ -4180,11 +4180,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
     return {
-      status_request: 'upcoming',
+      navevent: 'appointment',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -4205,18 +4206,8 @@ __webpack_require__.r(__webpack_exports__);
     showUpcomingRequest: function showUpcomingRequest(p) {
       var _this = this;
 
-      var status_request;
-
-      if (this.status_request === 'upcoming') {
-        status_request = 'waiting_respond';
-      }
-
-      if (this.status_request === 'accepted') {
-        status_request = 'accept';
-      }
-
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/consultant/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/consultant/request_list/waiting_respond?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -62365,7 +62356,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("My Appointment")])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("My Event")])
     ])
   }
 ]
@@ -63260,19 +63251,15 @@ var render = function() {
         _c("nav", { staticClass: "uk-navbar" }, [
           _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
             _c("li", [
-              _c(
-                "a",
-                {
-                  class: { active: _vm.status_request === "upcoming" },
-                  on: {
-                    click: function($event) {
-                      _vm.status_request = "upcoming"
-                      _vm.showUpcomingRequest()
-                    }
-                  }
-                },
-                [_vm._v("Upcoming Appointment")]
-              )
+              _c("a", { class: { active: _vm.navevent === "appointment" } }, [
+                _vm._v("Upcoming Appointment")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("a", { class: { active: _vm.navevent === "meeting" } }, [
+                _vm._v("Upcoming Event")
+              ])
             ])
           ])
         ])

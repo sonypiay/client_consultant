@@ -4,7 +4,8 @@
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'upcoming'}" @click="status_request = 'upcoming'; showUpcomingRequest()">Upcoming Appointment</a></li>
+            <li><a :class="{'active': navevent === 'appointment'}">Upcoming Appointment</a></li>
+            <li><a :class="{'active': navevent === 'meeting'}">Upcoming Event</a></li>
           </ul>
         </nav>
       </div>
@@ -81,7 +82,7 @@ export default {
   props: [],
   data() {
     return {
-      status_request: 'upcoming',
+      navevent: 'appointment',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -101,18 +102,8 @@ export default {
   methods: {
     showUpcomingRequest( p )
     {
-      let status_request;
-      if( this.status_request === 'upcoming' )
-      {
-        status_request = 'waiting_respond';
-      }
-      if( this.status_request === 'accepted' )
-      {
-        status_request = 'accept';
-      }
-
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/consultant/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/consultant/request_list/waiting_respond?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({
