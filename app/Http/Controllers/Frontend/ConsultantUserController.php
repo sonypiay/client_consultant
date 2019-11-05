@@ -70,4 +70,11 @@ class ConsultantUserController extends Controller
     $userid = session()->has('isConsultant') ? session()->get('consultantId') : '';
     return response()->json( $notification->get_notification( $userid ) );
   }
+
+  public function mark_as_read( Notification $notification, $type )
+  {
+    $userid = session()->has('isConsultant') ? session()->get('consultantId') : '';
+    $res = $notification->markAsRead( $userid, $type );
+    return response()->json( $res, $res['responseCode'] );
+  }
 }

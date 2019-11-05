@@ -20,8 +20,14 @@ class Notification extends Model
 
   public function get_notification( $userid )
   {
-    $query = $this->where('client_id', $userid)
-    ->orWhere('consultant_id', $userid)
+    $query = $this->where([
+      ['client_id', $userid],
+      ['notif_read', 'N']
+    ])
+    ->orWhere([
+      ['consultant_id', $userid],
+      ['notif_read', 'N']
+    ])
     ->take(20)
     ->orderBy('notif_date', 'desc')
     ->get();
@@ -34,10 +40,11 @@ class Notification extends Model
 
   public function markAsRead( $userid, $type )
   {
-    $query = $this->where([
-      ['client_id', $userid],
-      ['notif_type', $type]
-    ]);
+    $query = $this->where('notif_type', $type)
+    ->where(function($q) use ($userid) {
+      $q->where('client_id', $userid)
+      ->orWhere('consultant_id', $userid);
+    });
     $query->update(['notif_read' => 'R']);
     $res = ['responseCode' => 200, 'responseMessage' => ''];
 

@@ -4591,6 +4591,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -4624,9 +4633,10 @@ __webpack_require__.r(__webpack_exports__);
     markAsRead: function markAsRead(type) {
       var _this2 = this;
 
+      var usertype = this.haslogin.user;
       axios({
         method: 'put',
-        url: this.$root.url + '/client/notification/' + type + '/mark_as_read'
+        url: this.$root.url + '/' + usertype + '/notification/' + type + '/mark_as_read'
       }).then(function (res) {
         _this2.showNotification();
       })["catch"](function (err) {
@@ -4640,14 +4650,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
-
-    if (this.haslogin.isLogin) {
-      this.showNotification();
-      setInterval(function () {
-        _this3.showNotification();
-      }, 10000);
-    }
+    if (this.haslogin.isLogin) this.showNotification();
   }
 });
 
@@ -64012,18 +64015,33 @@ var render = function() {
                         },
                         [
                           _c("div", { staticClass: "uk-clearfix" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "uk-float-right markas-read",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.markAsRead("request")
+                            _c("div", { staticClass: "uk-float-right" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.markAsRead("request")
+                                    }
                                   }
-                                }
-                              },
-                              [_vm._v("Mark as read")]
-                            )
+                                },
+                                [_vm._v("Mark as read")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showNotification()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Refresh")]
+                              )
+                            ])
                           ]),
                           _vm._v(" "),
                           _vm.getnotification.isLoading
@@ -64032,16 +64050,20 @@ var render = function() {
                               ])
                             : _c("div", [
                                 _vm.getnotification.total === 0
-                                  ? _c("div", [
-                                      _c("span", {
-                                        attrs: { "uk-icon": "info" }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("br"),
-                                      _vm._v(
-                                        "\n                    You have no notification.\n                  "
-                                      )
-                                    ])
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "uk-text-center" },
+                                      [
+                                        _c("span", {
+                                          attrs: { "uk-icon": "info" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                    You have no notification.\n                  "
+                                        )
+                                      ]
+                                    )
                                   : _c("div", [
                                       _c(
                                         "div",
@@ -64055,19 +64077,26 @@ var render = function() {
                                               staticClass:
                                                 "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
                                             },
-                                            _vm._l(10, function(notif) {
-                                              return _c("li", [
-                                                _c(
-                                                  "a",
-                                                  { attrs: { href: "#" } },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                            Lorem ipsum dolor sit amet\n                          "
-                                                    )
-                                                  ]
-                                                )
-                                              ])
-                                            }),
+                                            _vm._l(
+                                              _vm.getnotification.results,
+                                              function(notif) {
+                                                return _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    { attrs: { href: "#" } },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                            " +
+                                                          _vm._s(
+                                                            notif.notif_message
+                                                          ) +
+                                                          "\n                          "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              }
+                                            ),
                                             0
                                           )
                                         ]
@@ -64172,7 +64201,25 @@ var render = function() {
                   _vm.haslogin.user === "consultant"
                 ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
                     _c("li", [
-                      _vm._m(4),
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("span", { attrs: { "uk-icon": "bell" } }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.getnotification.total !== 0,
+                                expression: "getnotification.total !== 0"
+                              }
+                            ],
+                            staticClass: "count-notification"
+                          },
+                          [_vm._v(_vm._s(_vm.getnotification.total))]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -64185,18 +64232,33 @@ var render = function() {
                         },
                         [
                           _c("div", { staticClass: "uk-clearfix" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "uk-float-right markas-read",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.markAsRead("request")
+                            _c("div", { staticClass: "uk-float-right" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.markAsRead("request")
+                                    }
                                   }
-                                }
-                              },
-                              [_vm._v("Mark as read")]
-                            )
+                                },
+                                [_vm._v("Mark as read")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showNotification()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Refresh")]
+                              )
+                            ])
                           ]),
                           _vm._v(" "),
                           _vm.getnotification.isLoading
@@ -64205,44 +64267,56 @@ var render = function() {
                               ])
                             : _c("div", [
                                 _vm.getnotification.total === 0
-                                  ? _c("div", [
-                                      _c("span", {
-                                        attrs: { "uk-icon": "info" }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("br"),
-                                      _vm._v(
-                                        "\n                    You have no notification.\n                  "
-                                      )
-                                    ])
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "uk-text-center" },
+                                      [
+                                        _c("span", {
+                                          attrs: { "uk-icon": "info" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                    You have no notification.\n                  "
+                                        )
+                                      ]
+                                    )
                                   : _c("div", [
                                       _c(
-                                        "ul",
+                                        "div",
                                         {
-                                          staticClass:
-                                            "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                          staticClass: "dropdown-notification"
                                         },
-                                        _vm._l(
-                                          _vm.getnotification.results,
-                                          function(notif) {
-                                            return _c("li", [
-                                              _c(
-                                                "a",
-                                                { attrs: { href: "#" } },
-                                                [
-                                                  _vm._v(
-                                                    "\n                          " +
-                                                      _vm._s(
-                                                        notif.notif_message
-                                                      ) +
-                                                      "\n                        "
+                                        [
+                                          _c(
+                                            "ul",
+                                            {
+                                              staticClass:
+                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                            },
+                                            _vm._l(
+                                              _vm.getnotification.results,
+                                              function(notif) {
+                                                return _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    { attrs: { href: "#" } },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                            " +
+                                                          _vm._s(
+                                                            notif.notif_message
+                                                          ) +
+                                                          "\n                          "
+                                                      )
+                                                    ]
                                                   )
-                                                ]
-                                              )
-                                            ])
-                                          }
-                                        ),
-                                        0
+                                                ])
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        ]
                                       )
                                     ])
                               ])
@@ -64288,11 +64362,11 @@ var render = function() {
                                 "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
                             },
                             [
+                              _vm._m(4),
+                              _vm._v(" "),
                               _vm._m(5),
                               _vm._v(" "),
                               _vm._m(6),
-                              _vm._v(" "),
-                              _vm._m(7),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -64420,14 +64494,6 @@ var staticRenderFns = [
         }),
         _vm._v("\n                      Messages\n                    ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("span", { attrs: { "uk-icon": "bell" } })
     ])
   },
   function() {
