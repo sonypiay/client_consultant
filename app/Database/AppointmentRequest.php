@@ -85,16 +85,12 @@ class AppointmentRequest extends Model
     {
       if( $created_by === 'client' )
       {
-        $client = new ClientUser;
-        $getclient = $client->getProfile( $client_id );
-        $data_notif['notif_message'] = 'You have a new request appointment from ' . $getclient->client_fullname;
+        $data_notif['notif_message'] = 'You have a new request appointment. Request ID ' . $apt_id;
         $data_notif['consultant_id'] = $consult_id;
       }
       else
       {
-        $consultant = new ConsultantUser;
-        $getconsult = $consultant->getProfile( $consult_id );
-        $data_notif['notif_message'] = 'You have a new request appointment from ' . $getconsult->consultant_fullname;
+        $data_notif['notif_message'] = 'You have a new request appointment. Request ID ' . $apt_id;
         $data_notif['client_id'] = $client_id;
       }
 
@@ -137,14 +133,12 @@ class AppointmentRequest extends Model
     {
       if( $created_by === 'client' )
       {
-        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled. Waiting for confirmation.';
+        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled.';
         $data_notif['consultant_id'] = $getrequest->consultant_id;
       }
       else
       {
-        $consultant = new ConsultantUser;
-        $getconsult = $consultant->getProfile( $consult_id );
-        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled. Waiting for confirmation.';
+        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled.';
         $data_notif['client_id'] = $getrequest->client_id;
       }
 
