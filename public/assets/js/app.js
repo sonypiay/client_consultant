@@ -4088,6 +4088,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -63463,93 +63477,152 @@ var render = function() {
                                 "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
                             },
                             [
-                              _c("div", { staticClass: "uk-float-right" }, [
-                                _c("a", {
-                                  staticClass: "request-icon",
-                                  attrs: { "uk-icon": "more-vertical" }
-                                }),
+                              _c("div", { staticClass: "uk-clearfix" }, [
+                                _c("div", { staticClass: "uk-float-right" }, [
+                                  req.status_request === "waiting_respond"
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "request-status-badge upcoming"
+                                        },
+                                        [_vm._v("Waiting Response")]
+                                      )
+                                    : req.status_request === "accept"
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "request-status-badge upcoming"
+                                        },
+                                        [_vm._v("Accept")]
+                                      )
+                                    : req.status_request === "decline"
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "request-status-badge upcoming"
+                                        },
+                                        [_vm._v("Decline")]
+                                      )
+                                    : req.status_request === "cancel"
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "request-status-badge upcoming"
+                                        },
+                                        [_vm._v("Cancel")]
+                                      )
+                                    : _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "request-status-badge upcoming"
+                                        },
+                                        [_vm._v("Done")]
+                                      )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "uk-clearfix" }, [
+                                _c("div", { staticClass: "uk-float-left" }, [
+                                  _c("div", { staticClass: "request-id" }, [
+                                    _vm._v("#" + _vm._s(req.apt_id))
+                                  ])
+                                ]),
                                 _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "dropdown-request-nav",
-                                    attrs: {
-                                      "uk-dropdown": "mode: click; pos: left"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "uk-nav uk-dropdown-nav request-nav"
-                                      },
-                                      [
-                                        _vm._m(2, true),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value:
-                                                  req.created_by ===
-                                                  "consultant",
-                                                expression:
-                                                  "req.created_by === 'consultant'"
-                                              }
-                                            ]
-                                          },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.onClickModal(req)
-                                                  }
+                                _c("div", { staticClass: "uk-float-right" }, [
+                                  _c("a", {
+                                    staticClass: "request-icon",
+                                    attrs: { "uk-icon": "more-vertical" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "dropdown-request-nav",
+                                      attrs: {
+                                        "uk-dropdown": "mode: click; pos: left"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "ul",
+                                        {
+                                          staticClass:
+                                            "uk-nav uk-dropdown-nav request-nav"
+                                        },
+                                        [
+                                          _vm._m(2, true),
+                                          _vm._v(" "),
+                                          _c(
+                                            "li",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "show",
+                                                  rawName: "v-show",
+                                                  value:
+                                                    req.created_by ===
+                                                    "consultant",
+                                                  expression:
+                                                    "req.created_by === 'consultant'"
                                                 }
-                                              },
-                                              [
-                                                _c("span", {
-                                                  staticClass:
-                                                    "uk-margin-small-right",
-                                                  attrs: {
-                                                    "uk-icon":
-                                                      "icon: pencil; ratio: 0.8"
-                                                  }
-                                                }),
-                                                _vm._v(
-                                                  "\n                      Edit\n                    "
-                                                )
                                               ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value:
-                                                  req.created_by ===
-                                                  "consultant",
-                                                expression:
-                                                  "req.created_by === 'consultant'"
-                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.onClickModal(
+                                                        req
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "uk-margin-small-right",
+                                                    attrs: {
+                                                      "uk-icon":
+                                                        "icon: pencil; ratio: 0.8"
+                                                    }
+                                                  }),
+                                                  _vm._v(
+                                                    "\n                        Edit\n                      "
+                                                  )
+                                                ]
+                                              )
                                             ]
-                                          },
-                                          [_vm._m(3, true)]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "li",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "show",
+                                                  rawName: "v-show",
+                                                  value:
+                                                    req.created_by ===
+                                                    "consultant",
+                                                  expression:
+                                                    "req.created_by === 'consultant'"
+                                                }
+                                              ]
+                                            },
+                                            [_vm._m(3, true)]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "uk-margin-small" }, [
@@ -63713,7 +63786,7 @@ var staticRenderFns = [
           staticClass: "uk-margin-small-right",
           attrs: { "uk-icon": "icon: forward; ratio: 0.8" }
         }),
-        _vm._v("\n                      View\n                    ")
+        _vm._v("\n                        View\n                      ")
       ])
     ])
   },
@@ -63726,7 +63799,7 @@ var staticRenderFns = [
         staticClass: "uk-margin-small-right",
         attrs: { "uk-icon": "icon: trash; ratio: 0.8" }
       }),
-      _vm._v("\n                      Delete\n                    ")
+      _vm._v("\n                        Delete\n                      ")
     ])
   }
 ]
