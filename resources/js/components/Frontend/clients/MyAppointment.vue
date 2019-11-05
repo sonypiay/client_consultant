@@ -28,9 +28,10 @@
           <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.limit">
-                <option value="10">10 rows</option>
-                <option value="10">20 rows</option>
-                <option value="10">50 rows</option>
+                <option value="10">6 rows</option>
+                <option value="12">12 rows</option>
+                <option value="24">24 rows</option>
+                <option value="36">36 rows</option>
               </select>
             </div>
             <div>
@@ -165,7 +166,7 @@ export default {
       },
       forms: {
         keywords: '',
-        limit: 10,
+        limit: 6,
         status_request: 'all'
       },
       messages: {

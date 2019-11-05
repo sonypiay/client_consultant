@@ -47,10 +47,16 @@ class ClientUserController extends Controller
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function request_list( AppointmentRequest $appointment, $status = null )
+  public function request_list( Request $request, AppointmentRequest $appointment, $status = null )
   {
-    $res = $appointment->showRequest( $status );
+    $res = $appointment->showRequest( $status, $request );
     return response()->json( $res, 200 );
+  }
+
+  public function update_status_appointment( AppointmentRequest $appointment, $status, $id )
+  {
+    $res = $appointment->updateStatus( $id, $status );
+    return response()->json( $res, $res['responseCode'] );
   }
 
   public function add_request( Request $request, AppointmentRequest $appointment )

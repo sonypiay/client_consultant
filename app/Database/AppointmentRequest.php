@@ -31,10 +31,13 @@ class AppointmentRequest extends Model
     return $this->generateId();
   }
 
-  public function showRequest( $status = null )
+  public function showRequest( $status = null, $request = null )
   {
     $whereClauses = [];
     $status = $status === null ? 'all' : $status;
+    $keywords = $request !== null ? ( isset( $request->keywords ) ? '' : $request->keywords ) : '';
+    $limit = $request !== null ? ( isset( $request->limit ) ? 6 : $request->limit ) : 6;
+
     $query = $this->select(
       'appointment_request.apt_id',
       'appointment_request.client_id',
@@ -63,9 +66,39 @@ class AppointmentRequest extends Model
     {
       array_push( $whereClauses, ['consultant_user.consultant_id', session()->get('consultantId')]);
     }
-
     $query = $query->where($whereClauses);
-    $result = $query->paginate( 6 );
+
+    if( ! empty( $keywords ) )
+    {
+      if( session()->has('isClient') )
+      {
+        $query = $query->where(function( $q ) use ( $keywords ) {
+          $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_id', 'like', '%' . $keywords . '%');
+        });
+      }
+      else if( session()->has('isConsultant') )
+      {
+        $query = $query->where(function( $q ) use ( $keywords ) {
+          $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%');
+        });
+      }
+      else
+      {
+        $query = $query->where(function( $q ) use ( $keywords ) {
+          $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_id', 'like', '%' . $keywords . '%');
+        });
+      }
+    }
+
+    $result = $query->paginate( $limit );
     return $result;
   }
 

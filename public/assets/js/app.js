@@ -4105,6 +4105,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -4122,7 +4123,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       forms: {
         keywords: '',
-        limit: 10,
+        limit: 6,
         status_request: 'all'
       },
       messages: {
@@ -63283,15 +63284,19 @@ var render = function() {
                       },
                       [
                         _c("option", { attrs: { value: "10" } }, [
-                          _vm._v("10 rows")
+                          _vm._v("6 rows")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "10" } }, [
-                          _vm._v("20 rows")
+                        _c("option", { attrs: { value: "12" } }, [
+                          _vm._v("12 rows")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "10" } }, [
-                          _vm._v("50 rows")
+                        _c("option", { attrs: { value: "24" } }, [
+                          _vm._v("24 rows")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "36" } }, [
+                          _vm._v("36 rows")
                         ])
                       ]
                     )
