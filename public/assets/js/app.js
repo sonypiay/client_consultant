@@ -2713,19 +2713,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['getuser', 'getconsultant', 'haslogin', 'detailrequest'],
+  props: ['getuser', 'getconsultant', 'haslogin'],
   components: {
     VCalendar: v_calendar__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   data: function data() {
     return {
-      datarequest: this.detailrequest,
       datepicker: {
         mindate: new Date(),
         popover: {
@@ -2818,9 +2816,8 @@ document.addEventListener("DOMContentLoaded", function () {
       var hours = this.forms.timepicker.hours;
       var minute = this.forms.timepicker.minute;
       if (hours === '') hours = 'HH';
-      if (minute === '') minute = 'mm'; //this.forms.timepicker.selected = hours + ':' + minute;
-
-      this.forms.timepicker.selected = this.$root.formatDate(this.detailrequest.schedule_date, 'HH:mm');
+      if (minute === '') minute = 'mm';
+      this.forms.timepicker.selected = hours + ':' + minute;
       return this.forms.timepicker.selected;
     }
   }
@@ -3082,6 +3079,94 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EditRequest_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditRequest.vue */ "./resources/js/components/Frontend/clients/EditRequest.vue");
+/* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! v-calendar */ "./node_modules/v-calendar/lib/v-calendar.umd.min.js");
+/* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(v_calendar__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3173,9 +3258,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+document.addEventListener("DOMContentLoaded", function () {
+  OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   components: {
+    VCalendar: v_calendar__WEBPACK_IMPORTED_MODULE_1___default.a,
     'edit-request': _EditRequest_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
@@ -3191,10 +3281,32 @@ __webpack_require__.r(__webpack_exports__);
           prev_page_url: '',
           next_page_url: ''
         },
-        request_detail: {}
+        details: {}
+      },
+      datepicker: {
+        mindate: new Date(),
+        popover: {
+          placement: 'bottom',
+          visibility: 'click'
+        }
+      },
+      forms: {
+        id: '',
+        selectedDate: new Date(),
+        timepicker: {
+          selected: '',
+          isSelecting: false,
+          hours: '',
+          minute: ''
+        },
+        description: '',
+        submit: 'Save Changes'
       },
       messages: {
-        errorMessage: ''
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
       }
     };
   },
@@ -3273,9 +3385,84 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    onEditRequest: function onEditRequest(data) {
-      this.getrequest.request_detail = data;
+    viewModalEdit: function viewModalEdit(data) {
+      this.getrequest.details = data;
+      var f = this.forms;
+      f.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'YYYY-MM-DD'));
+      f.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
+      f.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
+      f.description = data.description;
+      f.id = data.apt_id;
       UIkit.modal('#modal-edit-request').show();
+    },
+    onSelectedTime: function onSelectedTime(val, time) {
+      var str = this.$root.padNumber(val, 2);
+      if (time === 'hours') this.forms.timepicker.hours = str;
+      if (time === 'minute') this.forms.timepicker.minute = str;
+    },
+    onSaveRequest: function onSaveRequest() {
+      var _this3 = this;
+
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var message_form = 'This field must be required';
+
+      if (this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '') {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.forms.description === '') {
+        this.messages.errors.description = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.messages.iserror === true) return false;
+      var datepicker = this.$root.formatDate(this.forms.selectedDate, 'YYYY-MM-DD');
+      var schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
+      var consult_id = this.getconsultant.consultant_id;
+      var client_id = this.getuser.client_id;
+      var description = this.forms.description;
+      var created_by = 'client';
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/client/add_request',
+        params: {
+          schedule_date: schedule_date,
+          consult_id: consult_id,
+          client_id: client_id,
+          description: description,
+          created_by: created_by
+        }
+      }).then(function (res) {
+        var message = 'Request has been successfully created.';
+        _this3.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success'
+        });
+        setTimeout(function () {
+          document.location = _this3.$root.url + '/client/dashboard';
+        }, 2000);
+      })["catch"](function (err) {
+        _this3.forms.submit = 'Create Request';
+        if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
+      });
+    }
+  },
+  computed: {
+    selectedTime: function selectedTime() {
+      var hours = this.forms.timepicker.hours;
+      var minute = this.forms.timepicker.minute;
+      if (hours === '') hours = 'HH';
+      if (minute === '') minute = 'mm';
+      this.forms.timepicker.selected = hours + ':' + minute;
+      return this.forms.timepicker.selected;
     }
   },
   mounted: function mounted() {
@@ -59969,7 +60156,7 @@ var render = function() {
         _c("div", { staticClass: "modal-title" }, [
           _vm._v("Add Request Service")
         ]),
-        _vm._v("\n      " + _vm._s(_vm.datarequest) + "\n      "),
+        _vm._v(" "),
         _c(
           "div",
           {
@@ -60911,334 +61098,732 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("edit-request", {
-        attrs: { detailrequest: _vm.getrequest.request_detail }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "navbar-event" }, [
-        _c("div", { staticClass: "uk-container" }, [
-          _c("nav", { staticClass: "uk-navbar" }, [
-            _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "upcoming" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "upcoming"
-                        _vm.showUpcomingRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Upcoming Request")]
-                )
+  return _c("div", [
+    _c("div", { attrs: { id: "modal-edit-request", "uk-modal": "" } }, [
+      _c("div", { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" }, [
+        _c("a", {
+          staticClass: "uk-modal-close uk-modal-close-default",
+          attrs: { "uk-close": "" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "modal-title" }, [
+          _vm._v("Add Request Service")
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.successMessage,
+                expression: "messages.successMessage"
+              }
+            ],
+            staticClass: "uk-margin-top uk-alert-success",
+            attrs: { "uk-alert": "" }
+          },
+          [
+            _vm._v(
+              "\n        " + _vm._s(_vm.messages.successMessage) + "\n      "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.errorMessage,
+                expression: "messages.errorMessage"
+              }
+            ],
+            staticClass: "uk-margin-top uk-alert-danger",
+            attrs: { "uk-alert": "" }
+          },
+          [
+            _vm._v(
+              "\n        " + _vm._s(_vm.messages.errorMessage) + "\n      "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "uk-form-stacked",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.onCreateRequest($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("Select Date")
               ]),
               _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "accepted" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "accepted"
-                        _vm.showUpcomingRequest()
+              _c(
+                "div",
+                { staticClass: "uk-form-controls" },
+                [
+                  _c(
+                    "v-date-picker",
+                    {
+                      attrs: {
+                        "min-date": _vm.datepicker.mindate,
+                        popover: _vm.datepicker.popover,
+                        columns: 2
+                      },
+                      model: {
+                        value: _vm.forms.selectedDate,
+                        callback: function($$v) {
+                          _vm.$set(_vm.forms, "selectedDate", $$v)
+                        },
+                        expression: "forms.selectedDate"
                       }
-                    }
-                  },
-                  [_vm._v("Accepted Request")]
-                )
+                    },
+                    [
+                      _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
+                        _c("span", {
+                          staticClass: "uk-form-icon",
+                          attrs: { "uk-icon": "calendar" }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "uk-width-1-1 uk-input gl-input-default",
+                          attrs: { type: "text", readonly: "" },
+                          domProps: {
+                            value: _vm.$root.formatDate(
+                              _vm.forms.selectedDate,
+                              "ddd, DD MMMM YYYY"
+                            )
+                          }
+                        })
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("Select Time")
               ]),
               _vm._v(" "),
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "completed" },
-                    attrs: { href: "#" }
-                  },
-                  [_vm._v("Completed Request")]
-                )
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
-        },
-        [
-          _vm.getrequest.isLoading
-            ? _c("div", { staticClass: "uk-text-center" }, [
-                _c("span", { attrs: { "uk-spinner": "" } })
-              ])
-            : _c("div", [
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
+                  _c("a", {
+                    staticClass: "uk-form-icon",
+                    attrs: { "uk-icon": "clock" }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedTime,
+                        expression: "selectedTime"
+                      }
+                    ],
+                    staticClass: "uk-width-1-1 uk-input gl-input-default",
+                    attrs: { type: "text", readonly: "" },
+                    domProps: { value: _vm.selectedTime },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.selectedTime = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
                 _c(
                   "div",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.messages.errorMessage,
-                        expression: "messages.errorMessage"
-                      }
-                    ],
-                    staticClass: "uk-alert-danger",
-                    attrs: { "uk-alert": "" }
+                    staticClass: "uk-width-large dropdown-timepicker",
+                    attrs: { "uk-dropdown": "mode: click;" }
                   },
                   [
-                    _vm._v(
-                      "\n        " +
-                        _vm._s(_vm.messages.errorMessage) +
-                        "\n      "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.getrequest.total === 0
-                  ? _c("div", { staticClass: "no-request-list" }, [
-                      _c("div", { staticClass: "uk-margin-remove" }, [
-                        _vm._m(0),
-                        _vm._v(
-                          "\n          You have no " +
-                            _vm._s(_vm.status_request) +
-                            " request.\n        "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "uk-button uk-button-primary gl-button-primary",
-                          attrs: { href: _vm.$root.url + "/search" }
-                        },
-                        [_vm._v("Find consultant")]
-                      )
-                    ])
-                  : _c(
+                    _c(
                       "div",
                       {
-                        staticClass: "uk-grid-medium",
+                        staticClass: "uk-dropdown-grid uk-child-width-1-2",
                         attrs: { "uk-grid": "" }
                       },
-                      _vm._l(_vm.getrequest.results, function(req) {
-                        return _c("div", { staticClass: "uk-width-1-3" }, [
+                      [
+                        _c("div", [
                           _c(
                             "div",
-                            {
-                              staticClass:
-                                "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
-                            },
+                            { staticClass: "dropdown-timepicker-header" },
+                            [_vm._v("Hours")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "dropdown-timepicker-content" },
                             [
-                              _c("div", { staticClass: "uk-clearfix" }, [
-                                _c("div", { staticClass: "uk-float-left" }, [
-                                  _c("div", { staticClass: "request-id" }, [
-                                    _vm._v("#" + _vm._s(req.apt_id))
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "uk-float-right" }, [
-                                  _c("a", {
-                                    staticClass: "request-icon",
-                                    attrs: { "uk-icon": "more-vertical" }
-                                  }),
+                              _c(
+                                "ul",
+                                {
+                                  staticClass:
+                                    "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
+                                },
+                                [
+                                  _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        class: {
+                                          active:
+                                            _vm.$root.padNumber(0, 2) ==
+                                            _vm.forms.timepicker.hours
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.onSelectedTime(
+                                              0,
+                                              "hours"
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                          " +
+                                            _vm._s(_vm.$root.padNumber(0, 2)) +
+                                            "\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ]),
                                   _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "dropdown-request-nav",
-                                      attrs: {
-                                        "uk-dropdown": "mode: click; pos: left"
-                                      }
-                                    },
-                                    [
+                                  _vm._l(23, function(i) {
+                                    return _c("li", [
                                       _c(
-                                        "ul",
+                                        "a",
                                         {
-                                          staticClass:
-                                            "uk-nav uk-dropdown-nav request-nav"
+                                          class: {
+                                            active:
+                                              _vm.$root.padNumber(i, 2) ==
+                                              _vm.forms.timepicker.hours
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.onSelectedTime(
+                                                i,
+                                                "hours"
+                                              )
+                                            }
+                                          }
                                         },
                                         [
-                                          _vm._m(1, true),
-                                          _vm._v(" "),
-                                          _c(
-                                            "li",
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "show",
-                                                  rawName: "v-show",
-                                                  value:
-                                                    req.created_by ===
-                                                      "client" &&
-                                                    req.status_request ===
-                                                      "waiting_respond",
-                                                  expression:
-                                                    "req.created_by === 'client' && req.status_request === 'waiting_respond'"
-                                                }
-                                              ]
-                                            },
-                                            [
-                                              _c(
-                                                "a",
-                                                {
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.onEditRequest(
-                                                        req
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c("span", {
-                                                    staticClass:
-                                                      "uk-margin-small-right",
-                                                    attrs: {
-                                                      "uk-icon":
-                                                        "icon: pencil; ratio: 0.8"
-                                                    }
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                        Edit\n                      "
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "li",
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "show",
-                                                  rawName: "v-show",
-                                                  value:
-                                                    req.created_by ===
-                                                      "client" &&
-                                                    req.status_request ===
-                                                      "waiting_respond",
-                                                  expression:
-                                                    "req.created_by === 'client' && req.status_request === 'waiting_respond'"
-                                                }
-                                              ]
-                                            },
-                                            [_vm._m(2, true)]
+                                          _vm._v(
+                                            "\n                          " +
+                                              _vm._s(
+                                                _vm.$root.padNumber(i, 2)
+                                              ) +
+                                              "\n                        "
                                           )
                                         ]
                                       )
-                                    ]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "uk-margin-small" }, [
-                                _c("div", { staticClass: "request-time" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.$root.formatDate(
-                                        req.schedule_date,
-                                        "HH:mm"
-                                      )
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "request-date" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.$root.formatDate(
-                                        req.schedule_date,
-                                        "DD MMMM YYYY"
-                                      )
-                                    )
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "uk-margin-small" }, [
-                                _c("div", { staticClass: "request-pic" }, [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(req.consultant_fullname) +
-                                      "\n              "
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
+                                    ])
+                                  })
+                                ],
+                                2
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "div",
+                            { staticClass: "dropdown-timepicker-header" },
+                            [_vm._v("Minute")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "dropdown-timepicker-content" },
+                            [
                               _c(
-                                "div",
+                                "ul",
                                 {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: req.created_by === "consultant",
-                                      expression:
-                                        "req.created_by === 'consultant'"
-                                    }
-                                  ],
-                                  staticClass: "uk-margin-small"
+                                  staticClass:
+                                    "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
                                 },
                                 [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onApprovalRequest(
-                                            req.apt_id,
-                                            "accept"
-                                          )
+                                  _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        class: {
+                                          active:
+                                            _vm.$root.padNumber(0, 2) ==
+                                            _vm.forms.timepicker.minute
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.onSelectedTime(
+                                              0,
+                                              "minute"
+                                            )
+                                          }
                                         }
-                                      }
-                                    },
-                                    [_vm._v("Accept")]
-                                  ),
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                          " +
+                                            _vm._s(_vm.$root.padNumber(0, 2)) +
+                                            "\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ]),
                                   _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onApprovalRequest(
-                                            req.apt_id,
-                                            "reject"
+                                  _vm._l(59, function(i) {
+                                    return _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          class: {
+                                            active:
+                                              _vm.$root.padNumber(i, 2) ==
+                                              _vm.forms.timepicker.minute
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.onSelectedTime(
+                                                i,
+                                                "minute"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                          " +
+                                              _vm._s(
+                                                _vm.$root.padNumber(i, 2)
+                                              ) +
+                                              "\n                        "
                                           )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Decline")]
-                                  )
-                                ]
+                                        ]
+                                      )
+                                    ])
+                                  })
+                                ],
+                                2
                               )
                             ]
                           )
                         ])
-                      }),
-                      0
+                      ]
                     )
-              ])
-        ]
-      )
-    ],
-    1
-  )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.timepicker,
+                      expression: "messages.errors.timepicker"
+                    }
+                  ],
+                  staticClass: "uk-text-small uk-text-danger"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.timepicker))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("Description")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.description,
+                      expression: "forms.description"
+                    }
+                  ],
+                  staticClass: "uk-textarea uk-height-small gl-input-default",
+                  attrs: { placeholder: "Enter a description" },
+                  domProps: { value: _vm.forms.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "description", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.description,
+                      expression: "messages.errors.description"
+                    }
+                  ],
+                  staticClass: "uk-text-small uk-text-danger"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.description))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("button", {
+                staticClass: "uk-button uk-button-default gl-button-default",
+                domProps: { innerHTML: _vm._s(_vm.forms.submit) }
+              })
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "navbar-event" }, [
+      _c("div", { staticClass: "uk-container" }, [
+        _c("nav", { staticClass: "uk-navbar" }, [
+          _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
+            _c("li", [
+              _c(
+                "a",
+                {
+                  class: { active: _vm.status_request === "upcoming" },
+                  on: {
+                    click: function($event) {
+                      _vm.status_request = "upcoming"
+                      _vm.showUpcomingRequest()
+                    }
+                  }
+                },
+                [_vm._v("Upcoming Request")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  class: { active: _vm.status_request === "accepted" },
+                  on: {
+                    click: function($event) {
+                      _vm.status_request = "accepted"
+                      _vm.showUpcomingRequest()
+                    }
+                  }
+                },
+                [_vm._v("Accepted Request")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c(
+                "a",
+                {
+                  class: { active: _vm.status_request === "completed" },
+                  attrs: { href: "#" }
+                },
+                [_vm._v("Completed Request")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
+      },
+      [
+        _vm.getrequest.isLoading
+          ? _c("div", { staticClass: "uk-text-center" }, [
+              _c("span", { attrs: { "uk-spinner": "" } })
+            ])
+          : _c("div", [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errorMessage,
+                      expression: "messages.errorMessage"
+                    }
+                  ],
+                  staticClass: "uk-alert-danger",
+                  attrs: { "uk-alert": "" }
+                },
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.messages.errorMessage) +
+                      "\n      "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.getrequest.total === 0
+                ? _c("div", { staticClass: "no-request-list" }, [
+                    _c("div", { staticClass: "uk-margin-remove" }, [
+                      _vm._m(0),
+                      _vm._v(
+                        "\n          You have no " +
+                          _vm._s(_vm.status_request) +
+                          " request.\n        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "uk-button uk-button-primary gl-button-primary",
+                        attrs: { href: _vm.$root.url + "/search" }
+                      },
+                      [_vm._v("Find consultant")]
+                    )
+                  ])
+                : _c(
+                    "div",
+                    { staticClass: "uk-grid-medium", attrs: { "uk-grid": "" } },
+                    _vm._l(_vm.getrequest.results, function(req) {
+                      return _c("div", { staticClass: "uk-width-1-3" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
+                          },
+                          [
+                            _c("div", { staticClass: "uk-clearfix" }, [
+                              _c("div", { staticClass: "uk-float-left" }, [
+                                _c("div", { staticClass: "request-id" }, [
+                                  _vm._v("#" + _vm._s(req.apt_id))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "uk-float-right" }, [
+                                _c("a", {
+                                  staticClass: "request-icon",
+                                  attrs: { "uk-icon": "more-vertical" }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "dropdown-request-nav",
+                                    attrs: {
+                                      "uk-dropdown": "mode: click; pos: left"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "ul",
+                                      {
+                                        staticClass:
+                                          "uk-nav uk-dropdown-nav request-nav"
+                                      },
+                                      [
+                                        _vm._m(1, true),
+                                        _vm._v(" "),
+                                        _c(
+                                          "li",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value:
+                                                  req.created_by === "client" &&
+                                                  req.status_request ===
+                                                    "waiting_respond",
+                                                expression:
+                                                  "req.created_by === 'client' && req.status_request === 'waiting_respond'"
+                                              }
+                                            ]
+                                          },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.viewModalEdit(
+                                                      req
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("span", {
+                                                  staticClass:
+                                                    "uk-margin-small-right",
+                                                  attrs: {
+                                                    "uk-icon":
+                                                      "icon: pencil; ratio: 0.8"
+                                                  }
+                                                }),
+                                                _vm._v(
+                                                  "\n                        Edit\n                      "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "li",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value:
+                                                  req.created_by === "client" &&
+                                                  req.status_request ===
+                                                    "waiting_respond",
+                                                expression:
+                                                  "req.created_by === 'client' && req.status_request === 'waiting_respond'"
+                                              }
+                                            ]
+                                          },
+                                          [_vm._m(2, true)]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "uk-margin-small" }, [
+                              _c("div", { staticClass: "request-time" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.$root.formatDate(
+                                      req.schedule_date,
+                                      "HH:mm"
+                                    )
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "request-date" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.$root.formatDate(
+                                      req.schedule_date,
+                                      "DD MMMM YYYY"
+                                    )
+                                  )
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "uk-margin-small" }, [
+                              _c("div", { staticClass: "request-pic" }, [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(req.consultant_fullname) +
+                                    "\n              "
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: req.created_by === "consultant",
+                                    expression:
+                                      "req.created_by === 'consultant'"
+                                  }
+                                ],
+                                staticClass: "uk-margin-small"
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onApprovalRequest(
+                                          req.apt_id,
+                                          "accept"
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Accept")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onApprovalRequest(
+                                          req.apt_id,
+                                          "reject"
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Decline")]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    }),
+                    0
+                  )
+            ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {

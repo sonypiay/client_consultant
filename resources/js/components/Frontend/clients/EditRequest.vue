@@ -4,7 +4,6 @@
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">Add Request Service</div>
-        {{ datarequest }}
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
         </div>
@@ -104,15 +103,13 @@ export default {
   props: [
     'getuser',
     'getconsultant',
-    'haslogin',
-    'detailrequest'
+    'haslogin'
   ],
   components: {
     VCalendar
   },
   data() {
     return {
-      datarequest: this.detailrequest,
       datepicker: {
         mindate: new Date(),
         popover: {
@@ -208,8 +205,7 @@ export default {
 
       if( hours === '' ) hours = 'HH';
       if( minute === '' ) minute = 'mm';
-      //this.forms.timepicker.selected = hours + ':' + minute;
-      this.forms.timepicker.selected = this.$root.formatDate( this.detailrequest.schedule_date, 'HH:mm' );
+      this.forms.timepicker.selected = hours + ':' + minute;
       return this.forms.timepicker.selected;
     }
   }
