@@ -215,6 +215,19 @@ html, body { font-family: $font-base; }
       color: #333333;
       &:hover, &:active { color: $color-base; }
     }
+    .request-status-badge {
+      padding: 4px 8px;
+      color: #ffffff;
+      @include global_font_style( 300, 12px, normal, 0.4px );
+      background: $color-base;
+      border-radius: 6px;
+    }
+    .upcoming { background: $color-base; }
+    .accept { background: $green; }
+    .decline { background: $red; }
+    .cancel { background: $orange; }
+    .done { background: $green; }
+
     .dropdown-request-nav {
       border-radius: 6px;
       padding: 0;

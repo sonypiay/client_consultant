@@ -78,16 +78,19 @@
         <div v-else class="uk-grid-medium uk-grid-match" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
-              <div class="uk-clearfix">
-                <div class="uk-float-right">
-                  <div v-if="req.status_request === 'waiting_respond'" class="request-status-badge upcoming">Waiting Response</div>
-                  <div v-else-if="req.status_request === 'accept'" class="request-status-badge upcoming">Accept</div>
-                  <div v-else-if="req.status_request === 'decline'" class="request-status-badge upcoming">Decline</div>
-                  <div v-else-if="req.status_request === 'cancel'" class="request-status-badge upcoming">Cancel</div>
-                  <div v-else class="request-status-badge upcoming">Done</div>
+              <div class="uk-clearfix uk-margin-small">
+                <div class="uk-float-left">
+                  <span v-if="req.status_request === 'waiting_respond'" class="request-status-badge upcoming">Waiting Response</span>
+                  <span v-else-if="req.status_request === 'accept'" class="request-status-badge accept">Accept</span>
+                  <span v-else-if="req.status_request === 'decline'" class="request-status-badge decline">Decline</span>
+                  <span v-else-if="req.status_request === 'cancel'" class="request-status-badge cancel">Cancel</span>
+                  <span v-else class="request-status-badge done">Done</span>
+
+                  <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Solved</span>
+                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Not Solved</span>
                 </div>
               </div>
-              <div class="uk-clearfix">
+              <div class="uk-clearfix uk-margin-small">
                 <div class="uk-float-left">
                   <div class="request-id">#{{ req.apt_id }}</div>
                 </div>
@@ -131,7 +134,7 @@
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
               <div v-show="req.status_request === 'accept'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Mark as Completed</a>
+                <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-default uk-button-small gl-button-default">Mark as Completed</a>
               </div>
             </div>
           </div>
