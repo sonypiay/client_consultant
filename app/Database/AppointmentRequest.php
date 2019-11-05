@@ -77,15 +77,27 @@ class AppointmentRequest extends Model
     $data_notif = [
       'parent_id' => $apt_id,
       'notif_date' => date('Y-m-d H:i:s'),
-      ''
+      'notif_read' => 'N',
+      'notif_type' => 'request'
     ];
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
       if( $created_by === 'client' )
       {
-
+        $client = new ClientUser;
+        $getclient = $client->getProfile( $client_id );
+        $data_notif['notif_message'] = 'You have a new request appointment from ' . $getclient->client_fullname;
+        $data_notif['consultant_id'] = $consult_id;
       }
+      else
+      {
+        $consultant = new ConsultantUser;
+        $getconsult = $consultant->getProfile( $consult_id );
+        $data_notif['notif_message'] = 'You have a new request appointment from ' . $getconsult->consultant_fullname;
+        $data_notif['consultant_id'] = $consult_id;
+      }
+
       $this->apt_id = $apt_id;
       $this->client_id = $client_id;
       $this->consultant_id = $consult_id;
@@ -93,6 +105,8 @@ class AppointmentRequest extends Model
       $this->schedule_date = $schedule_date;
       $this->description = $description;
       $this->save();
+
+      $notification->addNotification( $data_notif );
     }
     else
     {
