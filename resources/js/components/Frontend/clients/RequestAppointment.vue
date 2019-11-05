@@ -1,5 +1,10 @@
 <template>
   <div>
+
+    <edit-request
+    :detailrequest="getrequest.request_detail"
+    />
+
     <div class="navbar-event">
       <div class="uk-container">
         <nav class="uk-navbar">
@@ -46,13 +51,13 @@
                           View
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client'">
-                        <a href="#">
+                      <li v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'">
+                        <a @click="onEditRequest( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Edit
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client'">
+                      <li v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'">
                         <a href="#">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                           Delete
@@ -103,7 +108,8 @@ export default {
           last_page: 1,
           prev_page_url: '',
           next_page_url: ''
-        }
+        },
+        request_detail: {}
       },
       messages: {
         errorMessage: ''
@@ -179,6 +185,11 @@ export default {
           });
         }
       });
+    },
+    onEditRequest( data )
+    {
+      this.getrequest.request_detail = data;
+      UIkit.modal('#modal-edit-request').show();
     }
   },
   mounted() {

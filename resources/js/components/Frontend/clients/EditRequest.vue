@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div id="modal-add-request" uk-modal>
+    <div id="modal-edit-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">Add Request Service</div>
+        {{ datarequest }}
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
         </div>
@@ -42,12 +43,12 @@
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
                         <li>
-                          <a :class="{'active': $root.padNumber( 0, 2 ) === forms.timepicker.hours}" @click="onSelectedTime( 0, 'hours' )">
+                          <a :class="{'active': $root.padNumber( 0, 2 ) == forms.timepicker.hours}" @click="onSelectedTime( 0, 'hours' )">
                             {{ $root.padNumber( 0, 2 ) }}
                           </a>
                         </li>
                         <li v-for="i in 23">
-                          <a :class="{'active': $root.padNumber( i, 2 ) === forms.timepicker.hours}" @click="onSelectedTime( i, 'hours' )">
+                          <a :class="{'active': $root.padNumber( i, 2 ) == forms.timepicker.hours}" @click="onSelectedTime( i, 'hours' )">
                             {{ $root.padNumber( i, 2 ) }}
                           </a>
                         </li>
@@ -59,12 +60,12 @@
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
                         <li>
-                          <a :class="{'active': $root.padNumber( 0, 2 ) === forms.timepicker.minute}" @click="onSelectedTime( 0, 'minute' )">
+                          <a :class="{'active': $root.padNumber( 0, 2 ) == forms.timepicker.minute}" @click="onSelectedTime( 0, 'minute' )">
                             {{ $root.padNumber( 0, 2 ) }}
                           </a>
                         </li>
                         <li v-for="i in 59">
-                          <a :class="{'active': $root.padNumber( i, 2 ) === forms.timepicker.minute}" @click="onSelectedTime( i, 'minute' )">
+                          <a :class="{'active': $root.padNumber( i, 2 ) == forms.timepicker.minute}" @click="onSelectedTime( i, 'minute' )">
                             {{ $root.padNumber( i, 2 ) }}
                           </a>
                         </li>
@@ -103,13 +104,15 @@ export default {
   props: [
     'getuser',
     'getconsultant',
-    'haslogin'
+    'haslogin',
+    'detailrequest'
   ],
   components: {
     VCalendar
   },
   data() {
     return {
+      datarequest: this.detailrequest,
       datepicker: {
         mindate: new Date(),
         popover: {
@@ -118,12 +121,12 @@ export default {
         }
       },
       forms: {
-        selectedDate: new Date(),
+        selectedDate: new Date( this.$root.formatDate( this.detailrequest.schedule_date, 'YYYY-MM-DD' ) ),
         timepicker: {
           selected: '',
           isSelecting: false,
-          hours: '',
-          minute: ''
+          hours: this.$root.formatDate( this.detailrequest.schedule_date, 'YYYY-MM-DD' ),
+          minute: this.$root.formatDate( this.detailrequest.schedule_date, 'mm' )
         },
         description: '',
         submit: 'Create Request'
@@ -205,7 +208,8 @@ export default {
 
       if( hours === '' ) hours = 'HH';
       if( minute === '' ) minute = 'mm';
-      this.forms.timepicker.selected = hours + ':' + minute;
+      //this.forms.timepicker.selected = hours + ':' + minute;
+      this.forms.timepicker.selected = this.$root.formatDate( this.detailrequest.schedule_date, 'HH:mm' );
       return this.forms.timepicker.selected;
     }
   }
