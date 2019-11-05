@@ -20,6 +20,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/signin', 'Frontend\PagesController@client_login_page')->name('client_login_page');
   Route::get('/signup', 'Frontend\PagesController@client_register_page')->name('client_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
+  Route::get('/myappointment', 'Frontend\PagesController@client_appointment_page')->name('client_appointment_page');
   Route::get('/logout', 'Frontend\ClientUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ClientUserController@request_list');
   Route::get('/notification', 'Frontend\ClientUserController@get_notification');
@@ -29,6 +30,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::put('/save_request/{id}', 'Frontend\ClientUserController@save_request');
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
+  Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ClientUserController@mark_as_read');
 });
 

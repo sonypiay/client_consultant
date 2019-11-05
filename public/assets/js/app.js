@@ -65014,13 +65014,34 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url + "/client/myappointment"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: file-edit; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      My Appointment\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
                               _vm._m(1),
                               _vm._v(" "),
                               _vm._m(2),
                               _vm._v(" "),
                               _vm._m(3),
-                              _vm._v(" "),
-                              _vm._m(4),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -65276,9 +65297,9 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _vm._m(5),
+                              _vm._m(4),
                               _vm._v(" "),
-                              _vm._m(6),
+                              _vm._m(5),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -65364,17 +65385,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-navbar-left" }, [
       _c("a", { staticClass: "uk-navbar-item uk-logo" }, [_vm._v("Logo")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", { staticClass: "uk-margin-small-right fas fa-dashboard" }),
-        _vm._v("\n                      My Appointment\n                    ")
-      ])
     ])
   },
   function() {

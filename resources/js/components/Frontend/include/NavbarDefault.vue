@@ -56,8 +56,8 @@
                       </a>
                     </li>
                     <li>
-                      <a href="#">
-                        <span class="uk-margin-small-right fas fa-dashboard"></span>
+                      <a :href="$root.url + '/client/myappointment'">
+                        <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
                         My Appointment
                       </a>
                     </li>
