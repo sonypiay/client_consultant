@@ -23,6 +23,12 @@
     </div>
 
     <div class="uk-container uk-margin-large-top uk-margin-large-bottom container-request-list">
+      <div class="uk-clearfix">
+        <div class="uk-float-right">
+          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Make Appointment</a>
+        </div>
+      </div>
+
       <div v-if="getrequest.isLoading" class="uk-text-center">
         <span uk-spinner></span>
       </div>
@@ -59,13 +65,13 @@
                       </a>
                     </li>
                     <li v-show="req.created_by === 'consultant'">
-                      <a href="#">
+                      <a @click="onClickModal( req )">
                         <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                         Edit
                       </a>
                     </li>
                     <li v-show="req.created_by === 'consultant'">
-                      <a href="#">
+                      <a>
                         <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                         Delete
                       </a>
@@ -85,6 +91,9 @@
               <div v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'" class="uk-margin-small">
                 <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onApprovalRequest( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+              </div>
+              <div v-show="req.status_request === 'accept'" class="uk-margin-small">
+                <a @click="" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Mark as Completed</a>
               </div>
             </div>
           </div>
@@ -178,6 +187,17 @@ export default {
           });
         }
       });
+    },
+    onClickModal( data )
+    {
+      if( data === undefined )
+      {
+
+      }
+      else
+      {
+
+      }
     }
   },
   mounted() {

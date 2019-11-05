@@ -4065,6 +4065,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -4150,6 +4159,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    onClickModal: function onClickModal(data) {
+      if (data === undefined) {} else {}
     }
   },
   mounted: function mounted() {
@@ -63257,6 +63269,23 @@ var render = function() {
             "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
         },
         [
+          _c("div", { staticClass: "uk-clearfix" }, [
+            _c("div", { staticClass: "uk-float-right" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "uk-button uk-button-default gl-button-default",
+                  on: {
+                    click: function($event) {
+                      return _vm.onClickModal()
+                    }
+                  }
+                },
+                [_vm._v("Make Appointment")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
           _vm.getrequest.isLoading
             ? _c("div", { staticClass: "uk-text-center" }, [
                 _c("span", { attrs: { "uk-spinner": "" } })
@@ -63367,7 +63396,31 @@ var render = function() {
                                               }
                                             ]
                                           },
-                                          [_vm._m(3, true)]
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.onClickModal(req)
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("span", {
+                                                  staticClass:
+                                                    "uk-margin-small-right",
+                                                  attrs: {
+                                                    "uk-icon":
+                                                      "icon: pencil; ratio: 0.8"
+                                                  }
+                                                }),
+                                                _vm._v(
+                                                  "\n                      Edit\n                    "
+                                                )
+                                              ]
+                                            )
+                                          ]
                                         ),
                                         _vm._v(" "),
                                         _c(
@@ -63385,7 +63438,7 @@ var render = function() {
                                               }
                                             ]
                                           },
-                                          [_vm._m(4, true)]
+                                          [_vm._m(3, true)]
                                         )
                                       ]
                                     )
@@ -63479,6 +63532,33 @@ var render = function() {
                                     [_vm._v("Decline")]
                                   )
                                 ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: req.status_request === "accept",
+                                      expression:
+                                        "req.status_request === 'accept'"
+                                    }
+                                  ],
+                                  staticClass: "uk-margin-small"
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
+                                      on: { click: function($event) {} }
+                                    },
+                                    [_vm._v("Mark as Completed")]
+                                  )
+                                ]
                               )
                             ]
                           )
@@ -63528,19 +63608,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("span", {
-        staticClass: "uk-margin-small-right",
-        attrs: { "uk-icon": "icon: pencil; ratio: 0.8" }
-      }),
-      _vm._v("\n                      Edit\n                    ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
+    return _c("a", [
       _c("span", {
         staticClass: "uk-margin-small-right",
         attrs: { "uk-icon": "icon: trash; ratio: 0.8" }
