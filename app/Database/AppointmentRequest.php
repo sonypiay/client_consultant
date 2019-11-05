@@ -74,8 +74,12 @@ class AppointmentRequest extends Model
     $apt_id = $this->getId();
     $res = ['responseCode' => 200, 'responseMessage' => ''];
     $notification = new Notification;
-    $data_notif = [];
-    
+    $data_notif = [
+      'parent_id' => $apt_id,
+      'notif_date' => date('Y-m-d H:i:s'),
+      ''
+    ];
+
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
       if( $created_by === 'client' )
