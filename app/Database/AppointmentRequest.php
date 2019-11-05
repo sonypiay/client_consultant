@@ -137,26 +137,21 @@ class AppointmentRequest extends Model
     {
       if( $created_by === 'client' )
       {
-        $client = new ClientUser;
-        $getclient = $client->getProfile( $client_id );
-        $data_notif['notif_message'] = 'You have a new request appointment from ' . $getclient->client_fullname;
-        $data_notif['consultant_id'] = $consult_id;
+        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled. Waiting for confirmation.';
+        $data_notif['consultant_id'] = $getrequest->consultant_id;
       }
       else
       {
         $consultant = new ConsultantUser;
         $getconsult = $consultant->getProfile( $consult_id );
-        $data_notif['notif_message'] = 'You have a new request appointment from ' . $getconsult->consultant_fullname;
-        $data_notif['client_id'] = $client_id;
+        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled. Waiting for confirmation.';
+        $data_notif['client_id'] = $getrequest->client_id;
       }
 
-      $this->apt_id = $apt_id;
-      $this->client_id = $client_id;
-      $this->consultant_id = $consult_id;
-      $this->created_by = $created_by;
-      $this->schedule_date = $schedule_date;
-      $this->description = $description;
-      $this->save();
+      $getrequest->status_request = 'N';
+      $getrequest->schedule_date = $schedule_date;
+      $getrequest->description = $description;
+      $getrequest->save();
 
       $notification->addNotification( $data_notif );
     }
