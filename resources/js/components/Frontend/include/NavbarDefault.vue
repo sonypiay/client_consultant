@@ -51,11 +51,36 @@
             </ul>
             <ul v-else-if="haslogin.isLogin === true && haslogin.user === 'consultant'" class="uk-navbar-nav navdefault">
               <li>
+                <a href="#">
+                  <span uk-icon="bell"></span>
+                </a>
+                <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
+                  <div class="uk-clearfix">
+                    <a class="uk-float-right markas-read">Mark as read</a>
+                  </div>
+                  <div class="uk-margin-bottom uk-overflow-auto navbar-dropdown-notification">
+                    <div v-if="getnotification.total === 0">
+                      <span uk-icon="info"></span> <br />
+                      You have no notification.
+                    </div>
+                    <div v-else>
+                      <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
+                        <li v-for="notif in getnotification.results">
+                          <a href="#">
+                            {{ notif.notif_message }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
                 <a :href="$root.url + '/consultant/signin'">
                   {{ getuser.consultant_fullname }}
                   <span class="uk-margin-small-left" uk-icon="icon: chevron-down; ratio: 0.7"></span>
                 </a>
-                <div class="uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default" uk-dropdown="mode: click;">
+                <div class="uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
                   <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default">
                     <li>
                       <a href="#">
@@ -103,10 +128,45 @@
 </template>
 
 <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+	OverlayScrollbars(document.querySelector(".navbar-dropdown-notification"), {});
+});
+
 export default {
   props: [
     'haslogin',
     'getuser'
-  ]
+  ],
+  data() {
+    return {
+      getnotification: {
+        total: 0,
+        results: []
+      }
+    }
+  },
+  methods: {
+    showNotification()
+    {
+      let url = this.$root.url + '/' + this.haslogin.user + '/notification';
+      axios({
+        method: 'get',
+        url: url
+      }).then( res => {
+        let result = res.data;
+
+        this.getnotification.total = result.total;
+        this.getnotification.results = result.data;
+
+        console.log( this.getnotification );
+      }).catch( err => {
+        console.log( err.response.statusText );
+      });
+    }
+  },
+  mounted() {
+    this.showNotification();
+  }
 }
 </script>

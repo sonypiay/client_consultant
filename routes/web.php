@@ -22,6 +22,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
   Route::get('/logout', 'Frontend\ClientUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ClientUserController@request_list');
+  Route::get('/notification', 'Frontend\ClientUserController@get_notification');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');
   Route::post('/add_request', 'Frontend\ClientUserController@add_request');
@@ -37,6 +38,7 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/logout', 'Frontend\ConsultantUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ConsultantUserController@request_list');
   Route::get('/profile/{id}', 'Frontend\PagesController@view_profile_consultant')->name('view_profile_consultant');
+  Route::get('/notification', 'Frontend\ConsultantUserController@get_notification');
   Route::post('/create_account', 'Frontend\ConsultantUserController@register');
   Route::post('/signin', 'Frontend\ConsultantUserController@login');
   Route::put('/save_profile', 'Frontend\ConsultantUserController@save_profile');

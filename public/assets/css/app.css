@@ -52,7 +52,37 @@ body {
 }
 
 .headerdefault .navbardefault .navdefault li .navbar-dropdown-default {
-  border-radius: 10px;
+  border-radius: 6px;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .navbar-dropdown-notification {
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .navbar-dropdown-notification .no-notification {
+  margin-top: 3.8rem;
+  font-weight: 400;
+  font-size: 13px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  color: #888888;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .markas-read {
+  color: #888888;
+  font-weight: 700;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-decoration: none;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .markas-read:hover,
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .markas-read:active {
+  color: #25C4F2;
 }
 
 .headerdefault .navbardefault .navdefault li .navbar-dropdown-default .nav-dropdown-default li a {
@@ -63,6 +93,16 @@ body {
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
   text-transform: capitalize;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .nav-dropdown-notification li a {
+  color: #333333;
+  font-weight: 600;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: none !important;
 }
 
 .navbar-event {

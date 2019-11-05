@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\ClientUser;
 use App\Database\AppointmentRequest;
+use App\Database\Notification;
 use DB;
 use Storage;
 use Hash;
@@ -56,5 +57,11 @@ class ClientUserController extends Controller
   {
     $res = $appointment->addRequest( $request );
     return response()->json( $res, 200 );
+  }
+
+  public function get_notification( Notification $notification )
+  {
+    $userid = session()->has('isClient') ? session()->get('clientId') : '';
+    return response()->json( $notification->get_notification( $userid ) );
   }
 }
