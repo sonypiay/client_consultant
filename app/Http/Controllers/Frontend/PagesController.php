@@ -202,4 +202,19 @@ class PagesController extends Controller
     $data['getuser'] = $consultant->getProfile();
     return response()->view('frontend.pages.consultant.appointment', $data);
   }
+
+  public function client_appointment_page( Request $request )
+  {
+    if( ! session()->has('isClient') )
+    {
+      return redirect()->route('client_login_page');
+    }
+
+    $client = new ClientUser;
+    $data['request'] = $request;
+    $data['hasLogin']['user'] = 'client';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $client->getProfile();
+    return response()->view('frontend.pages.clients.appointment', $data);
+  }
 }

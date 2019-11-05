@@ -4871,12 +4871,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -65046,8 +65040,6 @@ var render = function() {
                               _vm._v(" "),
                               _vm._m(2),
                               _vm._v(" "),
-                              _vm._m(3),
-                              _vm._v(" "),
                               _c("li", [
                                 _c(
                                   "a",
@@ -65302,9 +65294,9 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _vm._m(4),
+                              _vm._m(3),
                               _vm._v(" "),
-                              _vm._m(5),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -65390,20 +65382,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-navbar-left" }, [
       _c("a", { staticClass: "uk-navbar-item uk-logo" }, [_vm._v("Logo")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: file-edit; ratio: 0.8" }
-        }),
-        _vm._v("\n                      My Appointment\n                    ")
-      ])
     ])
   },
   function() {
@@ -77699,7 +77677,8 @@ Vue.component('search-consultant', __webpack_require__(/*! ./components/Frontend
 Vue.component('client-register-page', __webpack_require__(/*! ./components/Frontend/clients/Register.vue */ "./resources/js/components/Frontend/clients/Register.vue")["default"]);
 Vue.component('client-login-page', __webpack_require__(/*! ./components/Frontend/clients/Login.vue */ "./resources/js/components/Frontend/clients/Login.vue")["default"]);
 Vue.component('client-dashboard-page', __webpack_require__(/*! ./components/Frontend/clients/Dashboard.vue */ "./resources/js/components/Frontend/clients/Dashboard.vue")["default"]);
-Vue.component('client-editprofile-page', __webpack_require__(/*! ./components/Frontend/clients/EditProfile.vue */ "./resources/js/components/Frontend/clients/EditProfile.vue")["default"]); // consultant user
+Vue.component('client-editprofile-page', __webpack_require__(/*! ./components/Frontend/clients/EditProfile.vue */ "./resources/js/components/Frontend/clients/EditProfile.vue")["default"]);
+Vue.component('client-view-appointment', __webpack_require__(/*! ./components/Frontend/consultant/MyAppointment.vue */ "./resources/js/components/Frontend/consultant/MyAppointment.vue")["default"]); // consultant user
 
 Vue.component('consultant-register-page', __webpack_require__(/*! ./components/Frontend/consultant/Register.vue */ "./resources/js/components/Frontend/consultant/Register.vue")["default"]);
 Vue.component('consultant-login-page', __webpack_require__(/*! ./components/Frontend/consultant/Login.vue */ "./resources/js/components/Frontend/consultant/Login.vue")["default"]);

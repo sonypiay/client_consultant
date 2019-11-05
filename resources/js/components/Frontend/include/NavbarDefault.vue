@@ -63,12 +63,6 @@
                     </li>
                     <li>
                       <a href="#">
-                        <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
-                        My Appointment
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
                         <span class="uk-margin-small-right" uk-icon="icon: bell; ratio: 0.8"></span>
                         Notification
                       </a>
