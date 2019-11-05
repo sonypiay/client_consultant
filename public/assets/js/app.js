@@ -61107,7 +61107,7 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("div", { staticClass: "modal-title" }, [
-          _vm._v("Add Request Service")
+          _vm._v("Edit Request Appointment")
         ]),
         _vm._v(" "),
         _c(
@@ -61159,7 +61159,7 @@ var render = function() {
             on: {
               submit: function($event) {
                 $event.preventDefault()
-                return _vm.onCreateRequest($event)
+                return _vm.onSaveRequest($event)
               }
             }
           },

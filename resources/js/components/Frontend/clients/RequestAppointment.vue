@@ -4,14 +4,14 @@
     <div id="modal-edit-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
-        <div class="modal-title">Add Request Service</div>
+        <div class="modal-title">Edit Request Appointment</div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
         </div>
         <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
           {{ messages.errorMessage }}
         </div>
-        <form class="uk-form-stacked" @submit.prevent="onCreateRequest">
+        <form class="uk-form-stacked" @submit.prevent="onSaveRequest">
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Select Date</label>
             <div class="uk-form-controls">
