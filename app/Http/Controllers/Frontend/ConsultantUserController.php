@@ -55,7 +55,7 @@ class ConsultantUserController extends Controller
 
   public function request_list( AppointmentRequest $appointment, $status = null )
   {
-    $res = $appointment->upcomingRequest( $status );
+    $res = $appointment->showRequest( $status );
     return response()->json( $res, 200 );
   }
 

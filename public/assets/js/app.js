@@ -3268,7 +3268,7 @@ document.addEventListener("DOMContentLoaded", function () {
   },
   data: function data() {
     return {
-      status_request: 'upcoming',
+      status_request: 'waiting_respond',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -3312,18 +3312,8 @@ document.addEventListener("DOMContentLoaded", function () {
     showUpcomingRequest: function showUpcomingRequest(p) {
       var _this = this;
 
-      var status_request;
-
-      if (this.status_request === 'upcoming') {
-        status_request = 'waiting_respond';
-      }
-
-      if (this.status_request === 'accepted') {
-        status_request = 'accept';
-      }
-
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/client/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/client/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -4129,22 +4119,22 @@ __webpack_require__.r(__webpack_exports__);
       switch (status) {
         case 'accept':
           confirmation = 'Are you sure want to accept this request?';
-          message = 'Request has been accepted.';
+          message = 'Request ' + id + ' has been accepted.';
           break;
 
         case 'decline':
           confirmation = 'Are you sure want to decline this request?';
-          message = 'Request has been declined.';
+          message = 'Request ' + id + ' has been declined.';
           break;
 
         case 'cancel':
           confirmation = 'Are you sure want to cancel this request?';
-          message = 'Request has been canceled.';
+          message = 'Request ' + id + ' has been canceled.';
           break;
 
         default:
           confirmation = 'Are you sure want to mark this as completed?';
-          message = 'Request has been completed.';
+          message = 'Request ' + id + ' has been completed.';
       }
 
       swal({
@@ -4460,7 +4450,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.messages.errorMessage = err.response.statusText;
       });
     },
-    onApprovalRequest: function onApprovalRequest(id, approval) {
+    onUpdateStatus: function onUpdateStatus(id, approval) {
       var _this2 = this;
 
       var confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
@@ -4479,9 +4469,9 @@ __webpack_require__.r(__webpack_exports__);
         if (val) {
           axios({
             method: 'put',
-            url: _this2.$root.url + '/consultant/approval_request/' + id + '/' + approval
+            url: _this2.$root.url + '/consultant/status_appointment/' + approval + '/' + id
           }).then(function (res) {
-            var message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
+            var message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
             swal({
               text: message,
               icon: 'success'
@@ -4647,6 +4637,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -61764,10 +61772,10 @@ var render = function() {
               _c(
                 "a",
                 {
-                  class: { active: _vm.status_request === "upcoming" },
+                  class: { active: _vm.status_request === "waiting_respond" },
                   on: {
                     click: function($event) {
-                      _vm.status_request = "upcoming"
+                      _vm.status_request = "waiting_respond"
                       _vm.showUpcomingRequest()
                     }
                   }
@@ -61817,14 +61825,7 @@ var render = function() {
               _vm._v(" "),
               _vm.getrequest.total === 0
                 ? _c("div", { staticClass: "no-request-list" }, [
-                    _c("div", { staticClass: "uk-margin-remove" }, [
-                      _vm._m(0),
-                      _vm._v(
-                        "\n          You have no " +
-                          _vm._s(_vm.status_request) +
-                          " request.\n        "
-                      )
-                    ]),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c(
                       "a",
@@ -62050,7 +62051,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-margin-remove" }, [
-      _c("span", { staticClass: "far fa-frown" })
+      _c("div", { staticClass: "uk-margin-remove" }, [
+        _c("span", { staticClass: "far fa-frown" })
+      ]),
+      _vm._v("\n          You have no upcoming appointment.\n        ")
     ])
   },
   function() {
@@ -64176,7 +64180,7 @@ var render = function() {
                                       "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
                                     on: {
                                       click: function($event) {
-                                        return _vm.onApprovalRequest(
+                                        return _vm.onUpdateStatus(
                                           req.apt_id,
                                           "accept"
                                         )
@@ -64193,7 +64197,7 @@ var render = function() {
                                       "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
                                     on: {
                                       click: function($event) {
-                                        return _vm.onApprovalRequest(
+                                        return _vm.onUpdateStatus(
                                           req.apt_id,
                                           "decline"
                                         )
@@ -64795,11 +64799,35 @@ var render = function() {
                                 "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
                             },
                             [
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: _vm.$root.url + "/client/dashboard"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: home; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Dashboard\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
                               _vm._m(1),
                               _vm._v(" "),
                               _vm._m(2),
                               _vm._v(" "),
                               _vm._m(3),
+                              _vm._v(" "),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -64979,25 +65007,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("li", [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: _vm.$root.url + "/consultant/signin" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(_vm.getuser.consultant_fullname) +
-                              "\n                "
-                          ),
-                          _c("span", {
-                            staticClass: "uk-margin-small-left",
-                            attrs: {
-                              "uk-icon": "icon: chevron-down; ratio: 0.7"
-                            }
-                          })
-                        ]
-                      ),
+                      _c("a", [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.getuser.consultant_fullname) +
+                            "\n                "
+                        ),
+                        _c("span", {
+                          staticClass: "uk-margin-small-left",
+                          attrs: { "uk-icon": "icon: chevron-down; ratio: 0.7" }
+                        })
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -65022,6 +65042,29 @@ var render = function() {
                                   {
                                     attrs: {
                                       href:
+                                        _vm.$root.url + "/consultant/dashboard"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: home; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Dashboard\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
                                         _vm.$root.url +
                                         "/consultant/myappointment"
                                     }
@@ -65040,9 +65083,9 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _vm._m(4),
-                              _vm._v(" "),
                               _vm._m(5),
+                              _vm._v(" "),
+                              _vm._m(6),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -65128,6 +65171,17 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-navbar-left" }, [
       _c("a", { staticClass: "uk-navbar-item uk-logo" }, [_vm._v("Logo")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", { staticClass: "uk-margin-small-right fas fa-dashboard" }),
+        _vm._v("\n                      My Appointment\n                    ")
+      ])
     ])
   },
   function() {

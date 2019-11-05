@@ -161,19 +161,19 @@ export default {
       switch (status) {
         case 'accept':
           confirmation = 'Are you sure want to accept this request?';
-          message = 'Request has been accepted.';
+          message = 'Request ' + id + ' has been accepted.';
           break;
         case 'decline':
           confirmation = 'Are you sure want to decline this request?';
-          message = 'Request has been declined.';
+          message = 'Request ' + id + ' has been declined.';
           break;
         case 'cancel':
           confirmation = 'Are you sure want to cancel this request?';
-          message = 'Request has been canceled.';
+          message = 'Request ' + id + ' has been canceled.';
           break;
         default:
           confirmation = 'Are you sure want to mark this as completed?';
-          message = 'Request has been completed.';
+          message = 'Request ' + id + ' has been completed.';
       }
 
       swal({

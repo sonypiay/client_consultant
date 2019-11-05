@@ -31,7 +31,7 @@ class AppointmentRequest extends Model
     return $this->generateId();
   }
 
-  public function upcomingRequest( $status = null )
+  public function showRequest( $status = null )
   {
     $whereClauses = [];
     $status = $status === null ? 'all' : $status;
@@ -65,7 +65,7 @@ class AppointmentRequest extends Model
     }
 
     $query = $query->where($whereClauses);
-    $result = $query->paginate( 4 );
+    $result = $query->paginate( 6 );
     return $result;
   }
 
@@ -205,7 +205,7 @@ class AppointmentRequest extends Model
         $data_notif['consultant_id'] = $update->consultant_id;
       }
 
-      $update->status_request = $approval;
+      $update->status_request = $status;
       $update->save();
 
       $notification->addNotification( $data_notif );

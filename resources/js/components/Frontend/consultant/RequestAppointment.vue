@@ -66,8 +66,8 @@
                 </div>
               </div>
               <div v-show="req.created_by === 'client'" class="uk-margin-small">
-                <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onApprovalRequest( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
+                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default {
         this.messages.errorMessage = err.response.statusText;
       });
     },
-    onApprovalRequest( id, approval )
+    onUpdateStatus( id, approval )
     {
       let confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
       swal({
@@ -141,9 +141,9 @@ export default {
         {
           axios({
             method: 'put',
-            url: this.$root.url + '/consultant/approval_request/' + id + '/' + approval
+            url: this.$root.url + '/consultant/status_appointment/' + approval + '/' + id
           }).then( res => {
-            let message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
+            let message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
             swal({
               text: message,
               icon: 'success'

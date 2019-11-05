@@ -95,7 +95,7 @@
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'upcoming'}" @click="status_request = 'upcoming'; showUpcomingRequest()">Upcoming Appointment</a></li>
+            <li><a :class="{'active': status_request === 'waiting_respond'}" @click="status_request = 'waiting_respond'; showUpcomingRequest()">Upcoming Appointment</a></li>
           </ul>
         </nav>
       </div>
@@ -114,7 +114,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no {{ status_request }} request.
+            You have no upcoming appointment.
           </div>
           <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
         </div>
@@ -188,7 +188,7 @@ export default {
   },
   data() {
     return {
-      status_request: 'upcoming',
+      status_request: 'waiting_respond',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -231,18 +231,8 @@ export default {
   methods: {
     showUpcomingRequest( p )
     {
-      let status_request;
-      if( this.status_request === 'upcoming' )
-      {
-        status_request = 'waiting_respond';
-      }
-      if( this.status_request === 'accepted' )
-      {
-        status_request = 'accept';
-      }
-
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/client/request_list/' + status_request + '?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/client/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({
