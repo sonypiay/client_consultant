@@ -4589,14 +4589,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-document.addEventListener("DOMContentLoaded", function () {
-  OverlayScrollbars(document.querySelector(".navbar-dropdown-notification"), {});
-});
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
     return {
       getnotification: {
+        isLoading: false,
         total: 0,
         results: []
       }
@@ -4606,6 +4606,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showNotification: function showNotification() {
       var _this = this;
 
+      this.getnotification.isLoading = true;
       var url = this.$root.url + '/' + this.haslogin.user + '/notification';
       axios({
         method: 'get',
@@ -4614,17 +4615,20 @@ document.addEventListener("DOMContentLoaded", function () {
         var result = res.data;
         _this.getnotification.total = result.total;
         _this.getnotification.results = result.data;
-        console.log(_this.getnotification);
+        _this.getnotification.isLoading = false;
       })["catch"](function (err) {
+        _this.getnotification.isLoading = false;
         console.log(err.response.statusText);
       });
     },
     markAsRead: function markAsRead(type) {
+      var _this2 = this;
+
       axios({
         method: 'put',
         url: this.$root.url + '/client/notification/' + type + '/mark_as_read'
       }).then(function (res) {
-        console.log('mark as read!');
+        _this2.showNotification();
       })["catch"](function (err) {
         swal({
           title: 'Whoops',
@@ -4636,7 +4640,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   },
   mounted: function mounted() {
-    if (this.haslogin.isLogin) this.showNotification();
+    var _this3 = this;
+
+    if (this.haslogin.isLogin) {
+      this.showNotification();
+      setInterval(function () {
+        _this3.showNotification();
+      }, 10000);
+    }
   }
 });
 
@@ -64015,75 +64026,54 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "uk-margin-bottom uk-overflow-auto navbar-dropdown-notification"
-                            },
-                            [
-                              _vm.getnotification.total === 0
-                                ? _c("div", [
-                                    _c("span", {
-                                      attrs: { "uk-icon": "info" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("br"),
-                                    _vm._v(
-                                      "\n                    You have no notification.\n                  "
-                                    )
-                                  ])
-                                : _c("div", [
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
-                                      },
-                                      _vm._l(
-                                        _vm.getnotification.results,
-                                        function(notif) {
-                                          return _c("li", [
-                                            _c("a", { attrs: { href: "#" } }, [
-                                              _c(
-                                                "div",
-                                                {
-                                                  directives: [
-                                                    {
-                                                      name: "show",
-                                                      rawName: "v-show",
-                                                      value:
-                                                        notif.notif_type ===
-                                                        "request",
-                                                      expression:
-                                                        "notif.notif_type === 'request'"
-                                                    }
-                                                  ],
-                                                  staticClass:
-                                                    "uk-margin-remove uk-text-muted uk-text-small"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                            " +
-                                                      _vm._s(notif.parent_id) +
-                                                      "\n                          "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(
-                                                "\n                          " +
-                                                  _vm._s(notif.notif_message) +
-                                                  "\n                        "
-                                              )
-                                            ])
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  ])
-                            ]
-                          )
+                          _vm.getnotification.isLoading
+                            ? _c("div", { staticClass: "uk-text-center" }, [
+                                _c("span", { attrs: { "uk-spinner": "" } })
+                              ])
+                            : _c("div", [
+                                _vm.getnotification.total === 0
+                                  ? _c("div", [
+                                      _c("span", {
+                                        attrs: { "uk-icon": "info" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                    You have no notification.\n                  "
+                                      )
+                                    ])
+                                  : _c("div", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "dropdown-notification"
+                                        },
+                                        [
+                                          _c(
+                                            "ul",
+                                            {
+                                              staticClass:
+                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                            },
+                                            _vm._l(10, function(notif) {
+                                              return _c("li", [
+                                                _c(
+                                                  "a",
+                                                  { attrs: { href: "#" } },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                            Lorem ipsum dolor sit amet\n                          "
+                                                    )
+                                                  ]
+                                                )
+                                              ])
+                                            }),
+                                            0
+                                          )
+                                        ]
+                                      )
+                                    ])
+                              ])
                         ]
                       )
                     ]),
@@ -64209,75 +64199,53 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "uk-margin-bottom uk-overflow-auto navbar-dropdown-notification"
-                            },
-                            [
-                              _vm.getnotification.total === 0
-                                ? _c("div", [
-                                    _c("span", {
-                                      attrs: { "uk-icon": "info" }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("br"),
-                                    _vm._v(
-                                      "\n                    You have no notification.\n                  "
-                                    )
-                                  ])
-                                : _c("div", [
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
-                                      },
-                                      _vm._l(
-                                        _vm.getnotification.results,
-                                        function(notif) {
-                                          return _c("li", [
-                                            _c("a", { attrs: { href: "#" } }, [
+                          _vm.getnotification.isLoading
+                            ? _c("div", { staticClass: "uk-text-center" }, [
+                                _c("span", { attrs: { "uk-spinner": "" } })
+                              ])
+                            : _c("div", [
+                                _vm.getnotification.total === 0
+                                  ? _c("div", [
+                                      _c("span", {
+                                        attrs: { "uk-icon": "info" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                    You have no notification.\n                  "
+                                      )
+                                    ])
+                                  : _c("div", [
+                                      _c(
+                                        "ul",
+                                        {
+                                          staticClass:
+                                            "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                        },
+                                        _vm._l(
+                                          _vm.getnotification.results,
+                                          function(notif) {
+                                            return _c("li", [
                                               _c(
-                                                "div",
-                                                {
-                                                  directives: [
-                                                    {
-                                                      name: "show",
-                                                      rawName: "v-show",
-                                                      value:
-                                                        notif.notif_type ===
-                                                        "request",
-                                                      expression:
-                                                        "notif.notif_type === 'request'"
-                                                    }
-                                                  ],
-                                                  staticClass:
-                                                    "uk-margin-remove uk-text-muted uk-text-small"
-                                                },
+                                                "a",
+                                                { attrs: { href: "#" } },
                                                 [
                                                   _vm._v(
-                                                    "\n                            " +
-                                                      _vm._s(notif.parent_id) +
-                                                      "\n                          "
+                                                    "\n                          " +
+                                                      _vm._s(
+                                                        notif.notif_message
+                                                      ) +
+                                                      "\n                        "
                                                   )
                                                 ]
-                                              ),
-                                              _vm._v(
-                                                "\n                          " +
-                                                  _vm._s(notif.notif_message) +
-                                                  "\n                        "
                                               )
                                             ])
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  ])
-                            ]
-                          )
+                                          }
+                                        ),
+                                        0
+                                      )
+                                    ])
+                              ])
                         ]
                       )
                     ]),

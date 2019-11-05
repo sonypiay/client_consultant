@@ -68,12 +68,12 @@ body {
   border-radius: 6px;
 }
 
-.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .navbar-dropdown-notification {
-  height: 150px;
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .dropdown-notification {
+  height: 200px;
   overflow-y: scroll;
 }
 
-.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .navbar-dropdown-notification .no-notification {
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .no-notification {
   margin-top: 3.8rem;
   font-weight: 400;
   font-size: 13px;

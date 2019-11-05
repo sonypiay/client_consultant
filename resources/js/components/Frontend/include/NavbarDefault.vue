@@ -17,22 +17,24 @@
                   <div class="uk-clearfix">
                     <a @click="markAsRead('request')" class="uk-float-right markas-read">Mark as read</a>
                   </div>
-                  <div class="uk-margin-bottom uk-overflow-auto navbar-dropdown-notification">
+                  <div v-if="getnotification.isLoading" class="uk-text-center">
+                    <span uk-spinner></span>
+                  </div>
+                  <div v-else>
                     <div v-if="getnotification.total === 0">
                       <span uk-icon="info"></span> <br />
                       You have no notification.
                     </div>
                     <div v-else>
-                      <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
-                        <li v-for="notif in getnotification.results">
-                          <a href="#">
-                            <div v-show="notif.notif_type === 'request'" class="uk-margin-remove uk-text-muted uk-text-small">
-                              {{ notif.parent_id }}
-                            </div>
-                            {{ notif.notif_message }}
-                          </a>
-                        </li>
-                      </ul>
+                      <div class="dropdown-notification">
+                        <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
+                          <li v-for="notif in 10">
+                            <a href="#">
+                              Lorem ipsum dolor sit amet
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -87,7 +89,10 @@
                   <div class="uk-clearfix">
                     <a @click="markAsRead('request')" class="uk-float-right markas-read">Mark as read</a>
                   </div>
-                  <div class="uk-margin-bottom uk-overflow-auto navbar-dropdown-notification">
+                  <div v-if="getnotification.isLoading" class="uk-text-center">
+                    <span uk-spinner></span>
+                  </div>
+                  <div v-else>
                     <div v-if="getnotification.total === 0">
                       <span uk-icon="info"></span> <br />
                       You have no notification.
@@ -96,9 +101,6 @@
                       <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
                         <li v-for="notif in getnotification.results">
                           <a href="#">
-                            <div v-show="notif.notif_type === 'request'" class="uk-margin-remove uk-text-muted uk-text-small">
-                              {{ notif.parent_id }}
-                            </div>
                             {{ notif.notif_message }}
                           </a>
                         </li>
@@ -161,10 +163,6 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function() {
-	OverlayScrollbars(document.querySelector(".navbar-dropdown-notification"), {});
-});
-
 export default {
   props: [
     'haslogin',
@@ -173,6 +171,7 @@ export default {
   data() {
     return {
       getnotification: {
+        isLoading: false,
         total: 0,
         results: []
       }
@@ -181,18 +180,18 @@ export default {
   methods: {
     showNotification()
     {
+      this.getnotification.isLoading = true;
       let url = this.$root.url + '/' + this.haslogin.user + '/notification';
       axios({
         method: 'get',
         url: url
       }).then( res => {
         let result = res.data;
-
         this.getnotification.total = result.total;
         this.getnotification.results = result.data;
-
-        console.log( this.getnotification );
+        this.getnotification.isLoading = false;
       }).catch( err => {
+        this.getnotification.isLoading = false;
         console.log( err.response.statusText );
       });
     },
@@ -202,7 +201,7 @@ export default {
         method: 'put',
         url: this.$root.url + '/client/notification/' + type + '/mark_as_read'
       }).then( res => {
-        console.log('mark as read!');
+        this.showNotification();
       }).catch( err => {
         swal({
           title: 'Whoops',
@@ -214,7 +213,11 @@ export default {
     }
   },
   mounted() {
-    if( this.haslogin.isLogin ) this.showNotification();
+    if( this.haslogin.isLogin )
+    {
+      this.showNotification();
+      setInterval(() => { this.showNotification(); }, 10000);
+    }
   }
 }
 </script>
