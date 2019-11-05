@@ -105,13 +105,13 @@
                           View
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'consultant'">
+                      <li v-show="req.created_by === 'client'">
                         <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Edit
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'consultant'">
+                      <li v-show="req.created_by === 'client'">
                         <a>
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                           Delete
@@ -130,12 +130,12 @@
                   {{ req.client_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'" class="uk-margin-small">
+              <div v-show="req.created_by === 'consultant' && req.status_request === 'waiting_respond'" class="uk-margin-small">
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
-              <div v-show="req.status_request === 'accept'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-default uk-button-small gl-button-default">Mark as Completed</a>
+              <div v-show="req.status_request === 'done'" class="uk-margin-small">
+                <a @click="" class="uk-button uk-button-default uk-button-small gl-button-default">Review this Consultant</a>
               </div>
             </div>
           </div>
