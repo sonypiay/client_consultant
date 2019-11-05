@@ -4165,7 +4165,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   },
   mounted: function mounted() {
-    this.showNotification();
+    if (this.haslogin.isLogin) this.showNotification();
   }
 });
 

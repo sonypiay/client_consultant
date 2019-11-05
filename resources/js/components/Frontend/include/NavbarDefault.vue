@@ -166,7 +166,7 @@ export default {
     }
   },
   mounted() {
-    this.showNotification();
+    if( this.haslogin.isLogin ) this.showNotification();
   }
 }
 </script>

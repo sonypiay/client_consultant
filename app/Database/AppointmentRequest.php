@@ -127,25 +127,28 @@ class AppointmentRequest extends Model
     {
       $update = $apt->first();
       $notification = new Notification;
+      $notif_message = $approval === 'accept' ? 'Your request #' . $id . ' has been accepted' : 'Your request #' . $id . ' has been declined';
+
       $data_notif = [
-        'parent_id' => $apt_id,
+        'parent_id' => $id,
         'notif_date' => date('Y-m-d H:i:s'),
         'notif_read' => 'N',
         'notif_type' => 'request',
-        'notif_message' => 'Your request #' . $id . ' has been accepted'
+        'notif_message' => $notif_message
       ];
 
-      if( $created_by === 'client' )
+      if( $update->created_by === 'client' )
       {
-        $data_notif['consultant_id'] = $update->consultant_id;
+        $data_notif['client_id'] = $update->client_id;
       }
       else
       {
-        $data_notif['client_id'] = $update->client_id;
+        $data_notif['consultant_id'] = $update->consultant_id;
       }
 
       $update->status_request = $approval;
       $update->save();
+
       $notification->addNotification( $data_notif );
     }
 
