@@ -70,4 +70,11 @@ class ClientUserController extends Controller
     $res = $appointment->saveRequest( $id, $request );
     return response()->json( $res, 200 );
   }
+
+  public function mark_as_read( Notification $notification, $type )
+  {
+    $userid = session()->has('isClient') ? session()->get('clientId') : '';
+    $res = $notification->markAsRead( $userid, $type );
+    return response()->json( $res, $res['responseCode'] );
+  }
 }

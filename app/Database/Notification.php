@@ -31,4 +31,16 @@ class Notification extends Model
       'data' => $query
     ];
   }
+
+  public function markAsRead( $userid, $type )
+  {
+    $query = $this->where([
+      ['client_id', $userid],
+      ['notif_type', $type]
+    ]);
+    $query->update(['notif_read' => 'R']);
+    $res = ['responseCode' => 200, 'responseMessage' => ''];
+
+    return $res;
+  }
 }

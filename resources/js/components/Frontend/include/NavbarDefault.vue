@@ -11,10 +11,11 @@
               <li>
                 <a href="#">
                   <span uk-icon="bell"></span>
+                  <span v-show="getnotification.total !== 0" class="count-notification">{{ getnotification.total }}</span>
                 </a>
                 <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
                   <div class="uk-clearfix">
-                    <a class="uk-float-right markas-read">Mark as read</a>
+                    <a @click="markAsRead('request')" class="uk-float-right markas-read">Mark as read</a>
                   </div>
                   <div class="uk-margin-bottom uk-overflow-auto navbar-dropdown-notification">
                     <div v-if="getnotification.total === 0">
@@ -84,7 +85,7 @@
                 </a>
                 <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
                   <div class="uk-clearfix">
-                    <a class="uk-float-right markas-read">Mark as read</a>
+                    <a @click="markAsRead('request')" class="uk-float-right markas-read">Mark as read</a>
                   </div>
                   <div class="uk-margin-bottom uk-overflow-auto navbar-dropdown-notification">
                     <div v-if="getnotification.total === 0">
@@ -193,6 +194,22 @@ export default {
         console.log( this.getnotification );
       }).catch( err => {
         console.log( err.response.statusText );
+      });
+    },
+    markAsRead( type )
+    {
+      axios({
+        method: 'put',
+        url: this.$root.url + '/client/notification/' + type + '/mark_as_read'
+      }).then( res => {
+        console.log('mark as read!');
+      }).catch( err => {
+        swal({
+          title: 'Whoops',
+          text: err.response.statusText,
+          icon: 'error',
+          dangerMode: true
+        });
       });
     }
   },

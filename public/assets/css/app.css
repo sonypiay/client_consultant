@@ -51,6 +51,19 @@ body {
   text-transform: capitalize;
 }
 
+.headerdefault .navbardefault .navdefault li a .count-notification {
+  margin-top: -1rem;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  padding: 3px 8px;
+  background: #25C4F2;
+  border-radius: 2rem;
+}
+
 .headerdefault .navbardefault .navdefault li .navbar-dropdown-default {
   border-radius: 6px;
 }

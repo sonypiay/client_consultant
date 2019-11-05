@@ -4588,6 +4588,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelector(".navbar-dropdown-notification"), {});
 });
@@ -4616,6 +4617,21 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(_this.getnotification);
       })["catch"](function (err) {
         console.log(err.response.statusText);
+      });
+    },
+    markAsRead: function markAsRead(type) {
+      axios({
+        method: 'put',
+        url: this.$root.url + '/client/notification/' + type + '/mark_as_read'
+      }).then(function (res) {
+        console.log('mark as read!');
+      })["catch"](function (err) {
+        swal({
+          title: 'Whoops',
+          text: err.response.statusText,
+          icon: 'error',
+          dangerMode: true
+        });
       });
     }
   },
@@ -63954,7 +63970,25 @@ var render = function() {
               _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
                 ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
                     _c("li", [
-                      _vm._m(1),
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("span", { attrs: { "uk-icon": "bell" } }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.getnotification.total !== 0,
+                                expression: "getnotification.total !== 0"
+                              }
+                            ],
+                            staticClass: "count-notification"
+                          },
+                          [_vm._v(_vm._s(_vm.getnotification.total))]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -63966,7 +64000,20 @@ var render = function() {
                           }
                         },
                         [
-                          _vm._m(2),
+                          _c("div", { staticClass: "uk-clearfix" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "uk-float-right markas-read",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.markAsRead("request")
+                                  }
+                                }
+                              },
+                              [_vm._v("Mark as read")]
+                            )
+                          ]),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -64075,11 +64122,11 @@ var render = function() {
                                 "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
                             },
                             [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _vm._m(2),
+                              _vm._v(" "),
                               _vm._m(3),
-                              _vm._v(" "),
-                              _vm._m(4),
-                              _vm._v(" "),
-                              _vm._m(5),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -64135,7 +64182,7 @@ var render = function() {
                   _vm.haslogin.user === "consultant"
                 ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
                     _c("li", [
-                      _vm._m(6),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -64147,7 +64194,20 @@ var render = function() {
                           }
                         },
                         [
-                          _vm._m(7),
+                          _c("div", { staticClass: "uk-clearfix" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "uk-float-right markas-read",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.markAsRead("request")
+                                  }
+                                }
+                              },
+                              [_vm._v("Mark as read")]
+                            )
+                          ]),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -64260,11 +64320,11 @@ var render = function() {
                                 "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
                             },
                             [
-                              _vm._m(8),
+                              _vm._m(5),
                               _vm._v(" "),
-                              _vm._m(9),
+                              _vm._m(6),
                               _vm._v(" "),
-                              _vm._m(10),
+                              _vm._m(7),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -64356,24 +64416,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("span", { attrs: { "uk-icon": "bell" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-clearfix" }, [
-      _c("a", { staticClass: "uk-float-right markas-read" }, [
-        _vm._v("Mark as read")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("li", [
       _c("a", { attrs: { href: "#" } }, [
         _c("span", {
@@ -64418,16 +64460,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("a", { attrs: { href: "#" } }, [
       _c("span", { attrs: { "uk-icon": "bell" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-clearfix" }, [
-      _c("a", { staticClass: "uk-float-right markas-read" }, [
-        _vm._v("Mark as read")
-      ])
     ])
   },
   function() {

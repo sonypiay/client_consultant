@@ -34,6 +34,14 @@
           color: #333333;
           @include global_font_style( 700, 16px, normal, 0.4px );
           text-transform: capitalize;
+          .count-notification {
+            margin-top: -1rem;
+            color: #ffffff;
+            @include global_font_style( 700, 12px, normal, 0.4px );
+            padding: 3px 8px;
+            background: $color-base;
+            border-radius: 2rem;
+          }
         }
         .navbar-dropdown-default {
           border-radius: 6px;

@@ -29,6 +29,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::put('/save_request/{id}', 'Frontend\ClientUserController@save_request');
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
+  Route::put('/notification/{type}/mark_as_read', 'Frontend\ClientUserController@mark_as_read');
 });
 
 Route::group(['prefix' => 'consultant'], function() {
