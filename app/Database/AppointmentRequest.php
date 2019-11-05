@@ -33,7 +33,7 @@ class AppointmentRequest extends Model
 
   public function upcomingRequest( $status = null )
   {
-    $status = $status === null ? 'waiting_respond' : $status;
+    $status = $status === null ? 'all' : $status;
     $query = $this->select(
       'appointment_request.apt_id',
       'appointment_request.client_id',
@@ -48,8 +48,12 @@ class AppointmentRequest extends Model
       'consultant_user.consultant_fullname'
     )
     ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
-    ->join('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
-    ->where('appointment_request.status_request', $status);
+    ->join('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id');
+
+    if( $status !== 'all' )
+    {
+      $query = $query->where('appointment_request.status_request', $status);
+    }
 
     if( session()->has('isClient') )
     {

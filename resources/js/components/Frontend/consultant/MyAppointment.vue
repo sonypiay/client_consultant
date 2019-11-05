@@ -4,9 +4,12 @@
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'upcoming'}" @click="status_request = 'upcoming'; showUpcomingRequest()">Upcoming Appointment</a></li>
-            <li><a :class="{'active': status_request === 'accepted'}" @click="status_request = 'accepted'; showUpcomingRequest()">Accepted Appointment</a></li>
-            <li><a :class="{'active': status_request === 'declined'}" @click="status_request = 'declined'; showUpcomingRequest()">Declined Appointment</a></li>
+            <li><a :class="{'active': status_request === 'all'}" @click="status_request = 'all'; showUpcomingRequest()">All Appointment</a></li>
+            <li><a :class="{'active': status_request === 'waiting_respond'}" @click="status_request = 'waiting_respond'; showUpcomingRequest()">Upcoming Appointment</a></li>
+            <li><a :class="{'active': status_request === 'accept'}" @click="status_request = 'accept'; showUpcomingRequest()">Accepted Appointment</a></li>
+            <li><a :class="{'active': status_request === 'decline'}" @click="status_request = 'decline'; showUpcomingRequest()">Declined Appointment</a></li>
+            <li><a :class="{'active': status_request === 'cancel'}" @click="status_request = 'cancel'; showUpcomingRequest()">Canceled Appointment</a></li>
+            <li><a :class="{'active': status_request === 'done'}" @click="status_request = 'done'; showUpcomingRequest()">Canceled Appointment</a></li>
           </ul>
         </nav>
       </div>
