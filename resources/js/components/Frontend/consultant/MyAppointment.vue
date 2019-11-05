@@ -93,7 +93,7 @@
                 <a @click="onApprovalRequest( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
               <div v-show="req.status_request === 'accept'" class="uk-margin-small">
-                <a @click="" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Mark as Completed</a>
+                <a @click="markAsDone( req.apt_id )" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Mark as Completed</a>
               </div>
             </div>
           </div>
@@ -154,9 +154,22 @@ export default {
         this.messages.errorMessage = err.response.statusText;
       });
     },
-    onApprovalRequest( id, approval )
+    onUpdateStatus( id, status )
     {
-      let confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      let confirmation;
+      switch (status) {
+        case 'accept':
+          confirmation = 'Are you sure want to accept this appointment?';
+          break;
+        case 'decline':
+          confirmation = 'Are you sure want to decline this appointment?';
+          break;
+        case 'cancel':
+          confirmation = 'Are you sure want to cancel this appointment?';
+          break;
+        default:
+          confirmation = 'Are you sure want to mark this as completed?';
+      }
       swal({
         title: 'Confirmation',
         text: confirmation,

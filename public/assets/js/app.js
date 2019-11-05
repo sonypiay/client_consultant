@@ -4121,10 +4121,28 @@ __webpack_require__.r(__webpack_exports__);
         _this.messages.errorMessage = err.response.statusText;
       });
     },
-    onApprovalRequest: function onApprovalRequest(id, approval) {
+    onUpdateStatus: function onUpdateStatus(id, status) {
       var _this2 = this;
 
-      var confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      var confirmation;
+
+      switch (status) {
+        case 'accept':
+          confirmation = 'Are you sure want to accept this appointment?';
+          break;
+
+        case 'decline':
+          confirmation = 'Are you sure want to decline this appointment?';
+          break;
+
+        case 'cancel':
+          confirmation = 'Are you sure want to cancel this appointment?';
+          break;
+
+        default:
+          confirmation = 'Are you sure want to mark this as completed?';
+      }
+
       swal({
         title: 'Confirmation',
         text: confirmation,
@@ -63554,7 +63572,11 @@ var render = function() {
                                     {
                                       staticClass:
                                         "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                      on: { click: function($event) {} }
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.markAsDone(req.apt_id)
+                                        }
+                                      }
                                     },
                                     [_vm._v("Mark as Completed")]
                                   )

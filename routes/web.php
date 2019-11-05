@@ -46,6 +46,6 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::post('/signin', 'Frontend\ConsultantUserController@login');
   Route::put('/save_profile', 'Frontend\ConsultantUserController@save_profile');
   Route::put('/change_password', 'Frontend\ConsultantUserController@change_password');
-  Route::put('/approval_request/{id}/{approval}', 'Frontend\ConsultantUserController@approval_request');
+  Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ConsultantUserController@mark_as_read');
 });
