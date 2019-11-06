@@ -3311,6 +3311,7 @@ __webpack_require__.r(__webpack_exports__);
     onClickModal: function onClickModal() {},
     modalReview: function modalReview(data) {
       this.getrequest.details = data;
+      console.log(data);
       UIkit.modal('#givereview').show();
     },
     onGiveReview: function onGiveReview() {
@@ -62250,9 +62251,10 @@ var render = function() {
                                                     rawName: "v-show",
                                                     value:
                                                       req.status_request ===
-                                                      "done",
+                                                        "done" &&
+                                                      req.is_solved !== "Y",
                                                     expression:
-                                                      "req.status_request === 'done'"
+                                                      "req.status_request === 'done' && req.is_solved !== 'Y'"
                                                   }
                                                 ]
                                               },
@@ -62295,9 +62297,10 @@ var render = function() {
                                                     rawName: "v-show",
                                                     value:
                                                       req.status_request ===
-                                                      "done",
+                                                        "done" &&
+                                                      req.is_solved !== "Y",
                                                     expression:
-                                                      "req.status_request === 'done'"
+                                                      "req.status_request === 'done' && req.is_solved !== 'Y'"
                                                   }
                                                 ]
                                               },
@@ -62433,9 +62436,11 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: req.status_request === "done",
+                                      value:
+                                        req.status_request === "done" &&
+                                        req.is_solved === "Y",
                                       expression:
-                                        "req.status_request === 'done'"
+                                        "req.status_request === 'done' && req.is_solved === 'Y'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"

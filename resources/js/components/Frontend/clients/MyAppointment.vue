@@ -189,13 +189,13 @@
                           Delete
                         </a>
                       </li>
-                      <li v-show="req.status_request === 'done'">
+                      <li v-show="req.status_request === 'done' && req.is_solved !== 'Y'">
                         <a @click="onUpdateStatus( req.apt_id, 'solved' )">
                           <span class="uk-margin-small-right" uk-icon="icon: check; ratio: 0.8"></span>
                           Mark as Solved
                         </a>
                       </li>
-                      <li v-show="req.status_request === 'done'">
+                      <li v-show="req.status_request === 'done' && req.is_solved !== 'Y'">
                         <a @click="onUpdateStatus( req.apt_id, 'unfinished' )">
                           <span class="uk-margin-small-right" uk-icon="icon: close; ratio: 0.8"></span>
                           Mark as Unfinished
@@ -218,7 +218,7 @@
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
-              <div v-show="req.status_request === 'done'" class="uk-margin-small">
+              <div v-show="req.status_request === 'done' && req.is_solved === 'Y'" class="uk-margin-small">
                 <a @click="modalReview( req )" class="uk-button uk-button-default uk-button-small gl-button-default">Review this Consultant</a>
               </div>
             </div>
@@ -362,6 +362,7 @@ export default {
     modalReview( data )
     {
       this.getrequest.details = data;
+      console.log(data);
       UIkit.modal('#givereview').show();
     },
     onGiveReview()

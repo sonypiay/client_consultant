@@ -46,6 +46,7 @@ class AppointmentRequest extends Model
       'appointment_request.schedule_date',
       'appointment_request.description',
       'appointment_request.status_request',
+      'appointment_request.is_solved',
       'appointment_request.created_at',
       'appointment_request.updated_at',
       'client_user.client_fullname',
