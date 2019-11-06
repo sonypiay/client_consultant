@@ -211,15 +211,18 @@
               </div>
               <div class="uk-margin-small">
                 <div class="request-pic">
-                  {{ req.client_fullname }}
+                  {{ req.consultant_fullname }}
                 </div>
               </div>
               <div v-show="req.created_by === 'consultant' && req.status_request === 'waiting_respond'" class="uk-margin-small">
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
-              <div v-show="req.status_request === 'done' && req.is_solved === 'Y'" class="uk-margin-small">
-                <a @click="modalReview( req )" class="uk-button uk-button-default uk-button-small gl-button-default">Review this Consultant</a>
+              <div v-show="req.status_request === 'done'" class="uk-margin-small">
+                <a @click="modalReview( req )" class="uk-button uk-button-default uk-button-small gl-button-default">
+                  <span v-if="req.is_solved === 'Y'">Edit Review</span>
+                  <span v-else>Review this Consultant</span>
+                </a>
               </div>
             </div>
           </div>
@@ -361,8 +364,9 @@ export default {
     },
     modalReview( data )
     {
+      this.forms.rating.review_description = '';
+      this.forms.rating.feedback = '';
       this.getrequest.details = data;
-      console.log(data);
       UIkit.modal('#givereview').show();
     },
     onGiveReview()

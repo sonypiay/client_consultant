@@ -3176,6 +3176,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -3310,8 +3313,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onClickModal: function onClickModal() {},
     modalReview: function modalReview(data) {
+      this.forms.rating.review_description = '';
+      this.forms.rating.feedback = '';
       this.getrequest.details = data;
-      console.log(data);
       UIkit.modal('#givereview').show();
     },
     onGiveReview: function onGiveReview() {
@@ -62396,7 +62400,7 @@ var render = function() {
                                 _c("div", { staticClass: "request-pic" }, [
                                   _vm._v(
                                     "\n                " +
-                                      _vm._s(req.client_fullname) +
+                                      _vm._s(req.consultant_fullname) +
                                       "\n              "
                                   )
                                 ])
@@ -62463,11 +62467,9 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value:
-                                        req.status_request === "done" &&
-                                        req.is_solved === "Y",
+                                      value: req.status_request === "done",
                                       expression:
-                                        "req.status_request === 'done' && req.is_solved === 'Y'"
+                                        "req.status_request === 'done'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -62484,7 +62486,13 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Review this Consultant")]
+                                    [
+                                      req.is_solved === "Y"
+                                        ? _c("span", [_vm._v("Edit Review")])
+                                        : _c("span", [
+                                            _vm._v("Review this Consultant")
+                                          ])
+                                    ]
                                   )
                                 ]
                               )
