@@ -49,4 +49,16 @@
     background: $red;
     &:hover, &:active { background: lighten( $red, 10% ); }
   }
+
+  .gl-icon-review {
+    color: $color-base;
+    font-size: 40px;
+    &:hover, &:active {
+      color: lighten( $color-base, 10% );
+    }
+  }
+  .gl-review-text {
+    color: #666666;
+    @include global_font_style( 400, 14px, normal, 0.4px );
+  }
 }

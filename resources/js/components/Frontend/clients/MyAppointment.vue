@@ -4,6 +4,81 @@
     :haslogin="haslogin"
     :getuser="getuser" />
 
+    <div id="givereview" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body modal-dialog">
+        <a class="uk-modal-close uk-modal-close-default" uk-close></a>
+        <div class="modal-title">Review a Consultant</div>
+
+        <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
+          {{ messages.successMessage }}
+        </div>
+        <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
+          {{ messages.errorMessage }}
+        </div>
+
+        <form class="uk-form-stacked uk-margin-top" @submit.prevent="onGiveReview">
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Write a Review</label>
+            <div class="uk-form-controls">
+              <textarea class="uk-textarea uk-height-small gl-input-default" placeholder="Write your complete review"></textarea>
+            </div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">How do you review it?</label>
+            <div class="uk-form-controls">
+              <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a @click="forms.rating.feedback = 'excellent'" uk-tooltip="Excellent" class="gl-icon-review">
+                      <i :class="{'fas': forms.rating.feedback === 'excellent'}" class="far fa-smile-beam"></i>
+                    </a>
+                    <div class="gl-review-text">Excellent</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a @click="forms.rating.feedback = 'good'" uk-tooltip="Good" class="gl-icon-review">
+                      <i :class="{'fas': forms.rating.feedback === 'good'}" class="far fa-smile"></i>
+                    </a>
+                    <div class="gl-review-text">Good</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a @click="forms.rating.feedback = 'neutral'" uk-tooltip="Neutral" class="gl-icon-review">
+                      <i :class="{'fas': forms.rating.feedback === 'neutral'}" class="far fa-meh"></i>
+                    </a>
+                    <div class="gl-review-text">Neutral</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a @click="forms.rating.feedback = 'poor'" uk-tooltip="Poor" class="gl-icon-review">
+                      <i :class="{'fas': forms.rating.feedback === 'poor'}" class="far fa-frown"></i>
+                    </a>
+                    <div class="gl-review-text">Poor</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a @click="forms.rating.feedback = 'disappointed'" uk-tooltip="Disappointed" class="gl-icon-review">
+                      <i :class="{'fas': forms.rating.feedback === 'disappointed'}" class="far fa-angry"></i>
+                    </a>
+                    <div class="gl-review-text">Disappointed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="uk-margin">
+            <div class="uk-form-controls">
+              <button class="uk-button uk-button-primary gl-button-primary" v-html="forms.rating.submit"></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <div class="uk-padding banner-index_header">
       <div class="uk-container">My Appointment</div>
     </div>
@@ -23,34 +98,29 @@
     </div>-->
 
     <div class="uk-container uk-margin-top uk-margin-large-bottom container-request-list">
-      <div class="uk-clearfix uk-margin-bottom">
-        <div class="uk-float-left">
-          <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
-            <div>
-              <select class="uk-select gl-input-default" v-model="forms.limit">
-                <option value="6">6 rows</option>
-                <option value="12">12 rows</option>
-                <option value="24">24 rows</option>
-                <option value="36">36 rows</option>
-              </select>
-            </div>
-            <div>
-              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Find by id, consultant name..." @keyup.enter="showRequest()" />
-            </div>
-            <div>
-              <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
-                <option value="all">All Status</option>
-                <option value="waiting_respond">Upcoming</option>
-                <option value="accept">Accepted</option>
-                <option value="decline">Declined</option>
-                <option value="cancel">Canceled</option>
-                <option value="done">Completed</option>
-              </select>
-            </div>
+      <div class="uk-margin-bottom">
+        <div class="uk-grid-small uk-child-width-auto" uk-grid>
+          <div>
+            <select class="uk-select gl-input-default" v-model="forms.limit">
+              <option value="6">6 rows</option>
+              <option value="12">12 rows</option>
+              <option value="24">24 rows</option>
+              <option value="36">36 rows</option>
+            </select>
           </div>
-        </div>
-        <div class="uk-float-right">
-          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Make Appointment</a>
+          <div>
+            <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Find by id, consultant name..." @keyup.enter="showRequest()" />
+          </div>
+          <div>
+            <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
+              <option value="all">All Status</option>
+              <option value="waiting_respond">Upcoming</option>
+              <option value="accept">Accepted</option>
+              <option value="decline">Declined</option>
+              <option value="cancel">Canceled</option>
+              <option value="done">Completed</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -135,7 +205,7 @@
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
               <div v-show="req.status_request === 'done'" class="uk-margin-small">
-                <a @click="" class="uk-button uk-button-default uk-button-small gl-button-default">Review this Consultant</a>
+                <a @click="modalReview( req )" class="uk-button uk-button-default uk-button-small gl-button-default">Review this Consultant</a>
               </div>
             </div>
           </div>
@@ -162,12 +232,18 @@ export default {
           last_page: 1,
           prev_page_url: '',
           next_page_url: ''
-        }
+        },
+        details: {}
       },
       forms: {
         keywords: '',
         limit: 6,
-        status_request: 'all'
+        status_request: 'all',
+        rating: {
+          feedback: '',
+          comment_review: '',
+          submit: 'Send Review'
+        }
       },
       messages: {
         errors: {},
@@ -256,6 +332,19 @@ export default {
           });
         }
       });
+    },
+    onClickModal()
+    {
+
+    },
+    modalReview( data )
+    {
+      this.getrequest.details = data;
+      UIkit.modal('#givereview').show();
+    },
+    onGiveReview()
+    {
+
     }
   },
   mounted() {

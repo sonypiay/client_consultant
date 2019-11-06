@@ -241,6 +241,25 @@ body {
   background: #e9605c;
 }
 
+.gl-icon-review {
+  color: #25C4F2;
+  font-size: 40px;
+}
+
+.gl-icon-review:hover,
+.gl-icon-review:active {
+  color: #55d1f5;
+}
+
+.gl-review-text {
+  color: #666666;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
 .banner-homepage-overlay {
   background: rgba(37, 196, 242, 0.7);
 }

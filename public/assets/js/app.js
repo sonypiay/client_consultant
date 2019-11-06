@@ -3092,6 +3092,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -3105,12 +3175,18 @@ __webpack_require__.r(__webpack_exports__);
           last_page: 1,
           prev_page_url: '',
           next_page_url: ''
-        }
+        },
+        details: {}
       },
       forms: {
         keywords: '',
         limit: 6,
-        status_request: 'all'
+        status_request: 'all',
+        rating: {
+          feedback: '',
+          comment_review: '',
+          submit: 'Send Review'
+        }
       },
       messages: {
         errors: {},
@@ -3207,7 +3283,13 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
-    }
+    },
+    onClickModal: function onClickModal() {},
+    modalReview: function modalReview(data) {
+      this.getrequest.details = data;
+      UIkit.modal('#givereview').show();
+    },
+    onGiveReview: function onGiveReview() {}
   },
   mounted: function mounted() {
     this.showRequest();
@@ -61376,7 +61458,259 @@ var render = function() {
         attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
       }),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { attrs: { id: "givereview", "uk-modal": "" } }, [
+        _c(
+          "div",
+          { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" },
+          [
+            _c("a", {
+              staticClass: "uk-modal-close uk-modal-close-default",
+              attrs: { "uk-close": "" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-title" }, [
+              _vm._v("Review a Consultant")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.messages.successMessage,
+                    expression: "messages.successMessage"
+                  }
+                ],
+                staticClass: "uk-margin-top uk-alert-success",
+                attrs: { "uk-alert": "" }
+              },
+              [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.messages.successMessage) +
+                    "\n      "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.messages.errorMessage,
+                    expression: "messages.errorMessage"
+                  }
+                ],
+                staticClass: "uk-margin-top uk-alert-danger",
+                attrs: { "uk-alert": "" }
+              },
+              [
+                _vm._v(
+                  "\n        " + _vm._s(_vm.messages.errorMessage) + "\n      "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "uk-form-stacked uk-margin-top",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.onGiveReview($event)
+                  }
+                }
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("How do you review it?")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "uk-grid-small",
+                        attrs: { "uk-grid": "" }
+                      },
+                      [
+                        _c("div", { staticClass: "uk-width-1-5" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "gl-icon-review",
+                                attrs: { "uk-tooltip": "Excellent" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.forms.rating.feedback = "excellent"
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "far fa-smile-beam",
+                                  class: {
+                                    fas:
+                                      _vm.forms.rating.feedback === "excellent"
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "gl-review-text" }, [
+                              _vm._v("Excellent")
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "uk-width-1-5" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "gl-icon-review",
+                                attrs: { "uk-tooltip": "Good" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.forms.rating.feedback = "good"
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "far fa-smile",
+                                  class: {
+                                    fas: _vm.forms.rating.feedback === "good"
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "gl-review-text" }, [
+                              _vm._v("Good")
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "uk-width-1-5" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "gl-icon-review",
+                                attrs: { "uk-tooltip": "Neutral" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.forms.rating.feedback = "neutral"
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "far fa-meh",
+                                  class: {
+                                    fas: _vm.forms.rating.feedback === "neutral"
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "gl-review-text" }, [
+                              _vm._v("Neutral")
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "uk-width-1-5" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "gl-icon-review",
+                                attrs: { "uk-tooltip": "Poor" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.forms.rating.feedback = "poor"
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "far fa-frown",
+                                  class: {
+                                    fas: _vm.forms.rating.feedback === "poor"
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "gl-review-text" }, [
+                              _vm._v("Poor")
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "uk-width-1-5" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "gl-icon-review",
+                                attrs: { "uk-tooltip": "Disappointed" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.forms.rating.feedback = "disappointed"
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "far fa-angry",
+                                  class: {
+                                    fas:
+                                      _vm.forms.rating.feedback ===
+                                      "disappointed"
+                                  }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "gl-review-text" }, [
+                              _vm._v("Disappointed")
+                            ])
+                          ])
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c("button", {
+                      staticClass:
+                        "uk-button uk-button-primary gl-button-primary",
+                      domProps: { innerHTML: _vm._s(_vm.forms.rating.submit) }
+                    })
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(1),
       _vm._v(" "),
       _c(
         "div",
@@ -61385,30 +61719,125 @@ var render = function() {
             "uk-container uk-margin-top uk-margin-large-bottom container-request-list"
         },
         [
-          _c("div", { staticClass: "uk-clearfix uk-margin-bottom" }, [
-            _c("div", { staticClass: "uk-float-left" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "uk-grid uk-grid-small uk-child-width-auto",
-                  attrs: { "uk-grid": "" }
-                },
-                [
-                  _c("div", [
-                    _c(
-                      "select",
+          _c("div", { staticClass: "uk-margin-bottom" }, [
+            _c(
+              "div",
+              {
+                staticClass: "uk-grid-small uk-child-width-auto",
+                attrs: { "uk-grid": "" }
+              },
+              [
+                _c("div", [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.forms.limit,
+                          expression: "forms.limit"
+                        }
+                      ],
+                      staticClass: "uk-select gl-input-default",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.forms,
+                            "limit",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "6" } }, [
+                        _vm._v("6 rows")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "12" } }, [
+                        _vm._v("12 rows")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "24" } }, [
+                        _vm._v("24 rows")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "36" } }, [
+                        _vm._v("36 rows")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("input", {
+                    directives: [
                       {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.forms.limit,
-                            expression: "forms.limit"
-                          }
-                        ],
-                        staticClass: "uk-select gl-input-default",
-                        on: {
-                          change: function($event) {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.forms.keywords,
+                        expression: "forms.keywords"
+                      }
+                    ],
+                    staticClass: "uk-input gl-input-default",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Find by id, consultant name..."
+                    },
+                    domProps: { value: _vm.forms.keywords },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.showRequest()
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.forms, "keywords", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.forms.status_request,
+                          expression: "forms.status_request"
+                        }
+                      ],
+                      staticClass: "uk-select gl-input-default",
+                      on: {
+                        change: [
+                          function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
                                 return o.selected
@@ -61419,159 +61848,47 @@ var render = function() {
                               })
                             _vm.$set(
                               _vm.forms,
-                              "limit",
+                              "status_request",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
                             )
+                          },
+                          function($event) {
+                            return _vm.showRequest()
                           }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "6" } }, [
-                          _vm._v("6 rows")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "12" } }, [
-                          _vm._v("12 rows")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "24" } }, [
-                          _vm._v("24 rows")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "36" } }, [
-                          _vm._v("36 rows")
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.forms.keywords,
-                          expression: "forms.keywords"
-                        }
-                      ],
-                      staticClass: "uk-input gl-input-default",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Find by id, consultant name..."
-                      },
-                      domProps: { value: _vm.forms.keywords },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.showRequest()
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.forms, "keywords", $event.target.value)
-                        }
+                        ]
                       }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.forms.status_request,
-                            expression: "forms.status_request"
-                          }
-                        ],
-                        staticClass: "uk-select gl-input-default",
-                        on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.forms,
-                                "status_request",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            },
-                            function($event) {
-                              return _vm.showRequest()
-                            }
-                          ]
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "all" } }, [
-                          _vm._v("All Status")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "waiting_respond" } }, [
-                          _vm._v("Upcoming")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "accept" } }, [
-                          _vm._v("Accepted")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "decline" } }, [
-                          _vm._v("Declined")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "cancel" } }, [
-                          _vm._v("Canceled")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "done" } }, [
-                          _vm._v("Completed")
-                        ])
-                      ]
-                    )
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-float-right" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "uk-button uk-button-default gl-button-default",
-                  on: {
-                    click: function($event) {
-                      return _vm.onClickModal()
-                    }
-                  }
-                },
-                [_vm._v("Make Appointment")]
-              )
-            ])
+                    },
+                    [
+                      _c("option", { attrs: { value: "all" } }, [
+                        _vm._v("All Status")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "waiting_respond" } }, [
+                        _vm._v("Upcoming")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "accept" } }, [
+                        _vm._v("Accepted")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "decline" } }, [
+                        _vm._v("Declined")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "cancel" } }, [
+                        _vm._v("Canceled")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "done" } }, [
+                        _vm._v("Completed")
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
           ]),
           _vm._v(" "),
           _vm.getrequest.isLoading
@@ -61605,7 +61922,7 @@ var render = function() {
                 _vm.getrequest.total === 0
                   ? _c("div", { staticClass: "no-request-list" }, [
                       _c("div", { staticClass: "uk-margin-remove" }, [
-                        _vm._m(1),
+                        _vm._m(2),
                         _vm._v("\n          You have no\n          "),
                         _vm.forms.status_request === "waiting_respond"
                           ? _c("span", [_vm._v("upcoming")])
@@ -61755,7 +62072,7 @@ var render = function() {
                                               "uk-nav uk-dropdown-nav request-nav"
                                           },
                                           [
-                                            _vm._m(2, true),
+                                            _vm._m(3, true),
                                             _vm._v(" "),
                                             _c(
                                               "li",
@@ -61816,7 +62133,7 @@ var render = function() {
                                                   }
                                                 ]
                                               },
-                                              [_vm._m(3, true)]
+                                              [_vm._m(4, true)]
                                             )
                                           ]
                                         )
@@ -61934,7 +62251,11 @@ var render = function() {
                                     {
                                       staticClass:
                                         "uk-button uk-button-default uk-button-small gl-button-default",
-                                      on: { click: function($event) {} }
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.modalReview(req)
+                                        }
+                                      }
                                     },
                                     [_vm._v("Review this Consultant")]
                                   )
@@ -61954,6 +62275,23 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-margin" }, [
+      _c("label", { staticClass: "uk-form-label gl-label" }, [
+        _vm._v("Write a Review")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-form-controls" }, [
+        _c("textarea", {
+          staticClass: "uk-textarea uk-height-small gl-input-default",
+          attrs: { placeholder: "Write your complete review" }
+        })
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
