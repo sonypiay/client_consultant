@@ -218,7 +218,7 @@
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
-              <div v-show="req.status_request === 'done' && req.feedback === null" class="uk-margin-small">
+              <div v-show="req.status_request === 'done' && req.feedback === null && req.is_solved === 'Y'" class="uk-margin-small">
                 <a @click="modalReview( req )" class="uk-button uk-button-default uk-button-small gl-button-default">
                   Review this Consultant
                 </a>

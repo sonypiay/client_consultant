@@ -62468,9 +62468,10 @@ var render = function() {
                                       rawName: "v-show",
                                       value:
                                         req.status_request === "done" &&
-                                        req.feedback === null,
+                                        req.feedback === null &&
+                                        req.is_solved === "Y",
                                       expression:
-                                        "req.status_request === 'done' && req.feedback === null"
+                                        "req.status_request === 'done' && req.feedback === null && req.is_solved === 'Y'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
