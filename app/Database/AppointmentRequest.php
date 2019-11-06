@@ -50,10 +50,14 @@ class AppointmentRequest extends Model
       'appointment_request.created_at',
       'appointment_request.updated_at',
       'client_user.client_fullname',
-      'consultant_user.consultant_fullname'
+      'consultant_user.consultant_fullname',
+      'feedbacks.fd_id',
+      'feedbacks.review_description',
+      'feedbacks.feedback'
     )
     ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
-    ->join('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id');
+    ->join('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id');
 
     if( $status !== 'all' )
     {

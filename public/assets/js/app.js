@@ -3178,7 +3178,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -62467,9 +62466,11 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: req.status_request === "done",
+                                      value:
+                                        req.status_request === "done" &&
+                                        req.feedback === null,
                                       expression:
-                                        "req.status_request === 'done'"
+                                        "req.status_request === 'done' && req.feedback === null"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -62487,11 +62488,9 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      req.is_solved === "Y"
-                                        ? _c("span", [_vm._v("Edit Review")])
-                                        : _c("span", [
-                                            _vm._v("Review this Consultant")
-                                          ])
+                                      _vm._v(
+                                        "\n                Review this Consultant\n              "
+                                      )
                                     ]
                                   )
                                 ]
