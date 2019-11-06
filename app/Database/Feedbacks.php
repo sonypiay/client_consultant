@@ -4,6 +4,7 @@ namespace App\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Database\AppointmentRequest;
+use App\Database\Notification;
 
 class Feedbacks extends Model
 {
@@ -34,12 +35,30 @@ class Feedbacks extends Model
 
     if( session()->has('isClient') )
     {
+      $appointment = new AppointmentRequest;
+      $getappointment = $appointment->select(
+        'consultant_id'
+      )
+      ->where('apt_id', $id)
+      ->first();
+
+      $notification = new Notification;
+      $data_notif = [
+        'parent_id' => $id,
+        'notif_date' => date('Y-m-d H:i:s'),
+        'notif_read' => 'N',
+        'notif_type' => 'request',
+        'notif_message' => 'Client gave you a review on request #' . $id,
+        'consultant_id' => $getappointment->consultant_id
+      ];
+
+      $this->fd_id = $this->getId();
       $this->review_description = $review_description;
       $this->feedback = $feedback;
-      $this->consultant_id = $userid;
       $this->apt_id = $id;
-
       $this->save();
+
+      $notification->addNotification( $data_notif );
     }
     else
     {

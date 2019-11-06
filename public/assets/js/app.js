@@ -61601,7 +61601,34 @@ var render = function() {
                     _vm._v("Write a Review")
                   ]),
                   _vm._v(" "),
-                  _vm._m(0),
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.forms.rating.review_description,
+                          expression: "forms.rating.review_description"
+                        }
+                      ],
+                      staticClass:
+                        "uk-textarea uk-height-small gl-input-default",
+                      attrs: { placeholder: "Write your complete review" },
+                      domProps: { value: _vm.forms.rating.review_description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.forms.rating,
+                            "review_description",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -61816,7 +61843,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(1),
+      _vm._m(0),
       _vm._v(" "),
       _c(
         "div",
@@ -62028,7 +62055,7 @@ var render = function() {
                 _vm.getrequest.total === 0
                   ? _c("div", { staticClass: "no-request-list" }, [
                       _c("div", { staticClass: "uk-margin-remove" }, [
-                        _vm._m(2),
+                        _vm._m(1),
                         _vm._v("\n          You have no\n          "),
                         _vm.forms.status_request === "waiting_respond"
                           ? _c("span", [_vm._v("upcoming")])
@@ -62178,7 +62205,7 @@ var render = function() {
                                               "uk-nav uk-dropdown-nav request-nav"
                                           },
                                           [
-                                            _vm._m(3, true),
+                                            _vm._m(2, true),
                                             _vm._v(" "),
                                             _c(
                                               "li",
@@ -62239,7 +62266,7 @@ var render = function() {
                                                   }
                                                 ]
                                               },
-                                              [_vm._m(4, true)]
+                                              [_vm._m(3, true)]
                                             ),
                                             _vm._v(" "),
                                             _c(
@@ -62475,17 +62502,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-form-controls" }, [
-      _c("textarea", {
-        staticClass: "uk-textarea uk-height-small gl-input-default",
-        attrs: { placeholder: "Write your complete review" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

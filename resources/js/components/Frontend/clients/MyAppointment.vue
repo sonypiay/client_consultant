@@ -20,7 +20,7 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Write a Review</label>
             <div class="uk-form-controls">
-              <textarea class="uk-textarea uk-height-small gl-input-default" placeholder="Write your complete review"></textarea>
+              <textarea v-model="forms.rating.review_description" class="uk-textarea uk-height-small gl-input-default" placeholder="Write your complete review"></textarea>
             </div>
             <div v-show="messages.errors.review_description" class="uk-text-danger uk-text-small">{{ messages.errors.review_description }}</div>
           </div>
