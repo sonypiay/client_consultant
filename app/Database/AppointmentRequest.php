@@ -246,4 +246,9 @@ class AppointmentRequest extends Model
 
     return $res;
   }
+
+  public function setProblem( $id, $status )
+  {
+    $apt = $this->where('apt_id', $id)->first();
+  }
 }

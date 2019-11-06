@@ -3162,6 +3162,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -3289,7 +3291,35 @@ __webpack_require__.r(__webpack_exports__);
       this.getrequest.details = data;
       UIkit.modal('#givereview').show();
     },
-    onGiveReview: function onGiveReview() {}
+    onGiveReview: function onGiveReview() {
+      this.messages = {
+        errors: {},
+        successMessage: '',
+        errorMessage: '',
+        iserror: false
+      };
+
+      if (this.forms.review_description === '') {
+        this.messages.errors.review_description = 'Please write your review.';
+        this.messages.iserror = true;
+      }
+
+      if (this.forms.feedback === '') {
+        this.messages.errors.feedback = 'Please choose your feedback.';
+        this.messages.iserror = true;
+      }
+
+      if (this.messages.iserror === true) return false;
+      this.forms.rating.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/client/add_feedback/' + this.getrequest.details.apt_id,
+        params: {
+          review_description: this.forms.rating.review_description,
+          feedback: this.forms.rating.feedback
+        }
+      });
+    }
   },
   mounted: function mounted() {
     this.showRequest();
@@ -61528,7 +61558,29 @@ var render = function() {
                 }
               },
               [
-                _vm._m(0),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("Write a Review")
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.messages.errors.review_description,
+                          expression: "messages.errors.review_description"
+                        }
+                      ],
+                      staticClass: "uk-text-danger uk-text-small"
+                    },
+                    [_vm._v(_vm._s(_vm.messages.errors.review_description))]
+                  )
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
@@ -61691,6 +61743,22 @@ var render = function() {
                           ])
                         ])
                       ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.messages.errors.feedback,
+                            expression: "messages.errors.feedback"
+                          }
+                        ],
+                        staticClass: "uk-text-danger uk-text-small"
+                      },
+                      [_vm._v(_vm._s(_vm.messages.errors.feedback))]
                     )
                   ])
                 ]),
@@ -62279,17 +62347,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-margin" }, [
-      _c("label", { staticClass: "uk-form-label gl-label" }, [
-        _vm._v("Write a Review")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "uk-form-controls" }, [
-        _c("textarea", {
-          staticClass: "uk-textarea uk-height-small gl-input-default",
-          attrs: { placeholder: "Write your complete review" }
-        })
-      ])
+    return _c("div", { staticClass: "uk-form-controls" }, [
+      _c("textarea", {
+        staticClass: "uk-textarea uk-height-small gl-input-default",
+        attrs: { placeholder: "Write your complete review" }
+      })
     ])
   },
   function() {

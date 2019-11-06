@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Database\ClientUser;
 use App\Database\AppointmentRequest;
 use App\Database\Notification;
+use App\Database\Feedbacks;
 use DB;
 use Storage;
 use Hash;
@@ -81,6 +82,18 @@ class ClientUserController extends Controller
   {
     $userid = session()->has('isClient') ? session()->get('clientId') : '';
     $res = $notification->markAsRead( $userid, $type );
+    return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function status_problem( AppointmentRequest $appointment, $status, $id )
+  {
+    $res = $appointment->setProblem( $id, $status );
+    return response()->json( $res, 200 );
+  }
+
+  public function add_feedback( Request $request, Feedbacks $fb, $id )
+  {
+    $res = $fb->addFeeback( $request, $id );
     return response()->json( $res, $res['responseCode'] );
   }
 }

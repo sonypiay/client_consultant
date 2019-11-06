@@ -22,6 +22,7 @@
             <div class="uk-form-controls">
               <textarea class="uk-textarea uk-height-small gl-input-default" placeholder="Write your complete review"></textarea>
             </div>
+            <div v-show="messages.errors.review_description" class="uk-text-danger uk-text-small">{{ messages.errors.review_description }}</div>
           </div>
           <div class="uk-margin">
             <label class="uk-form-label gl-label">How do you review it?</label>
@@ -68,6 +69,7 @@
                   </div>
                 </div>
               </div>
+              <div v-show="messages.errors.feedback" class="uk-text-danger uk-text-small">{{ messages.errors.feedback }}</div>
             </div>
           </div>
           <div class="uk-margin">
@@ -344,7 +346,34 @@ export default {
     },
     onGiveReview()
     {
+      this.messages = {
+        errors: {},
+        successMessage: '',
+        errorMessage: '',
+        iserror: false
+      };
 
+      if( this.forms.review_description === '' )
+      {
+        this.messages.errors.review_description = 'Please write your review.';
+        this.messages.iserror = true;
+      }
+      if( this.forms.feedback === '' )
+      {
+        this.messages.errors.feedback = 'Please choose your feedback.';
+        this.messages.iserror = true;
+      }
+      if( this.messages.iserror === true ) return false;
+
+      this.forms.rating.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/client/add_feedback/' + this.getrequest.details.apt_id,
+        params: {
+          review_description: this.forms.rating.review_description,
+          feedback: this.forms.rating.feedback
+        }
+      })
     }
   },
   mounted() {
