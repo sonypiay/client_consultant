@@ -243,7 +243,7 @@ export default {
         status_request: 'all',
         rating: {
           feedback: '',
-          comment_review: '',
+          review_description: '',
           submit: 'Send Review'
         }
       },
@@ -300,6 +300,14 @@ export default {
           confirmation = 'Are you sure want to cancel this request?';
           message = 'Request ' + id + ' has been canceled.';
           break;
+        case 'solved':
+          confirmation = 'Are you sure?';
+          message = 'Request ' + id + ' has been updated. Case closed';
+          break;
+        case 'notsolved':
+          confirmation = 'Are you sure?';
+          message = 'Request ' + id + ' has been updated. Case is not finished yet.';
+          break;
         default:
           confirmation = 'Are you sure want to mark this as completed?';
           message = 'Request ' + id + ' has been completed.';
@@ -353,12 +361,12 @@ export default {
         iserror: false
       };
 
-      if( this.forms.review_description === '' )
+      if( this.forms.rating.review_description === '' )
       {
         this.messages.errors.review_description = 'Please write your review.';
         this.messages.iserror = true;
       }
-      if( this.forms.feedback === '' )
+      if( this.forms.rating.feedback === '' )
       {
         this.messages.errors.feedback = 'Please choose your feedback.';
         this.messages.iserror = true;
@@ -373,7 +381,20 @@ export default {
           review_description: this.forms.rating.review_description,
           feedback: this.forms.rating.feedback
         }
-      })
+      }).then( res => {
+        let msg = 'Review has been given';
+        this.messages.successMessage = msg;
+
+        swal({
+          text: msg,
+          icon: 'success',
+          timer: 2000
+        });
+        setTimeout(() => {
+          this.showRequest();
+          UIkit.modal('#givereview').hide();
+        }, 2000);
+      });
     }
   },
   mounted() {

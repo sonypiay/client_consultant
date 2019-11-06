@@ -32,6 +32,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
   Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
+  Route::put('/status_problem/{status}/{id}', 'Frontend\ConsultantUserController@status_problem');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ClientUserController@mark_as_read');
 });
 

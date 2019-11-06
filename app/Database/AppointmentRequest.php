@@ -208,16 +208,22 @@ class AppointmentRequest extends Model
       $notification = new Notification;
       switch ($status) {
         case 'accept':
-          $notif_message = 'Your request #' . $id . ' has been accepted';
+          $notif_message = 'Request #' . $id . ' has been accepted';
           break;
         case 'decline':
-          $notif_message = 'Your request #' . $id . ' has been declined';
+          $notif_message = 'Request #' . $id . ' has been declined';
           break;
         case 'cancel':
-          $notif_message = 'Your request #' . $id . ' has been canceled';
+          $notif_message = 'Request #' . $id . ' has been canceled';
+          break;
+        case 'solved':
+          $notif_message = 'Request #' . $id . ' has been completed. Case closed.';
+          break;
+        case 'notsolved':
+          $notif_message = 'Request #' . $id . ' has been completed but case is not finished yet.';
           break;
         default:
-          $notif_message = 'Your request #' . $id . ' has been completed';
+          $notif_message = 'Request #' . $id . ' has been completed. Waiting for feedback by Client.';
           break;
       }
 
@@ -238,17 +244,24 @@ class AppointmentRequest extends Model
         $data_notif['consultant_id'] = $update->consultant_id;
       }
 
-      $update->status_request = $status;
+      if( $status === 'solved' )
+      {
+        $update->is_solved = 'Y';
+      }
+      else if( $status === 'notsolved' )
+      {
+        $update->is_solved = 'N';
+      }
+      else
+      {
+        $update->status_request = $status;
+      }
+
       $update->save();
 
       $notification->addNotification( $data_notif );
     }
 
     return $res;
-  }
-
-  public function setProblem( $id, $status )
-  {
-    $apt = $this->where('apt_id', $id)->first();
   }
 }

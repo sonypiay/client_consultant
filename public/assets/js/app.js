@@ -3186,7 +3186,7 @@ __webpack_require__.r(__webpack_exports__);
         status_request: 'all',
         rating: {
           feedback: '',
-          comment_review: '',
+          review_description: '',
           submit: 'Send Review'
         }
       },
@@ -3247,6 +3247,16 @@ __webpack_require__.r(__webpack_exports__);
           message = 'Request ' + id + ' has been canceled.';
           break;
 
+        case 'solved':
+          confirmation = 'Are you sure?';
+          message = 'Request ' + id + ' has been updated. Case closed';
+          break;
+
+        case 'notsolved':
+          confirmation = 'Are you sure?';
+          message = 'Request ' + id + ' has been updated. Case is not finished yet.';
+          break;
+
         default:
           confirmation = 'Are you sure want to mark this as completed?';
           message = 'Request ' + id + ' has been completed.';
@@ -3292,6 +3302,8 @@ __webpack_require__.r(__webpack_exports__);
       UIkit.modal('#givereview').show();
     },
     onGiveReview: function onGiveReview() {
+      var _this3 = this;
+
       this.messages = {
         errors: {},
         successMessage: '',
@@ -3299,12 +3311,12 @@ __webpack_require__.r(__webpack_exports__);
         iserror: false
       };
 
-      if (this.forms.review_description === '') {
+      if (this.forms.rating.review_description === '') {
         this.messages.errors.review_description = 'Please write your review.';
         this.messages.iserror = true;
       }
 
-      if (this.forms.feedback === '') {
+      if (this.forms.rating.feedback === '') {
         this.messages.errors.feedback = 'Please choose your feedback.';
         this.messages.iserror = true;
       }
@@ -3318,6 +3330,19 @@ __webpack_require__.r(__webpack_exports__);
           review_description: this.forms.rating.review_description,
           feedback: this.forms.rating.feedback
         }
+      }).then(function (res) {
+        var msg = 'Review has been given';
+        _this3.messages.successMessage = msg;
+        swal({
+          text: msg,
+          icon: 'success',
+          timer: 2000
+        });
+        setTimeout(function () {
+          _this3.showRequest();
+
+          UIkit.modal('#givereview').hide();
+        }, 2000);
       });
     }
   },
