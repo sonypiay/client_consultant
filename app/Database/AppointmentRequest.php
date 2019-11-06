@@ -253,7 +253,7 @@ class AppointmentRequest extends Model
       {
         $update->is_solved = 'Y';
       }
-      else if( $status === 'notsolved' )
+      else if( $status === 'unfinished' )
       {
         $update->is_solved = 'N';
       }

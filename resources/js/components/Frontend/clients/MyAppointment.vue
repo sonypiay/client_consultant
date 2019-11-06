@@ -160,7 +160,7 @@
                   <span v-else class="request-status-badge done">Done</span>
 
                   <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Solved</span>
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Not Solved</span>
+                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Unfinished</span>
                 </div>
               </div>
               <div class="uk-clearfix uk-margin-small">

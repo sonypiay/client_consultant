@@ -62168,7 +62168,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge decline"
                                           },
-                                          [_vm._v("Not Solved")]
+                                          [_vm._v("Unfinished")]
                                         )
                                       : _vm._e()
                                   ])
