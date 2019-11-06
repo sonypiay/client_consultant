@@ -3164,6 +3164,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -3252,9 +3264,9 @@ __webpack_require__.r(__webpack_exports__);
           message = 'Request ' + id + ' has been updated. Case closed';
           break;
 
-        case 'notsolved':
+        case 'unfinished':
           confirmation = 'Are you sure?';
-          message = 'Request ' + id + ' has been updated. Case is not finished yet.';
+          message = 'Request ' + id + ' has been updated. Case is unfinished yet.';
           break;
 
         default:
@@ -62227,6 +62239,96 @@ var render = function() {
                                                 ]
                                               },
                                               [_vm._m(4, true)]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      req.status_request ===
+                                                      "done",
+                                                    expression:
+                                                      "req.status_request === 'done'"
+                                                  }
+                                                ]
+                                              },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.onUpdateStatus(
+                                                          req.apt_id,
+                                                          "solved"
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "uk-margin-small-right",
+                                                      attrs: {
+                                                        "uk-icon":
+                                                          "icon: check; ratio: 0.8"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      "\n                        Mark as Solved\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      req.status_request ===
+                                                      "done",
+                                                    expression:
+                                                      "req.status_request === 'done'"
+                                                  }
+                                                ]
+                                              },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.onUpdateStatus(
+                                                          req.apt_id,
+                                                          "unfinished"
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "uk-margin-small-right",
+                                                      attrs: {
+                                                        "uk-icon":
+                                                          "icon: close; ratio: 0.8"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      "\n                        Mark as Unfinished\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             )
                                           ]
                                         )

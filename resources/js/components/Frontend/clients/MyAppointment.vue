@@ -189,6 +189,18 @@
                           Delete
                         </a>
                       </li>
+                      <li v-show="req.status_request === 'done'">
+                        <a @click="onUpdateStatus( req.apt_id, 'solved' )">
+                          <span class="uk-margin-small-right" uk-icon="icon: check; ratio: 0.8"></span>
+                          Mark as Solved
+                        </a>
+                      </li>
+                      <li v-show="req.status_request === 'done'">
+                        <a @click="onUpdateStatus( req.apt_id, 'unfinished' )">
+                          <span class="uk-margin-small-right" uk-icon="icon: close; ratio: 0.8"></span>
+                          Mark as Unfinished
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -304,9 +316,9 @@ export default {
           confirmation = 'Are you sure?';
           message = 'Request ' + id + ' has been updated. Case closed';
           break;
-        case 'notsolved':
+        case 'unfinished':
           confirmation = 'Are you sure?';
-          message = 'Request ' + id + ' has been updated. Case is not finished yet.';
+          message = 'Request ' + id + ' has been updated. Case is unfinished yet.';
           break;
         default:
           confirmation = 'Are you sure want to mark this as completed?';

@@ -219,11 +219,11 @@ class AppointmentRequest extends Model
         case 'solved':
           $notif_message = 'Request #' . $id . ' has been completed. Case closed.';
           break;
-        case 'notsolved':
+        case 'unfinished':
           $notif_message = 'Request #' . $id . ' has been completed but case is not finished yet.';
           break;
         default:
-          $notif_message = 'Request #' . $id . ' has been completed. Waiting for feedback by Client.';
+          $notif_message = 'Request #' . $id . ' has been completed. Waiting for review by Client.';
           break;
       }
 
