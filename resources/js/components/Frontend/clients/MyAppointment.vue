@@ -226,7 +226,7 @@
             <span v-else-if="forms.status_request === 'done'">completed</span>
             <span v-else>any</span> appointment.
           </div>
-          <a class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
+          <a @click="onClickModal()" class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
         </div>
         <div v-else class="uk-grid-medium uk-grid-match" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
@@ -269,7 +269,7 @@
                           Delete
                         </a>
                       </li>
-                      <li v-show="req.status_request !== 'done' && req.status_request !== 'cancel'">
+                      <li v-show="req.status_request === 'client' && req.status_request !== 'done' && req.status_request !== 'cancel'">
                         <a @click="onUpdateStatus( req.apt_id, 'cancel' )">
                           <span class="uk-margin-small-right" uk-icon="icon: ban; ratio: 0.8"></span>
                           Cancel

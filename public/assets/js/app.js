@@ -62303,7 +62303,12 @@ var render = function() {
                         "a",
                         {
                           staticClass:
-                            "uk-button uk-button-primary gl-button-primary"
+                            "uk-button uk-button-primary gl-button-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.onClickModal()
+                            }
+                          }
                         },
                         [_vm._v("Create Appointment")]
                       )
@@ -62535,12 +62540,14 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
+                                                      req.status_request ===
+                                                        "client" &&
                                                       req.status_request !==
                                                         "done" &&
                                                       req.status_request !==
                                                         "cancel",
                                                     expression:
-                                                      "req.status_request !== 'done' && req.status_request !== 'cancel'"
+                                                      "req.status_request === 'client' && req.status_request !== 'done' && req.status_request !== 'cancel'"
                                                   }
                                                 ]
                                               },
