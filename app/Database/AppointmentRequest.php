@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Database\ClientUser;
 use App\Database\ConsultantUser;
 use App\Database\Notification;
+use DateTime;
 
 class AppointmentRequest extends Model
 {
@@ -116,25 +117,50 @@ class AppointmentRequest extends Model
     $created_by = $request->created_by;
     $apt_id = $this->getId();
     $res = ['responseCode' => 200, 'responseMessage' => ''];
+    $data_notif = [];
     $notification = new Notification;
-    $data_notif = [
-      'parent_id' => $apt_id,
-      'notif_date' => date('Y-m-d H:i:s'),
-      'notif_read' => 'N',
-      'notif_type' => 'request'
-    ];
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
       if( $created_by === 'client' )
       {
-        $data_notif['notif_message'] = 'You have a new request appointment. Request ID ' . $apt_id;
-        $data_notif['consultant_id'] = $consult_id;
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
+          'consultant_id' => $consult_id
+        ]);
+
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => 'You create a new request appointment with ID ' . $apt_id,
+          'client_id' => $consult_id
+        ]);
       }
       else
       {
-        $data_notif['notif_message'] = 'You have a new request appointment. Request ID ' . $apt_id;
-        $data_notif['client_id'] = $client_id;
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
+          'consultant_id' => $consult_id
+        ]);
+
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => 'You create a new request appointment with ID ' . $apt_id,
+          'client_id' => $consult_id
+        ]);
       }
 
       $this->apt_id = $apt_id;
@@ -204,8 +230,9 @@ class AppointmentRequest extends Model
         $data_notif['client_id'] = $getrequest->client_id;
       }
 
+      $current_schedule = new DateTime( $getrequest->schedule_date );
       $getrequest->description = $description;
-      if( $getrequest->schedule_date != $schedule_date )
+      if( $current_schedule->format('Y-m-d H:i') != $schedule_date )
       {
         $getrequest->status_request = 'waiting_respond';
         $getrequest->schedule_date = $schedule_date;
