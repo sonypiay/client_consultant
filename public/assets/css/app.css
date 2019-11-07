@@ -543,6 +543,70 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
+.modal-dialog .modal-banner-top {
+  background: #25c4f2;
+  /* Old browsers */
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: -webkit-gradient(linear, left top, right top, from(#25c4f2), to(#81d7ef));
+  background: linear-gradient(to right, #25c4f2 0%, #81d7ef 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#25c4f2", endColorstr="#81d7ef",GradientType=1 );
+  /* IE6-9 */
+  min-height: 100px;
+  border-radius: 6px 6px 0 0;
+}
+
+.modal-dialog .modal-banner-top .request-time {
+  color: #ffffff;
+  font-weight: 200;
+  font-size: 48px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.modal-dialog .modal-banner-top .request-date {
+  color: #ffffff;
+  font-weight: 200;
+  font-size: 36px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.modal-dialog .request-status-badge {
+  padding: 4px 8px;
+  color: #ffffff;
+  font-weight: 300;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  background: #25C4F2;
+  border-radius: 6px;
+}
+
+.modal-dialog .upcoming {
+  background: #25C4F2;
+}
+
+.modal-dialog .accept {
+  background: #38c172;
+}
+
+.modal-dialog .decline {
+  background: #e3342f;
+}
+
+.modal-dialog .cancel {
+  background: #f6993f;
+}
+
+.modal-dialog .done {
+  background: #38c172;
+}
+
 .dropdown-timepicker {
   border-radius: 6px;
 }

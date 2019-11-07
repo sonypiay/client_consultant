@@ -3801,6 +3801,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['detailrequest']
 });
@@ -63700,18 +63717,40 @@ var render = function() {
   return _c("div", [
     _c("div", { attrs: { id: "modal-view-request", "uk-modal": "" } }, [
       _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
-        _c("a", {
-          staticClass: "uk-modal-close uk-modal-close-default",
-          attrs: { "uk-close": "" }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-title" }, [
-          _vm._v(_vm._s(_vm.detailrequest.apt_id))
+        _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
+          _c("div", { staticClass: "request-time" }, [
+            _c("span", {
+              staticClass: "uk-margin-small-right",
+              attrs: { "uk-icon": "icon: clock; ratio: 2.5" }
+            }),
+            _vm._v(
+              "\n          " +
+                _vm._s(
+                  _vm.$root.formatDate(_vm.detailrequest.schedule_date, "HH:mm")
+                ) +
+                "\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "request-date" }, [
+            _c("span", {
+              staticClass: "uk-margin-small-right",
+              attrs: { "uk-icon": "icon: calendar; ratio: 2.5" }
+            }),
+            _vm._v(
+              "\n          " +
+                _vm._s(
+                  _vm.$root.formatDate(
+                    _vm.detailrequest.schedule_date,
+                    "ddd, DD MMMM YYYY"
+                  )
+                ) +
+                "\n        "
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "uk-margin-top" }, [
+        _c("div", { staticClass: "uk-modal-body" }, [
           _c("div", { staticClass: "uk-panel uk-margin" }, [
             _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
               _vm._v("Client Name")
@@ -63742,6 +63781,50 @@ var render = function() {
                   ) +
                   "\n          "
               )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-panel uk-margin" }, [
+            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+              _vm._v("Status Appointment")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin-remove-top" }, [
+              _vm.detailrequest.status_request === "waiting_respond"
+                ? _c("span", { staticClass: "request-status-badge upcoming" }, [
+                    _vm._v("Waiting Response")
+                  ])
+                : _vm.detailrequest.status_request === "accept"
+                ? _c("span", { staticClass: "request-status-badge accept" }, [
+                    _vm._v("Accept")
+                  ])
+                : _vm.detailrequest.status_request === "decline"
+                ? _c("span", { staticClass: "request-status-badge decline" }, [
+                    _vm._v("Decline")
+                  ])
+                : _vm.detailrequest.status_request === "cancel"
+                ? _c("span", { staticClass: "request-status-badge cancel" }, [
+                    _vm._v("Cancel")
+                  ])
+                : _c("span", { staticClass: "request-status-badge done" }, [
+                    _vm._v("Done")
+                  ]),
+              _vm._v(" "),
+              _vm.detailrequest.status_request === "done" &&
+              _vm.detailrequest.is_solved === "Y"
+                ? _c("span", { staticClass: "request-status-badge accept" }, [
+                    _c("i", { attrs: { "uk-icon": "icon: check; ratio: 1" } }),
+                    _vm._v(" Solved")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.detailrequest.status_request === "done" &&
+              _vm.detailrequest.is_solved === "N"
+                ? _c("span", { staticClass: "request-status-badge decline" }, [
+                    _c("i", { attrs: { "uk-icon": "icon: check; ratio: 1" } }),
+                    _vm._v(" Unfinished")
+                  ])
+                : _vm._e()
             ])
           ])
         ])

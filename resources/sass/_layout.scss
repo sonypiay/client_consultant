@@ -151,6 +151,31 @@ html, body { font-family: $font-base; }
     color: #666666;
     @include global_font_style( 200, 24px, normal, 0.4px );
   }
+  .modal-banner-top {
+    @include color_gradient_base();
+    min-height: 100px;
+    border-radius: 6px 6px 0 0;
+    .request-time {
+      color: #ffffff;
+      @include global_font_style( 200, 48px, normal, 0.4px );
+    }
+    .request-date {
+      color: #ffffff;
+      @include global_font_style( 200, 36px, normal, 0.4px );
+    }
+  }
+  .request-status-badge {
+    padding: 4px 8px;
+    color: #ffffff;
+    @include global_font_style( 300, 12px, normal, 0.4px );
+    background: $color-base;
+    border-radius: 6px;
+  }
+  .upcoming { background: $color-base; }
+  .accept { background: $green; }
+  .decline { background: $red; }
+  .cancel { background: $orange; }
+  .done { background: $green; }
 }
 
 .dropdown-timepicker {
