@@ -234,7 +234,7 @@ class AppointmentRequest extends Model
           'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
           'client_id' => $getrequest->client_id
         ]);
-        
+
         $getrequest->status_request = 'waiting_respond';
         $getrequest->schedule_date = $schedule_date;
         $getrequest->save();
@@ -268,44 +268,44 @@ class AppointmentRequest extends Model
       $data_notif = [];
       switch ($status) {
         case 'accept':
-          $notif_message = 'Request #' . $id . ' has been accepted';
+          $notif_message = 'Request appointment ' . $id . ' accepted';
           break;
         case 'decline':
-          $notif_message = 'Request #' . $id . ' has been declined';
+          $notif_message = 'Request appointment ' . $id . ' declined';
           break;
         case 'cancel':
-          $notif_message = 'Request #' . $id . ' has been canceled';
+          $notif_message = 'Request appointment ' . $id . ' canceled';
           break;
         case 'solved':
-          $notif_message = 'Request #' . $id . ' has been completed. Case closed.';
+          $notif_message = 'Case closed for request ' . $id;
           break;
         case 'unfinished':
-          $notif_message = 'Request #' . $id . ' has been completed but case is not finished yet.';
+          $notif_message = 'Case is not finished yet with request ' . $id;
           break;
         default:
-          $notif_message = 'Request #' . $id . ' has been completed. Waiting for review by Client.';
+          $notif_message = 'Request appointment' . $id . ' has been completed. Waiting for review.';
           break;
       }
 
-      $data_notif = [
-        'parent_id' => $id,
-        'notif_date' => date('Y-m-d H:i:s'),
-        'notif_read' => 'N',
-        'notif_type' => 'request',
-        'notif_message' => $notif_message
-      ];
-
       if( $update->created_by === 'client' )
       {
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => $notif_message,
+          'consultant_id' => $update->consult_id
+        ]);
 
-        if( $status === 'cancel' )
-        {
-          $data_notif['consultant_id'] = $update->consultant_id;
-        }
-        else
-        {
-          $data_notif['client_id'] = $update->client_id;
-        }
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => $notif_message,
+          'client_id' => $update->client_id
+        ]);
       }
       else
       {
