@@ -223,7 +223,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
-          'user_id' => $getrequest->consult_id
+          'user_id' => $getrequest->consultant_id
         ]);
 
         array_push( $data_notif, [
@@ -283,7 +283,7 @@ class AppointmentRequest extends Model
           $notif_message = 'Case is not finished yet with request ' . $id;
           break;
         default:
-          $notif_message = 'Request appointment' . $id . ' completed. Waiting for review.';
+          $notif_message = 'Request appointment ' . $id . ' completed. Waiting for review.';
           break;
       }
 
@@ -293,7 +293,7 @@ class AppointmentRequest extends Model
         'notif_read' => 'N',
         'notif_type' => 'request',
         'notif_message' => $notif_message,
-        'user_id' => $update->consult_id
+        'user_id' => $update->consultant_id
       ]);
 
       array_push( $data_notif, [
