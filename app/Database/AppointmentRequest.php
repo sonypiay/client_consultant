@@ -143,9 +143,27 @@ class AppointmentRequest extends Model
       $this->created_by = $created_by;
       $this->schedule_date = $schedule_date;
       $this->description = $description;
-      $this->save();
-
-      $notification->addNotification( $data_notif );
+      if( $created_by === 'client' )
+      {
+        $this->save();
+        $notification->addNotification( $data_notif );
+      }
+      else
+      {
+        $check_client = ClientUser::where('client_id', $client_id)->count();
+        if( $check_client === 1 )
+        {
+          $this->save();
+          $notification->addNotification( $data_notif );
+        }
+        else
+        {
+          $res = [
+            'responseCode' => 410,
+            'responseMessage' => 'Sorry, client does not exists.'
+          ];
+        }
+      }
     }
     else
     {
