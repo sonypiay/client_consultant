@@ -24,7 +24,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no {{ status_request }} appointment.
+            You have no upcoming appointment.
           </div>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>

@@ -288,7 +288,7 @@ class AppointmentRequest extends Model
       }
 
       array_push( $data_notif, [
-        'parent_id' => $apt_id,
+        'parent_id' => $id,
         'notif_date' => date('Y-m-d H:i:s'),
         'notif_read' => 'N',
         'notif_type' => 'request',
@@ -297,7 +297,7 @@ class AppointmentRequest extends Model
       ]);
 
       array_push( $data_notif, [
-        'parent_id' => $apt_id,
+        'parent_id' => $id,
         'notif_date' => date('Y-m-d H:i:s'),
         'notif_read' => 'N',
         'notif_type' => 'request',

@@ -66387,16 +66387,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _vm.getrequest.total === 0
-                ? _c("div", { staticClass: "no-request-list" }, [
-                    _c("div", { staticClass: "uk-margin-remove" }, [
-                      _vm._m(0),
-                      _vm._v(
-                        "\n          You have no " +
-                          _vm._s(_vm.status_request) +
-                          " appointment.\n        "
-                      )
-                    ])
-                  ])
+                ? _c("div", { staticClass: "no-request-list" }, [_vm._m(0)])
                 : _c(
                     "div",
                     { staticClass: "uk-grid-medium", attrs: { "uk-grid": "" } },
@@ -66594,7 +66585,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-margin-remove" }, [
-      _c("span", { staticClass: "far fa-frown" })
+      _c("div", { staticClass: "uk-margin-remove" }, [
+        _c("span", { staticClass: "far fa-frown" })
+      ]),
+      _vm._v("\n          You have no upcoming appointment.\n        ")
     ])
   },
   function() {

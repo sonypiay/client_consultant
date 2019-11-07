@@ -38,10 +38,10 @@ class Notification extends Model
   {
     $query = $this->where([
       ['notif_type', $type],
-      ['client_id', $userid]
+      ['user_id', $userid]
     ]);
     $query->update(['notif_read' => 'R']);
-    
+
     $res = ['responseCode' => 200, 'responseMessage' => ''];
     return $res;
   }
