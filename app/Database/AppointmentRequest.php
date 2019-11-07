@@ -130,7 +130,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
-          'consultant_id' => $consult_id
+          'user_id' => $consult_id
         ]);
 
         array_push( $data_notif, [
@@ -139,7 +139,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'You create a new request appointment with ID ' . $apt_id,
-          'client_id' => $client_id
+          'user_id' => $client_id
         ]);
       }
       else
@@ -150,7 +150,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'You created a new request appointment with ID ' . $apt_id,
-          'consultant_id' => $consult_id
+          'user_id' => $consult_id
         ]);
 
         array_push( $data_notif, [
@@ -159,7 +159,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
-          'client_id' => $client_id
+          'user_id' => $client_id
         ]);
       }
 
@@ -223,7 +223,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
-          'consultant_id' => $getrequest->consult_id
+          'user_id' => $getrequest->consult_id
         ]);
 
         array_push( $data_notif, [
@@ -232,7 +232,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
-          'client_id' => $getrequest->client_id
+          'user_id' => $getrequest->client_id
         ]);
 
         $getrequest->status_request = 'waiting_respond';
@@ -293,7 +293,7 @@ class AppointmentRequest extends Model
         'notif_read' => 'N',
         'notif_type' => 'request',
         'notif_message' => $notif_message,
-        'consultant_id' => $update->consult_id
+        'user_id' => $update->consult_id
       ]);
 
       array_push( $data_notif, [
@@ -302,7 +302,7 @@ class AppointmentRequest extends Model
         'notif_read' => 'N',
         'notif_type' => 'request',
         'notif_message' => $notif_message,
-        'client_id' => $update->client_id
+        'user_id' => $update->client_id
       ]);
 
       if( $status === 'solved' )

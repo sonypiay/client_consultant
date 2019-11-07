@@ -49,7 +49,7 @@ class Feedbacks extends Model
         'notif_read' => 'N',
         'notif_type' => 'request',
         'notif_message' => 'Client gave you a review with request ' . $id,
-        'consultant_id' => $getappointment->consultant_id
+        'user_id' => $getappointment->consultant_id
       ];
 
       $this->fd_id = $this->getId();
