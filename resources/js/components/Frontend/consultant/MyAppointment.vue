@@ -418,6 +418,10 @@ export default {
         this.forms.request.timepicker.minute = '';
         this.forms.request.description = '';
         this.forms.request.id = '';
+        this.forms.request.client.client_id = '';
+        this.forms.request.client.client_fullname = '';
+        this.forms.request.submit = 'Create Appointment';
+        this.forms.request.isedit = false;
       }
       else
       {
@@ -426,6 +430,10 @@ export default {
         this.forms.request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
         this.forms.request.description = data.description;
         this.forms.request.id = data.apt_id;
+        this.forms.request.client.client_id = data.client_id;
+        this.forms.request.client.client_fullname = data.client_fullname;
+        this.forms.request.submit = 'Save Changes';
+        this.forms.request.isedit = true;
       }
       UIkit.modal('#modal-request').show();
     },
@@ -460,7 +468,7 @@ export default {
       let consult_id = this.getuser.consultant_id;
       let client_id = this.forms.request.client.client_id;
       let description = this.forms.request.description;
-      let created_by = 'client';
+      let created_by = 'consultant';
 
       this.forms.submit = '<span uk-spinner></span>';
       axios({
@@ -471,7 +479,7 @@ export default {
           consult_id: consult_id,
           client_id: client_id,
           description: description,
-          created_by: 'consultant'
+          created_by: created_by
         }
       }).then( res => {
         let message = 'Request appointment has been successfully created.'

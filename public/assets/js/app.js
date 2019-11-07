@@ -4819,12 +4819,20 @@ document.addEventListener("DOMContentLoaded", function () {
         this.forms.request.timepicker.minute = '';
         this.forms.request.description = '';
         this.forms.request.id = '';
+        this.forms.request.client.client_id = '';
+        this.forms.request.client.client_fullname = '';
+        this.forms.request.submit = 'Create Appointment';
+        this.forms.request.isedit = false;
       } else {
         this.forms.request.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'ddd, DD MMMM YYYY'));
         this.forms.request.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
         this.forms.request.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
         this.forms.request.description = data.description;
         this.forms.request.id = data.apt_id;
+        this.forms.request.client.client_id = data.client_id;
+        this.forms.request.client.client_fullname = data.client_fullname;
+        this.forms.request.submit = 'Save Changes';
+        this.forms.request.isedit = true;
       }
 
       UIkit.modal('#modal-request').show();
@@ -4861,7 +4869,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var consult_id = this.getuser.consultant_id;
       var client_id = this.forms.request.client.client_id;
       var description = this.forms.request.description;
-      var created_by = 'client';
+      var created_by = 'consultant';
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
@@ -4871,7 +4879,7 @@ document.addEventListener("DOMContentLoaded", function () {
           consult_id: consult_id,
           client_id: client_id,
           description: description,
-          created_by: 'consultant'
+          created_by: created_by
         }
       }).then(function (res) {
         var message = 'Request appointment has been successfully created.';
