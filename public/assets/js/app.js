@@ -3520,8 +3520,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! v-calendar */ "./node_modules/v-calendar/lib/v-calendar.umd.min.js");
-/* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(v_calendar__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3696,15 +3694,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-document.addEventListener("DOMContentLoaded", function () {
-  OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
-});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
-  components: {
-    VCalendar: v_calendar__WEBPACK_IMPORTED_MODULE_0___default.a
-  },
   data: function data() {
     return {
       status_request: 'waiting_respond',
@@ -3719,31 +3710,6 @@ document.addEventListener("DOMContentLoaded", function () {
           next_page_url: ''
         },
         details: {}
-      },
-      datepicker: {
-        mindate: new Date(),
-        popover: {
-          placement: 'bottom',
-          visibility: 'click'
-        }
-      },
-      forms: {
-        id: '',
-        selectedDate: new Date(),
-        timepicker: {
-          selected: '',
-          isSelecting: false,
-          hours: '',
-          minute: ''
-        },
-        description: '',
-        submit: 'Save Changes'
-      },
-      messages: {
-        errors: {},
-        errorMessage: '',
-        successMessage: '',
-        iserror: false
       }
     };
   },
@@ -3773,7 +3739,7 @@ document.addEventListener("DOMContentLoaded", function () {
         _this.messages.errorMessage = err.response.statusText;
       });
     },
-    onApprovalRequest: function onApprovalRequest(id, approval) {
+    onUpdateStatus: function onUpdateStatus(id, approval) {
       var _this2 = this;
 
       var confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
@@ -3792,9 +3758,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (val) {
           axios({
             method: 'put',
-            url: _this2.$root.url + '/client/approval_request/' + id + '/' + approval
+            url: _this2.$root.url + '/client/status_appointment/' + approval + '/' + id
           }).then(function (res) {
-            var message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
+            var message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
             swal({
               text: message,
               icon: 'success'
@@ -3811,82 +3777,6 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
       });
-    },
-    viewModalEdit: function viewModalEdit(data) {
-      this.getrequest.details = data;
-      var f = this.forms;
-      f.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'YYYY-MM-DD'));
-      f.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
-      f.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
-      f.description = data.description;
-      f.id = data.apt_id;
-      UIkit.modal('#modal-edit-request').show();
-    },
-    onSelectedTime: function onSelectedTime(val, time) {
-      var str = this.$root.padNumber(val, 2);
-      if (time === 'hours') this.forms.timepicker.hours = str;
-      if (time === 'minute') this.forms.timepicker.minute = str;
-    },
-    onSaveRequest: function onSaveRequest() {
-      var _this3 = this;
-
-      this.messages = {
-        errors: {},
-        errorMessage: '',
-        successMessage: '',
-        iserror: false
-      };
-      var message_form = 'This field must be required';
-
-      if (this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '') {
-        this.messages.errors.timepicker = message_form;
-        this.messages.iserror = true;
-      }
-
-      if (this.forms.description === '') {
-        this.messages.errors.description = message_form;
-        this.messages.iserror = true;
-      }
-
-      if (this.messages.iserror === true) return false;
-      var datepicker = this.$root.formatDate(this.forms.selectedDate, 'YYYY-MM-DD');
-      var schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
-      var description = this.forms.description;
-      this.forms.submit = '<span uk-spinner></span>';
-      axios({
-        method: 'put',
-        url: this.$root.url + '/client/save_request/' + this.forms.id,
-        params: {
-          schedule_date: schedule_date,
-          description: description
-        }
-      }).then(function (res) {
-        var message = 'Request ' + _this3.forms.id + ' updated.';
-        _this3.messages.successMessage = message;
-        swal({
-          text: message,
-          icon: 'success',
-          timer: 2000
-        });
-        setTimeout(function () {
-          _this3.showUpcomingRequest();
-
-          UIkit.modal('#modal-edit-request').hide();
-        }, 2000);
-      })["catch"](function (err) {
-        _this3.forms.submit = 'Save Changes';
-        if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
-      });
-    }
-  },
-  computed: {
-    selectedTime: function selectedTime() {
-      var hours = this.forms.timepicker.hours;
-      var minute = this.forms.timepicker.minute;
-      if (hours === '') hours = 'HH';
-      if (minute === '') minute = 'mm';
-      this.forms.timepicker.selected = hours + ':' + minute;
-      return this.forms.timepicker.selected;
     }
   },
   mounted: function mounted() {

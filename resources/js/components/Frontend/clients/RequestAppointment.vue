@@ -173,17 +173,8 @@
 </template>
 
 <script>
-import VCalendar from 'v-calendar';
-
-document.addEventListener("DOMContentLoaded", function() {
-	OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
-});
-
 export default {
   props: [],
-  components: {
-    VCalendar
-  },
   data() {
     return {
       status_request: 'waiting_respond',
@@ -198,31 +189,6 @@ export default {
           next_page_url: ''
         },
         details: {}
-      },
-      datepicker: {
-        mindate: new Date(),
-        popover: {
-          placement: 'bottom',
-          visibility: 'click'
-        }
-      },
-      forms: {
-        id: '',
-        selectedDate: new Date(),
-        timepicker: {
-          selected: '',
-          isSelecting: false,
-          hours: '',
-          minute: ''
-        },
-        description: '',
-        submit: 'Save Changes'
-      },
-      messages: {
-        errors: {},
-        errorMessage: '',
-        successMessage: '',
-        iserror: false
       }
     }
   },
@@ -252,7 +218,7 @@ export default {
         this.messages.errorMessage = err.response.statusText;
       });
     },
-    onApprovalRequest( id, approval )
+    onUpdateStatus( id, approval )
     {
       let confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
       swal({
@@ -268,9 +234,9 @@ export default {
         {
           axios({
             method: 'put',
-            url: this.$root.url + '/client/approval_request/' + id + '/' + approval
+            url: this.$root.url + '/client/status_appointment/' + approval + '/' + id
           }).then( res => {
-            let message = approval === 'accept' ? 'Request has been accepted.' : 'Request has been declined.';
+            let message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
             swal({
               text: message,
               icon: 'success'
@@ -285,88 +251,6 @@ export default {
           });
         }
       });
-    },
-    viewModalEdit( data )
-    {
-      this.getrequest.details = data;
-      let f = this.forms;
-      f.selectedDate = new Date( this.$root.formatDate( data.schedule_date, 'YYYY-MM-DD' ) );
-      f.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH' );
-      f.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm' );
-      f.description = data.description;
-      f.id = data.apt_id;
-
-      UIkit.modal('#modal-edit-request').show();
-    },
-    onSelectedTime( val, time )
-    {
-      let str = this.$root.padNumber( val, 2 );
-      if( time === 'hours' ) this.forms.timepicker.hours = str;
-      if( time === 'minute' ) this.forms.timepicker.minute = str;
-    },
-    onSaveRequest()
-    {
-      this.messages = {
-        errors: {},
-        errorMessage: '',
-        successMessage: '',
-        iserror: false
-      }
-
-      let message_form = 'This field must be required';
-      if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '' )
-      {
-        this.messages.errors.timepicker = message_form;
-        this.messages.iserror = true;
-      }
-      if( this.forms.description === '' )
-      {
-        this.messages.errors.description = message_form;
-        this.messages.iserror = true;
-      }
-
-      if( this.messages.iserror === true ) return false;
-      let datepicker = this.$root.formatDate( this.forms.selectedDate, 'YYYY-MM-DD' );
-      let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
-      let description = this.forms.description;
-
-      this.forms.submit = '<span uk-spinner></span>';
-      axios({
-        method: 'put',
-        url: this.$root.url + '/client/save_request/' + this.forms.id,
-        params: {
-          schedule_date: schedule_date,
-          description: description
-        }
-      }).then( res => {
-        let message = 'Request ' + this.forms.id + ' updated.';
-        this.messages.successMessage = message;
-        swal({
-          text: message,
-          icon: 'success',
-          timer: 2000
-        });
-        setTimeout(() => {
-          this.showUpcomingRequest();
-          UIkit.modal('#modal-edit-request').hide();
-        }, 2000);
-      }).catch( err => {
-        this.forms.submit = 'Save Changes';
-        if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
-        else this.messages.errorMessage = err.response.data.responseMessage;
-      });
-    }
-  },
-  computed: {
-    selectedTime()
-    {
-      let hours = this.forms.timepicker.hours;
-      let minute = this.forms.timepicker.minute;
-
-      if( hours === '' ) hours = 'HH';
-      if( minute === '' ) minute = 'mm';
-      this.forms.timepicker.selected = hours + ':' + minute;
-      return this.forms.timepicker.selected;
     }
   },
   mounted() {
