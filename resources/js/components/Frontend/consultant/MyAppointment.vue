@@ -23,7 +23,7 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Client</label>
             <div class="uk-form-controls">
-              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="" />
+              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" />
             </div>
             <div v-show="messages.errors.client_name" class="uk-text-small uk-text-danger">{{ messages.errors.client_name }}</div>
             <div v-if="existingClient.isLoading" class="uk-text-center uk-margin-top">
@@ -443,7 +443,7 @@ export default {
         this.messages.errors.client_name = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.timepicker.hours === '' && this.forms.timepicker.minute === '' )
+      if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
       {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
@@ -455,11 +455,11 @@ export default {
       }
 
       if( this.messages.iserror === true ) return false;
-      let datepicker = this.$root.formatDate( this.forms.selectedDate, 'YYYY-MM-DD' );
-      let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
+      let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
+      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       let consult_id = this.getuser.consultant_id;
-      let client_id = this.forms.client.client_id;
-      let description = this.forms.description;
+      let client_id = this.forms.request.client.client_id;
+      let description = this.forms.request.description;
       let created_by = 'client';
 
       this.forms.submit = '<span uk-spinner></span>';
@@ -478,10 +478,12 @@ export default {
         this.messages.successMessage = message;
         swal({
           text: message,
-          icon: 'success'
+          icon: 'success',
+          timer: 2000
         });
         setTimeout(() => {
-
+          this.showRequest();
+          UIkit.modal('#modal-edit-request').hide();
         }, 2000);
       }).catch( err => {
         this.forms.submit = 'Create Request';
@@ -516,7 +518,7 @@ export default {
       }
 
       if( this.messages.iserror === true ) return false;
-      
+
       let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       let description = this.forms.request.description;

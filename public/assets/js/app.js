@@ -4845,7 +4845,7 @@ document.addEventListener("DOMContentLoaded", function () {
         this.messages.iserror = true;
       }
 
-      if (this.forms.request.timepicker.hours === '' && this.forms.timepicker.minute === '') {
+      if (this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '') {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
@@ -4856,11 +4856,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (this.messages.iserror === true) return false;
-      var datepicker = this.$root.formatDate(this.forms.selectedDate, 'YYYY-MM-DD');
-      var schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
+      var datepicker = this.$root.formatDate(this.forms.request.selectedDate, 'YYYY-MM-DD');
+      var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       var consult_id = this.getuser.consultant_id;
-      var client_id = this.forms.client.client_id;
-      var description = this.forms.description;
+      var client_id = this.forms.request.client.client_id;
+      var description = this.forms.request.description;
       var created_by = 'client';
       this.forms.submit = '<span uk-spinner></span>';
       axios({
@@ -4878,9 +4878,14 @@ document.addEventListener("DOMContentLoaded", function () {
         _this3.messages.successMessage = message;
         swal({
           text: message,
-          icon: 'success'
+          icon: 'success',
+          timer: 2000
         });
-        setTimeout(function () {}, 2000);
+        setTimeout(function () {
+          _this3.showRequest();
+
+          UIkit.modal('#modal-edit-request').hide();
+        }, 2000);
       })["catch"](function (err) {
         _this3.forms.submit = 'Create Request';
         if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
@@ -65200,6 +65205,7 @@ var render = function() {
                             return null
                           }
                           $event.preventDefault()
+                          return _vm.findExistingClient($event)
                         },
                         input: function($event) {
                           if ($event.target.composing) {

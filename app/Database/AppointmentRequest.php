@@ -103,7 +103,7 @@ class AppointmentRequest extends Model
       }
     }
 
-    $result = $query->paginate( $limit );
+    $result = $query->orderBy('appointment_request.created_at', 'desc')->paginate( $limit );
     return $result;
   }
 
@@ -143,6 +143,7 @@ class AppointmentRequest extends Model
       $this->created_by = $created_by;
       $this->schedule_date = $schedule_date;
       $this->description = $description;
+
       if( $created_by === 'client' )
       {
         $this->save();
