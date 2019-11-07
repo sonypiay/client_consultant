@@ -226,7 +226,7 @@
             <span v-else-if="forms.status_request === 'done'">completed</span>
             <span v-else>any</span> appointment.
           </div>
-          <a @click="onClickModal()" class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
+          <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
         </div>
         <div v-else class="uk-grid-medium uk-grid-match" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">

@@ -62365,13 +62365,9 @@ var render = function() {
                         {
                           staticClass:
                             "uk-button uk-button-primary gl-button-primary",
-                          on: {
-                            click: function($event) {
-                              return _vm.onClickModal()
-                            }
-                          }
+                          attrs: { href: _vm.$root.url + "/search" }
                         },
-                        [_vm._v("Create Appointment")]
+                        [_vm._v("Find consultant")]
                       )
                     ])
                   : _c(
