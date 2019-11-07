@@ -216,7 +216,7 @@
                         </a>
                       </li>
                       <li v-show="req.created_by === 'consultant'">
-                        <a>
+                        <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                           Delete
                         </a>
@@ -582,6 +582,36 @@ export default {
       this.forms.request.client.client_id = id;
       this.forms.request.client.client_name = name;
       this.existingClient.isFinding = false;
+    },
+    deleteRequest( id )
+    {
+      swal({
+        title: 'Confirmation',
+        text: 'Are you sure want to delete this request?',
+        icon: 'warning',
+        buttons: {
+          confirm: { value: true, text: 'Yes' },
+          cancel: 'Cancel'
+        }
+      }).then( val => {
+        if( val )
+        {
+          axios({
+            method: 'delete',
+            url: this.$root.url + '/consultant/delete_request/' + id
+          }).then( res => {
+            setTimeout(() => {
+              this.showRequest();
+            }, 2000);
+          }).catch( err => {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      })
     }
   },
   computed: {

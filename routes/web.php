@@ -54,4 +54,5 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::put('/change_password', 'Frontend\ConsultantUserController@change_password');
   Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ConsultantUserController@mark_as_read');
+  Route::delete('/delete_request/{id}', 'Frontend\ConsultantUserController@delete_request');
 });

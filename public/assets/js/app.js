@@ -4808,6 +4808,39 @@ document.addEventListener("DOMContentLoaded", function () {
       this.forms.request.client.client_id = id;
       this.forms.request.client.client_name = name;
       this.existingClient.isFinding = false;
+    },
+    deleteRequest: function deleteRequest(id) {
+      var _this6 = this;
+
+      swal({
+        title: 'Confirmation',
+        text: 'Are you sure want to delete this request?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            value: true,
+            text: 'Yes'
+          },
+          cancel: 'Cancel'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'delete',
+            url: _this6.$root.url + '/consultant/delete_request/' + id
+          }).then(function (res) {
+            setTimeout(function () {
+              _this6.showRequest();
+            }, 2000);
+          })["catch"](function (err) {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      });
     }
   },
   computed: {
@@ -65530,7 +65563,33 @@ var render = function() {
                                                   }
                                                 ]
                                               },
-                                              [_vm._m(3, true)]
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.deleteRequest(
+                                                          req.apt_id
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "uk-margin-small-right",
+                                                      attrs: {
+                                                        "uk-icon":
+                                                          "icon: trash; ratio: 0.8"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      "\n                        Delete\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             )
                                           ]
                                         )
@@ -65703,18 +65762,6 @@ var staticRenderFns = [
         }),
         _vm._v("\n                        View\n                      ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("span", {
-        staticClass: "uk-margin-small-right",
-        attrs: { "uk-icon": "icon: trash; ratio: 0.8" }
-      }),
-      _vm._v("\n                        Delete\n                      ")
     ])
   }
 ]
