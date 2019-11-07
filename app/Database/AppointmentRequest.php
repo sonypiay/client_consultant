@@ -51,7 +51,11 @@ class AppointmentRequest extends Model
       'appointment_request.created_at',
       'appointment_request.updated_at',
       'client_user.client_fullname',
+      'client_user.client_phone_number',
+      'client_user.client_email',
       'consultant_user.consultant_fullname',
+      'consultant_user.consultant_email',
+      'consultant_user.consultant_phone_number',
       'feedbacks.fd_id',
       'feedbacks.review_description',
       'feedbacks.feedback'
