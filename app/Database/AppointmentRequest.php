@@ -243,10 +243,14 @@ class AppointmentRequest extends Model
 
       if( $update->created_by === 'client' )
       {
-        $data_notif['client_id'] = $update->client_id;
+
         if( $status === 'cancel' )
         {
           $data_notif['consultant_id'] = $update->consultant_id;
+        }
+        else
+        {
+          $data_notif['client_id'] = $update->client_id;
         }
       }
       else
