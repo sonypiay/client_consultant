@@ -63412,7 +63412,7 @@ var render = function() {
                                       click: function($event) {
                                         return _vm.onUpdateStatus(
                                           req.apt_id,
-                                          "reject"
+                                          "decline"
                                         )
                                       }
                                     }
