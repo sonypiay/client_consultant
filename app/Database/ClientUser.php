@@ -226,4 +226,27 @@ class ClientUser extends Model
 
     return session()->flush();
   }
+
+  public function getExistingClient( $request )
+  {
+    $query = $this->select(
+      'client_user.client_id',
+      'client_user.client_fullname'
+    )
+    ->join('appointment_request', 'client_user.client_id', '=', 'appointment_request.client_id')
+    ->where([
+      ['client_user.client_fullname', 'like', '%' . $keywords . '%'],
+      ['appointment_request.consultant_id', session()->get('consultantId')]
+    ])
+    ->orWhere([
+      ['client_user.client_id', 'like', '%' . $keywords . '%'],
+      ['appointment_request.consultant_id', session()->get('consultantId')]
+    ])
+    ->get();
+
+    return [
+      'total' => $query->count(),
+      'data' => $query
+    ];
+  }
 }

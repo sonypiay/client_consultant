@@ -4684,8 +4684,9 @@ document.addEventListener("DOMContentLoaded", function () {
       var _this = this;
 
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/consultant/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page;
-      if (p !== undefined) url = p;
+      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
+      var url = this.$root.url + '/consultant/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
+      if (p !== undefined) url = p + '&' + param;
       axios({
         method: 'get',
         url: url

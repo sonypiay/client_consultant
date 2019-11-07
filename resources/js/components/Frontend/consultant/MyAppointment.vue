@@ -287,8 +287,9 @@ export default {
     showRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/consultant/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page;
-      if( p !== undefined ) url = p;
+      let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
+      let url = this.$root.url + '/consultant/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
+      if( p !== undefined ) url = p + '&' + param;
 
       axios({
         method: 'get',
