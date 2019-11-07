@@ -4625,6 +4625,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -4647,6 +4665,11 @@ document.addEventListener("DOMContentLoaded", function () {
           next_page_url: ''
         }
       },
+      existingClient: {
+        isLoading: false,
+        total: 0,
+        results: []
+      },
       datepicker: {
         mindate: new Date(),
         popover: {
@@ -4666,6 +4689,10 @@ document.addEventListener("DOMContentLoaded", function () {
             isSelecting: false,
             hours: '',
             minute: ''
+          },
+          client: {
+            client_id: '',
+            client_name: ''
           },
           description: '',
           submit: 'Make Appointment'
@@ -4899,6 +4926,22 @@ document.addEventListener("DOMContentLoaded", function () {
       })["catch"](function (err) {
         _this4.forms.request.submit = 'Save Changes';
         if (err.response.status === 500) _this4.messages.errorMessage = err.response.statusText;else _this4.messages.errorMessage = err.response.data.responseMessage;
+      });
+    },
+    findExistingClient: function findExistingClient(e) {
+      var _this5 = this;
+
+      this.existingClient.isLoading = true;
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/existing_client?keywords=' + this.forms.request.client.client_name
+      }).then(function (res) {
+        var result = res.data;
+        _this5.existingClient.total = result.total;
+        _this5.existingClient.results = result.data;
+        _this5.existingClient.isLoading = false;
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
       });
     }
   },
@@ -65095,11 +65138,119 @@ var render = function() {
                     $event.preventDefault()
                     _vm.forms.request.isedit === true
                       ? _vm.onSaveRequest()
-                      : _vm.onAddRequest()
+                      : _vm.onCreateRequest()
                   }
                 }
               },
               [
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("Client")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.forms.request.client.client_name,
+                          expression: "forms.request.client.client_name"
+                        }
+                      ],
+                      staticClass: "uk-input gl-input-default",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Find by client name or id..."
+                      },
+                      domProps: { value: _vm.forms.request.client.client_name },
+                      on: {
+                        keypress: _vm.findExistingClient,
+                        keydown: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          $event.preventDefault()
+                          return _vm.findExistingClient($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.forms.request.client,
+                            "client_name",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm.existingClient.isLoading
+                    ? _c(
+                        "div",
+                        { staticClass: "uk-text-center uk-margin-top" },
+                        [_c("span", { attrs: { "uk-spinner": "" } })]
+                      )
+                    : _c("div", [
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value:
+                                  _vm.existingClient.total != 0 &&
+                                  _vm.forms.request.client.client_name != "",
+                                expression:
+                                  "existingClient.total != 0 && forms.request.client.client_name != ''"
+                              }
+                            ],
+                            staticClass:
+                              "uk-card uk-card-default uk-margin-top uk-margin-bottom uk-width-large dropdown-timepicker"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "dropdown-timepicker-content" },
+                              [
+                                _c(
+                                  "ul",
+                                  {
+                                    staticClass:
+                                      "uk-nav uk-nav-default nav-timepicker"
+                                  },
+                                  _vm._l(_vm.existingClient.results, function(
+                                    client
+                                  ) {
+                                    return _c("li", [
+                                      _c(
+                                        "a",
+                                        { on: { click: function($event) {} } },
+                                        [_vm._v(_vm._s(client.client_fullname))]
+                                      )
+                                    ])
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
                     _vm._v("Select Date")

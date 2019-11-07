@@ -19,7 +19,25 @@
         <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
           {{ messages.errorMessage }}
         </div>
-        <form class="uk-form-stacked uk-margin-top" @submit.prevent="forms.request.isedit === true ? onSaveRequest() : onAddRequest()">
+        <form class="uk-form-stacked uk-margin-top" @submit.prevent="forms.request.isedit === true ? onSaveRequest() : onCreateRequest()">
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Client</label>
+            <div class="uk-form-controls">
+              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" />
+            </div>
+            <div v-if="existingClient.isLoading" class="uk-text-center uk-margin-top">
+              <span uk-spinner></span>
+            </div>
+            <div v-else>
+              <div v-show="existingClient.total != 0 && forms.request.client.client_name != ''" class="uk-card uk-card-default uk-margin-top uk-margin-bottom uk-width-large dropdown-timepicker">
+                <div class="dropdown-timepicker-content">
+                  <ul class="uk-nav uk-nav-default nav-timepicker">
+                    <li v-for="client in existingClient.results"><a @click="">{{ client.client_fullname }}</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Select Date</label>
             <div class="uk-form-controls">
@@ -251,6 +269,11 @@ export default {
           next_page_url: ''
         }
       },
+      existingClient: {
+        isLoading: false,
+        total: 0,
+        results: []
+      },
       datepicker: {
         mindate: new Date(),
         popover: {
@@ -270,6 +293,10 @@ export default {
             isSelecting: false,
             hours: '',
             minute: ''
+          },
+          client: {
+            client_id: '',
+            client_name: ''
           },
           description: '',
           submit: 'Make Appointment'
@@ -499,6 +526,21 @@ export default {
         this.forms.request.submit = 'Save Changes';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
+      });
+    },
+    findExistingClient( e )
+    {
+      this.existingClient.isLoading = true;
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/existing_client?keywords=' + this.forms.request.client.client_name
+      }).then( res => {
+        let result = res.data;
+        this.existingClient.total = result.total;
+        this.existingClient.results = result.data;
+        this.existingClient.isLoading = false;
+      }).catch( err => {
+        console.log( err.response.statusText );
       });
     }
   },

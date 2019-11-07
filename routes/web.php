@@ -46,6 +46,7 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/logout', 'Frontend\ConsultantUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ConsultantUserController@request_list');
   Route::get('/notification', 'Frontend\ConsultantUserController@get_notification');
+  Route::get('/existing_client', 'Frontend\ConsultantUserController@existing_client');
   Route::post('/create_account', 'Frontend\ConsultantUserController@register');
   Route::post('/signin', 'Frontend\ConsultantUserController@login');
   Route::put('/save_profile', 'Frontend\ConsultantUserController@save_profile');

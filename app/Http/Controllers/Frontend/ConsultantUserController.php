@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Database\ClientUser;
 use App\Database\ConsultantUser;
 use App\Database\AppointmentRequest;
 use App\Database\Notification;
@@ -76,5 +77,11 @@ class ConsultantUserController extends Controller
     $userid = session()->has('isConsultant') ? session()->get('consultantId') : '';
     $res = $notification->markAsRead( $userid, $type );
     return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function existing_client( Request $request, ClientUser $client )
+  {
+    $res = $client->getExistingClient( $request );
+    return response()->json( $res, 200 );
   }
 }

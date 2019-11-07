@@ -229,19 +229,26 @@ class ClientUser extends Model
 
   public function getExistingClient( $request )
   {
+    $keywords = isset( $request->keywords ) ? $request->keywords : '';
     $query = $this->select(
       'client_user.client_id',
       'client_user.client_fullname'
     )
-    ->join('appointment_request', 'client_user.client_id', '=', 'appointment_request.client_id')
-    ->where([
-      ['client_user.client_fullname', 'like', '%' . $keywords . '%'],
-      ['appointment_request.consultant_id', session()->get('consultantId')]
-    ])
-    ->orWhere([
-      ['client_user.client_id', 'like', '%' . $keywords . '%'],
-      ['appointment_request.consultant_id', session()->get('consultantId')]
-    ])
+    ->join('appointment_request', 'client_user.client_id', '=', 'appointment_request.client_id');
+    
+    if( ! empty( $keywords ) )
+    {
+      $query = $query->where([
+        ['client_user.client_fullname', 'like', '%' . $keywords . '%'],
+        ['appointment_request.consultant_id', session()->get('consultantId')]
+      ])
+      ->orWhere([
+        ['client_user.client_id', 'like', '%' . $keywords . '%'],
+        ['appointment_request.consultant_id', session()->get('consultantId')]
+      ]);
+    }
+    $query = $query->orderBy('client_user.client_fullname', 'asc')
+    ->groupBy('appointment_request.client_id')
     ->get();
 
     return [
