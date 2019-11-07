@@ -269,7 +269,7 @@
                           Delete
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client' && req.status_request !== 'done'">
+                      <li v-show="req.status_request !== 'done' && req.status_request !== 'cancel'">
                         <a @click="onUpdateStatus( req.apt_id, 'cancel' )">
                           <span class="uk-margin-small-right" uk-icon="icon: ban; ratio: 0.8"></span>
                           Cancel

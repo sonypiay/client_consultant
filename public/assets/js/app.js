@@ -62254,12 +62254,12 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.created_by ===
-                                                        "client" &&
                                                       req.status_request !==
-                                                        "done",
+                                                        "done" &&
+                                                      req.status_request !==
+                                                        "cancel",
                                                     expression:
-                                                      "req.created_by === 'client' && req.status_request !== 'done'"
+                                                      "req.status_request !== 'done' && req.status_request !== 'cancel'"
                                                   }
                                                 ]
                                               },
