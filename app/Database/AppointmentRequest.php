@@ -218,20 +218,20 @@ class AppointmentRequest extends Model
       if( $current_schedule->format('Y-m-d H:i') != $schedule_date )
       {
         array_push( $data_notif, [
-          'parent_id' => $apt_id,
+          'parent_id' => $id,
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
+          'notif_message' => 'Request appointment with ID ' . $id . ' rescheduled',
           'user_id' => $getrequest->consultant_id
         ]);
 
         array_push( $data_notif, [
-          'parent_id' => $apt_id,
+          'parent_id' => $id,
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
+          'notif_message' => 'Request appointment with ID ' . $id . ' rescheduled',
           'user_id' => $getrequest->client_id
         ]);
 

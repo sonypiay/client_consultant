@@ -257,7 +257,7 @@
                           View
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client' && req.status_request !== 'done'">
+                      <li v-show="(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved !== 'Y')">
                         <a @click="modalEditReqest( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Edit
@@ -281,7 +281,7 @@
                           Mark as Solved
                         </a>
                       </li>
-                      <li v-show="req.status_request === 'done' && req.is_solved !== 'Y'">
+                      <li v-show="req.status_request === 'done' && req.is_solved === 'P'">
                         <a @click="onUpdateStatus( req.apt_id, 'unfinished' )">
                           <span class="uk-margin-small-right" uk-icon="icon: close; ratio: 0.8"></span>
                           Mark as Unfinished

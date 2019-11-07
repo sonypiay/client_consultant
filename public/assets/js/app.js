@@ -62505,12 +62505,15 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.created_by ===
+                                                      (req.created_by ===
                                                         "client" &&
-                                                      req.status_request !==
-                                                        "done",
+                                                        req.status_request !==
+                                                          "done") ||
+                                                      (req.created_by ===
+                                                        "client" &&
+                                                        req.is_solved !== "Y"),
                                                     expression:
-                                                      "req.created_by === 'client' && req.status_request !== 'done'"
+                                                      "(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved !== 'Y')"
                                                   }
                                                 ]
                                               },
@@ -62694,9 +62697,9 @@ var render = function() {
                                                     value:
                                                       req.status_request ===
                                                         "done" &&
-                                                      req.is_solved !== "Y",
+                                                      req.is_solved === "P",
                                                     expression:
-                                                      "req.status_request === 'done' && req.is_solved !== 'Y'"
+                                                      "req.status_request === 'done' && req.is_solved === 'P'"
                                                   }
                                                 ]
                                               },
