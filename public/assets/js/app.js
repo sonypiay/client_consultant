@@ -4652,7 +4652,7 @@ document.addEventListener("DOMContentLoaded", function () {
         this.forms.request.description = '';
         this.forms.request.id = '';
         this.forms.request.client.client_id = '';
-        this.forms.request.client.client_fullname = '';
+        this.forms.request.client.client_name = '';
         this.forms.request.submit = 'Create Appointment';
         this.forms.request.isedit = false;
       } else {
@@ -4662,7 +4662,7 @@ document.addEventListener("DOMContentLoaded", function () {
         this.forms.request.description = data.description;
         this.forms.request.id = data.apt_id;
         this.forms.request.client.client_id = data.client_id;
-        this.forms.request.client.client_fullname = data.client_fullname;
+        this.forms.request.client.client_name = data.client_fullname;
         this.forms.request.submit = 'Save Changes';
         this.forms.request.isedit = true;
       }
@@ -4680,7 +4680,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       var message_form = 'This field must be required';
 
-      if (this.forms.request.client.client_fullname === '') {
+      if (this.forms.request.client.client_name === '') {
         this.messages.errors.client_name = message_form;
         this.messages.iserror = true;
       }
@@ -4724,7 +4724,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
           _this3.showRequest();
 
-          UIkit.modal('#modal-edit-request').hide();
+          UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
         _this3.forms.submit = 'Create Request';
@@ -4742,7 +4742,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       var message_form = 'This field must be required';
 
-      if (this.forms.request.client.client_fullname === '') {
+      if (this.forms.request.client.client_name === '') {
         this.messages.errors.client_name = message_form;
         this.messages.iserror = true;
       }
@@ -4780,7 +4780,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
           _this4.showRequest();
 
-          UIkit.modal('#modal-edit-request').hide();
+          UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
         _this4.forms.request.submit = 'Save Changes';
@@ -64611,7 +64611,8 @@ var render = function() {
                       staticClass: "uk-input gl-input-default",
                       attrs: {
                         type: "text",
-                        placeholder: "Find by client name or id..."
+                        placeholder: "Find by client name or id...",
+                        disabled: _vm.forms.request.isedit
                       },
                       domProps: { value: _vm.forms.request.client.client_name },
                       on: {

@@ -26,7 +26,7 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Client</label>
             <div class="uk-form-controls">
-              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" />
+              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" :disabled="forms.request.isedit" />
             </div>
             <div v-show="messages.errors.client_name" class="uk-text-small uk-text-danger">{{ messages.errors.client_name }}</div>
             <div v-if="existingClient.isLoading" class="uk-text-center uk-margin-top">
@@ -422,7 +422,7 @@ export default {
         this.forms.request.description = '';
         this.forms.request.id = '';
         this.forms.request.client.client_id = '';
-        this.forms.request.client.client_fullname = '';
+        this.forms.request.client.client_name = '';
         this.forms.request.submit = 'Create Appointment';
         this.forms.request.isedit = false;
       }
@@ -434,7 +434,7 @@ export default {
         this.forms.request.description = data.description;
         this.forms.request.id = data.apt_id;
         this.forms.request.client.client_id = data.client_id;
-        this.forms.request.client.client_fullname = data.client_fullname;
+        this.forms.request.client.client_name = data.client_fullname;
         this.forms.request.submit = 'Save Changes';
         this.forms.request.isedit = true;
       }
@@ -449,7 +449,7 @@ export default {
         iserror: false
       }
       let message_form = 'This field must be required';
-      if( this.forms.request.client.client_fullname === '' )
+      if( this.forms.request.client.client_name === '' )
       {
         this.messages.errors.client_name = message_form;
         this.messages.iserror = true;
@@ -494,7 +494,7 @@ export default {
         });
         setTimeout(() => {
           this.showRequest();
-          UIkit.modal('#modal-edit-request').hide();
+          UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
         this.forms.submit = 'Create Request';
@@ -512,7 +512,7 @@ export default {
       }
 
       let message_form = 'This field must be required';
-      if( this.forms.request.client.client_fullname === '' )
+      if( this.forms.request.client.client_name === '' )
       {
         this.messages.errors.client_name = message_form;
         this.messages.iserror = true;
@@ -552,7 +552,7 @@ export default {
         });
         setTimeout(() => {
           this.showRequest();
-          UIkit.modal('#modal-edit-request').hide();
+          UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
         this.forms.request.submit = 'Save Changes';
