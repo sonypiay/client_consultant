@@ -211,6 +211,7 @@ class AppointmentRequest extends Model
     {
       $update = $apt->first();
       $notification = new Notification;
+      $data_notif = [];
       switch ($status) {
         case 'accept':
           $notif_message = 'Request #' . $id . ' has been accepted';
@@ -243,6 +244,10 @@ class AppointmentRequest extends Model
       if( $update->created_by === 'client' )
       {
         $data_notif['client_id'] = $update->client_id;
+        if( $status === 'cancel' )
+        {
+          $data_notif['consultant_id'] = $update->consultant_id;
+        }
       }
       else
       {
