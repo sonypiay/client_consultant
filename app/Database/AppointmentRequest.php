@@ -283,34 +283,27 @@ class AppointmentRequest extends Model
           $notif_message = 'Case is not finished yet with request ' . $id;
           break;
         default:
-          $notif_message = 'Request appointment' . $id . ' has been completed. Waiting for review.';
+          $notif_message = 'Request appointment' . $id . ' completed. Waiting for review.';
           break;
       }
 
-      if( $update->created_by === 'client' )
-      {
-        array_push( $data_notif, [
-          'parent_id' => $apt_id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => $notif_message,
-          'consultant_id' => $update->consult_id
-        ]);
+      array_push( $data_notif, [
+        'parent_id' => $apt_id,
+        'notif_date' => date('Y-m-d H:i:s'),
+        'notif_read' => 'N',
+        'notif_type' => 'request',
+        'notif_message' => $notif_message,
+        'consultant_id' => $update->consult_id
+      ]);
 
-        array_push( $data_notif, [
-          'parent_id' => $apt_id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => $notif_message,
-          'client_id' => $update->client_id
-        ]);
-      }
-      else
-      {
-        $data_notif['consultant_id'] = $update->consultant_id;
-      }
+      array_push( $data_notif, [
+        'parent_id' => $apt_id,
+        'notif_date' => date('Y-m-d H:i:s'),
+        'notif_read' => 'N',
+        'notif_type' => 'request',
+        'notif_message' => $notif_message,
+        'client_id' => $update->client_id
+      ]);
 
       if( $status === 'solved' )
       {
