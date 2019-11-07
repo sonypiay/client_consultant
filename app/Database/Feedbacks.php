@@ -48,7 +48,7 @@ class Feedbacks extends Model
         'notif_date' => date('Y-m-d H:i:s'),
         'notif_read' => 'N',
         'notif_type' => 'request',
-        'notif_message' => 'Client gave you a review on request #' . $id,
+        'notif_message' => 'Client gave you a review with request ' . $id,
         'consultant_id' => $getappointment->consultant_id
       ];
 

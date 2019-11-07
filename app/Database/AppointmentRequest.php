@@ -319,7 +319,6 @@ class AppointmentRequest extends Model
       }
 
       $update->save();
-
       $notification->addNotification( $data_notif );
     }
 
