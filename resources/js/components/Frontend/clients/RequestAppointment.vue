@@ -135,14 +135,8 @@
                           View
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'">
-                        <a @click="viewModalEdit( req )">
-                          <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
-                          Edit
-                        </a>
-                      </li>
-                      <li v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'">
-                        <a href="#">
+                      <li v-show="req.created_by === 'client'">
+                        <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                           Delete
                         </a>
@@ -161,8 +155,8 @@
                 </div>
               </div>
               <div v-show="req.created_by === 'consultant'" class="uk-margin-small">
-                <a @click="onApprovalRequest( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onApprovalRequest( req.apt_id, 'reject')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
+                <a @click="onUpdateStatus( req.apt_id, 'reject')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
             </div>
           </div>
@@ -251,6 +245,36 @@ export default {
           });
         }
       });
+    },
+    deleteRequest( id )
+    {
+      swal({
+        title: 'Confirmation',
+        text: 'Are you sure want to delete this request?',
+        icon: 'warning',
+        buttons: {
+          confirm: { value: true, text: 'Yes' },
+          cancel: 'Cancel'
+        }
+      }).then( val => {
+        if( val )
+        {
+          axios({
+            method: 'delete',
+            url: this.$root.url + '/client/delete_request/' + id
+          }).then( res => {
+            setTimeout(() => {
+              this.showRequest();
+            }, 2000);
+          }).catch( err => {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      })
     }
   },
   mounted() {

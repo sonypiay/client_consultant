@@ -3688,12 +3688,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
@@ -3768,6 +3762,39 @@ __webpack_require__.r(__webpack_exports__);
             setTimeout(function () {
               _this2.showUpcomingRequest();
             }, 1000);
+          })["catch"](function (err) {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      });
+    },
+    deleteRequest: function deleteRequest(id) {
+      var _this3 = this;
+
+      swal({
+        title: 'Confirmation',
+        text: 'Are you sure want to delete this request?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            value: true,
+            text: 'Yes'
+          },
+          cancel: 'Cancel'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'delete',
+            url: _this3.$root.url + '/client/delete_request/' + id
+          }).then(function (res) {
+            setTimeout(function () {
+              _this3.showRequest();
+            }, 2000);
           })["catch"](function (err) {
             swal({
               text: err.response.statusText,
@@ -5100,12 +5127,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
@@ -5182,6 +5203,39 @@ __webpack_require__.r(__webpack_exports__);
             setTimeout(function () {
               _this2.showUpcomingRequest();
             }, 1000);
+          })["catch"](function (err) {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      });
+    },
+    deleteRequest: function deleteRequest(id) {
+      var _this3 = this;
+
+      swal({
+        title: 'Confirmation',
+        text: 'Are you sure want to delete this request?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            value: true,
+            text: 'Yes'
+          },
+          cancel: 'Cancel'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'delete',
+            url: _this3.$root.url + '/consultant/delete_request/' + id
+          }).then(function (res) {
+            setTimeout(function () {
+              _this3.showRequest();
+            }, 2000);
           })["catch"](function (err) {
             swal({
               text: err.response.statusText,
@@ -63699,11 +63753,9 @@ var render = function() {
                                                 name: "show",
                                                 rawName: "v-show",
                                                 value:
-                                                  req.created_by === "client" &&
-                                                  req.status_request ===
-                                                    "waiting_respond",
+                                                  req.created_by === "client",
                                                 expression:
-                                                  "req.created_by === 'client' && req.status_request === 'waiting_respond'"
+                                                  "req.created_by === 'client'"
                                               }
                                             ]
                                           },
@@ -63713,8 +63765,8 @@ var render = function() {
                                               {
                                                 on: {
                                                   click: function($event) {
-                                                    return _vm.viewModalEdit(
-                                                      req
+                                                    return _vm.deleteRequest(
+                                                      req.apt_id
                                                     )
                                                   }
                                                 }
@@ -63725,34 +63777,15 @@ var render = function() {
                                                     "uk-margin-small-right",
                                                   attrs: {
                                                     "uk-icon":
-                                                      "icon: pencil; ratio: 0.8"
+                                                      "icon: trash; ratio: 0.8"
                                                   }
                                                 }),
                                                 _vm._v(
-                                                  "\n                        Edit\n                      "
+                                                  "\n                        Delete\n                      "
                                                 )
                                               ]
                                             )
                                           ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value:
-                                                  req.created_by === "client" &&
-                                                  req.status_request ===
-                                                    "waiting_respond",
-                                                expression:
-                                                  "req.created_by === 'client' && req.status_request === 'waiting_respond'"
-                                              }
-                                            ]
-                                          },
-                                          [_vm._m(2, true)]
                                         )
                                       ]
                                     )
@@ -63817,7 +63850,7 @@ var render = function() {
                                       "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
                                     on: {
                                       click: function($event) {
-                                        return _vm.onApprovalRequest(
+                                        return _vm.onUpdateStatus(
                                           req.apt_id,
                                           "accept"
                                         )
@@ -63834,7 +63867,7 @@ var render = function() {
                                       "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
                                     on: {
                                       click: function($event) {
-                                        return _vm.onApprovalRequest(
+                                        return _vm.onUpdateStatus(
                                           req.apt_id,
                                           "reject"
                                         )
@@ -63880,18 +63913,6 @@ var staticRenderFns = [
         }),
         _vm._v("\n                        View\n                      ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("span", {
-        staticClass: "uk-margin-small-right",
-        attrs: { "uk-icon": "icon: trash; ratio: 0.8" }
-      }),
-      _vm._v("\n                        Delete\n                      ")
     ])
   }
 ]
@@ -66644,24 +66665,33 @@ var render = function() {
                                             }
                                           ]
                                         },
-                                        [_vm._m(2, true)]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "li",
-                                        {
-                                          directives: [
+                                        [
+                                          _c(
+                                            "a",
                                             {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value:
-                                                req.created_by === "consultant",
-                                              expression:
-                                                "req.created_by === 'consultant'"
-                                            }
-                                          ]
-                                        },
-                                        [_vm._m(3, true)]
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.deleteRequest(
+                                                    req.apt_id
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("span", {
+                                                staticClass:
+                                                  "uk-margin-small-right",
+                                                attrs: {
+                                                  "uk-icon":
+                                                    "icon: trash; ratio: 0.8"
+                                                }
+                                              }),
+                                              _vm._v(
+                                                "\n                      Delete\n                    "
+                                              )
+                                            ]
+                                          )
+                                        ]
                                       )
                                     ]
                                   )
@@ -66784,30 +66814,6 @@ var staticRenderFns = [
         }),
         _vm._v("\n                      View\n                    ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("span", {
-        staticClass: "uk-margin-small-right",
-        attrs: { "uk-icon": "icon: pencil; ratio: 0.8" }
-      }),
-      _vm._v("\n                      Edit\n                    ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("span", {
-        staticClass: "uk-margin-small-right",
-        attrs: { "uk-icon": "icon: trash; ratio: 0.8" }
-      }),
-      _vm._v("\n                      Delete\n                    ")
     ])
   }
 ]
