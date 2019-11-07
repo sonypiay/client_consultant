@@ -3900,6 +3900,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['detailrequest']
 });
@@ -64019,129 +64030,126 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "uk-modal-body" }, [
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Request Created")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(
-                    _vm.$root.formatDate(
-                      _vm.detailrequest.created_at,
-                      "DD MMM YYYY"
-                    )
-                  ) +
-                  "\n          "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Request ID")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.detailrequest.apt_id) +
-                  "\n          "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Client ID")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.detailrequest.client_id) +
-                  "\n          "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Client Name")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.detailrequest.client_fullname) +
-                  "\n          "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Meeting Schedule")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(
-                    _vm.$root.formatDate(
-                      _vm.detailrequest.schedule_date,
-                      "dddd, DD MMMM YYYY HH:mm"
-                    )
-                  ) +
-                  "\n          "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Status Appointment")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-margin-remove-top" }, [
-              _vm.detailrequest.status_request === "waiting_respond"
-                ? _c("span", { staticClass: "request-status-badge upcoming" }, [
-                    _vm._v("Waiting Response")
-                  ])
-                : _vm.detailrequest.status_request === "accept"
-                ? _c("span", { staticClass: "request-status-badge accept" }, [
-                    _vm._v("Accept")
-                  ])
-                : _vm.detailrequest.status_request === "decline"
-                ? _c("span", { staticClass: "request-status-badge decline" }, [
-                    _vm._v("Decline")
-                  ])
-                : _vm.detailrequest.status_request === "cancel"
-                ? _c("span", { staticClass: "request-status-badge cancel" }, [
-                    _vm._v("Cancel")
-                  ])
-                : _c("span", { staticClass: "request-status-badge done" }, [
-                    _vm._v("Done")
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-margin",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Request Created")
                   ]),
-              _vm._v(" "),
-              _vm.detailrequest.status_request === "done" &&
-              _vm.detailrequest.is_solved === "Y"
-                ? _c("span", { staticClass: "request-status-badge accept" }, [
-                    _c("i", { attrs: { "uk-icon": "icon: check; ratio: 1" } }),
-                    _vm._v(" Solved")
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          _vm.$root.formatDate(
+                            _vm.detailrequest.created_at,
+                            "DD MMM YYYY"
+                          )
+                        ) +
+                        "\n              "
+                    )
                   ])
-                : _vm._e(),
+                ])
+              ]),
               _vm._v(" "),
-              _vm.detailrequest.status_request === "done" &&
-              _vm.detailrequest.is_solved === "N"
-                ? _c("span", { staticClass: "request-status-badge decline" }, [
-                    _c("i", { attrs: { "uk-icon": "icon: check; ratio: 1" } }),
-                    _vm._v(" Unfinished")
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Request ID")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.apt_id) +
+                        "\n              "
+                    )
                   ])
-                : _vm._e()
-            ])
-          ]),
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-margin",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Client ID")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant_id) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Client Name")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant_fullname) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Email Address")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant_email) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Contact Number")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant_phone_number) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -64157,6 +64165,8 @@ var render = function() {
               staticClass: "uk-panel uk-margin"
             },
             [
+              _c("hr"),
+              _vm._v(" "),
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
                 _vm._v("Feedback")
               ]),
@@ -64186,7 +64196,7 @@ var render = function() {
             },
             [
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                _vm._v("Your rate")
+                _vm._v("Rate")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-margin-remove-top" }, [

@@ -13,57 +13,68 @@
           </div>
         </div>
         <div class="uk-modal-body">
-          <div class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Request Created</h6>
-            <p class="uk-margin-remove-top">
-              {{ $root.formatDate( detailrequest.created_at, 'DD MMM YYYY' ) }}
-            </p>
+          <div class="uk-grid-small uk-margin" uk-grid>
+            <div class="uk-width-1-2">
+              <div class="uk-panel uk-margin">
+                <h6 class="uk-h6 uk-margin-remove-bottom">Request Created</h6>
+                <p class="uk-margin-remove-top">
+                  {{ $root.formatDate( detailrequest.created_at, 'DD MMM YYYY' ) }}
+                </p>
+              </div>
+            </div>
+            <div class="uk-width-1-2">
+              <div class="uk-panel uk-margin">
+                <h6 class="uk-h6 uk-margin-remove-bottom">Request ID</h6>
+                <p class="uk-margin-remove-top">
+                  {{ detailrequest.apt_id }}
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Request ID</h6>
-            <p class="uk-margin-remove-top">
-              {{ detailrequest.apt_id }}
-            </p>
-          </div>
-          <div class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Client ID</h6>
-            <p class="uk-margin-remove-top">
-              {{ detailrequest.client_id }}
-            </p>
-          </div>
-          <div class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Client Name</h6>
-            <p class="uk-margin-remove-top">
-              {{ detailrequest.client_fullname }}
-            </p>
-          </div>
-          <div class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Meeting Schedule</h6>
-            <p class="uk-margin-remove-top">
-              {{ $root.formatDate( detailrequest.schedule_date, 'dddd, DD MMMM YYYY HH:mm' ) }}
-            </p>
-          </div>
-          <div class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Status Appointment</h6>
-            <div class="uk-margin-remove-top">
-              <span v-if="detailrequest.status_request === 'waiting_respond'" class="request-status-badge upcoming">Waiting Response</span>
-              <span v-else-if="detailrequest.status_request === 'accept'" class="request-status-badge accept">Accept</span>
-              <span v-else-if="detailrequest.status_request === 'decline'" class="request-status-badge decline">Decline</span>
-              <span v-else-if="detailrequest.status_request === 'cancel'" class="request-status-badge cancel">Cancel</span>
-              <span v-else class="request-status-badge done">Done</span>
-
-              <span v-if="detailrequest.status_request === 'done' && detailrequest.is_solved === 'Y'" class="request-status-badge accept"><i uk-icon="icon: check; ratio: 1"></i> Solved</span>
-              <span v-if="detailrequest.status_request === 'done' && detailrequest.is_solved === 'N'" class="request-status-badge decline"><i uk-icon="icon: check; ratio: 1"></i> Unfinished</span>
+          <hr>
+          <div class="uk-grid-small uk-margin" uk-grid>
+            <div class="uk-width-1-2">
+              <div class="uk-panel uk-margin">
+                <h6 class="uk-h6 uk-margin-remove-bottom">Client ID</h6>
+                <p class="uk-margin-remove-top">
+                  {{ detailrequest.consultant_id }}
+                </p>
+              </div>
+            </div>
+            <div class="uk-width-1-2">
+              <div class="uk-panel uk-margin">
+                <h6 class="uk-h6 uk-margin-remove-bottom">Client Name</h6>
+                <p class="uk-margin-remove-top">
+                  {{ detailrequest.consultant_fullname }}
+                </p>
+              </div>
+            </div>
+            <div class="uk-width-1-2">
+              <div class="uk-panel uk-margin">
+                <h6 class="uk-h6 uk-margin-remove-bottom">Email Address</h6>
+                <p class="uk-margin-remove-top">
+                  {{ detailrequest.consultant_email }}
+                </p>
+              </div>
+            </div>
+            <div class="uk-width-1-2">
+              <div class="uk-panel uk-margin">
+                <h6 class="uk-h6 uk-margin-remove-bottom">Contact Number</h6>
+                <p class="uk-margin-remove-top">
+                  {{ detailrequest.consultant_phone_number }}
+                </p>
+              </div>
             </div>
           </div>
           <div v-show="detailrequest.feedback" class="uk-panel uk-margin">
+            <hr>
             <h6 class="uk-h6 uk-margin-remove-bottom">Feedback</h6>
             <p class="uk-margin-remove-top">
               {{ detailrequest.review_description }}
             </p>
           </div>
           <div v-show="detailrequest.feedback" class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Your rate</h6>
+            <h6 class="uk-h6 uk-margin-remove-bottom">Rate</h6>
             <div class="uk-margin-remove-top">
               <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-5">
