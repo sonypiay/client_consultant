@@ -204,12 +204,19 @@ class AppointmentRequest extends Model
         $data_notif['client_id'] = $getrequest->client_id;
       }
 
-      $getrequest->status_request = 'waiting_respond';
-      $getrequest->schedule_date = $schedule_date;
       $getrequest->description = $description;
-      $getrequest->save();
+      if( $getrequest->schedule_date != $schedule_date )
+      {
+        $getrequest->status_request = 'waiting_respond';
+        $getrequest->schedule_date = $schedule_date;
+        $getrequest->save();
 
-      $notification->addNotification( $data_notif );
+        $notification->addNotification( $data_notif );
+      }
+      else
+      {
+        $getrequest->save();
+      }
     }
     else
     {
