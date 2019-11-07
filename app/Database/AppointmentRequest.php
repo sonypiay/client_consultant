@@ -139,7 +139,7 @@ class AppointmentRequest extends Model
           'notif_read' => 'N',
           'notif_type' => 'request',
           'notif_message' => 'You create a new request appointment with ID ' . $apt_id,
-          'client_id' => $consult_id
+          'client_id' => $client_id
         ]);
       }
       else
@@ -149,7 +149,7 @@ class AppointmentRequest extends Model
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
+          'notif_message' => 'You created a new request appointment with ID ' . $apt_id,
           'consultant_id' => $consult_id
         ]);
 
@@ -158,8 +158,8 @@ class AppointmentRequest extends Model
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'You create a new request appointment with ID ' . $apt_id,
-          'client_id' => $consult_id
+          'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
+          'client_id' => $client_id
         ]);
       }
 
@@ -209,31 +209,32 @@ class AppointmentRequest extends Model
     $res = ['responseCode' => 200, 'responseMessage' => ''];
     $getrequest = $this->where( 'apt_id', $id )->first();
     $notification = new Notification;
-
-    $data_notif = [
-      'parent_id' => $id,
-      'notif_date' => date('Y-m-d H:i:s'),
-      'notif_read' => 'N',
-      'notif_type' => 'request'
-    ];
+    $data_notif = [];
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
-      if( $getrequest->created_by === 'client' )
-      {
-        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled.';
-        $data_notif['consultant_id'] = $getrequest->consultant_id;
-      }
-      else
-      {
-        $data_notif['notif_message'] = 'Request ' . $id . ' has been rescheduled.';
-        $data_notif['client_id'] = $getrequest->client_id;
-      }
-
       $current_schedule = new DateTime( $getrequest->schedule_date );
       $getrequest->description = $description;
       if( $current_schedule->format('Y-m-d H:i') != $schedule_date )
       {
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
+          'consultant_id' => $getrequest->consult_id
+        ]);
+
+        array_push( $data_notif, [
+          'parent_id' => $apt_id,
+          'notif_date' => date('Y-m-d H:i:s'),
+          'notif_read' => 'N',
+          'notif_type' => 'request',
+          'notif_message' => 'Request appointment with ID ' . $apt_id . ' has been rescheduled',
+          'client_id' => $getrequest->client_id
+        ]);
+        
         $getrequest->status_request = 'waiting_respond';
         $getrequest->schedule_date = $schedule_date;
         $getrequest->save();
