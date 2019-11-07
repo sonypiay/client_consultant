@@ -173,7 +173,6 @@
 </template>
 
 <script>
-import EditRequest from './EditRequest.vue';
 import VCalendar from 'v-calendar';
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -183,8 +182,7 @@ document.addEventListener("DOMContentLoaded", function() {
 export default {
   props: [],
   components: {
-    VCalendar,
-    'edit-request': EditRequest
+    VCalendar
   },
   data() {
     return {
@@ -341,7 +339,7 @@ export default {
           description: description
         }
       }).then( res => {
-        let message = 'Request ' + id + ' updated.';
+        let message = 'Request ' + this.forms.id + ' updated.';
         this.messages.successMessage = message;
         swal({
           text: message,

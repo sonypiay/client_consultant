@@ -3,14 +3,15 @@
     <div id="modal-edit-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
-        <div class="modal-title">Add Request Service</div>
+        <div class="modal-title">Edit Request Appointment</div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
         </div>
         <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
           {{ messages.errorMessage }}
         </div>
-        <form class="uk-form-stacked" @submit.prevent="onCreateRequest">
+        {{ $root.formatDate( selectedDate, 'ddd, DD MMMM YYYY' ) }}
+        <form class="uk-form-stacked uk-margin-top" @submit.prevent="onSaveRequest">
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Select Date</label>
             <div class="uk-form-controls">
@@ -21,7 +22,7 @@
               >
               <div class="uk-width-1-1 uk-inline">
                 <span class="uk-form-icon" uk-icon="calendar"></span>
-                <input type="text" class="uk-width-1-1 uk-input gl-input-default" :value="$root.formatDate( forms.selectedDate, 'ddd, DD MMMM YYYY' )" readonly />
+                <input type="text" class="uk-width-1-1 uk-input gl-input-default" v-model="forms.selectedDate" readonly />
               </div>
               </v-date-picker>
             </div>
@@ -102,8 +103,8 @@ document.addEventListener("DOMContentLoaded", function() {
 export default {
   props: [
     'getuser',
-    'getconsultant',
-    'haslogin'
+    'haslogin',
+    'detailrequest'
   ],
   components: {
     VCalendar
@@ -118,15 +119,16 @@ export default {
         }
       },
       forms: {
-        selectedDate: new Date( this.$root.formatDate( this.detailrequest.schedule_date, 'YYYY-MM-DD' ) ),
+        id: '',
+        selectedDate: new Date(),
         timepicker: {
           selected: '',
           isSelecting: false,
-          hours: this.$root.formatDate( this.detailrequest.schedule_date, 'YYYY-MM-DD' ),
-          minute: this.$root.formatDate( this.detailrequest.schedule_date, 'mm' )
+          hours: '',
+          minute: ''
         },
-        description: '',
-        submit: 'Create Request'
+        description: this.detailrequest.description,
+        submit: 'Save Changes'
       },
       messages: {
         errors: {},
@@ -143,7 +145,7 @@ export default {
       if( time === 'hours' ) this.forms.timepicker.hours = str;
       if( time === 'minute' ) this.forms.timepicker.minute = str;
     },
-    onCreateRequest()
+    onSaveRequest()
     {
       this.messages = {
         errors: {},
@@ -151,6 +153,7 @@ export default {
         successMessage: '',
         iserror: false
       }
+
       let message_form = 'This field must be required';
       if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '' )
       {
@@ -166,51 +169,54 @@ export default {
       if( this.messages.iserror === true ) return false;
       let datepicker = this.$root.formatDate( this.forms.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
-      let consult_id = this.getconsultant.consultant_id;
-      let client_id = this.getuser.client_id;
       let description = this.forms.description;
-      let created_by = 'client';
 
       this.forms.submit = '<span uk-spinner></span>';
       axios({
-        method: 'post',
-        url: this.$root.url + '/client/add_request',
+        method: 'put',
+        url: this.$root.url + '/client/save_request/' + this.forms.id,
         params: {
           schedule_date: schedule_date,
-          consult_id: consult_id,
-          client_id: client_id,
-          description: description,
-          created_by: created_by
+          description: description
         }
       }).then( res => {
-        let message = 'Request has been successfully created.'
+        let message = 'Request ' + id + ' updated.';
         this.messages.successMessage = message;
         swal({
           text: message,
-          icon: 'success'
+          icon: 'success',
+          timer: 2000
         });
-        setTimeout(() => { document.location = this.$root.url + '/client/dashboard'; }, 2000);
+        setTimeout(() => {
+          this.showUpcomingRequest();
+          UIkit.modal('#modal-edit-request').hide();
+        }, 2000);
       }).catch( err => {
-        this.forms.submit = 'Create Request';
+        this.forms.submit = 'Save Changes';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });
     }
   },
+  mounted() {
+    console.log( this.detailrequest );
+  },
   computed: {
     selectedTime()
     {
-      let hours = this.forms.timepicker.hours;
-      let minute = this.forms.timepicker.minute;
+      let hours = this.$root.formatDate( this.detailrequest.schedule_date, 'HH' );
+      let minute = this.$root.formatDate( this.detailrequest.schedule_date, 'mm' );
 
       if( hours === '' ) hours = 'HH';
       if( minute === '' ) minute = 'mm';
       this.forms.timepicker.selected = hours + ':' + minute;
       return this.forms.timepicker.selected;
+    },
+    selectedDate()
+    {
+      this.forms.selectedDate = new Date( this.detailrequest.schedule_date );
+      return this.forms.selectedDate;
     }
   }
 }
 </script>
-
-<style lang="css" scoped>
-</style>
