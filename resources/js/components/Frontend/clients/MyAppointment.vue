@@ -548,6 +548,7 @@ export default {
     {
       this.forms.rating.review_description = '';
       this.forms.rating.feedback = '';
+      this.forms.rating.submit = 'Send Review'
       this.getrequest.details = data;
       UIkit.modal('#givereview').show();
     },

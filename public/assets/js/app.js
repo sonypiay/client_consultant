@@ -3280,6 +3280,7 @@ document.addEventListener("DOMContentLoaded", function () {
     modalReview: function modalReview(data) {
       this.forms.rating.review_description = '';
       this.forms.rating.feedback = '';
+      this.forms.rating.submit = 'Send Review';
       this.getrequest.details = data;
       UIkit.modal('#givereview').show();
     },
@@ -5002,6 +5003,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -66181,67 +66187,80 @@ var render = function() {
                               "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
                           },
                           [
-                            _c("div", { staticClass: "uk-float-right" }, [
-                              _c("a", {
-                                staticClass: "request-icon",
-                                attrs: { "uk-icon": "more-vertical" }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "dropdown-request-nav",
-                                  attrs: {
-                                    "uk-dropdown": "mode: click; pos: left"
-                                  }
-                                },
-                                [
+                            _c(
+                              "div",
+                              { staticClass: "uk-clearfix uk-margin-small" },
+                              [
+                                _c("div", { staticClass: "uk-float-left" }, [
+                                  _c("div", { staticClass: "request-id" }, [
+                                    _vm._v("#" + _vm._s(req.apt_id))
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "uk-float-right" }, [
+                                  _c("a", {
+                                    staticClass: "request-icon",
+                                    attrs: { "uk-icon": "more-vertical" }
+                                  }),
+                                  _vm._v(" "),
                                   _c(
-                                    "ul",
+                                    "div",
                                     {
-                                      staticClass:
-                                        "uk-nav uk-dropdown-nav request-nav"
+                                      staticClass: "dropdown-request-nav",
+                                      attrs: {
+                                        "uk-dropdown": "mode: click; pos: left"
+                                      }
                                     },
                                     [
-                                      _vm._m(1, true),
-                                      _vm._v(" "),
                                       _c(
-                                        "li",
+                                        "ul",
                                         {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value:
-                                                req.created_by === "consultant",
-                                              expression:
-                                                "req.created_by === 'consultant'"
-                                            }
-                                          ]
+                                          staticClass:
+                                            "uk-nav uk-dropdown-nav request-nav"
                                         },
                                         [
+                                          _vm._m(1, true),
+                                          _vm._v(" "),
                                           _c(
-                                            "a",
+                                            "li",
                                             {
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.deleteRequest(
-                                                    req.apt_id
-                                                  )
+                                              directives: [
+                                                {
+                                                  name: "show",
+                                                  rawName: "v-show",
+                                                  value:
+                                                    req.created_by ===
+                                                    "consultant",
+                                                  expression:
+                                                    "req.created_by === 'consultant'"
                                                 }
-                                              }
+                                              ]
                                             },
                                             [
-                                              _c("span", {
-                                                staticClass:
-                                                  "uk-margin-small-right",
-                                                attrs: {
-                                                  "uk-icon":
-                                                    "icon: trash; ratio: 0.8"
-                                                }
-                                              }),
-                                              _vm._v(
-                                                "\n                      Delete\n                    "
+                                              _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deleteRequest(
+                                                        req.apt_id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "uk-margin-small-right",
+                                                    attrs: {
+                                                      "uk-icon":
+                                                        "icon: trash; ratio: 0.8"
+                                                    }
+                                                  }),
+                                                  _vm._v(
+                                                    "\n                        Delete\n                      "
+                                                  )
+                                                ]
                                               )
                                             ]
                                           )
@@ -66249,9 +66268,9 @@ var render = function() {
                                       )
                                     ]
                                   )
-                                ]
-                              )
-                            ]),
+                                ])
+                              ]
+                            ),
                             _vm._v(" "),
                             _c("div", { staticClass: "uk-margin-small" }, [
                               _c("div", { staticClass: "request-time" }, [
@@ -66366,7 +66385,7 @@ var staticRenderFns = [
           staticClass: "uk-margin-small-right",
           attrs: { "uk-icon": "icon: forward; ratio: 0.8" }
         }),
-        _vm._v("\n                      View\n                    ")
+        _vm._v("\n                        View\n                      ")
       ])
     ])
   }

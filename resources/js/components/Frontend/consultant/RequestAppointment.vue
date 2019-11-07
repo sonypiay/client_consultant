@@ -31,23 +31,28 @@
         <div v-else class="uk-grid-medium" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
-              <div class="uk-float-right">
-                <a uk-icon="more-vertical" class="request-icon"></a>
-                <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
-                  <ul class="uk-nav uk-dropdown-nav request-nav">
-                    <li>
-                      <a href="#">
-                        <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
-                        View
-                      </a>
-                    </li>
-                    <li v-show="req.created_by === 'consultant'">
-                      <a @click="deleteRequest( req.apt_id )">
-                        <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
-                        Delete
-                      </a>
-                    </li>
-                  </ul>
+              <div class="uk-clearfix uk-margin-small">
+                <div class="uk-float-left">
+                  <div class="request-id">#{{ req.apt_id }}</div>
+                </div>
+                <div class="uk-float-right">
+                  <a uk-icon="more-vertical" class="request-icon"></a>
+                  <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
+                    <ul class="uk-nav uk-dropdown-nav request-nav">
+                      <li>
+                        <a href="#">
+                          <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
+                          View
+                        </a>
+                      </li>
+                      <li v-show="req.created_by === 'consultant'">
+                        <a @click="deleteRequest( req.apt_id )">
+                          <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
+                          Delete
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
               <div class="uk-margin-small">
