@@ -9,7 +9,7 @@
     </div>
 
     <!-- add / update appointment -->
-    <div id="modal-add-request" uk-modal>
+    <div id="modal-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">Edit Request Appointment</div>
@@ -272,7 +272,7 @@ export default {
             minute: ''
           },
           description: '',
-          submit: 'Add Appointment'
+          submit: 'Make Appointment'
         }
       },
       messages: {
@@ -393,7 +393,112 @@ export default {
         this.forms.request.description = data.description;
         this.forms.request.id = data.apt_id;
       }
-      UIkit.modal('#modal-add-request').show();
+      UIkit.modal('#modal-request').show();
+    },
+    onCreateRequest()
+    {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      }
+      let message_form = 'This field must be required';
+      if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '' )
+      {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+      if( this.forms.description === '' )
+      {
+        this.messages.errors.description = message_form;
+        this.messages.iserror = true;
+      }
+
+      if( this.messages.iserror === true ) return false;
+      let datepicker = this.$root.formatDate( this.forms.selectedDate, 'YYYY-MM-DD' );
+      let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
+      let consult_id = this.getuser.consultant_id;
+      let client_id = '';
+      let description = this.forms.description;
+      let created_by = 'client';
+
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/consultant/add_request',
+        params: {
+          schedule_date: schedule_date,
+          consult_id: consult_id,
+          client_id: client_id,
+          description: description,
+          created_by: 'consultant'
+        }
+      }).then( res => {
+        let message = 'Request appointment has been successfully created.'
+        this.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success'
+        });
+        setTimeout(() => { document.location = this.$root.url + '/consultant/dashboard'; }, 2000);
+      }).catch( err => {
+        this.forms.submit = 'Create Request';
+        if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
+        else this.messages.errorMessage = err.response.data.responseMessage;
+      });
+    },
+    onSaveRequest()
+    {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      }
+
+      let message_form = 'This field must be required';
+      if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
+      {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+      if( this.forms.request.description === '' )
+      {
+        this.messages.errors.description = message_form;
+        this.messages.iserror = true;
+      }
+
+      if( this.messages.iserror === true ) return false;
+      let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
+      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
+      let description = this.forms.request.description;
+
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'put',
+        url: this.$root.url + '/client/save_request/' + this.forms.request.id,
+        params: {
+          schedule_date: schedule_date,
+          description: description
+        }
+      }).then( res => {
+        let message = 'Request ' + this.forms.request.id + ' updated.';
+        this.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success',
+          timer: 2000
+        });
+        setTimeout(() => {
+          this.showRequest();
+          UIkit.modal('#modal-edit-request').hide();
+        }, 2000);
+      }).catch( err => {
+        this.forms.request.submit = 'Save Changes';
+        if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
+        else this.messages.errorMessage = err.response.data.responseMessage;
+      });
     }
   },
   mounted() {

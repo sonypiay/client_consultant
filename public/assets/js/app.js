@@ -4668,7 +4668,7 @@ document.addEventListener("DOMContentLoaded", function () {
             minute: ''
           },
           description: '',
-          submit: 'Add Appointment'
+          submit: 'Make Appointment'
         }
       },
       messages: {
@@ -4793,7 +4793,112 @@ document.addEventListener("DOMContentLoaded", function () {
         this.forms.request.id = data.apt_id;
       }
 
-      UIkit.modal('#modal-add-request').show();
+      UIkit.modal('#modal-request').show();
+    },
+    onCreateRequest: function onCreateRequest() {
+      var _this3 = this;
+
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var message_form = 'This field must be required';
+
+      if (this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '') {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.forms.description === '') {
+        this.messages.errors.description = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.messages.iserror === true) return false;
+      var datepicker = this.$root.formatDate(this.forms.selectedDate, 'YYYY-MM-DD');
+      var schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
+      var consult_id = this.getuser.consultant_id;
+      var client_id = '';
+      var description = this.forms.description;
+      var created_by = 'client';
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/consultant/add_request',
+        params: {
+          schedule_date: schedule_date,
+          consult_id: consult_id,
+          client_id: client_id,
+          description: description,
+          created_by: 'consultant'
+        }
+      }).then(function (res) {
+        var message = 'Request appointment has been successfully created.';
+        _this3.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success'
+        });
+        setTimeout(function () {
+          document.location = _this3.$root.url + '/consultant/dashboard';
+        }, 2000);
+      })["catch"](function (err) {
+        _this3.forms.submit = 'Create Request';
+        if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
+      });
+    },
+    onSaveRequest: function onSaveRequest() {
+      var _this4 = this;
+
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var message_form = 'This field must be required';
+
+      if (this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '') {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.forms.request.description === '') {
+        this.messages.errors.description = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.messages.iserror === true) return false;
+      var datepicker = this.$root.formatDate(this.forms.request.selectedDate, 'YYYY-MM-DD');
+      var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
+      var description = this.forms.request.description;
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'put',
+        url: this.$root.url + '/client/save_request/' + this.forms.request.id,
+        params: {
+          schedule_date: schedule_date,
+          description: description
+        }
+      }).then(function (res) {
+        var message = 'Request ' + _this4.forms.request.id + ' updated.';
+        _this4.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success',
+          timer: 2000
+        });
+        setTimeout(function () {
+          _this4.showRequest();
+
+          UIkit.modal('#modal-edit-request').hide();
+        }, 2000);
+      })["catch"](function (err) {
+        _this4.forms.request.submit = 'Save Changes';
+        if (err.response.status === 500) _this4.messages.errorMessage = err.response.statusText;else _this4.messages.errorMessage = err.response.data.responseMessage;
+      });
     }
   },
   mounted: function mounted() {
@@ -64912,7 +65017,7 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { attrs: { id: "modal-add-request", "uk-modal": "" } }, [
+      _c("div", { attrs: { id: "modal-request", "uk-modal": "" } }, [
         _c(
           "div",
           { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" },
