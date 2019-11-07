@@ -3043,6 +3043,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -3217,6 +3223,7 @@ document.addEventListener("DOMContentLoaded", function () {
       this.forms.request.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
       this.forms.request.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
       this.forms.request.description = data.description;
+      this.forms.request.id = data.apt_id;
       UIkit.modal('#modal-edit-request').show();
     },
     onSaveRequest: function onSaveRequest() {
@@ -62183,10 +62190,10 @@ var render = function() {
                                                     value:
                                                       req.created_by ===
                                                         "client" &&
-                                                      req.status_request ===
-                                                        "waiting_respond",
+                                                      req.status_request !==
+                                                        "done",
                                                     expression:
-                                                      "req.created_by === 'client' && req.status_request === 'waiting_respond'"
+                                                      "req.created_by === 'client' && req.status_request !== 'done'"
                                                   }
                                                 ]
                                               },
@@ -62229,14 +62236,61 @@ var render = function() {
                                                     value:
                                                       req.created_by ===
                                                         "client" &&
-                                                      req.status_request ===
-                                                        "waiting_respond",
+                                                      req.status_request !==
+                                                        "done",
                                                     expression:
-                                                      "req.created_by === 'client' && req.status_request === 'waiting_respond'"
+                                                      "req.created_by === 'client' && req.status_request !== 'done'"
                                                   }
                                                 ]
                                               },
                                               [_vm._m(3, true)]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      req.created_by ===
+                                                        "client" &&
+                                                      req.status_request !==
+                                                        "done",
+                                                    expression:
+                                                      "req.created_by === 'client' && req.status_request !== 'done'"
+                                                  }
+                                                ]
+                                              },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.onUpdateStatus(
+                                                          req.apt_id,
+                                                          "cancel"
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "uk-margin-small-right",
+                                                      attrs: {
+                                                        "uk-icon":
+                                                          "icon: ban; ratio: 0.8"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      "\n                        Cancel\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             ),
                                             _vm._v(" "),
                                             _c(

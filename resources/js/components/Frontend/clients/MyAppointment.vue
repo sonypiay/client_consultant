@@ -257,16 +257,22 @@
                           View
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'">
+                      <li v-show="req.created_by === 'client' && req.status_request !== 'done'">
                         <a @click="modalEditReqest( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Edit
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'">
+                      <li v-show="req.created_by === 'client' && req.status_request !== 'done'">
                         <a>
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                           Delete
+                        </a>
+                      </li>
+                      <li v-show="req.created_by === 'client' && req.status_request !== 'done'">
+                        <a @click="onUpdateStatus( req.apt_id, 'cancel' )">
+                          <span class="uk-margin-small-right" uk-icon="icon: ban; ratio: 0.8"></span>
+                          Cancel
                         </a>
                       </li>
                       <li v-show="req.status_request === 'done' && req.is_solved !== 'Y'">
@@ -483,6 +489,7 @@ export default {
       this.forms.request.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH');
       this.forms.request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
       this.forms.request.description = data.description;
+      this.forms.request.id = data.apt_id;
       UIkit.modal('#modal-edit-request').show();
     },
     onSaveRequest()
