@@ -3818,6 +3818,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['detailrequest']
 });
@@ -63825,6 +63878,154 @@ var render = function() {
                     _vm._v(" Unfinished")
                   ])
                 : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-panel uk-margin" }, [
+            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+              _vm._v("Feedback")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "uk-margin-remove-top" }, [
+              _vm._v(
+                "\n            " +
+                  _vm._s(_vm.detailrequest.review_description) +
+                  "\n          "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-panel uk-margin" }, [
+            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+              _vm._v("Your rate")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin-remove-top" }, [
+              _c(
+                "div",
+                { staticClass: "uk-grid-small", attrs: { "uk-grid": "" } },
+                [
+                  _c("div", { staticClass: "uk-width-1-5" }, [
+                    _c("div", { staticClass: "uk-text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "gl-icon-review",
+                          attrs: { "uk-tooltip": "Excellent" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "far fa-smile-beam",
+                            class: {
+                              fas: _vm.detailrequest.feedback === "excellent"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "gl-review-text" }, [
+                        _vm._v("Excellent")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-width-1-5" }, [
+                    _c("div", { staticClass: "uk-text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "gl-icon-review",
+                          attrs: { "uk-tooltip": "Good" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "far fa-smile",
+                            class: {
+                              fas: _vm.detailrequest.feedback === "good"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "gl-review-text" }, [
+                        _vm._v("Good")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-width-1-5" }, [
+                    _c("div", { staticClass: "uk-text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "gl-icon-review",
+                          attrs: { "uk-tooltip": "Neutral" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "far fa-meh",
+                            class: {
+                              fas: _vm.detailrequest.feedback === "neutral"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "gl-review-text" }, [
+                        _vm._v("Neutral")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-width-1-5" }, [
+                    _c("div", { staticClass: "uk-text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "gl-icon-review",
+                          attrs: { "uk-tooltip": "Poor" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "far fa-frown",
+                            class: {
+                              fas: _vm.detailrequest.feedback === "poor"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "gl-review-text" }, [
+                        _vm._v("Poor")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-width-1-5" }, [
+                    _c("div", { staticClass: "uk-text-center" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "gl-icon-review",
+                          attrs: { "uk-tooltip": "Disappointed" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "far fa-angry",
+                            class: {
+                              fas: _vm.detailrequest.feedback === "disappointed"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "gl-review-text" }, [
+                        _vm._v("Disappointed")
+                      ])
+                    ])
+                  ])
+                ]
+              )
             ])
           ])
         ])

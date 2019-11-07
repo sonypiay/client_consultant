@@ -38,6 +38,59 @@
               <span v-if="detailrequest.status_request === 'done' && detailrequest.is_solved === 'N'" class="request-status-badge decline"><i uk-icon="icon: check; ratio: 1"></i> Unfinished</span>
             </div>
           </div>
+          <div class="uk-panel uk-margin">
+            <h6 class="uk-h6 uk-margin-remove-bottom">Feedback</h6>
+            <p class="uk-margin-remove-top">
+              {{ detailrequest.review_description }}
+            </p>
+          </div>
+          <div class="uk-panel uk-margin">
+            <h6 class="uk-h6 uk-margin-remove-bottom">Your rate</h6>
+            <div class="uk-margin-remove-top">
+              <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a uk-tooltip="Excellent" class="gl-icon-review">
+                      <i :class="{'fas': detailrequest.feedback === 'excellent'}" class="far fa-smile-beam"></i>
+                    </a>
+                    <div class="gl-review-text">Excellent</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a uk-tooltip="Good" class="gl-icon-review">
+                      <i :class="{'fas': detailrequest.feedback === 'good'}" class="far fa-smile"></i>
+                    </a>
+                    <div class="gl-review-text">Good</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a uk-tooltip="Neutral" class="gl-icon-review">
+                      <i :class="{'fas': detailrequest.feedback === 'neutral'}" class="far fa-meh"></i>
+                    </a>
+                    <div class="gl-review-text">Neutral</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a uk-tooltip="Poor" class="gl-icon-review">
+                      <i :class="{'fas': detailrequest.feedback === 'poor'}" class="far fa-frown"></i>
+                    </a>
+                    <div class="gl-review-text">Poor</div>
+                  </div>
+                </div>
+                <div class="uk-width-1-5">
+                  <div class="uk-text-center">
+                    <a uk-tooltip="Disappointed" class="gl-icon-review">
+                      <i :class="{'fas': detailrequest.feedback === 'disappointed'}" class="far fa-angry"></i>
+                    </a>
+                    <div class="gl-review-text">Disappointed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
