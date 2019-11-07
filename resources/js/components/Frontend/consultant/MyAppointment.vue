@@ -131,7 +131,7 @@
         <div class="uk-float-left">
           <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
             <div>
-              <select class="uk-select gl-input-default" v-model="forms.limit">
+              <select class="uk-select gl-input-default" v-model="forms.limit" @change="showRequest()">
                 <option value="6">6 rows</option>
                 <option value="12">12 rows</option>
                 <option value="24">24 rows</option>
@@ -244,6 +244,35 @@
             </div>
           </div>
         </div>
+
+        <!-- pagination -->
+        <ul class="uk-pagination uk-flex-center">
+          <li v-if="getrequest.paginate.prev_page_url" @click="showRequest( getrequest.paginate.prev_page_url )">
+            <a>
+              <span uk-pagination-previous></span>
+              Previous
+            </a>
+          </li>
+          <li v-else class="uk-disabled">
+            <a>
+              <span uk-pagination-previous></span>
+              Previous
+            </a>
+          </li>
+          <li class="uk-disabled"><span>Page {{ getrequest.paginate.current_page }} of {{ getrequest.paginate.last_page }}</span></li>
+          <li v-if="getrequest.paginate.next_page_url" @click="showRequest( getrequest.paginate.next_page_url )">
+            <a>
+              Next <span uk-pagination-next></span>
+            </a>
+          </li>
+          <li v-else class="uk-disabled">
+            <a>
+              Next <span uk-pagination-next></span>
+            </a>
+          </li>
+        </ul>
+        <!-- pagination -->
+
       </div>
     </div>
   </div>

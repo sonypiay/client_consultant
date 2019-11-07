@@ -3049,6 +3049,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -4230,6 +4258,35 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! v-calendar */ "./node_modules/v-calendar/lib/v-calendar.umd.min.js");
 /* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(v_calendar__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -62101,23 +62158,28 @@ var render = function() {
                       ],
                       staticClass: "uk-select gl-input-default",
                       on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.forms,
-                            "limit",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.forms,
+                              "limit",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            return _vm.showRequest()
+                          }
+                        ]
                       }
                     },
                     [
@@ -62809,7 +62871,52 @@ var render = function() {
                         ])
                       }),
                       0
-                    )
+                    ),
+                _vm._v(" "),
+                _c("ul", { staticClass: "uk-pagination uk-flex-center" }, [
+                  _vm.getrequest.paginate.prev_page_url
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.showRequest(
+                                _vm.getrequest.paginate.prev_page_url
+                              )
+                            }
+                          }
+                        },
+                        [_vm._m(3)]
+                      )
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(4)]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "uk-disabled" }, [
+                    _c("span", [
+                      _vm._v(
+                        "Page " +
+                          _vm._s(_vm.getrequest.paginate.current_page) +
+                          " of " +
+                          _vm._s(_vm.getrequest.paginate.last_page)
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.getrequest.paginate.next_page_url
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.showRequest(
+                                _vm.getrequest.paginate.next_page_url
+                              )
+                            }
+                          }
+                        },
+                        [_vm._m(5)]
+                      )
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(6)])
+                ])
               ])
         ]
       )
@@ -62846,6 +62953,42 @@ var staticRenderFns = [
         }),
         _vm._v("\n                        View\n                      ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("span", { attrs: { "uk-pagination-previous": "" } }),
+      _vm._v("\n            Previous\n          ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("span", { attrs: { "uk-pagination-previous": "" } }),
+      _vm._v("\n            Previous\n          ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _vm._v("\n            Next "),
+      _c("span", { attrs: { "uk-pagination-next": "" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _vm._v("\n            Next "),
+      _c("span", { attrs: { "uk-pagination-next": "" } })
     ])
   }
 ]
@@ -65167,23 +65310,28 @@ var render = function() {
                         ],
                         staticClass: "uk-select gl-input-default",
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.forms,
-                              "limit",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.forms,
+                                "limit",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            function($event) {
+                              return _vm.showRequest()
+                            }
+                          ]
                         }
                       },
                       [
@@ -65737,7 +65885,52 @@ var render = function() {
                         ])
                       }),
                       0
-                    )
+                    ),
+                _vm._v(" "),
+                _c("ul", { staticClass: "uk-pagination uk-flex-center" }, [
+                  _vm.getrequest.paginate.prev_page_url
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.showRequest(
+                                _vm.getrequest.paginate.prev_page_url
+                              )
+                            }
+                          }
+                        },
+                        [_vm._m(3)]
+                      )
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(4)]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "uk-disabled" }, [
+                    _c("span", [
+                      _vm._v(
+                        "Page " +
+                          _vm._s(_vm.getrequest.paginate.current_page) +
+                          " of " +
+                          _vm._s(_vm.getrequest.paginate.last_page)
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.getrequest.paginate.next_page_url
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.showRequest(
+                                _vm.getrequest.paginate.next_page_url
+                              )
+                            }
+                          }
+                        },
+                        [_vm._m(5)]
+                      )
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(6)])
+                ])
               ])
         ]
       )
@@ -65774,6 +65967,42 @@ var staticRenderFns = [
         }),
         _vm._v("\n                        View\n                      ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("span", { attrs: { "uk-pagination-previous": "" } }),
+      _vm._v("\n            Previous\n          ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("span", { attrs: { "uk-pagination-previous": "" } }),
+      _vm._v("\n            Previous\n          ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _vm._v("\n            Next "),
+      _c("span", { attrs: { "uk-pagination-next": "" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _vm._v("\n            Next "),
+      _c("span", { attrs: { "uk-pagination-next": "" } })
     ])
   }
 ]
