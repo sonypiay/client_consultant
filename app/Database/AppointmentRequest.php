@@ -237,6 +237,7 @@ class AppointmentRequest extends Model
 
         $getrequest->status_request = 'waiting_respond';
         $getrequest->schedule_date = $schedule_date;
+        $getrequest->is_solved = 'P';
         $getrequest->save();
 
         $notification->addNotification( $data_notif );

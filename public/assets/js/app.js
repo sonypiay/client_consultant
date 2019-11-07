@@ -3240,7 +3240,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (time === 'hours') this.forms.request.timepicker.hours = str;
       if (time === 'minute') this.forms.request.timepicker.minute = str;
     },
-    modalEditReqest: function modalEditReqest(data) {
+    modalEditRequest: function modalEditRequest(data) {
       this.messages = {
         errors: {},
         errorMessage: '',
@@ -62511,9 +62511,9 @@ var render = function() {
                                                           "done") ||
                                                       (req.created_by ===
                                                         "client" &&
-                                                        req.is_solved !== "Y"),
+                                                        req.is_solved === "N"),
                                                     expression:
-                                                      "(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved !== 'Y')"
+                                                      "(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },
@@ -62523,7 +62523,7 @@ var render = function() {
                                                   {
                                                     on: {
                                                       click: function($event) {
-                                                        return _vm.modalEditReqest(
+                                                        return _vm.modalEditRequest(
                                                           req
                                                         )
                                                       }
@@ -65671,10 +65671,15 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.created_by ===
-                                                      "consultant",
+                                                      (req.created_by ===
+                                                        "consultant" &&
+                                                        req.status_request !==
+                                                          "done") ||
+                                                      (req.created_by ===
+                                                        "consultant" &&
+                                                        req.is_solved === "N"),
                                                     expression:
-                                                      "req.created_by === 'consultant'"
+                                                      "(req.created_by === 'consultant' && req.status_request !== 'done') || (req.created_by === 'consultant' && req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },

@@ -209,7 +209,7 @@
                           View
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'consultant'">
+                      <li v-show="(req.created_by === 'consultant' && req.status_request !== 'done') || (req.created_by === 'consultant' && req.is_solved === 'N')">
                         <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Edit

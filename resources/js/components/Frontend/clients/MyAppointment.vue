@@ -257,8 +257,8 @@
                           View
                         </a>
                       </li>
-                      <li v-show="(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved !== 'Y')">
-                        <a @click="modalEditReqest( req )">
+                      <li v-show="(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved === 'N')">
+                        <a @click="modalEditRequest( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Edit
                         </a>
@@ -505,7 +505,7 @@ export default {
       if( time === 'hours' ) this.forms.request.timepicker.hours = str;
       if( time === 'minute' ) this.forms.request.timepicker.minute = str;
     },
-    modalEditReqest( data )
+    modalEditRequest( data )
     {
       this.messages = {
         errors: {},

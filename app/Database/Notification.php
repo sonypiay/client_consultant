@@ -25,13 +25,9 @@ class Notification extends Model
       ['notif_read', 'N']
     ])
     ->take(20)
-    ->orderBy('notif_date', 'desc')
-    ->get();
+    ->orderBy('notif_date', 'desc');
 
-    return [
-      'total' => $query->count(),
-      'data' => $query
-    ];
+    return $query->paginate( 6 );
   }
 
   public function markAsRead( $userid, $type )
