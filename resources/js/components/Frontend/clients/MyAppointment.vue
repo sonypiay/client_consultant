@@ -264,7 +264,7 @@
                         </a>
                       </li>
                       <li v-show="req.created_by === 'client' && req.status_request !== 'done'">
-                        <a>
+                        <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                           Delete
                         </a>

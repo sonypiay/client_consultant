@@ -62276,7 +62276,33 @@ var render = function() {
                                                   }
                                                 ]
                                               },
-                                              [_vm._m(3, true)]
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.deleteRequest(
+                                                          req.apt_id
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "uk-margin-small-right",
+                                                      attrs: {
+                                                        "uk-icon":
+                                                          "icon: trash; ratio: 0.8"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      "\n                        Delete\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             ),
                                             _vm._v(" "),
                                             _c(
@@ -62592,18 +62618,6 @@ var staticRenderFns = [
         }),
         _vm._v("\n                        View\n                      ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("span", {
-        staticClass: "uk-margin-small-right",
-        attrs: { "uk-icon": "icon: trash; ratio: 0.8" }
-      }),
-      _vm._v("\n                        Delete\n                      ")
     ])
   }
 ]
