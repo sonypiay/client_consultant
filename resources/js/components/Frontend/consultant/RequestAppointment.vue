@@ -26,7 +26,6 @@
             </div>
             You have no {{ status_request }} appointment.
           </div>
-          <a class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">

@@ -5080,7 +5080,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   data: function data() {
@@ -66171,16 +66170,7 @@ var render = function() {
                           _vm._s(_vm.status_request) +
                           " appointment.\n        "
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass:
-                          "uk-button uk-button-primary gl-button-primary"
-                      },
-                      [_vm._v("Create Appointment")]
-                    )
+                    ])
                   ])
                 : _c(
                     "div",
