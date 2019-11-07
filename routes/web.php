@@ -50,6 +50,7 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::post('/create_account', 'Frontend\ConsultantUserController@register');
   Route::post('/signin', 'Frontend\ConsultantUserController@login');
   Route::post('/add_request', 'Frontend\ConsultantUserController@add_request');
+  Route::put('/save_request/{id}', 'Frontend\ConsultantUserController@save_request');
   Route::put('/save_profile', 'Frontend\ConsultantUserController@save_profile');
   Route::put('/change_password', 'Frontend\ConsultantUserController@change_password');
   Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
