@@ -4643,6 +4643,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -4667,6 +4672,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       existingClient: {
         isLoading: false,
+        isFinding: false,
         total: 0,
         results: []
       },
@@ -4834,12 +4840,17 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       var message_form = 'This field must be required';
 
-      if (this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '') {
+      if (this.forms.request.client.client_fullname === '') {
+        this.messages.errors.client_name = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.forms.request.timepicker.hours === '' && this.forms.timepicker.minute === '') {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
 
-      if (this.forms.description === '') {
+      if (this.forms.request.description === '') {
         this.messages.errors.description = message_form;
         this.messages.iserror = true;
       }
@@ -4848,7 +4859,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var datepicker = this.$root.formatDate(this.forms.selectedDate, 'YYYY-MM-DD');
       var schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
       var consult_id = this.getuser.consultant_id;
-      var client_id = '';
+      var client_id = this.forms.client.client_id;
       var description = this.forms.description;
       var created_by = 'client';
       this.forms.submit = '<span uk-spinner></span>';
@@ -4869,9 +4880,7 @@ document.addEventListener("DOMContentLoaded", function () {
           text: message,
           icon: 'success'
         });
-        setTimeout(function () {
-          document.location = _this3.$root.url + '/consultant/dashboard';
-        }, 2000);
+        setTimeout(function () {}, 2000);
       })["catch"](function (err) {
         _this3.forms.submit = 'Create Request';
         if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
@@ -4887,6 +4896,11 @@ document.addEventListener("DOMContentLoaded", function () {
         iserror: false
       };
       var message_form = 'This field must be required';
+
+      if (this.forms.request.client.client_fullname === '') {
+        this.messages.errors.client_name = message_form;
+        this.messages.iserror = true;
+      }
 
       if (this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '') {
         this.messages.errors.timepicker = message_form;
@@ -4905,7 +4919,7 @@ document.addEventListener("DOMContentLoaded", function () {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_request/' + this.forms.request.id,
+        url: this.$root.url + '/consultant/save_request/' + this.forms.request.id,
         params: {
           schedule_date: schedule_date,
           description: description
@@ -4940,9 +4954,15 @@ document.addEventListener("DOMContentLoaded", function () {
         _this5.existingClient.total = result.total;
         _this5.existingClient.results = result.data;
         _this5.existingClient.isLoading = false;
+        if (result.total == 0) _this5.existingClient.isFinding = false;else _this5.existingClient.isFinding = true;
       })["catch"](function (err) {
         console.log(err.response.statusText);
       });
+    },
+    onChooseExistingClient: function onChooseExistingClient(id, name) {
+      this.forms.request.client.client_id = id;
+      this.forms.request.client.client_name = name;
+      this.existingClient.isFinding = false;
     }
   },
   computed: {
@@ -65180,7 +65200,6 @@ var render = function() {
                             return null
                           }
                           $event.preventDefault()
-                          return _vm.findExistingClient($event)
                         },
                         input: function($event) {
                           if ($event.target.composing) {
@@ -65196,6 +65215,22 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.messages.errors.client_name,
+                          expression: "messages.errors.client_name"
+                        }
+                      ],
+                      staticClass: "uk-text-small uk-text-danger"
+                    },
+                    [_vm._v(_vm._s(_vm.messages.errors.client_name))]
+                  ),
+                  _vm._v(" "),
                   _vm.existingClient.isLoading
                     ? _c(
                         "div",
@@ -65210,11 +65245,8 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value:
-                                  _vm.existingClient.total != 0 &&
-                                  _vm.forms.request.client.client_name != "",
-                                expression:
-                                  "existingClient.total != 0 && forms.request.client.client_name != ''"
+                                value: _vm.existingClient.isFinding,
+                                expression: "existingClient.isFinding"
                               }
                             ],
                             staticClass:
@@ -65237,8 +65269,23 @@ var render = function() {
                                     return _c("li", [
                                       _c(
                                         "a",
-                                        { on: { click: function($event) {} } },
-                                        [_vm._v(_vm._s(client.client_fullname))]
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.onChooseExistingClient(
+                                                client.client_id,
+                                                client.client_fullname
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                      " +
+                                              _vm._s(client.client_fullname) +
+                                              "\n                    "
+                                          )
+                                        ]
                                       )
                                     ])
                                   }),

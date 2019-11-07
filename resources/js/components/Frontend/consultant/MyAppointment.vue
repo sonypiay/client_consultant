@@ -23,16 +23,21 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Client</label>
             <div class="uk-form-controls">
-              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" />
+              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="" />
             </div>
+            <div v-show="messages.errors.client_name" class="uk-text-small uk-text-danger">{{ messages.errors.client_name }}</div>
             <div v-if="existingClient.isLoading" class="uk-text-center uk-margin-top">
               <span uk-spinner></span>
             </div>
             <div v-else>
-              <div v-show="existingClient.total != 0 && forms.request.client.client_name != ''" class="uk-card uk-card-default uk-margin-top uk-margin-bottom uk-width-large dropdown-timepicker">
+              <div v-show="existingClient.isFinding" class="uk-card uk-card-default uk-margin-top uk-margin-bottom uk-width-large dropdown-timepicker">
                 <div class="dropdown-timepicker-content">
                   <ul class="uk-nav uk-nav-default nav-timepicker">
-                    <li v-for="client in existingClient.results"><a @click="">{{ client.client_fullname }}</a></li>
+                    <li v-for="client in existingClient.results">
+                      <a @click="onChooseExistingClient( client.client_id, client.client_fullname )">
+                        {{ client.client_fullname }}
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -271,6 +276,7 @@ export default {
       },
       existingClient: {
         isLoading: false,
+        isFinding: false,
         total: 0,
         results: []
       },
@@ -432,12 +438,17 @@ export default {
         iserror: false
       }
       let message_form = 'This field must be required';
-      if( this.forms.timepicker.hours === '' && this.forms.timepicker.minute === '' )
+      if( this.forms.request.client.client_fullname === '' )
+      {
+        this.messages.errors.client_name = message_form;
+        this.messages.iserror = true;
+      }
+      if( this.forms.request.timepicker.hours === '' && this.forms.timepicker.minute === '' )
       {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.description === '' )
+      if( this.forms.request.description === '' )
       {
         this.messages.errors.description = message_form;
         this.messages.iserror = true;
@@ -447,7 +458,7 @@ export default {
       let datepicker = this.$root.formatDate( this.forms.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.timepicker.selected;
       let consult_id = this.getuser.consultant_id;
-      let client_id = '';
+      let client_id = this.forms.client.client_id;
       let description = this.forms.description;
       let created_by = 'client';
 
@@ -469,7 +480,9 @@ export default {
           text: message,
           icon: 'success'
         });
-        setTimeout(() => { document.location = this.$root.url + '/consultant/dashboard'; }, 2000);
+        setTimeout(() => {
+
+        }, 2000);
       }).catch( err => {
         this.forms.submit = 'Create Request';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
@@ -486,6 +499,11 @@ export default {
       }
 
       let message_form = 'This field must be required';
+      if( this.forms.request.client.client_fullname === '' )
+      {
+        this.messages.errors.client_name = message_form;
+        this.messages.iserror = true;
+      }
       if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
       {
         this.messages.errors.timepicker = message_form;
@@ -498,6 +516,7 @@ export default {
       }
 
       if( this.messages.iserror === true ) return false;
+      
       let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       let description = this.forms.request.description;
@@ -505,7 +524,7 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_request/' + this.forms.request.id,
+        url: this.$root.url + '/consultant/save_request/' + this.forms.request.id,
         params: {
           schedule_date: schedule_date,
           description: description
@@ -539,9 +558,17 @@ export default {
         this.existingClient.total = result.total;
         this.existingClient.results = result.data;
         this.existingClient.isLoading = false;
+        if( result.total == 0 ) this.existingClient.isFinding = false;
+        else this.existingClient.isFinding = true;
       }).catch( err => {
         console.log( err.response.statusText );
       });
+    },
+    onChooseExistingClient( id, name )
+    {
+      this.forms.request.client.client_id = id;
+      this.forms.request.client.client_name = name;
+      this.existingClient.isFinding = false;
     }
   },
   computed: {
