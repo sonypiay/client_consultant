@@ -278,4 +278,14 @@ class AppointmentRequest extends Model
 
     return $res;
   }
+
+  public function deleteRequest( $id )
+  {
+    $appointment = $this->where('apt_id', $id);
+    if( $appointment->count() == 1 )
+      $appointment->delete();
+
+    $res = ['responseCode' => 200, 'responseMessage' => ''];
+    return $res;
+  }
 }

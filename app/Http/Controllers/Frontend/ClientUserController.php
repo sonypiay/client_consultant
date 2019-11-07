@@ -60,21 +60,27 @@ class ClientUserController extends Controller
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function add_request( Request $request, AppointmentRequest $appointment )
-  {
-    $res = $appointment->addRequest( $request );
-    return response()->json( $res, 200 );
-  }
-
   public function get_notification( Notification $notification )
   {
     $userid = session()->has('isClient') ? session()->get('clientId') : '';
     return response()->json( $notification->get_notification( $userid ) );
   }
 
+  public function add_request( Request $request, AppointmentRequest $appointment )
+  {
+    $res = $appointment->addRequest( $request );
+    return response()->json( $res, 200 );
+  }
+
   public function save_request( Request $request, AppointmentRequest $appointment, $id )
   {
     $res = $appointment->saveRequest( $id, $request );
+    return response()->json( $res, 200 );
+  }
+
+  public function destroy_request( AppointmentRequest $appointment, $id )
+  {
+    $res = $appointment->deleteRequest( $id );
     return response()->json( $res, 200 );
   }
 

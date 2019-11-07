@@ -594,6 +594,36 @@ export default {
           UIkit.modal('#givereview').hide();
         }, 2000);
       });
+    },
+    deleteRequest( id )
+    {
+      swal({
+        title: 'Confirmation',
+        text: 'Are you sure want to delete this request?',
+        icon: 'warning',
+        buttons: {
+          confirm: { value: true, text: 'Yes' },
+          cancel: 'Cancel'
+        }
+      }).then( val => {
+        if( val )
+        {
+          axios({
+            method: 'delete',
+            url: this.$root.url + '/client/delete_request/' + id
+          }).then( res => {
+            setTimeout(() => {
+              this.showRequest();
+            }, 2000);
+          }).catch( err => {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      })
     }
   },
   computed: {

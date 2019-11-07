@@ -3326,6 +3326,39 @@ document.addEventListener("DOMContentLoaded", function () {
           UIkit.modal('#givereview').hide();
         }, 2000);
       });
+    },
+    deleteRequest: function deleteRequest(id) {
+      var _this5 = this;
+
+      swal({
+        title: 'Confirmation',
+        text: 'Are you sure want to delete this request?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            value: true,
+            text: 'Yes'
+          },
+          cancel: 'Cancel'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'delete',
+            url: _this5.$root.url + '/client/delete_request/' + id
+          }).then(function (res) {
+            setTimeout(function () {
+              _this5.showRequest();
+            }, 2000);
+          })["catch"](function (err) {
+            swal({
+              text: err.response.statusText,
+              icon: 'error',
+              dangerMode: true
+            });
+          });
+        }
+      });
     }
   },
   computed: {
