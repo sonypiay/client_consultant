@@ -78,7 +78,7 @@ class ClientUserController extends Controller
     return response()->json( $res, 200 );
   }
 
-  public function destroy_request( AppointmentRequest $appointment, $id )
+  public function delete_request( AppointmentRequest $appointment, $id )
   {
     $res = $appointment->deleteRequest( $id );
     return response()->json( $res, 200 );

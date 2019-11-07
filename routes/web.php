@@ -33,6 +33,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
   Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ClientUserController@mark_as_read');
+  Route::delete('/delete_request/{id}', 'Frontend\ClientUserController@delete_request');
 });
 
 Route::group(['prefix' => 'consultant'], function() {
