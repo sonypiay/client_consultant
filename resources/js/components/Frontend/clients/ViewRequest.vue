@@ -38,14 +38,14 @@
               <span v-if="detailrequest.status_request === 'done' && detailrequest.is_solved === 'N'" class="request-status-badge decline"><i uk-icon="icon: check; ratio: 1"></i> Unfinished</span>
             </div>
           </div>
-          <div class="uk-panel uk-margin">
+          <div v-show="detailrequest.feedback" class="uk-panel uk-margin">
             <h6 class="uk-h6 uk-margin-remove-bottom">Feedback</h6>
             <p class="uk-margin-remove-top">
               {{ detailrequest.review_description }}
             </p>
           </div>
-          <div class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Your rate</h6>
+          <div v-show="detailrequest.feedback" class="uk-panel uk-margin">
+            <h6 class="uk-h6 uk-margin-remove-bottom">Rate</h6>
             <div class="uk-margin-remove-top">
               <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-5">

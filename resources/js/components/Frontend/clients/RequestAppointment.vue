@@ -1,5 +1,7 @@
 <template>
   <div>
+    <view-request-detail :detailrequest="getrequest.details" />
+
     <div class="navbar-event">
       <div class="uk-container">
         <nav class="uk-navbar">
@@ -39,7 +41,7 @@
                   <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
                     <ul class="uk-nav uk-dropdown-nav request-nav">
                       <li>
-                        <a href="#">
+                        <a @click="onViewDetail( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
                           View
                         </a>
@@ -76,8 +78,12 @@
 </template>
 
 <script>
+import ViewRequest from './ViewRequest.vue';
 export default {
   props: [],
+  components: {
+    'view-request-detail': ViewRequest
+  },
   data() {
     return {
       status_request: 'waiting_respond',
@@ -187,6 +193,11 @@ export default {
           });
         }
       })
+    },
+    onViewDetail( data )
+    {
+      this.getrequest.details = data;
+      UIkit.modal('#modal-view-request').show();
     }
   },
   mounted() {

@@ -3558,6 +3558,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewRequest_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewRequest.vue */ "./resources/js/components/Frontend/clients/ViewRequest.vue");
 //
 //
 //
@@ -3635,8 +3636,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
+  components: {
+    'view-request-detail': _ViewRequest_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       status_request: 'waiting_respond',
@@ -3754,6 +3761,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    onViewDetail: function onViewDetail(data) {
+      this.getrequest.details = data;
+      UIkit.modal('#modal-view-request').show();
     }
   },
   mounted: function mounted() {
@@ -63458,146 +63469,137 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "navbar-event" }, [
-      _c("div", { staticClass: "uk-container" }, [
-        _c("nav", { staticClass: "uk-navbar" }, [
-          _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
-            _c("li", [
-              _c(
-                "a",
-                {
-                  class: { active: _vm.status_request === "waiting_respond" },
-                  on: {
-                    click: function($event) {
-                      _vm.status_request = "waiting_respond"
-                      _vm.showUpcomingRequest()
+  return _c(
+    "div",
+    [
+      _c("view-request-detail", {
+        attrs: { detailrequest: _vm.getrequest.details }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "navbar-event" }, [
+        _c("div", { staticClass: "uk-container" }, [
+          _c("nav", { staticClass: "uk-navbar" }, [
+            _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    class: { active: _vm.status_request === "waiting_respond" },
+                    on: {
+                      click: function($event) {
+                        _vm.status_request = "waiting_respond"
+                        _vm.showUpcomingRequest()
+                      }
                     }
-                  }
-                },
-                [_vm._v("Upcoming Appointment")]
-              )
+                  },
+                  [_vm._v("Upcoming Appointment")]
+                )
+              ])
             ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
-      },
-      [
-        _vm.getrequest.isLoading
-          ? _c("div", { staticClass: "uk-text-center" }, [
-              _c("span", { attrs: { "uk-spinner": "" } })
-            ])
-          : _c("div", [
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.messages.errorMessage,
-                      expression: "messages.errorMessage"
-                    }
-                  ],
-                  staticClass: "uk-alert-danger",
-                  attrs: { "uk-alert": "" }
-                },
-                [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.messages.errorMessage) +
-                      "\n      "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm.getrequest.total === 0
-                ? _c("div", { staticClass: "no-request-list" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "a",
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
+        },
+        [
+          _vm.getrequest.isLoading
+            ? _c("div", { staticClass: "uk-text-center" }, [
+                _c("span", { attrs: { "uk-spinner": "" } })
+              ])
+            : _c("div", [
+                _c(
+                  "div",
+                  {
+                    directives: [
                       {
-                        staticClass:
-                          "uk-button uk-button-primary gl-button-primary",
-                        attrs: { href: _vm.$root.url + "/search" }
-                      },
-                      [_vm._v("Find consultant")]
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.messages.errorMessage,
+                        expression: "messages.errorMessage"
+                      }
+                    ],
+                    staticClass: "uk-alert-danger",
+                    attrs: { "uk-alert": "" }
+                  },
+                  [
+                    _vm._v(
+                      "\n        " +
+                        _vm._s(_vm.messages.errorMessage) +
+                        "\n      "
                     )
-                  ])
-                : _c(
-                    "div",
-                    { staticClass: "uk-grid-medium", attrs: { "uk-grid": "" } },
-                    _vm._l(_vm.getrequest.results, function(req) {
-                      return _c("div", { staticClass: "uk-width-1-3" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
-                          },
-                          [
-                            _c("div", { staticClass: "uk-clearfix" }, [
-                              _c("div", { staticClass: "uk-float-left" }, [
-                                _c("div", { staticClass: "request-id" }, [
-                                  _vm._v("#" + _vm._s(req.apt_id))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "uk-float-right" }, [
-                                _c("a", {
-                                  staticClass: "request-icon",
-                                  attrs: { "uk-icon": "more-vertical" }
-                                }),
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.getrequest.total === 0
+                  ? _c("div", { staticClass: "no-request-list" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "uk-button uk-button-primary gl-button-primary",
+                          attrs: { href: _vm.$root.url + "/search" }
+                        },
+                        [_vm._v("Find consultant")]
+                      )
+                    ])
+                  : _c(
+                      "div",
+                      {
+                        staticClass: "uk-grid-medium",
+                        attrs: { "uk-grid": "" }
+                      },
+                      _vm._l(_vm.getrequest.results, function(req) {
+                        return _c("div", { staticClass: "uk-width-1-3" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "uk-card uk-card-default uk-card-body uk-card-small card-request-list"
+                            },
+                            [
+                              _c("div", { staticClass: "uk-clearfix" }, [
+                                _c("div", { staticClass: "uk-float-left" }, [
+                                  _c("div", { staticClass: "request-id" }, [
+                                    _vm._v("#" + _vm._s(req.apt_id))
+                                  ])
+                                ]),
                                 _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "dropdown-request-nav",
-                                    attrs: {
-                                      "uk-dropdown": "mode: click; pos: left"
-                                    }
-                                  },
-                                  [
-                                    _c(
-                                      "ul",
-                                      {
-                                        staticClass:
-                                          "uk-nav uk-dropdown-nav request-nav"
-                                      },
-                                      [
-                                        _vm._m(1, true),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value:
-                                                  req.created_by === "client",
-                                                expression:
-                                                  "req.created_by === 'client'"
-                                              }
-                                            ]
-                                          },
-                                          [
+                                _c("div", { staticClass: "uk-float-right" }, [
+                                  _c("a", {
+                                    staticClass: "request-icon",
+                                    attrs: { "uk-icon": "more-vertical" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "dropdown-request-nav",
+                                      attrs: {
+                                        "uk-dropdown": "mode: click; pos: left"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "ul",
+                                        {
+                                          staticClass:
+                                            "uk-nav uk-dropdown-nav request-nav"
+                                        },
+                                        [
+                                          _c("li", [
                                             _c(
                                               "a",
                                               {
                                                 on: {
                                                   click: function($event) {
-                                                    return _vm.deleteRequest(
-                                                      req.apt_id
-                                                    )
+                                                    return _vm.onViewDetail(req)
                                                   }
                                                 }
                                               },
@@ -63607,117 +63609,161 @@ var render = function() {
                                                     "uk-margin-small-right",
                                                   attrs: {
                                                     "uk-icon":
-                                                      "icon: trash; ratio: 0.8"
+                                                      "icon: forward; ratio: 0.8"
                                                   }
                                                 }),
                                                 _vm._v(
-                                                  "\n                        Delete\n                      "
+                                                  "\n                        View\n                      "
                                                 )
                                               ]
                                             )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "uk-margin-small" }, [
-                              _c("div", { staticClass: "request-time" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.$root.formatDate(
-                                      req.schedule_date,
-                                      "HH:mm"
-                                    )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "li",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "show",
+                                                  rawName: "v-show",
+                                                  value:
+                                                    req.created_by === "client",
+                                                  expression:
+                                                    "req.created_by === 'client'"
+                                                }
+                                              ]
+                                            },
+                                            [
+                                              _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deleteRequest(
+                                                        req.apt_id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "uk-margin-small-right",
+                                                    attrs: {
+                                                      "uk-icon":
+                                                        "icon: trash; ratio: 0.8"
+                                                    }
+                                                  }),
+                                                  _vm._v(
+                                                    "\n                        Delete\n                      "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
                                   )
-                                )
+                                ])
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "request-date" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.$root.formatDate(
-                                      req.schedule_date,
-                                      "DD MMMM YYYY"
+                              _c("div", { staticClass: "uk-margin-small" }, [
+                                _c("div", { staticClass: "request-time" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.$root.formatDate(
+                                        req.schedule_date,
+                                        "HH:mm"
+                                      )
                                     )
                                   )
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "uk-margin-small" }, [
-                              _c("div", { staticClass: "request-pic" }, [
-                                _vm._v(
-                                  "\n                " +
-                                    _vm._s(req.consultant_fullname) +
-                                    "\n              "
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: req.created_by === "consultant",
-                                    expression:
-                                      "req.created_by === 'consultant'"
-                                  }
-                                ],
-                                staticClass: "uk-margin-small"
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.onUpdateStatus(
-                                          req.apt_id,
-                                          "accept"
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Accept")]
-                                ),
+                                ]),
                                 _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.onUpdateStatus(
-                                          req.apt_id,
-                                          "decline"
-                                        )
-                                      }
+                                _c("div", { staticClass: "request-date" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.$root.formatDate(
+                                        req.schedule_date,
+                                        "DD MMMM YYYY"
+                                      )
+                                    )
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "uk-margin-small" }, [
+                                _c("div", { staticClass: "request-pic" }, [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(req.consultant_fullname) +
+                                      "\n              "
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: req.created_by === "consultant",
+                                      expression:
+                                        "req.created_by === 'consultant'"
                                     }
-                                  },
-                                  [_vm._v("Decline")]
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    }),
-                    0
-                  )
-            ])
-      ]
-    )
-  ])
+                                  ],
+                                  staticClass: "uk-margin-small"
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.onUpdateStatus(
+                                            req.apt_id,
+                                            "accept"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Accept")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.onUpdateStatus(
+                                            req.apt_id,
+                                            "decline"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Decline")]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      }),
+                      0
+                    )
+              ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -63729,20 +63775,6 @@ var staticRenderFns = [
         _c("span", { staticClass: "far fa-frown" })
       ]),
       _vm._v("\n          You have no upcoming appointment.\n        ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: forward; ratio: 0.8" }
-        }),
-        _vm._v("\n                        View\n                      ")
-      ])
     ])
   }
 ]
@@ -63881,153 +63913,182 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Feedback")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.detailrequest.review_description) +
-                  "\n          "
-              )
-            ])
-          ]),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.detailrequest.feedback,
+                  expression: "detailrequest.feedback"
+                }
+              ],
+              staticClass: "uk-panel uk-margin"
+            },
+            [
+              _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                _vm._v("Feedback")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.detailrequest.review_description) +
+                    "\n          "
+                )
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "uk-panel uk-margin" }, [
-            _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-              _vm._v("Your rate")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-margin-remove-top" }, [
-              _c(
-                "div",
-                { staticClass: "uk-grid-small", attrs: { "uk-grid": "" } },
-                [
-                  _c("div", { staticClass: "uk-width-1-5" }, [
-                    _c("div", { staticClass: "uk-text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "gl-icon-review",
-                          attrs: { "uk-tooltip": "Excellent" }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "far fa-smile-beam",
-                            class: {
-                              fas: _vm.detailrequest.feedback === "excellent"
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "gl-review-text" }, [
-                        _vm._v("Excellent")
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.detailrequest.feedback,
+                  expression: "detailrequest.feedback"
+                }
+              ],
+              staticClass: "uk-panel uk-margin"
+            },
+            [
+              _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                _vm._v("Rate")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-margin-remove-top" }, [
+                _c(
+                  "div",
+                  { staticClass: "uk-grid-small", attrs: { "uk-grid": "" } },
+                  [
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "gl-icon-review",
+                            attrs: { "uk-tooltip": "Excellent" }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "far fa-smile-beam",
+                              class: {
+                                fas: _vm.detailrequest.feedback === "excellent"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Excellent")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "gl-icon-review",
+                            attrs: { "uk-tooltip": "Good" }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "far fa-smile",
+                              class: {
+                                fas: _vm.detailrequest.feedback === "good"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Good")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "gl-icon-review",
+                            attrs: { "uk-tooltip": "Neutral" }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "far fa-meh",
+                              class: {
+                                fas: _vm.detailrequest.feedback === "neutral"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Neutral")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "gl-icon-review",
+                            attrs: { "uk-tooltip": "Poor" }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "far fa-frown",
+                              class: {
+                                fas: _vm.detailrequest.feedback === "poor"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Poor")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "gl-icon-review",
+                            attrs: { "uk-tooltip": "Disappointed" }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "far fa-angry",
+                              class: {
+                                fas:
+                                  _vm.detailrequest.feedback === "disappointed"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Disappointed")
+                        ])
                       ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "uk-width-1-5" }, [
-                    _c("div", { staticClass: "uk-text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "gl-icon-review",
-                          attrs: { "uk-tooltip": "Good" }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "far fa-smile",
-                            class: {
-                              fas: _vm.detailrequest.feedback === "good"
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "gl-review-text" }, [
-                        _vm._v("Good")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "uk-width-1-5" }, [
-                    _c("div", { staticClass: "uk-text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "gl-icon-review",
-                          attrs: { "uk-tooltip": "Neutral" }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "far fa-meh",
-                            class: {
-                              fas: _vm.detailrequest.feedback === "neutral"
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "gl-review-text" }, [
-                        _vm._v("Neutral")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "uk-width-1-5" }, [
-                    _c("div", { staticClass: "uk-text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "gl-icon-review",
-                          attrs: { "uk-tooltip": "Poor" }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "far fa-frown",
-                            class: {
-                              fas: _vm.detailrequest.feedback === "poor"
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "gl-review-text" }, [
-                        _vm._v("Poor")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "uk-width-1-5" }, [
-                    _c("div", { staticClass: "uk-text-center" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "gl-icon-review",
-                          attrs: { "uk-tooltip": "Disappointed" }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "far fa-angry",
-                            class: {
-                              fas: _vm.detailrequest.feedback === "disappointed"
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "gl-review-text" }, [
-                        _vm._v("Disappointed")
-                      ])
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
+                  ]
+                )
+              ])
+            ]
+          )
         ])
       ])
     ])
