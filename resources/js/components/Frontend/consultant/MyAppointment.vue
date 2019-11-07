@@ -501,6 +501,18 @@ export default {
       });
     }
   },
+  computed: {
+    selectedTime()
+    {
+      let hours = this.forms.request.timepicker.hours;
+      let minute = this.forms.request.timepicker.minute;
+
+      if( hours === '' ) hours = 'HH';
+      if( minute === '' ) minute = 'mm';
+      this.forms.request.timepicker.selected = hours + ':' + minute;
+      return this.forms.request.timepicker.selected;
+    }
+  },
   mounted() {
     this.showRequest();
   }

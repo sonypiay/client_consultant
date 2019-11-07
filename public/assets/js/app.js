@@ -4901,6 +4901,16 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   },
+  computed: {
+    selectedTime: function selectedTime() {
+      var hours = this.forms.request.timepicker.hours;
+      var minute = this.forms.request.timepicker.minute;
+      if (hours === '') hours = 'HH';
+      if (minute === '') minute = 'mm';
+      this.forms.request.timepicker.selected = hours + ':' + minute;
+      return this.forms.request.timepicker.selected;
+    }
+  },
   mounted: function mounted() {
     this.showRequest();
   }
