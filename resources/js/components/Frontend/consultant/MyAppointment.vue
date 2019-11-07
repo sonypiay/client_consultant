@@ -7,20 +7,98 @@
     <div class="uk-padding banner-index_header">
       <div class="uk-container">My Appointment</div>
     </div>
-    <!--<div class="navbar-event">
-      <div class="uk-container">
-        <nav class="uk-navbar">
-          <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'all'}" @click="status_request = 'all'; showRequest()">All Appointment</a></li>
-            <li><a :class="{'active': status_request === 'waiting_respond'}" @click="status_request = 'waiting_respond'; showRequest()">Upcoming Appointment</a></li>
-            <li><a :class="{'active': status_request === 'accept'}" @click="status_request = 'accept'; showRequest()">Accepted Appointment</a></li>
-            <li><a :class="{'active': status_request === 'decline'}" @click="status_request = 'decline'; showRequest()">Declined Appointment</a></li>
-            <li><a :class="{'active': status_request === 'cancel'}" @click="status_request = 'cancel'; showRequest()">Canceled Appointment</a></li>
-            <li><a :class="{'active': status_request === 'done'}" @click="status_request = 'done'; showRequest()">Completed Appointment</a></li>
-          </ul>
-        </nav>
+
+    <!-- add / update appointment -->
+    <div id="modal-add-request" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body modal-dialog">
+        <a class="uk-modal-close uk-modal-close-default" uk-close></a>
+        <div class="modal-title">Edit Request Appointment</div>
+        <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
+          {{ messages.successMessage }}
+        </div>
+        <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
+          {{ messages.errorMessage }}
+        </div>
+        <form class="uk-form-stacked uk-margin-top" @submit.prevent="forms.request.isedit === true ? onSaveRequest() : onAddRequest()">
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Select Date</label>
+            <div class="uk-form-controls">
+              <v-date-picker v-model="forms.request.selectedDate"
+              :min-date="datepicker.mindate"
+              :popover="datepicker.popover"
+              :columns="2"
+              >
+              <div class="uk-width-1-1 uk-inline">
+                <span class="uk-form-icon" uk-icon="calendar"></span>
+                <input type="text" class="uk-width-1-1 uk-input gl-input-default" :value="$root.formatDate( forms.request.selectedDate, 'ddd, DD MMMM YYYY' )" readonly />
+              </div>
+              </v-date-picker>
+            </div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Select Time</label>
+            <div class="uk-form-controls">
+              <div class="uk-width-1-1 uk-inline">
+                <a class="uk-form-icon" uk-icon="clock"></a>
+                <input type="text" class="uk-width-1-1 uk-input gl-input-default"
+                v-model="selectedTime"
+                readonly />
+              </div>
+              <div class="uk-width-large dropdown-timepicker" uk-dropdown="mode: click;">
+                <div class="uk-dropdown-grid uk-child-width-1-2" uk-grid>
+                  <div>
+                    <div class="dropdown-timepicker-header">Hours</div>
+                    <div class="dropdown-timepicker-content">
+                      <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
+                        <li>
+                          <a :class="{'active': $root.padNumber( 0, 2 ) == forms.request.timepicker.hours}" @click="onSelectedTime( 0, 'hours' )">
+                            {{ $root.padNumber( 0, 2 ) }}
+                          </a>
+                        </li>
+                        <li v-for="i in 23">
+                          <a :class="{'active': $root.padNumber( i, 2 ) == forms.request.timepicker.hours}" @click="onSelectedTime( i, 'hours' )">
+                            {{ $root.padNumber( i, 2 ) }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="dropdown-timepicker-header">Minute</div>
+                    <div class="dropdown-timepicker-content">
+                      <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
+                        <li>
+                          <a :class="{'active': $root.padNumber( 0, 2 ) == forms.request.timepicker.minute}" @click="onSelectedTime( 0, 'minute' )">
+                            {{ $root.padNumber( 0, 2 ) }}
+                          </a>
+                        </li>
+                        <li v-for="i in 59">
+                          <a :class="{'active': $root.padNumber( i, 2 ) == forms.request.timepicker.minute}" @click="onSelectedTime( i, 'minute' )">
+                            {{ $root.padNumber( i, 2 ) }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-show="messages.errors.timepicker" class="uk-text-small uk-text-danger">{{ messages.errors.timepicker }}</div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Description</label>
+            <div class="uk-form-controls">
+              <textarea class="uk-textarea uk-height-small gl-input-default" v-model="forms.request.description" placeholder="Enter a description"></textarea>
+            </div>
+            <div v-show="messages.errors.description" class="uk-text-small uk-text-danger">{{ messages.errors.description }}</div>
+          </div>
+          <div class="uk-margin">
+            <button class="uk-button uk-button-default gl-button-default" v-html="forms.request.submit"></button>
+          </div>
+        </form>
       </div>
-    </div>-->
+    </div>
+    <!-- add / update appointment -->
 
     <div class="uk-container uk-margin-top uk-margin-large-bottom container-request-list">
       <div class="uk-clearfix uk-margin-bottom">
@@ -146,11 +224,20 @@
 </template>
 
 <script>
+import VCalendar from 'v-calendar';
+
+document.addEventListener("DOMContentLoaded", function() {
+	OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
+});
+
 export default {
   props: [
     'haslogin',
     'getuser'
   ],
+  components: {
+    VCalendar
+  },
   data() {
     return {
       getrequest: {
@@ -164,10 +251,29 @@ export default {
           next_page_url: ''
         }
       },
+      datepicker: {
+        mindate: new Date(),
+        popover: {
+          placement: 'bottom',
+          visibility: 'click'
+        }
+      },
       forms: {
         keywords: '',
         limit: 6,
-        status_request: 'all'
+        status_request: 'all',
+        request: {
+          id: '',
+          selectedDate: new Date(),
+          timepicker: {
+            selected: '',
+            isSelecting: false,
+            hours: '',
+            minute: ''
+          },
+          description: '',
+          submit: 'Add Appointment'
+        }
       },
       messages: {
         errors: {},
@@ -256,16 +362,38 @@ export default {
         }
       });
     },
+    onSelectedTime( val, time )
+    {
+      let str = this.$root.padNumber( val, 2 );
+      if( time === 'hours' ) this.forms.request.timepicker.hours = str;
+      if( time === 'minute' ) this.forms.request.timepicker.minute = str;
+    },
     onClickModal( data )
     {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+
       if( data === undefined )
       {
-
+        this.forms.request.selectedDate = new Date();
+        this.forms.request.timepicker.hours = '';
+        this.forms.request.timepicker.minute = '';
+        this.forms.request.description = '';
+        this.forms.request.id = '';
       }
       else
       {
-
+        this.forms.request.selectedDate = new Date( this.$root.formatDate( data.schedule_date, 'ddd, DD MMMM YYYY' ) );
+        this.forms.request.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH');
+        this.forms.request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
+        this.forms.request.description = data.description;
+        this.forms.request.id = data.apt_id;
       }
+      UIkit.modal('#modal-add-request').show();
     }
   },
   mounted() {

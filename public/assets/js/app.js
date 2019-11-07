@@ -4398,6 +4398,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! v-calendar */ "./node_modules/v-calendar/lib/v-calendar.umd.min.js");
+/* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(v_calendar__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4545,8 +4547,93 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+document.addEventListener("DOMContentLoaded", function () {
+  OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
+  components: {
+    VCalendar: v_calendar__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   data: function data() {
     return {
       getrequest: {
@@ -4560,10 +4647,29 @@ __webpack_require__.r(__webpack_exports__);
           next_page_url: ''
         }
       },
+      datepicker: {
+        mindate: new Date(),
+        popover: {
+          placement: 'bottom',
+          visibility: 'click'
+        }
+      },
       forms: {
         keywords: '',
         limit: 6,
-        status_request: 'all'
+        status_request: 'all',
+        request: {
+          id: '',
+          selectedDate: new Date(),
+          timepicker: {
+            selected: '',
+            isSelecting: false,
+            hours: '',
+            minute: ''
+          },
+          description: '',
+          submit: 'Add Appointment'
+        }
       },
       messages: {
         errors: {},
@@ -4660,8 +4766,34 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    onSelectedTime: function onSelectedTime(val, time) {
+      var str = this.$root.padNumber(val, 2);
+      if (time === 'hours') this.forms.request.timepicker.hours = str;
+      if (time === 'minute') this.forms.request.timepicker.minute = str;
+    },
     onClickModal: function onClickModal(data) {
-      if (data === undefined) {} else {}
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+
+      if (data === undefined) {
+        this.forms.request.selectedDate = new Date();
+        this.forms.request.timepicker.hours = '';
+        this.forms.request.timepicker.minute = '';
+        this.forms.request.description = '';
+        this.forms.request.id = '';
+      } else {
+        this.forms.request.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'ddd, DD MMMM YYYY'));
+        this.forms.request.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
+        this.forms.request.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
+        this.forms.request.description = data.description;
+        this.forms.request.id = data.apt_id;
+      }
+
+      UIkit.modal('#modal-add-request').show();
     }
   },
   mounted: function mounted() {
@@ -64779,6 +64911,440 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm._m(0),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "modal-add-request", "uk-modal": "" } }, [
+        _c(
+          "div",
+          { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" },
+          [
+            _c("a", {
+              staticClass: "uk-modal-close uk-modal-close-default",
+              attrs: { "uk-close": "" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-title" }, [
+              _vm._v("Edit Request Appointment")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.messages.successMessage,
+                    expression: "messages.successMessage"
+                  }
+                ],
+                staticClass: "uk-margin-top uk-alert-success",
+                attrs: { "uk-alert": "" }
+              },
+              [
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.messages.successMessage) +
+                    "\n      "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.messages.errorMessage,
+                    expression: "messages.errorMessage"
+                  }
+                ],
+                staticClass: "uk-margin-top uk-alert-danger",
+                attrs: { "uk-alert": "" }
+              },
+              [
+                _vm._v(
+                  "\n        " + _vm._s(_vm.messages.errorMessage) + "\n      "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "uk-form-stacked uk-margin-top",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.forms.request.isedit === true
+                      ? _vm.onSaveRequest()
+                      : _vm.onAddRequest()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("Select Date")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "uk-form-controls" },
+                    [
+                      _c(
+                        "v-date-picker",
+                        {
+                          attrs: {
+                            "min-date": _vm.datepicker.mindate,
+                            popover: _vm.datepicker.popover,
+                            columns: 2
+                          },
+                          model: {
+                            value: _vm.forms.request.selectedDate,
+                            callback: function($$v) {
+                              _vm.$set(_vm.forms.request, "selectedDate", $$v)
+                            },
+                            expression: "forms.request.selectedDate"
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
+                            _c("span", {
+                              staticClass: "uk-form-icon",
+                              attrs: { "uk-icon": "calendar" }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass:
+                                "uk-width-1-1 uk-input gl-input-default",
+                              attrs: { type: "text", readonly: "" },
+                              domProps: {
+                                value: _vm.$root.formatDate(
+                                  _vm.forms.request.selectedDate,
+                                  "ddd, DD MMMM YYYY"
+                                )
+                              }
+                            })
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("Select Time")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
+                      _c("a", {
+                        staticClass: "uk-form-icon",
+                        attrs: { "uk-icon": "clock" }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedTime,
+                            expression: "selectedTime"
+                          }
+                        ],
+                        staticClass: "uk-width-1-1 uk-input gl-input-default",
+                        attrs: { type: "text", readonly: "" },
+                        domProps: { value: _vm.selectedTime },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.selectedTime = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "uk-width-large dropdown-timepicker",
+                        attrs: { "uk-dropdown": "mode: click;" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "uk-dropdown-grid uk-child-width-1-2",
+                            attrs: { "uk-grid": "" }
+                          },
+                          [
+                            _c("div", [
+                              _c(
+                                "div",
+                                { staticClass: "dropdown-timepicker-header" },
+                                [_vm._v("Hours")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "dropdown-timepicker-content" },
+                                [
+                                  _c(
+                                    "ul",
+                                    {
+                                      staticClass:
+                                        "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
+                                    },
+                                    [
+                                      _c("li", [
+                                        _c(
+                                          "a",
+                                          {
+                                            class: {
+                                              active:
+                                                _vm.$root.padNumber(0, 2) ==
+                                                _vm.forms.request.timepicker
+                                                  .hours
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.onSelectedTime(
+                                                  0,
+                                                  "hours"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                          " +
+                                                _vm._s(
+                                                  _vm.$root.padNumber(0, 2)
+                                                ) +
+                                                "\n                        "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(23, function(i) {
+                                        return _c("li", [
+                                          _c(
+                                            "a",
+                                            {
+                                              class: {
+                                                active:
+                                                  _vm.$root.padNumber(i, 2) ==
+                                                  _vm.forms.request.timepicker
+                                                    .hours
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.onSelectedTime(
+                                                    i,
+                                                    "hours"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                          " +
+                                                  _vm._s(
+                                                    _vm.$root.padNumber(i, 2)
+                                                  ) +
+                                                  "\n                        "
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "div",
+                                { staticClass: "dropdown-timepicker-header" },
+                                [_vm._v("Minute")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "dropdown-timepicker-content" },
+                                [
+                                  _c(
+                                    "ul",
+                                    {
+                                      staticClass:
+                                        "uk-nav uk-nav-default uk-dropdown-nav nav-timepicker"
+                                    },
+                                    [
+                                      _c("li", [
+                                        _c(
+                                          "a",
+                                          {
+                                            class: {
+                                              active:
+                                                _vm.$root.padNumber(0, 2) ==
+                                                _vm.forms.request.timepicker
+                                                  .minute
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.onSelectedTime(
+                                                  0,
+                                                  "minute"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                          " +
+                                                _vm._s(
+                                                  _vm.$root.padNumber(0, 2)
+                                                ) +
+                                                "\n                        "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(59, function(i) {
+                                        return _c("li", [
+                                          _c(
+                                            "a",
+                                            {
+                                              class: {
+                                                active:
+                                                  _vm.$root.padNumber(i, 2) ==
+                                                  _vm.forms.request.timepicker
+                                                    .minute
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.onSelectedTime(
+                                                    i,
+                                                    "minute"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                          " +
+                                                  _vm._s(
+                                                    _vm.$root.padNumber(i, 2)
+                                                  ) +
+                                                  "\n                        "
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.messages.errors.timepicker,
+                          expression: "messages.errors.timepicker"
+                        }
+                      ],
+                      staticClass: "uk-text-small uk-text-danger"
+                    },
+                    [_vm._v(_vm._s(_vm.messages.errors.timepicker))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("Description")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.forms.request.description,
+                          expression: "forms.request.description"
+                        }
+                      ],
+                      staticClass:
+                        "uk-textarea uk-height-small gl-input-default",
+                      attrs: { placeholder: "Enter a description" },
+                      domProps: { value: _vm.forms.request.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.forms.request,
+                            "description",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.messages.errors.description,
+                          expression: "messages.errors.description"
+                        }
+                      ],
+                      staticClass: "uk-text-small uk-text-danger"
+                    },
+                    [_vm._v(_vm._s(_vm.messages.errors.description))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("button", {
+                    staticClass:
+                      "uk-button uk-button-default gl-button-default",
+                    domProps: { innerHTML: _vm._s(_vm.forms.request.submit) }
+                  })
+                ])
+              ]
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
