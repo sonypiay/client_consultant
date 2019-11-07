@@ -12,7 +12,10 @@
     <div id="modal-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
-        <div class="modal-title">Edit Request Appointment</div>
+        <div class="modal-title">
+          <span v-if="forms.request.isedit">Edit Request Appointment</span>
+          <span v-else>Add Request Appointment</span>
+        </div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
         </div>
@@ -151,7 +154,7 @@
           </div>
         </div>
         <div class="uk-float-right">
-          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Make Appointment</a>
+          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Add Appointment</a>
         </div>
       </div>
 

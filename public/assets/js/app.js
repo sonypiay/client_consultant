@@ -4477,6 +4477,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -64527,7 +64530,9 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
-              _vm._v("Edit Request Appointment")
+              _vm.forms.request.isedit
+                ? _c("span", [_vm._v("Edit Request Appointment")])
+                : _c("span", [_vm._v("Add Request Appointment")])
             ]),
             _vm._v(" "),
             _c(
@@ -65277,7 +65282,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Make Appointment")]
+                [_vm._v("Add Appointment")]
               )
             ])
           ]),
