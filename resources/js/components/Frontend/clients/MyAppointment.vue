@@ -7,6 +7,8 @@
     :getuser="getuser" />
     <!-- navbar -->
 
+    <view-request-detail :detailrequest="getrequest.details" />
+
     <!-- edit appointment -->
     <div id="modal-edit-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
@@ -252,7 +254,7 @@
                   <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
                     <ul class="uk-nav uk-dropdown-nav request-nav">
                       <li>
-                        <a href="#">
+                        <a @click="onViewDetail( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
                           View
                         </a>
@@ -347,6 +349,7 @@
 
 <script>
 import VCalendar from 'v-calendar';
+import ViewRequest from './ViewRequest.vue';
 
 document.addEventListener("DOMContentLoaded", function() {
 	OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -358,7 +361,8 @@ export default {
     'getuser'
   ],
   components: {
-    VCalendar
+    VCalendar,
+    'view-request-detail': ViewRequest
   },
   data() {
     return {
@@ -653,6 +657,11 @@ export default {
           });
         }
       })
+    },
+    onViewDetail( data )
+    {
+      this.getrequest.details = data;
+      UIkit.modal('#modal-view-request').show();
     }
   },
   computed: {
