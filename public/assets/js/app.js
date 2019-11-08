@@ -5624,6 +5624,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
@@ -68316,6 +68326,29 @@ var render = function() {
                             ])
                           ]
                         )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "uk-margin" }, [
+                        _vm.getfeedbacks.isLoading
+                          ? _c("div", { staticClass: "uk-text-center" }, [
+                              _c("span", { attrs: { "uk-spinner": "" } })
+                            ])
+                          : _c("div", [
+                              _vm.getfeedbacks.total === 0
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "uk-alert-warning",
+                                      attrs: { "uk-alert": "" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                  No review\n                "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
                       ])
                     ])
                   ]

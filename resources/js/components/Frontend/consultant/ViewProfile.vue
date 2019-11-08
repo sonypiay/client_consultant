@@ -134,6 +134,16 @@
                   </div>
                 </div>
               </div>
+              <div class="uk-margin">
+                <div v-if="getfeedbacks.isLoading" class="uk-text-center">
+                  <span uk-spinner></span>
+                </div>
+                <div v-else>
+                  <div v-if="getfeedbacks.total === 0" class="uk-alert-warning" uk-alert>
+                    No review
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
