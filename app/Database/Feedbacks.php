@@ -89,4 +89,38 @@ class Feedbacks extends Model
 
     return $res;
   }
+
+  public function show_feedback( $request, $userid = null )
+  {
+    $keywords = isset( $request->keywords ) ? $request->keywords : '';
+    $limit = isset( $request->limit ) ? $request->limit : 10;
+    $feedback = isset( $request->feedback ) ? $request->feedback : 'all';
+
+    $query = $this->select(
+      'feedbacks.review_description',
+      'feedbacks.feedback',
+      'feedbacks.created_at',
+      'client_user.client_fullname'
+    )
+    ->join('appointment_request', 'feedbacks.apt_id', '=', 'appointment_request.apt_id')
+    ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id');
+
+    if( $feedback != 'all' )
+    {
+      $query = $query->where( 'feedbacks.feedback', $feedback );
+    }
+
+    if( $userid !== null )
+    {
+      $query = $query->where( 'appointment_request.consultant_id', $userid );
+    }
+
+    if( ! empty( $keywords ) )
+    {
+      $query = $query->where('client_user.client_fullname', 'like', '%' . $keywords . '%');
+    }
+
+    $result = $query->orderBy('feedbacks.created_at', 'desc')
+    ->paginate( $limit );
+  }
 }
