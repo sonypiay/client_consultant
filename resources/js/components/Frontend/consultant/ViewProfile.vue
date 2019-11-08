@@ -131,10 +131,9 @@ export default {
       else
       {
         swal({
-          title: 'Whoops',
-          text: 'You have to sign in first.',
-          icon: 'warning',
-          dangerMode: true
+          title: 'Sorry',
+          text: 'You have to sign in as Client.',
+          icon: 'warning'
         });
       }
     }
