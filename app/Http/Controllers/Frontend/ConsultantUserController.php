@@ -8,6 +8,7 @@ use App\Database\ClientUser;
 use App\Database\ConsultantUser;
 use App\Database\AppointmentRequest;
 use App\Database\Notification;
+use App\Database\Feedbacks;
 use DB;
 use Storage;
 use Hash;
@@ -96,10 +97,16 @@ class ConsultantUserController extends Controller
     $res = $appointment->saveRequest( $id, $request );
     return response()->json( $res, 200 );
   }
-  
+
   public function delete_request( AppointmentRequest $appointment, $id )
   {
     $res = $appointment->deleteRequest( $id );
+    return response()->json( $res, 200 );
+  }
+
+  public function list_review( Request $request, Feedbacks $feedback, $userid )
+  {
+    $res = $feedback->show_feedback( $request, $userid );
     return response()->json( $res, 200 );
   }
 }

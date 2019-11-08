@@ -122,5 +122,7 @@ class Feedbacks extends Model
 
     $result = $query->orderBy('feedbacks.created_at', 'desc')
     ->paginate( $limit );
+
+    return $result;
   }
 }
