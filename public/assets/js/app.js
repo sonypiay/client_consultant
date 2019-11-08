@@ -1953,6 +1953,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'keywords'],
   data: function data() {
@@ -60138,6 +60139,10 @@ var render = function() {
                     }
                   },
                   [
+                    _c("option", { attrs: { value: "recommended" } }, [
+                      _vm._v("Recommended")
+                    ]),
+                    _vm._v(" "),
                     _c("option", { attrs: { value: "latest" } }, [
                       _vm._v("Latest Consultant")
                     ]),

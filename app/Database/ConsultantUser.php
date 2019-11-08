@@ -5,6 +5,7 @@ namespace App\Database;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ConsultantUser extends Model
 {
@@ -47,8 +48,13 @@ class ConsultantUser extends Model
       'city.city_id',
       'city.city_name',
       'province.province_id',
-      'province.province_name'
+      'province.province_name',
+      DB::raw('count(feedbacks.feedback) as total_feedback'),
+      DB::raw('sum(feedbacks.rateindex) as total_rate'),
+      DB::raw('avg(feedbacks.rateindex) as total_average')
     )
+    ->leftJoin('appointment_request', 'consultant_user.consultant_id', '=', 'appointment_request.consultant_id')
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
     ->leftJoin('city', 'consultant_user.city_id', '=', 'city.city_id')
     ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
 
@@ -247,8 +253,13 @@ class ConsultantUser extends Model
       'city.city_id',
       'city.city_name',
       'province.province_id',
-      'province.province_name'
+      'province.province_name',
+      DB::raw('count(feedbacks.feedback) as total_feedback'),
+      DB::raw('sum(feedbacks.rateindex) as total_rate'),
+      DB::raw('avg(feedbacks.rateindex) as total_average')
     )
+    ->leftJoin('appointment_request', 'consultant_user.consultant_id', '=', 'appointment_request.consultant_id')
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
     ->leftJoin('city', 'consultant_user.city_id', '=', 'city.city_id')
     ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
 
@@ -270,7 +281,8 @@ class ConsultantUser extends Model
       $query = $query->orderBy('consultant_user.consultant_fullname', 'desc');
     }
 
-    $result = $query->paginate( $limit );
+    $result = $query->groupBy('consultant_user.consultant_id')
+    ->paginate( $limit );
     return $result;
   }
 }
