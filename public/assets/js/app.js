@@ -69952,7 +69952,7 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default",
+                            "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-homepage",
                           attrs: {
                             "uk-dropdown": "mode: click; pos: bottom-center"
                           }
@@ -70019,7 +70019,7 @@ var render = function() {
                                             "ul",
                                             {
                                               staticClass:
-                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-homepage nav-dropdown-notification"
                                             },
                                             _vm._l(
                                               _vm.getnotification.results,
@@ -70068,7 +70068,7 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
+                            "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-homepage",
                           attrs: {
                             "uk-dropdown": "mode: click; pos: bottom-center"
                           }
@@ -70078,7 +70078,7 @@ var render = function() {
                             "ul",
                             {
                               staticClass:
-                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
+                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-homepage"
                             },
                             [
                               _c("li", [

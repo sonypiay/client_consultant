@@ -95,7 +95,7 @@
                   <span uk-icon="bell"></span>
                   <span v-show="getnotification.total !== 0" class="count-notification">{{ getnotification.total }}</span>
                 </a>
-                <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
+                <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-homepage" uk-dropdown="mode: click; pos: bottom-center">
                   <div class="uk-clearfix">
                     <div class="uk-float-right">
                       <a @click="markAsRead('request')" class="markas-read">Mark as read</a>
@@ -112,7 +112,7 @@
                     </div>
                     <div v-else>
                       <div class="dropdown-notification">
-                        <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
+                        <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-homepage nav-dropdown-notification">
                           <li v-for="notif in getnotification.results">
                             <a href="#">
                               {{ notif.notif_message }}
@@ -129,8 +129,8 @@
                   {{ getuser.consultant_fullname }}
                   <span class="uk-margin-small-left" uk-icon="icon: chevron-down; ratio: 0.7"></span>
                 </a>
-                <div class="uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
-                  <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default">
+                <div class="uk-navbar-dropdown uk-width-1-5 navbar-dropdown-homepage" uk-dropdown="mode: click; pos: bottom-center">
+                  <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-homepage">
                     <li>
                       <a :href="$root.url + '/consultant/dashboard'">
                         <span class="uk-margin-small-right" uk-icon="icon: home; ratio: 0.8"></span>
