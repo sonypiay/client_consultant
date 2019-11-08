@@ -570,18 +570,22 @@ body {
 }
 
 .card-consultant .consultant-profile-rating .rating-level {
-  color: #888888;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 14px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
+  border: 1px solid #25C4F2;
+  border-radius: 6px;
+  color: #25C4F2;
+  padding: 4px 8px;
 }
 
 .card-consultant .consultant-profile-rating .rating-value {
+  margin-left: 1rem;
   color: #888888;
-  font-weight: 400;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 16px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;

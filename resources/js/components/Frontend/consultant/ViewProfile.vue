@@ -68,23 +68,39 @@
               </div>
               <div class="consultant-profile-rating">
                 <div class="uk-text-middle">
-                  <span v-for="n in 5">
-                    <i class="fas fa-star icon-rating"></i>
+                  <span class="rating-level">
+                    <label v-if="( getconsultant.total_rate / getconsultant.total_feedback ) > 0 && ( getconsultant.total_rate / getconsultant.total_feedback ) < 2">
+                      <i class="fas fa-angry"></i> Disappointed Service
+                    </label>
+                    <label v-else-if="( getconsultant.total_rate / getconsultant.total_feedback ) > 1 && ( getconsultant.total_rate / getconsultant.total_feedback ) < 3">
+                      <i class="fas fa-frown"></i> Poor Service
+                    </label>
+                    <label v-else-if="( getconsultant.total_rate / getconsultant.total_feedback ) > 2 && ( getconsultant.total_rate / getconsultant.total_feedback ) < 4">
+                      <i class="fas fa-meh"></i> Not Bad
+                    </label>
+                    <label v-else-if="( getconsultant.total_rate / getconsultant.total_feedback ) > 3 && ( getconsultant.total_rate / getconsultant.total_feedback ) < 5">
+                      <i class="fas fa-smile"></i> Good Service
+                    </label>
+                    <label v-else>
+                      <i class="fas fa-smile-beam"></i> Excellent Service
+                    </label>
                   </span>
-                  <span class="rating-level"><i class="fas fa-smile-beam"></i> Excellent</span>
-                  <span class="rating-value">5/5 (10 feedbacks)</span>
+                  <span class="rating-value">
+                    {{ rateIndex }} / 5 ({{ getconsultant.total_feedback }} feedbacks)
+                  </span>
                 </div>
               </div>
             </div>
             <div class="uk-float-right">
               <a @click="showAddRequest()" class="uk-button uk-button-default gl-button-default">
-                Request Service
+                Request Appointment
               </a>
             </div>
           </div>
           <div class="uk-card uk-card-body uk-card-default uk-margin-top card-panel">
             <div class="card-panel-feedbacks">
               <div class="uk-card-title feedbacks-title">Feedbacks</div>
+              {{ getconsultant }}
             </div>
           </div>
         </div>
@@ -121,6 +137,16 @@ export default {
           dangerMode: true
         });
       }
+    }
+  },
+  computed: {
+    rateIndex()
+    {
+      let rate = this.getconsultant.total_rate;
+      let fd = this.getconsultant.total_feedback;
+      let result = rate / fd;
+      if( Number.isInteger(result) ) return result;
+      else return result.toFixed(1);
     }
   }
 }

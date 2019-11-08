@@ -5575,6 +5575,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
@@ -5595,6 +5611,14 @@ __webpack_require__.r(__webpack_exports__);
           dangerMode: true
         });
       }
+    }
+  },
+  computed: {
+    rateIndex: function rateIndex() {
+      var rate = this.getconsultant.total_rate;
+      var fd = this.getconsultant.total_feedback;
+      var result = rate / fd;
+      if (Number.isInteger(result)) return result;else return result.toFixed(1);
     }
   }
 });
@@ -67961,26 +67985,68 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "consultant-profile-rating" }, [
-                        _c(
-                          "div",
-                          { staticClass: "uk-text-middle" },
-                          [
-                            _vm._l(5, function(n) {
-                              return _c("span", [
-                                _c("i", {
-                                  staticClass: "fas fa-star icon-rating"
-                                })
-                              ])
-                            }),
-                            _vm._v(" "),
-                            _vm._m(0),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "rating-value" }, [
-                              _vm._v("5/5 (10 feedbacks)")
-                            ])
-                          ],
-                          2
-                        )
+                        _c("div", { staticClass: "uk-text-middle" }, [
+                          _c("span", { staticClass: "rating-level" }, [
+                            _vm.getconsultant.total_rate /
+                              _vm.getconsultant.total_feedback >
+                              0 &&
+                            _vm.getconsultant.total_rate /
+                              _vm.getconsultant.total_feedback <
+                              2
+                              ? _c("label", [
+                                  _c("i", { staticClass: "fas fa-angry" }),
+                                  _vm._v(
+                                    " Disappointed Service\n                  "
+                                  )
+                                ])
+                              : _vm.getconsultant.total_rate /
+                                  _vm.getconsultant.total_feedback >
+                                  1 &&
+                                _vm.getconsultant.total_rate /
+                                  _vm.getconsultant.total_feedback <
+                                  3
+                              ? _c("label", [
+                                  _c("i", { staticClass: "fas fa-frown" }),
+                                  _vm._v(" Poor Service\n                  ")
+                                ])
+                              : _vm.getconsultant.total_rate /
+                                  _vm.getconsultant.total_feedback >
+                                  2 &&
+                                _vm.getconsultant.total_rate /
+                                  _vm.getconsultant.total_feedback <
+                                  4
+                              ? _c("label", [
+                                  _c("i", { staticClass: "fas fa-meh" }),
+                                  _vm._v(" Not Bad\n                  ")
+                                ])
+                              : _vm.getconsultant.total_rate /
+                                  _vm.getconsultant.total_feedback >
+                                  3 &&
+                                _vm.getconsultant.total_rate /
+                                  _vm.getconsultant.total_feedback <
+                                  5
+                              ? _c("label", [
+                                  _c("i", { staticClass: "fas fa-smile" }),
+                                  _vm._v(" Good Service\n                  ")
+                                ])
+                              : _c("label", [
+                                  _c("i", { staticClass: "fas fa-smile-beam" }),
+                                  _vm._v(
+                                    " Excellent Service\n                  "
+                                  )
+                                ])
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "rating-value" }, [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.rateIndex) +
+                                " / 5 (" +
+                                _vm._s(_vm.getconsultant.total_feedback) +
+                                " feedbacks)\n                "
+                            )
+                          ])
+                        ])
                       ])
                     ]),
                     _vm._v(" "),
@@ -67998,7 +68064,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n              Request Service\n            "
+                            "\n              Request Appointment\n            "
                           )
                         ]
                       )
@@ -68006,7 +68072,27 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(1)
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-card uk-card-body uk-card-default uk-margin-top card-panel"
+                  },
+                  [
+                    _c("div", { staticClass: "card-panel-feedbacks" }, [
+                      _c(
+                        "div",
+                        { staticClass: "uk-card-title feedbacks-title" },
+                        [_vm._v("Feedbacks")]
+                      ),
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(_vm.getconsultant) +
+                          "\n          "
+                      )
+                    ])
+                  ]
+                )
               ])
             ]
           )
@@ -68016,36 +68102,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "rating-level" }, [
-      _c("i", { staticClass: "fas fa-smile-beam" }),
-      _vm._v(" Excellent")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "uk-card uk-card-body uk-card-default uk-margin-top card-panel"
-      },
-      [
-        _c("div", { staticClass: "card-panel-feedbacks" }, [
-          _c("div", { staticClass: "uk-card-title feedbacks-title" }, [
-            _vm._v("Feedbacks")
-          ])
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

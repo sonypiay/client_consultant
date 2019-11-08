@@ -133,12 +133,16 @@ html, body { font-family: $font-base; }
       font-size: 14px;
     }
     .rating-level {
-      color: #888888;
-      @include global_font_style( 400, 14px, normal, 0.4px );
+      @include global_font_style( 300, 14px, normal, 0.4px );
+      border: 1px solid $color-base;
+      border-radius: 6px;
+      color: $color-base;
+      padding: 4px 8px;
     }
     .rating-value {
+      margin-left: 1rem;
       color: #888888;
-      @include global_font_style( 400, 14px, normal, 0.4px );
+      @include global_font_style( 700, 16px, normal, 0.4px );
     }
   }
 }
