@@ -12,7 +12,7 @@
         <div>
           <select class="uk-select gl-input-default" v-model="forms.sorting" @change="showConsultant()">
             <option value="recommended">Recommended</option>
-            <option value="latest">Latest Consultant</option>
+            <option value="latest">Latest</option>
             <option value="asc">A to Z</option>
             <option value="desc">Z to A</option>
           </select>

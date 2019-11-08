@@ -276,6 +276,10 @@ class ConsultantUser extends Model
     {
       $query = $query->orderBy('consultant_user.consultant_fullname', 'asc');
     }
+    else if( $sorting == 'recommended' )
+    {
+      $query = $query->orderBy(DB::raw('avg(feedbacks.rateindex)'), 'desc');
+    }
     else
     {
       $query = $query->orderBy('consultant_user.consultant_fullname', 'desc');

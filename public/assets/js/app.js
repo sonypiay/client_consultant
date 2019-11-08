@@ -60144,7 +60144,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("option", { attrs: { value: "latest" } }, [
-                      _vm._v("Latest Consultant")
+                      _vm._v("Latest")
                     ]),
                     _vm._v(" "),
                     _c("option", { attrs: { value: "asc" } }, [
