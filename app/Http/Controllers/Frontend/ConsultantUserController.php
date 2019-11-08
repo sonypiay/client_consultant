@@ -104,7 +104,7 @@ class ConsultantUserController extends Controller
     return response()->json( $res, 200 );
   }
 
-  public function list_review( Request $request, Feedbacks $feedback, $userid )
+  public function list_feedback( Request $request, Feedbacks $feedback, $userid )
   {
     $res = $feedback->show_feedback( $request, $userid );
     return response()->json( $res, 200 );

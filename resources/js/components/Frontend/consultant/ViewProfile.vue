@@ -100,7 +100,38 @@
           <div class="uk-card uk-card-body uk-card-default uk-margin-top card-panel">
             <div class="card-panel-feedbacks">
               <div class="uk-card-title feedbacks-title">Feedbacks</div>
-              {{ getconsultant }}
+              <div class="uk-margin feedbacks-filter">
+                <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                  <div>
+                    <label class="feedback-label-filter">Filter</label>
+                  </div>
+                  <div>
+                    <a class="uk-button uk-button-default gl-button-default">
+                      <i class="fas fa-angry"></i> Disappointed
+                    </a>
+                  </div>
+                  <div>
+                    <a class="uk-button uk-button-default gl-button-default">
+                      <i class="fas fa-poor"></i> Poor
+                    </a>
+                  </div>
+                  <div>
+                    <a class="uk-button uk-button-default gl-button-default">
+                      <i class="fas fa-meh"></i> Neutral
+                    </a>
+                  </div>
+                  <div>
+                    <a class="uk-button uk-button-default gl-button-default">
+                      <i class="fas fa-smile"></i> Good
+                    </a>
+                  </div>
+                  <div>
+                    <a class="uk-button uk-button-default gl-button-default">
+                      <i class="fas fa-smile-beam"></i> Excellent
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -120,6 +151,22 @@ export default {
   components: {
     'client-add-request': ClientAddRequest
   },
+  data() {
+    return {
+      filter_feedback: 'all',
+      getfeedbacks: {
+        isLoading: false,
+        total: 0,
+        results: [],
+        paginate: {
+          current_page: 1,
+          last_page: 1,
+          prev_page_url: null,
+          next_page_url: null
+        }
+      }
+    }
+  },
   methods: {
     showAddRequest()
     {
@@ -136,6 +183,32 @@ export default {
           icon: 'warning'
         });
       }
+    },
+    showFeedback( p, filter )
+    {
+      if( filter === undefined ) filter = 'all';
+      let param = 'feedback=' + this.filter_feedback;
+      let url = this.$root.url + '/consultant/list_feedback/' + this.getconsultant.consultant_id + '?page=' + this.getfeedbacks.paginate.current_page + '&' + param;
+      if( p !== undefined ) url = p + '&' + param;
+
+      this.getfeedbacks.isLoading = true;
+      axios({
+        method: 'get',
+        url: url
+      }).then( res => {
+        let result = res.data;
+        this.getfeedbacks.isLoading = false;
+        this.getfeedbacks.total = result.total;
+        this.getfeedbacks.results = result.data;
+        this.getfeedbacks.paginate = {
+          current_page: result.current_page,
+          last_page: result.last_page,
+          prev_page_url: result.prev_page_url,
+          next_page_url: result.next_page_url
+        };
+      }).catch( err => {
+        console.log( err.response.statusText );
+      });
     }
   },
   computed: {
@@ -147,6 +220,9 @@ export default {
       if( Number.isInteger(result) ) return result;
       else return result.toFixed(1);
     }
+  },
+  mounted() {
+    this.showFeedback();
   }
 }
 </script>
