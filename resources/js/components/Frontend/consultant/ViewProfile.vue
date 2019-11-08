@@ -167,6 +167,33 @@
                           {{ fd.review_description }}
                         </p>
                       </article>
+
+                      <!-- pagination -->
+                      <ul class="uk-pagination uk-flex-center">
+                        <li v-if="getfeedbacks.paginate.prev_page_url" @click="showFeedback( getfeedbacks.paginate.prev_page_url )">
+                          <a>
+                            <span uk-pagination-previous></span>
+                            Previous
+                          </a>
+                        </li>
+                        <li v-else class="uk-disabled">
+                          <a>
+                            <span uk-pagination-previous></span>
+                            Previous
+                          </a>
+                        </li>
+                        <li v-if="getfeedbacks.paginate.next_page_url" @click="showFeedback( getfeedbacks.paginate.next_page_url )">
+                          <a>
+                            Next <span uk-pagination-next></span>
+                          </a>
+                        </li>
+                        <li v-else class="uk-disabled">
+                          <a>
+                            Next <span uk-pagination-next></span>
+                          </a>
+                        </li>
+                      </ul>
+                      <!-- pagination -->
                     </div>
                   </div>
                 </div>

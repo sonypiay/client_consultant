@@ -5661,6 +5661,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
@@ -68494,6 +68521,69 @@ var render = function() {
                                                 ]
                                               )
                                             ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "ul",
+                                            {
+                                              staticClass:
+                                                "uk-pagination uk-flex-center"
+                                            },
+                                            [
+                                              _vm.getfeedbacks.paginate
+                                                .prev_page_url
+                                                ? _c(
+                                                    "li",
+                                                    {
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.showFeedback(
+                                                            _vm.getfeedbacks
+                                                              .paginate
+                                                              .prev_page_url
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._m(0, true)]
+                                                  )
+                                                : _c(
+                                                    "li",
+                                                    {
+                                                      staticClass: "uk-disabled"
+                                                    },
+                                                    [_vm._m(1, true)]
+                                                  ),
+                                              _vm._v(" "),
+                                              _vm.getfeedbacks.paginate
+                                                .next_page_url
+                                                ? _c(
+                                                    "li",
+                                                    {
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.showFeedback(
+                                                            _vm.getfeedbacks
+                                                              .paginate
+                                                              .next_page_url
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._m(2, true)]
+                                                  )
+                                                : _c(
+                                                    "li",
+                                                    {
+                                                      staticClass: "uk-disabled"
+                                                    },
+                                                    [_vm._m(3, true)]
+                                                  )
+                                            ]
                                           )
                                         ]
                                       )
@@ -68514,7 +68604,44 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("span", { attrs: { "uk-pagination-previous": "" } }),
+      _vm._v("\n                          Previous\n                        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("span", { attrs: { "uk-pagination-previous": "" } }),
+      _vm._v("\n                          Previous\n                        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _vm._v("\n                          Next "),
+      _c("span", { attrs: { "uk-pagination-next": "" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _vm._v("\n                          Next "),
+      _c("span", { attrs: { "uk-pagination-next": "" } })
+    ])
+  }
+]
 render._withStripped = true
 
 
