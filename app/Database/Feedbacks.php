@@ -52,9 +52,28 @@ class Feedbacks extends Model
         'user_id' => $getappointment->consultant_id
       ];
 
+      switch ($feedback) {
+        case 'excellent':
+          $rateindex = 5;
+          break;
+        case 'good':
+          $rateindex = 4;
+          break;
+        case 'neutral':
+          $rateindex = 3;
+          break;
+        case 'poor':
+          $rateindex = 2;
+          break;
+        default:
+          $rateindex = 1;
+          break;
+      }
+
       $this->fd_id = $this->getId();
       $this->review_description = $review_description;
       $this->feedback = $feedback;
+      $this->rateindex = $rateindex;
       $this->apt_id = $id;
       $this->save();
 
