@@ -68301,7 +68301,7 @@ var render = function() {
                                   }
                                 },
                                 [
-                                  _c("i", { staticClass: "fas fa-poor" }),
+                                  _c("i", { staticClass: "fas fa-frown" }),
                                   _vm._v(" Poor\n                  ")
                                 ]
                               )
@@ -68451,7 +68451,7 @@ var render = function() {
                                                       " Neutral\n                      "
                                                     )
                                                   ])
-                                                : fd.feedback === "Good"
+                                                : fd.feedback === "good"
                                                 ? _c("label", [
                                                     _c("i", {
                                                       staticClass:

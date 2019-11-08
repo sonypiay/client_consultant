@@ -114,7 +114,7 @@
                   </div>
                   <div>
                     <a @click="filter_feedback = 'poor'; showFeedback()" :class="{'gl-button-primary': filter_feedback === 'poor'}" class="uk-button uk-button-small uk-button-default gl-button-default">
-                      <i class="fas fa-poor"></i> Poor
+                      <i class="fas fa-frown"></i> Poor
                     </a>
                   </div>
                   <div>
@@ -154,7 +154,7 @@
                         <label v-else-if="fd.feedback === 'neutral'">
                           <i class="fas fa-meh"></i> Neutral
                         </label>
-                        <label v-else-if="fd.feedback === 'Good'">
+                        <label v-else-if="fd.feedback === 'good'">
                           <i class="fas fa-smile"></i> Good
                         </label>
                         <label v-else>
@@ -195,7 +195,7 @@
                     </li>
                   </ul>
                   <!-- pagination -->
-                  
+
                 </div>
               </div>
             </div>
