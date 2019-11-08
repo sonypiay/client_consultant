@@ -52,10 +52,30 @@
                       {{ consultant.consultant_fullname }}
                     </a>
                   </div>
-                  <div class="consultant-location">{{ consultant.city_name }}</div>
-                  <div class="consultant-rating" uk-tooltip="Excellent">
-                    <span v-for="n in 5">
-                      <i class="icon-rating" uk-icon="icon: star; ratio: 1"></i>
+                  <div class="consultant-location">
+                    <span v-if="consultant.city_name">{{ consultant.city_name }}</span>
+                    <span v-else>Unknown Location</span>
+                  </div>
+                  <div class="uk-margin-small-top consultant-rating">
+                    <span v-if="consultant.total_feedback != 0" class="icon-rating">
+                      <label v-if="( consultant.total_rate / consultant.total_feedback ) > 0 && ( consultant.total_rate / consultant.total_feedback ) < 2">
+                        <i class="fas fa-angry"></i> Disappointed Service
+                      </label>
+                      <label v-else-if="( consultant.total_rate / consultant.total_feedback ) > 1 && ( consultant.total_rate / consultant.total_feedback ) < 3">
+                        <i class="fas fa-frown"></i> Poor Service
+                      </label>
+                      <label v-else-if="( consultant.total_rate / consultant.total_feedback ) > 2 && ( consultant.total_rate / consultant.total_feedback ) < 4">
+                        <i class="fas fa-meh"></i> Not Bad
+                      </label>
+                      <label v-else-if="( consultant.total_rate / consultant.total_feedback ) > 3 && ( consultant.total_rate / consultant.total_feedback ) < 5">
+                        <i class="fas fa-smile"></i> Good Service
+                      </label>
+                      <label v-else>
+                        <i class="fas fa-smile-beam"></i> Excellent Service
+                      </label>
+                    </span>
+                    <span v-else class="icon-rating">
+                      No review
                     </span>
                   </div>
                 </div>

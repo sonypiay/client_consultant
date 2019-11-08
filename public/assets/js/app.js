@@ -1954,6 +1954,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'keywords'],
   data: function data() {
@@ -60357,32 +60377,117 @@ var render = function() {
                                               staticClass: "consultant-location"
                                             },
                                             [
-                                              _vm._v(
-                                                _vm._s(consultant.city_name)
-                                              )
+                                              consultant.city_name
+                                                ? _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        consultant.city_name
+                                                      )
+                                                    )
+                                                  ])
+                                                : _c("span", [
+                                                    _vm._v("Unknown Location")
+                                                  ])
                                             ]
                                           ),
                                           _vm._v(" "),
                                           _c(
                                             "div",
                                             {
-                                              staticClass: "consultant-rating",
-                                              attrs: {
-                                                "uk-tooltip": "Excellent"
-                                              }
+                                              staticClass:
+                                                "uk-margin-small-top consultant-rating"
                                             },
-                                            _vm._l(5, function(n) {
-                                              return _c("span", [
-                                                _c("i", {
-                                                  staticClass: "icon-rating",
-                                                  attrs: {
-                                                    "uk-icon":
-                                                      "icon: star; ratio: 1"
-                                                  }
-                                                })
-                                              ])
-                                            }),
-                                            0
+                                            [
+                                              consultant.total_feedback != 0
+                                                ? _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "icon-rating"
+                                                    },
+                                                    [
+                                                      consultant.total_rate /
+                                                        consultant.total_feedback >
+                                                        0 &&
+                                                      consultant.total_rate /
+                                                        consultant.total_feedback <
+                                                        2
+                                                        ? _c("label", [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "fas fa-angry"
+                                                            }),
+                                                            _vm._v(
+                                                              " Disappointed Service\n                    "
+                                                            )
+                                                          ])
+                                                        : consultant.total_rate /
+                                                            consultant.total_feedback >
+                                                            1 &&
+                                                          consultant.total_rate /
+                                                            consultant.total_feedback <
+                                                            3
+                                                        ? _c("label", [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "fas fa-frown"
+                                                            }),
+                                                            _vm._v(
+                                                              " Poor Service\n                    "
+                                                            )
+                                                          ])
+                                                        : consultant.total_rate /
+                                                            consultant.total_feedback >
+                                                            2 &&
+                                                          consultant.total_rate /
+                                                            consultant.total_feedback <
+                                                            4
+                                                        ? _c("label", [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "fas fa-meh"
+                                                            }),
+                                                            _vm._v(
+                                                              " Not Bad\n                    "
+                                                            )
+                                                          ])
+                                                        : consultant.total_rate /
+                                                            consultant.total_feedback >
+                                                            3 &&
+                                                          consultant.total_rate /
+                                                            consultant.total_feedback <
+                                                            5
+                                                        ? _c("label", [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "fas fa-smile"
+                                                            }),
+                                                            _vm._v(
+                                                              " Good Service\n                    "
+                                                            )
+                                                          ])
+                                                        : _c("label", [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "fas fa-smile-beam"
+                                                            }),
+                                                            _vm._v(
+                                                              " Excellent Service\n                    "
+                                                            )
+                                                          ])
+                                                    ]
+                                                  )
+                                                : _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "icon-rating"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                    No review\n                  "
+                                                      )
+                                                    ]
+                                                  )
+                                            ]
                                           )
                                         ]
                                       )

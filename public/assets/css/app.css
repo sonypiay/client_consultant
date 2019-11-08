@@ -521,10 +521,19 @@ body {
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
+  text-align: center;
 }
 
 .card-consultant .consultant-panel-body .consultant-rating .icon-rating {
-  color: #ffed4a;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  border: 1px solid #25C4F2;
+  border-radius: 6px;
+  color: #25C4F2;
+  padding: 4px 8px;
 }
 
 .card-consultant .nav-profile-consultant li a,

@@ -99,8 +99,13 @@ html, body { font-family: $font-base; }
     .consultant-rating {
       color: #888888;
       @include global_font_style( 400, 12px, normal, 0.4px );
+      text-align: center;
       .icon-rating {
-        color: $color-rating;
+        @include global_font_style( 400, 14px, normal, 0.4px );
+        border: 1px solid $color-base;
+        border-radius: 6px;
+        color: $color-base;
+        padding: 4px 8px;
       }
     }
   }
