@@ -68521,75 +68521,56 @@ var render = function() {
                                                 ]
                                               )
                                             ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "ul",
-                                            {
-                                              staticClass:
-                                                "uk-pagination uk-flex-center"
-                                            },
-                                            [
-                                              _vm.getfeedbacks.paginate
-                                                .prev_page_url
-                                                ? _c(
-                                                    "li",
-                                                    {
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.showFeedback(
-                                                            _vm.getfeedbacks
-                                                              .paginate
-                                                              .prev_page_url
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [_vm._m(0, true)]
-                                                  )
-                                                : _c(
-                                                    "li",
-                                                    {
-                                                      staticClass: "uk-disabled"
-                                                    },
-                                                    [_vm._m(1, true)]
-                                                  ),
-                                              _vm._v(" "),
-                                              _vm.getfeedbacks.paginate
-                                                .next_page_url
-                                                ? _c(
-                                                    "li",
-                                                    {
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.showFeedback(
-                                                            _vm.getfeedbacks
-                                                              .paginate
-                                                              .next_page_url
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [_vm._m(2, true)]
-                                                  )
-                                                : _c(
-                                                    "li",
-                                                    {
-                                                      staticClass: "uk-disabled"
-                                                    },
-                                                    [_vm._m(3, true)]
-                                                  )
-                                            ]
                                           )
                                         ]
                                       )
                                     }),
                                     0
-                                  )
+                                  ),
+                              _vm._v(" "),
+                              _c(
+                                "ul",
+                                { staticClass: "uk-pagination uk-flex-center" },
+                                [
+                                  _vm.getfeedbacks.paginate.prev_page_url
+                                    ? _c(
+                                        "li",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.showFeedback(
+                                                _vm.getfeedbacks.paginate
+                                                  .prev_page_url
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._m(0)]
+                                      )
+                                    : _c("li", { staticClass: "uk-disabled" }, [
+                                        _vm._m(1)
+                                      ]),
+                                  _vm._v(" "),
+                                  _vm.getfeedbacks.paginate.next_page_url
+                                    ? _c(
+                                        "li",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.showFeedback(
+                                                _vm.getfeedbacks.paginate
+                                                  .next_page_url
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._m(2)]
+                                      )
+                                    : _c("li", { staticClass: "uk-disabled" }, [
+                                        _vm._m(3)
+                                      ])
+                                ]
+                              )
                             ])
                       ])
                     ])
@@ -68611,7 +68592,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("a", [
       _c("span", { attrs: { "uk-pagination-previous": "" } }),
-      _vm._v("\n                          Previous\n                        ")
+      _vm._v("\n                      Previous\n                    ")
     ])
   },
   function() {
@@ -68620,7 +68601,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("a", [
       _c("span", { attrs: { "uk-pagination-previous": "" } }),
-      _vm._v("\n                          Previous\n                        ")
+      _vm._v("\n                      Previous\n                    ")
     ])
   },
   function() {
@@ -68628,7 +68609,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("a", [
-      _vm._v("\n                          Next "),
+      _vm._v("\n                      Next "),
       _c("span", { attrs: { "uk-pagination-next": "" } })
     ])
   },
@@ -68637,7 +68618,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("a", [
-      _vm._v("\n                          Next "),
+      _vm._v("\n                      Next "),
       _c("span", { attrs: { "uk-pagination-next": "" } })
     ])
   }
