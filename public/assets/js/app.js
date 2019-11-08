@@ -5622,6 +5622,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
@@ -5658,10 +5660,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    showFeedback: function showFeedback(p, filter) {
+    showFeedback: function showFeedback(p) {
       var _this = this;
 
-      if (filter === undefined) filter = 'all';
       var param = 'feedback=' + this.filter_feedback;
       var url = this.$root.url + '/consultant/list_feedback/' + this.getconsultant.consultant_id + '?page=' + this.getfeedbacks.paginate.current_page + '&' + param;
       if (p !== undefined) url = p + '&' + param;
@@ -68147,7 +68148,178 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(0)
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-card uk-card-body uk-card-default uk-margin-top card-panel"
+                  },
+                  [
+                    _c("div", { staticClass: "card-panel-feedbacks" }, [
+                      _c(
+                        "div",
+                        { staticClass: "uk-card-title feedbacks-title" },
+                        [_vm._v("Feedbacks")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "uk-margin feedbacks-filter" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "uk-grid-small uk-child-width-auto",
+                            attrs: { "uk-grid": "" }
+                          },
+                          [
+                            _c("div", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "uk-button uk-button-small uk-button-default gl-button-default",
+                                  class: {
+                                    "gl-button-primary":
+                                      _vm.filter_feedback === "all"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.filter_feedback = "all"
+                                      _vm.showFeedback()
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    All\n                  "
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "uk-button uk-button-small uk-button-default gl-button-default",
+                                  class: {
+                                    "gl-button-primary":
+                                      _vm.filter_feedback === "disappointed"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.filter_feedback = "disappointed"
+                                      _vm.showFeedback()
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-angry" }),
+                                  _vm._v(" Disappointed\n                  ")
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "uk-button uk-button-small uk-button-default gl-button-default",
+                                  class: {
+                                    "gl-button-primary":
+                                      _vm.filter_feedback === "poor"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.filter_feedback = "poor"
+                                      _vm.showFeedback()
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-poor" }),
+                                  _vm._v(" Poor\n                  ")
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "uk-button uk-button-small uk-button-default gl-button-default",
+                                  class: {
+                                    "gl-button-primary":
+                                      _vm.filter_feedback === "neutral"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.filter_feedback = "neutral"
+                                      _vm.showFeedback()
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-meh" }),
+                                  _vm._v(" Neutral\n                  ")
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "uk-button uk-button-small uk-button-default gl-button-default",
+                                  class: {
+                                    "gl-button-primary":
+                                      _vm.filter_feedback === "good"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.filter_feedback = "good"
+                                      _vm.showFeedback()
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-smile" }),
+                                  _vm._v(" Good\n                  ")
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "uk-button uk-button-small uk-button-default gl-button-default",
+                                  class: {
+                                    "gl-button-primary":
+                                      _vm.filter_feedback === "excellent"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.filter_feedback = "excellent"
+                                      _vm.showFeedback()
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-smile-beam" }),
+                                  _vm._v(" Excellent\n                  ")
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
               ])
             ]
           )
@@ -68157,114 +68329,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "uk-card uk-card-body uk-card-default uk-margin-top card-panel"
-      },
-      [
-        _c("div", { staticClass: "card-panel-feedbacks" }, [
-          _c("div", { staticClass: "uk-card-title feedbacks-title" }, [
-            _vm._v("Feedbacks")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-margin feedbacks-filter" }, [
-            _c(
-              "div",
-              {
-                staticClass: "uk-grid-small uk-child-width-auto",
-                attrs: { "uk-grid": "" }
-              },
-              [
-                _c("div", [
-                  _c("label", { staticClass: "feedback-label-filter" }, [
-                    _vm._v("Filter")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "uk-button uk-button-default gl-button-default"
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-angry" }),
-                      _vm._v(" Disappointed\n                  ")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "uk-button uk-button-default gl-button-default"
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-poor" }),
-                      _vm._v(" Poor\n                  ")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "uk-button uk-button-default gl-button-default"
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-meh" }),
-                      _vm._v(" Neutral\n                  ")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "uk-button uk-button-default gl-button-default"
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-smile" }),
-                      _vm._v(" Good\n                  ")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "uk-button uk-button-default gl-button-default"
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-smile-beam" }),
-                      _vm._v(" Excellent\n                  ")
-                    ]
-                  )
-                ])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

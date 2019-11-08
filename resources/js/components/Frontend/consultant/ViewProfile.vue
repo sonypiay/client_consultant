@@ -103,30 +103,32 @@
               <div class="uk-margin feedbacks-filter">
                 <div class="uk-grid-small uk-child-width-auto" uk-grid>
                   <div>
-                    <label class="feedback-label-filter">Filter</label>
+                    <a @click="filter_feedback = 'all'; showFeedback()" :class="{'gl-button-primary': filter_feedback === 'all'}" class="uk-button uk-button-small uk-button-default gl-button-default">
+                      All
+                    </a>
                   </div>
                   <div>
-                    <a class="uk-button uk-button-default gl-button-default">
+                    <a @click="filter_feedback = 'disappointed'; showFeedback()" :class="{'gl-button-primary': filter_feedback === 'disappointed'}" class="uk-button uk-button-small uk-button-default gl-button-default">
                       <i class="fas fa-angry"></i> Disappointed
                     </a>
                   </div>
                   <div>
-                    <a class="uk-button uk-button-default gl-button-default">
+                    <a @click="filter_feedback = 'poor'; showFeedback()" :class="{'gl-button-primary': filter_feedback === 'poor'}" class="uk-button uk-button-small uk-button-default gl-button-default">
                       <i class="fas fa-poor"></i> Poor
                     </a>
                   </div>
                   <div>
-                    <a class="uk-button uk-button-default gl-button-default">
+                    <a @click="filter_feedback = 'neutral'; showFeedback()" :class="{'gl-button-primary': filter_feedback === 'neutral'}" class="uk-button uk-button-small uk-button-default gl-button-default">
                       <i class="fas fa-meh"></i> Neutral
                     </a>
                   </div>
                   <div>
-                    <a class="uk-button uk-button-default gl-button-default">
+                    <a @click="filter_feedback = 'good'; showFeedback()" :class="{'gl-button-primary': filter_feedback === 'good'}" class="uk-button uk-button-small uk-button-default gl-button-default">
                       <i class="fas fa-smile"></i> Good
                     </a>
                   </div>
                   <div>
-                    <a class="uk-button uk-button-default gl-button-default">
+                    <a @click="filter_feedback = 'excellent'; showFeedback()" :class="{'gl-button-primary': filter_feedback === 'excellent'}" class="uk-button uk-button-small uk-button-default gl-button-default">
                       <i class="fas fa-smile-beam"></i> Excellent
                     </a>
                   </div>
@@ -184,9 +186,8 @@ export default {
         });
       }
     },
-    showFeedback( p, filter )
+    showFeedback( p )
     {
-      if( filter === undefined ) filter = 'all';
       let param = 'feedback=' + this.filter_feedback;
       let url = this.$root.url + '/consultant/list_feedback/' + this.getconsultant.consultant_id + '?page=' + this.getfeedbacks.paginate.current_page + '&' + param;
       if( p !== undefined ) url = p + '&' + param;
