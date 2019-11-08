@@ -244,7 +244,6 @@ class ConsultantUser extends Model
       'consultant_user.consultant_address',
       'consultant_user.created_at',
       'consultant_user.updated_at',
-      'consultant_user.rating',
       'city.city_id',
       'city.city_name',
       'province.province_id',
