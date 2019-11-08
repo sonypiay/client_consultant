@@ -1857,7 +1857,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'userid'],
+  props: ['haslogin', 'getuser'],
   data: function data() {
     return {
       forms: {
@@ -6001,7 +6001,223 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['haslogin', 'getuser'],
+  data: function data() {
+    return {
+      getnotification: {
+        isLoading: false,
+        total: 0,
+        results: []
+      }
+    };
+  },
+  methods: {
+    showNotification: function showNotification() {
+      var _this = this;
+
+      this.getnotification.isLoading = true;
+      var url = this.$root.url + '/' + this.haslogin.user + '/notification';
+      axios({
+        method: 'get',
+        url: url
+      }).then(function (res) {
+        var result = res.data;
+        _this.getnotification.total = result.total;
+        _this.getnotification.results = result.data;
+        _this.getnotification.isLoading = false;
+      })["catch"](function (err) {
+        _this.getnotification.isLoading = false;
+        console.log(err.response.statusText);
+      });
+    },
+    markAsRead: function markAsRead(type) {
+      var _this2 = this;
+
+      var usertype = this.haslogin.user;
+      axios({
+        method: 'put',
+        url: this.$root.url + '/' + usertype + '/notification/' + type + '/mark_as_read'
+      }).then(function (res) {
+        _this2.showNotification();
+      })["catch"](function (err) {
+        swal({
+          title: 'Whoops',
+          text: err.response.statusText,
+          icon: 'error',
+          dangerMode: true
+        });
+      });
+    }
+  },
+  mounted: function mounted() {
+    if (this.haslogin.isLogin) this.showNotification();
+  }
+});
 
 /***/ }),
 
@@ -59776,7 +59992,7 @@ var render = function() {
           },
           [
             _c("navbar-homepage", {
-              attrs: { haslogin: _vm.haslogin, userid: _vm.userid }
+              attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
             }),
             _vm._v(" "),
             _c(
@@ -68114,7 +68330,16 @@ var render = function() {
             attrs: { "uk-navbar": "" }
           },
           [
-            _vm._m(0),
+            _c("div", { staticClass: "uk-navbar-left" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "uk-navbar-item uk-logo",
+                  attrs: { href: _vm.$root.url }
+                },
+                [_vm._v("Logo")]
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "uk-navbar-right" }, [
               _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
@@ -68322,6 +68547,642 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url + "/client/edit_profile"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: cog; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Edit Profile & Settings\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: _vm.$root.url + "/client/logout"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: sign-out; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Logout\n                    "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm.haslogin.isLogin === true &&
+                  _vm.haslogin.user === "consultant"
+                ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("span", { attrs: { "uk-icon": "bell" } }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.getnotification.total !== 0,
+                                expression: "getnotification.total !== 0"
+                              }
+                            ],
+                            staticClass: "count-notification"
+                          },
+                          [_vm._v(_vm._s(_vm.getnotification.total))]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default",
+                          attrs: {
+                            "uk-dropdown": "mode: click; pos: bottom-center"
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "uk-clearfix" }, [
+                            _c("div", { staticClass: "uk-float-right" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.markAsRead("request")
+                                    }
+                                  }
+                                },
+                                [_vm._v("Mark as read")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showNotification()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Refresh")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.getnotification.isLoading
+                            ? _c("div", { staticClass: "uk-text-center" }, [
+                                _c("span", { attrs: { "uk-spinner": "" } })
+                              ])
+                            : _c("div", [
+                                _vm.getnotification.total === 0
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "uk-text-center" },
+                                      [
+                                        _c("span", {
+                                          attrs: { "uk-icon": "info" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                    You have no notification.\n                  "
+                                        )
+                                      ]
+                                    )
+                                  : _c("div", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "dropdown-notification"
+                                        },
+                                        [
+                                          _c(
+                                            "ul",
+                                            {
+                                              staticClass:
+                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                            },
+                                            _vm._l(
+                                              _vm.getnotification.results,
+                                              function(notif) {
+                                                return _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    { attrs: { href: "#" } },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                            " +
+                                                          _vm._s(
+                                                            notif.notif_message
+                                                          ) +
+                                                          "\n                          "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        ]
+                                      )
+                                    ])
+                              ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c("a", [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.getuser.consultant_fullname) +
+                            "\n                "
+                        ),
+                        _c("span", {
+                          staticClass: "uk-margin-small-left",
+                          attrs: { "uk-icon": "icon: chevron-down; ratio: 0.7" }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
+                          attrs: {
+                            "uk-dropdown": "mode: click; pos: bottom-center"
+                          }
+                        },
+                        [
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
+                            },
+                            [
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url + "/consultant/dashboard"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: home; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Dashboard\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url +
+                                        "/consultant/myappointment"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: file-edit; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      My Appointment\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(2),
+                              _vm._v(" "),
+                              _vm._m(3),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url +
+                                        "/consultant/edit_profile"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: cog; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Edit Profile & Settings\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: _vm.$root.url + "/consultant/logout"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: sign-out; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Logout\n                    "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                : _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                    _c("li", [
+                      _c(
+                        "a",
+                        { attrs: { href: _vm.$root.url + "/client/signin" } },
+                        [_vm._v("Log in Client")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: _vm.$root.url + "/consultant/signin" }
+                        },
+                        [_vm._v("Log in Consultant")]
+                      )
+                    ])
+                  ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: bell; ratio: 0.8" }
+        }),
+        _vm._v("\n                      Notification\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
+        }),
+        _vm._v("\n                      Messages\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: bell; ratio: 0.8" }
+        }),
+        _vm._v("\n                      Notification\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", {
+          staticClass: "uk-margin-small-right",
+          attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
+        }),
+        _vm._v("\n                      Messages\n                    ")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/NavbarHomepage.vue?vue&type=template&id=1940b2f2&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/include/NavbarHomepage.vue?vue&type=template&id=1940b2f2& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("header", { staticClass: "headerhomepage" }, [
+      _c("div", { staticClass: "uk-container" }, [
+        _c(
+          "nav",
+          {
+            staticClass: "uk-navbar navbarhomepage",
+            attrs: { "uk-navbar": "" }
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-navbar-right" }, [
+              _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
+                ? _c("ul", { staticClass: "uk-navbar-nav navhomepage" }, [
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("span", { attrs: { "uk-icon": "bell" } }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.getnotification.total !== 0,
+                                expression: "getnotification.total !== 0"
+                              }
+                            ],
+                            staticClass: "count-notification"
+                          },
+                          [_vm._v(_vm._s(_vm.getnotification.total))]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-homepage",
+                          attrs: {
+                            "uk-dropdown": "mode: click; pos: bottom-center"
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "uk-clearfix" }, [
+                            _c("div", { staticClass: "uk-float-right" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.markAsRead("request")
+                                    }
+                                  }
+                                },
+                                [_vm._v("Mark as read")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "markas-read",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showNotification()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Refresh")]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.getnotification.isLoading
+                            ? _c("div", { staticClass: "uk-text-center" }, [
+                                _c("span", { attrs: { "uk-spinner": "" } })
+                              ])
+                            : _c("div", [
+                                _vm.getnotification.total === 0
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "uk-text-center" },
+                                      [
+                                        _c("span", {
+                                          attrs: { "uk-icon": "info" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                    You have no notification.\n                  "
+                                        )
+                                      ]
+                                    )
+                                  : _c("div", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "dropdown-notification"
+                                        },
+                                        [
+                                          _c(
+                                            "ul",
+                                            {
+                                              staticClass:
+                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                            },
+                                            _vm._l(
+                                              _vm.getnotification.results,
+                                              function(notif) {
+                                                return _c("li", [
+                                                  _c(
+                                                    "a",
+                                                    { attrs: { href: "#" } },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                            " +
+                                                          _vm._s(
+                                                            notif.notif_message
+                                                          ) +
+                                                          "\n                          "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              }
+                                            ),
+                                            0
+                                          )
+                                        ]
+                                      )
+                                    ])
+                              ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        { attrs: { href: _vm.$root.url + "/client/signin" } },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.getuser.client_fullname) +
+                              "\n                "
+                          ),
+                          _c("span", {
+                            staticClass: "uk-margin-small-left",
+                            attrs: {
+                              "uk-icon": "icon: chevron-down; ratio: 0.7"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-homepage",
+                          attrs: { "uk-dropdown": "mode: click;" }
+                        },
+                        [
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-homepage"
+                            },
+                            [
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: _vm.$root.url + "/client/dashboard"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: home; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Dashboard\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url + "/client/myappointment"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: file-edit; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      My Appointment\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
                               _vm._m(1),
                               _vm._v(" "),
                               _vm._m(2),
@@ -68378,7 +69239,7 @@ var render = function() {
                   ])
                 : _vm.haslogin.isLogin === true &&
                   _vm.haslogin.user === "consultant"
-                ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                ? _c("ul", { staticClass: "uk-navbar-nav navhomepage" }, [
                     _c("li", [
                       _c("a", { attrs: { href: "#" } }, [
                         _c("span", { attrs: { "uk-icon": "bell" } }),
@@ -68635,7 +69496,7 @@ var render = function() {
                       )
                     ])
                   ])
-                : _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                : _c("ul", { staticClass: "uk-navbar-nav navhomepage" }, [
                     _c("li", [
                       _c(
                         "a",
@@ -68724,74 +69585,6 @@ var staticRenderFns = [
         }),
         _vm._v("\n                      Messages\n                    ")
       ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/NavbarHomepage.vue?vue&type=template&id=1940b2f2&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/include/NavbarHomepage.vue?vue&type=template&id=1940b2f2& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("header", { staticClass: "headerhomepage" }, [
-      _c("div", { staticClass: "uk-container" }, [
-        _c(
-          "nav",
-          {
-            staticClass: "uk-navbar navbarhomepage",
-            attrs: { "uk-navbar": "" }
-          },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-navbar-right" }, [
-              _c("ul", { staticClass: "uk-navbar-nav navhomepage" }, [
-                _c("li", [
-                  _c(
-                    "a",
-                    { attrs: { href: _vm.$root.url + "/client/signin" } },
-                    [_vm._v("Log in Client")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    { attrs: { href: _vm.$root.url + "/consultant/signin" } },
-                    [_vm._v("Log in Consultant")]
-                  )
-                ])
-              ])
-            ])
-          ]
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-navbar-left" }, [
-      _c("a", { staticClass: "uk-navbar-item uk-logo" }, [_vm._v("Logo")])
     ])
   }
 ]

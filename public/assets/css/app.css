@@ -27,6 +27,68 @@ body {
   text-transform: capitalize;
 }
 
+.headerhomepage .navbarhomepage .navhomepage li a .count-notification {
+  margin-top: -1rem;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  padding: 3px 8px;
+  background: #25C4F2;
+  border-radius: 2rem;
+}
+
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage {
+  border-radius: 6px;
+}
+
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage .no-notification {
+  margin-top: 3.8rem;
+  font-weight: 400;
+  font-size: 13px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  color: #888888;
+}
+
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage .markas-read {
+  color: #888888;
+  font-weight: 700;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-decoration: none;
+}
+
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage .markas-read:hover,
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage .markas-read:active {
+  color: #25C4F2;
+}
+
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage .nav-dropdown-homepage li a {
+  color: #333333;
+  font-weight: 600;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
+}
+
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage .nav-dropdown-notification li a {
+  color: #333333;
+  font-weight: 600;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: none !important;
+}
+
 .headerdefault {
   background: #ffffff;
 }
@@ -66,11 +128,6 @@ body {
 
 .headerdefault .navbardefault .navdefault li .navbar-dropdown-default {
   border-radius: 6px;
-}
-
-.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .dropdown-notification {
-  height: 200px;
-  overflow-y: scroll;
 }
 
 .headerdefault .navbardefault .navdefault li .navbar-dropdown-default .no-notification {

@@ -4,7 +4,7 @@
       <div class="uk-overlay uk-position-cover uk-padding-remove banner-homepage-overlay">
         <navbar-homepage
         :haslogin="haslogin"
-        :userid="userid" />
+        :getuser="getuser" />
         <div class="uk-width-2-3 uk-align-center uk-text-center banner-find-consultant">
           <div class="banner-text">
             Find a professional consultant you needs. <br>Make your appointment today.
@@ -20,7 +20,7 @@
 export default {
   props: [
     'haslogin',
-    'userid'
+    'getuser'
   ],
   data() {
     return {
