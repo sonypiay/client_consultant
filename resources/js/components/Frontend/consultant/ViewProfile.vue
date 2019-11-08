@@ -142,6 +142,33 @@
                   <div v-if="getfeedbacks.total === 0" class="uk-alert-warning" uk-alert>
                     No review
                   </div>
+                  <div v-else class="uk-grid-divider uk-grid-small" uk-grid>
+                    <div v-for="fd in getfeedbacks.results" class="uk-width-1-1">
+                      <a class="uk-button uk-button-default uk-button-small gl-button-default">
+                        <label v-if="fd.feedback === 'disappointed'">
+                          <i class="fas fa-angry"></i> Disappointed
+                        </label>
+                        <label v-else-if="fd.feedback === 'poor'">
+                          <i class="fas fa-frown"></i> Poor
+                        </label>
+                        <label v-else-if="fd.feedback === 'neutral'">
+                          <i class="fas fa-meh"></i> Neutral
+                        </label>
+                        <label v-else-if="fd.feedback === 'Good'">
+                          <i class="fas fa-smile"></i> Good
+                        </label>
+                        <label v-else>
+                          <i class="fas fa-smile-beam"></i> Excellent
+                        </label>
+                      </a>
+                      <article class="uk-margin-small-top uk-article">
+                        <p class="uk-article-meta uk-margin-remove-bottom">Written by {{ fd.client_fullname }} on {{ $root.formatDate( fd.created_at, 'DD MMMM YYYY' ) }}.</p>
+                        <p class="uk-margin-remove-top">
+                          {{ fd.review_description }}
+                        </p>
+                      </article>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -5634,6 +5634,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
@@ -68347,7 +68374,132 @@ var render = function() {
                                       )
                                     ]
                                   )
-                                : _vm._e()
+                                : _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "uk-grid-divider uk-grid-small",
+                                      attrs: { "uk-grid": "" }
+                                    },
+                                    _vm._l(_vm.getfeedbacks.results, function(
+                                      fd
+                                    ) {
+                                      return _c(
+                                        "div",
+                                        { staticClass: "uk-width-1-1" },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "uk-button uk-button-default uk-button-small gl-button-default"
+                                            },
+                                            [
+                                              fd.feedback === "disappointed"
+                                                ? _c("label", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-angry"
+                                                    }),
+                                                    _vm._v(
+                                                      " Disappointed\n                      "
+                                                    )
+                                                  ])
+                                                : fd.feedback === "poor"
+                                                ? _c("label", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-frown"
+                                                    }),
+                                                    _vm._v(
+                                                      " Poor\n                      "
+                                                    )
+                                                  ])
+                                                : fd.feedback === "neutral"
+                                                ? _c("label", [
+                                                    _c("i", {
+                                                      staticClass: "fas fa-meh"
+                                                    }),
+                                                    _vm._v(
+                                                      " Neutral\n                      "
+                                                    )
+                                                  ])
+                                                : fd.feedback === "Good"
+                                                ? _c("label", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-smile"
+                                                    }),
+                                                    _vm._v(
+                                                      " Good\n                      "
+                                                    )
+                                                  ])
+                                                : _c("label", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-smile-beam"
+                                                    }),
+                                                    _vm._v(
+                                                      " Excellent\n                      "
+                                                    )
+                                                  ])
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "article",
+                                            {
+                                              staticClass:
+                                                "uk-margin-small-top uk-article"
+                                            },
+                                            [
+                                              _c(
+                                                "p",
+                                                {
+                                                  staticClass:
+                                                    "uk-article-meta uk-margin-remove-bottom"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "Written by " +
+                                                      _vm._s(
+                                                        fd.client_fullname
+                                                      ) +
+                                                      " on " +
+                                                      _vm._s(
+                                                        _vm.$root.formatDate(
+                                                          fd.created_at,
+                                                          "DD MMMM YYYY"
+                                                        )
+                                                      ) +
+                                                      "."
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "p",
+                                                {
+                                                  staticClass:
+                                                    "uk-margin-remove-top"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                        " +
+                                                      _vm._s(
+                                                        fd.review_description
+                                                      ) +
+                                                      "\n                      "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  )
                             ])
                       ])
                     ])
