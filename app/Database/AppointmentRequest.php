@@ -44,6 +44,7 @@ class AppointmentRequest extends Model
       'appointment_request.client_id',
       'appointment_request.consultant_id',
       'appointment_request.created_by',
+      'appointment_request.request_to',
       'appointment_request.schedule_date',
       'appointment_request.location',
       'appointment_request.service_topic',
