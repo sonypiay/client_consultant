@@ -270,7 +270,7 @@
                       <li>
                         <a @click="onViewDetail( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
-                          View
+                          Lihat
                         </a>
                       </li>
                       <li v-show="req.status_request !== 'done' || req.is_solved === 'N'">
@@ -282,25 +282,25 @@
                       <li v-show="req.status_request !== 'done'">
                         <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
-                          Delete
+                          Hapus
                         </a>
                       </li>
                       <li v-show="req.status_request !== 'done' && req.status_request !== 'cancel'">
                         <a @click="onUpdateStatus( req.apt_id, 'cancel' )">
                           <span class="uk-margin-small-right" uk-icon="icon: ban; ratio: 0.8"></span>
-                          Cancel
+                          Batalkan
                         </a>
                       </li>
                       <li v-show="req.status_request === 'done' && req.is_solved !== 'Y'">
                         <a @click="onUpdateStatus( req.apt_id, 'solved' )">
                           <span class="uk-margin-small-right" uk-icon="icon: check; ratio: 0.8"></span>
-                          Mark as Solved
+                          Tandai sudah selesai
                         </a>
                       </li>
                       <li v-show="req.status_request === 'done' && req.is_solved === 'P'">
                         <a @click="onUpdateStatus( req.apt_id, 'unfinished' )">
                           <span class="uk-margin-small-right" uk-icon="icon: close; ratio: 0.8"></span>
-                          Mark as Unfinished
+                          Tandai belum selesai
                         </a>
                       </li>
                     </ul>
@@ -316,13 +316,13 @@
                   {{ req.consultant_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'consultant' && req.status_request === 'waiting'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+              <div v-show="req.status_request === 'waiting'" class="uk-margin-small">
+                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Terima</a>
+                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
               </div>
               <div v-show="req.status_request === 'done' && req.feedback === null && req.is_solved === 'Y'" class="uk-margin-small">
                 <a @click="modalReview( req )" class="uk-button uk-button-default uk-button-small gl-button-default">
-                  Review this Consultant
+                  Beri Ulasan
                 </a>
               </div>
             </div>
@@ -334,24 +334,22 @@
           <li v-if="getrequest.paginate.prev_page_url" @click="showRequest( getrequest.paginate.prev_page_url )">
             <a>
               <span uk-pagination-previous></span>
-              Previous
             </a>
           </li>
           <li v-else class="uk-disabled">
             <a>
               <span uk-pagination-previous></span>
-              Previous
             </a>
           </li>
           <li class="uk-disabled"><span>Page {{ getrequest.paginate.current_page }} of {{ getrequest.paginate.last_page }}</span></li>
           <li v-if="getrequest.paginate.next_page_url" @click="showRequest( getrequest.paginate.next_page_url )">
             <a>
-              Next <span uk-pagination-next></span>
+              <span uk-pagination-next></span>
             </a>
           </li>
           <li v-else class="uk-disabled">
             <a>
-              Next <span uk-pagination-next></span>
+              <span uk-pagination-next></span>
             </a>
           </li>
         </ul>
@@ -429,7 +427,7 @@ export default {
           location: '',
           service_topic: '',
           isedit: false,
-          submit: 'Buat Permintaan'
+          submit: 'Buat Jadwal'
         }
       },
       messages: {
@@ -474,37 +472,37 @@ export default {
 
       switch (status) {
         case 'accept':
-          confirmation = 'Are you sure want to accept this request?';
-          message = 'Request ' + id + ' has been accepted.';
+          confirmation = 'Apakah anda ingin menerima permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id +' diterima';
           break;
         case 'decline':
-          confirmation = 'Are you sure want to decline this request?';
-          message = 'Request ' + id + ' has been declined.';
+          confirmation = 'Apakah anda ingin menolak permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id +' ditolak';
           break;
         case 'cancel':
-          confirmation = 'Are you sure want to cancel this request?';
-          message = 'Request ' + id + ' has been canceled.';
+          confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id +' dibatalkan';
           break;
         case 'solved':
-          confirmation = 'Are you sure?';
-          message = 'Request ' + id + ' has been updated. Case closed';
+          confirmation = 'Apakah masalah ini sudah terpecahkan?';
+          message = 'Perihal konsultasi ' + id + ' sudah terpecahkan';
           break;
-        case 'unfinished':
-          confirmation = 'Are you sure?';
-          message = 'Request ' + id + ' has been updated. Case is unfinished yet.';
+        case 'unsolved':
+          confirmation = 'Apakah masalah ini belum menemukan solusi?';
+          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi.';
           break;
         default:
-          confirmation = 'Are you sure want to mark this as completed?';
-          message = 'Request ' + id + ' has been completed.';
+          confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
+          message = 'Permintaan jadwal konsultasi ' + id +' diterima';
       }
 
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: confirmation,
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batal'
         }
       }).then( val => {
         if( val )
@@ -708,9 +706,10 @@ export default {
     },
     modalReview( data )
     {
+      this.messages.successMessage = '';
       this.forms.rating.review_description = '';
       this.forms.rating.feedback = '';
-      this.forms.rating.submit = 'Send Review'
+      this.forms.rating.submit = 'Beri ulasan'
       this.getrequest.details = data;
       UIkit.modal('#givereview').show();
     },
@@ -725,12 +724,12 @@ export default {
 
       if( this.forms.rating.review_description === '' )
       {
-        this.messages.errors.review_description = 'Please write your review.';
+        this.messages.errors.review_description = 'Harap diisi';
         this.messages.iserror = true;
       }
       if( this.forms.rating.feedback === '' )
       {
-        this.messages.errors.feedback = 'Please choose your feedback.';
+        this.messages.errors.feedback = 'Harap diisi';
         this.messages.iserror = true;
       }
       if( this.messages.iserror === true ) return false;
@@ -744,7 +743,7 @@ export default {
           feedback: this.forms.rating.feedback
         }
       }).then( res => {
-        let msg = 'Review has been given';
+        let msg = 'Ulasan telah diberikan kepada konsultan';
         this.messages.successMessage = msg;
 
         swal({
@@ -752,6 +751,7 @@ export default {
           icon: 'success',
           timer: 2000
         });
+
         setTimeout(() => {
           this.showRequest();
           UIkit.modal('#givereview').hide();
@@ -761,12 +761,12 @@ export default {
     deleteRequest( id )
     {
       swal({
-        title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batal'
         }
       }).then( val => {
         if( val )
@@ -775,9 +775,14 @@ export default {
             method: 'delete',
             url: this.$root.url + '/client/delete_request/' + id
           }).then( res => {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(() => {
               this.showRequest();
-            }, 2000);
+            }, 1000);
           }).catch( err => {
             swal({
               text: err.response.statusText,

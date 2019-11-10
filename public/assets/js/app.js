@@ -3109,8 +3109,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -3172,7 +3170,7 @@ document.addEventListener("DOMContentLoaded", function () {
           location: '',
           service_topic: '',
           isedit: false,
-          submit: 'Buat Permintaan'
+          submit: 'Buat Jadwal'
         }
       },
       messages: {
@@ -3218,45 +3216,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
       switch (status) {
         case 'accept':
-          confirmation = 'Are you sure want to accept this request?';
-          message = 'Request ' + id + ' has been accepted.';
+          confirmation = 'Apakah anda ingin menerima permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' diterima';
           break;
 
         case 'decline':
-          confirmation = 'Are you sure want to decline this request?';
-          message = 'Request ' + id + ' has been declined.';
+          confirmation = 'Apakah anda ingin menolak permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' ditolak';
           break;
 
         case 'cancel':
-          confirmation = 'Are you sure want to cancel this request?';
-          message = 'Request ' + id + ' has been canceled.';
+          confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' dibatalkan';
           break;
 
         case 'solved':
-          confirmation = 'Are you sure?';
-          message = 'Request ' + id + ' has been updated. Case closed';
+          confirmation = 'Apakah masalah ini sudah terpecahkan?';
+          message = 'Perihal konsultasi ' + id + ' sudah terpecahkan';
           break;
 
-        case 'unfinished':
-          confirmation = 'Are you sure?';
-          message = 'Request ' + id + ' has been updated. Case is unfinished yet.';
+        case 'unsolved':
+          confirmation = 'Apakah masalah ini belum menemukan solusi?';
+          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi.';
           break;
 
         default:
-          confirmation = 'Are you sure want to mark this as completed?';
-          message = 'Request ' + id + ' has been completed.';
+          confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' diterima';
       }
 
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: confirmation,
         icon: 'warning',
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {
@@ -3452,9 +3450,10 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     },
     modalReview: function modalReview(data) {
+      this.messages.successMessage = '';
       this.forms.rating.review_description = '';
       this.forms.rating.feedback = '';
-      this.forms.rating.submit = 'Send Review';
+      this.forms.rating.submit = 'Beri ulasan';
       this.getrequest.details = data;
       UIkit.modal('#givereview').show();
     },
@@ -3469,12 +3468,12 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       if (this.forms.rating.review_description === '') {
-        this.messages.errors.review_description = 'Please write your review.';
+        this.messages.errors.review_description = 'Harap diisi';
         this.messages.iserror = true;
       }
 
       if (this.forms.rating.feedback === '') {
-        this.messages.errors.feedback = 'Please choose your feedback.';
+        this.messages.errors.feedback = 'Harap diisi';
         this.messages.iserror = true;
       }
 
@@ -3488,7 +3487,7 @@ document.addEventListener("DOMContentLoaded", function () {
           feedback: this.forms.rating.feedback
         }
       }).then(function (res) {
-        var msg = 'Review has been given';
+        var msg = 'Ulasan telah diberikan kepada konsultan';
         _this5.messages.successMessage = msg;
         swal({
           text: msg,
@@ -3506,15 +3505,15 @@ document.addEventListener("DOMContentLoaded", function () {
       var _this6 = this;
 
       swal({
-        title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {
@@ -3522,9 +3521,14 @@ document.addEventListener("DOMContentLoaded", function () {
             method: 'delete',
             url: _this6.$root.url + '/client/delete_request/' + id
           }).then(function (res) {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(function () {
               _this6.showRequest();
-            }, 2000);
+            }, 1000);
           })["catch"](function (err) {
             swal({
               text: err.response.statusText,
@@ -5421,8 +5425,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -5479,7 +5481,7 @@ document.addEventListener("DOMContentLoaded", function () {
             client_name: ''
           },
           description: '',
-          submit: 'Make Appointment'
+          submit: 'Buat Jadwal'
         }
       },
       messages: {
@@ -64088,7 +64090,7 @@ var render = function() {
                                                     }
                                                   }),
                                                   _vm._v(
-                                                    "\n                        View\n                      "
+                                                    "\n                        Lihat\n                      "
                                                   )
                                                 ]
                                               )
@@ -64176,7 +64178,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Delete\n                      "
+                                                      "\n                        Hapus\n                      "
                                                     )
                                                   ]
                                                 )
@@ -64223,7 +64225,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Cancel\n                      "
+                                                      "\n                        Batalkan\n                      "
                                                     )
                                                   ]
                                                 )
@@ -64269,7 +64271,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Mark as Solved\n                      "
+                                                      "\n                        Tandai sudah selesai\n                      "
                                                     )
                                                   ]
                                                 )
@@ -64315,7 +64317,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Mark as Unfinished\n                      "
+                                                      "\n                        Tandai belum selesai\n                      "
                                                     )
                                                   ]
                                                 )
@@ -64370,11 +64372,9 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value:
-                                        req.created_by === "consultant" &&
-                                        req.status_request === "waiting",
+                                      value: req.status_request === "waiting",
                                       expression:
-                                        "req.created_by === 'consultant' && req.status_request === 'waiting'"
+                                        "req.status_request === 'waiting'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -64394,7 +64394,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Accept")]
+                                    [_vm._v("Terima")]
                                   ),
                                   _vm._v(" "),
                                   _c(
@@ -64411,7 +64411,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Decline")]
+                                    [_vm._v("Tolak")]
                                   )
                                 ]
                               ),
@@ -64447,7 +64447,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                Review this Consultant\n              "
+                                        "\n                Beri Ulasan\n              "
                                       )
                                     ]
                                   )
@@ -64535,37 +64535,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("span", { attrs: { "uk-pagination-previous": "" } }),
-      _vm._v("\n            Previous\n          ")
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("span", { attrs: { "uk-pagination-previous": "" } }),
-      _vm._v("\n            Previous\n          ")
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _vm._v("\n            Next "),
-      _c("span", { attrs: { "uk-pagination-next": "" } })
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _vm._v("\n            Next "),
-      _c("span", { attrs: { "uk-pagination-next": "" } })
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
   }
 ]
 render._withStripped = true
@@ -68897,37 +68885,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("span", { attrs: { "uk-pagination-previous": "" } }),
-      _vm._v("\n            Previous\n          ")
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("span", { attrs: { "uk-pagination-previous": "" } }),
-      _vm._v("\n            Previous\n          ")
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _vm._v("\n            Next "),
-      _c("span", { attrs: { "uk-pagination-next": "" } })
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", [
-      _vm._v("\n            Next "),
-      _c("span", { attrs: { "uk-pagination-next": "" } })
-    ])
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
   }
 ]
 render._withStripped = true

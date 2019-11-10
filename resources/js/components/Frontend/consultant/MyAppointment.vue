@@ -261,24 +261,22 @@
           <li v-if="getrequest.paginate.prev_page_url" @click="showRequest( getrequest.paginate.prev_page_url )">
             <a>
               <span uk-pagination-previous></span>
-              Previous
             </a>
           </li>
           <li v-else class="uk-disabled">
             <a>
               <span uk-pagination-previous></span>
-              Previous
             </a>
           </li>
           <li class="uk-disabled"><span>Page {{ getrequest.paginate.current_page }} of {{ getrequest.paginate.last_page }}</span></li>
           <li v-if="getrequest.paginate.next_page_url" @click="showRequest( getrequest.paginate.next_page_url )">
             <a>
-              Next <span uk-pagination-next></span>
+              <span uk-pagination-next></span>
             </a>
           </li>
           <li v-else class="uk-disabled">
             <a>
-              Next <span uk-pagination-next></span>
+              <span uk-pagination-next></span>
             </a>
           </li>
         </ul>
@@ -352,7 +350,7 @@ export default {
             client_name: ''
           },
           description: '',
-          submit: 'Make Appointment'
+          submit: 'Buat Jadwal'
         }
       },
       messages: {
@@ -401,16 +399,16 @@ export default {
           message = 'Permintaan jadwal konsultasi ' + id +' diterima';
           break;
         case 'decline':
-        confirmation = 'Apakah anda ingin menolak permintaan ini?';
-        message = 'Permintaan jadwal konsultasi ' + id +' ditolak';
+          confirmation = 'Apakah anda ingin menolak permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id +' ditolak';
           break;
         case 'cancel':
-        confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
-        message = 'Permintaan jadwal konsultasi ' + id +' dibatalkan';
+          confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id +' dibatalkan';
           break;
         default:
-        confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
-        message = 'Permintaan jadwal konsultasi ' + id +' diterima';
+          confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
+          message = 'Permintaan jadwal konsultasi ' + id +' diterima';
       }
 
       swal({
