@@ -5612,29 +5612,33 @@ document.addEventListener("DOMContentLoaded", function () {
         successMessage: '',
         iserror: false
       };
+      var request = this.forms.request;
 
       if (data === undefined) {
-        this.forms.request.selectedDate = new Date();
-        this.forms.request.timepicker.hours = '';
-        this.forms.request.timepicker.minute = '';
-        this.forms.request.description = '';
-        this.forms.request.id = '';
-        this.forms.request.client.client_id = '';
-        this.forms.request.client.client_name = '';
-        this.forms.request.submit = 'Create Appointment';
-        this.forms.request.isedit = false;
+        request.selectedDate = new Date();
+        request.timepicker.hours = '';
+        request.timepicker.minute = '';
+        request.location = '';
+        request.service_topic = '';
+        request.client_id = '';
+        request.client_name = '';
+        request.id = '';
+        request.submit = 'Buat Jadwal';
+        request.isedit = false;
       } else {
-        this.forms.request.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'ddd, DD MMMM YYYY'));
-        this.forms.request.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
-        this.forms.request.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
-        this.forms.request.description = data.description;
-        this.forms.request.id = data.apt_id;
-        this.forms.request.client.client_id = data.client_id;
-        this.forms.request.client.client_name = data.client_fullname;
-        this.forms.request.submit = 'Save Changes';
-        this.forms.request.isedit = true;
+        request.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'ddd, DD MMMM YYYY'));
+        request.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
+        request.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
+        request.location = data.location;
+        request.service_topic = data.service_topic;
+        request.client.client_id = data.client_id;
+        request.client.client_name = data.client_fullname;
+        request.id = data.apt_id;
+        request.submit = 'Simpan Perubahan';
+        request.isedit = true;
       }
 
+      console.log(request);
       UIkit.modal('#modal-request').show();
     },
     onCreateRequest: function onCreateRequest() {
@@ -68760,7 +68764,7 @@ var render = function() {
                                                     }
                                                   }),
                                                   _vm._v(
-                                                    "\n                        View\n                      "
+                                                    "\n                        Lihat\n                      "
                                                   )
                                                 ]
                                               )
@@ -68774,15 +68778,11 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      (req.created_by ===
-                                                        "consultant" &&
-                                                        req.status_request !==
-                                                          "done") ||
-                                                      (req.created_by ===
-                                                        "consultant" &&
-                                                        req.is_solved === "N"),
+                                                      req.status_request !==
+                                                        "done" ||
+                                                      req.is_solved === "N",
                                                     expression:
-                                                      "(req.created_by === 'consultant' && req.status_request !== 'done') || (req.created_by === 'consultant' && req.is_solved === 'N')"
+                                                      "(req.status_request !== 'done') || (req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },
@@ -68808,56 +68808,40 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Edit\n                      "
+                                                      "\n                        Ubah\n                      "
                                                     )
                                                   ]
                                                 )
                                               ]
                                             ),
                                             _vm._v(" "),
-                                            _c(
-                                              "li",
-                                              {
-                                                directives: [
-                                                  {
-                                                    name: "show",
-                                                    rawName: "v-show",
-                                                    value:
-                                                      req.created_by ===
-                                                      "consultant",
-                                                    expression:
-                                                      "req.created_by === 'consultant'"
-                                                  }
-                                                ]
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    on: {
-                                                      click: function($event) {
-                                                        return _vm.deleteRequest(
-                                                          req.apt_id
-                                                        )
-                                                      }
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deleteRequest(
+                                                        req.apt_id
+                                                      )
                                                     }
-                                                  },
-                                                  [
-                                                    _c("span", {
-                                                      staticClass:
-                                                        "uk-margin-small-right",
-                                                      attrs: {
-                                                        "uk-icon":
-                                                          "icon: trash; ratio: 0.8"
-                                                      }
-                                                    }),
-                                                    _vm._v(
-                                                      "\n                        Delete\n                      "
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
+                                                  }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "uk-margin-small-right",
+                                                    attrs: {
+                                                      "uk-icon":
+                                                        "icon: trash; ratio: 0.8"
+                                                    }
+                                                  }),
+                                                  _vm._v(
+                                                    "\n                        Hapus\n                      "
+                                                  )
+                                                ]
+                                              )
+                                            ])
                                           ]
                                         )
                                       ]
@@ -68909,10 +68893,9 @@ var render = function() {
                                       rawName: "v-show",
                                       value:
                                         req.created_by === "client" &&
-                                        req.status_request ===
-                                          "waiting_respond",
+                                        req.status_request === "waiting",
                                       expression:
-                                        "req.created_by === 'client' && req.status_request === 'waiting_respond'"
+                                        "req.created_by === 'client' && req.status_request === 'waiting'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -68932,7 +68915,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Accept")]
+                                    [_vm._v("Terima")]
                                   ),
                                   _vm._v(" "),
                                   _c(
@@ -68949,7 +68932,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Decline")]
+                                    [_vm._v("Tolak")]
                                   )
                                 ]
                               ),
@@ -68983,7 +68966,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Mark as Completed")]
+                                    [_vm._v("Tandai sudah selesai")]
                                   )
                                 ]
                               )

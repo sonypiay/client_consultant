@@ -81,7 +81,6 @@ class AppointmentRequest extends Model
         $q->where('appointment_request.consultant_id', $consultant)
         ->orWhereNull('appointment_request.consultant_id');
       });
-      //array_push( $whereClauses, ['consultant_user.consultant_id', session()->get('consultantId')]);
     }
 
     $query = $query->where($whereClauses);

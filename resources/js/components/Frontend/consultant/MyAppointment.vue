@@ -217,19 +217,19 @@
                       <li>
                         <a @click="onViewDetail( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
-                          View
+                          Lihat
                         </a>
                       </li>
-                      <li v-show="(req.created_by === 'consultant' && req.status_request !== 'done') || (req.created_by === 'consultant' && req.is_solved === 'N')">
+                      <li v-show="(req.status_request !== 'done') || (req.is_solved === 'N')">
                         <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
-                          Edit
+                          Ubah
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'consultant'">
+                      <li>
                         <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
-                          Delete
+                          Hapus
                         </a>
                       </li>
                     </ul>
@@ -245,12 +245,12 @@
                   {{ req.client_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'client' && req.status_request === 'waiting_respond'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+              <div v-show="req.created_by === 'client' && req.status_request === 'waiting'" class="uk-margin-small">
+                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Terima</a>
+                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
               </div>
               <div v-show="req.status_request === 'accept'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-default uk-button-small gl-button-default">Mark as Completed</a>
+                <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-default uk-button-small gl-button-default">Tandai sudah selesai</a>
               </div>
             </div>
           </div>
@@ -457,31 +457,35 @@ export default {
         successMessage: '',
         iserror: false
       };
+      let request = this.forms.request;
 
       if( data === undefined )
       {
-        this.forms.request.selectedDate = new Date();
-        this.forms.request.timepicker.hours = '';
-        this.forms.request.timepicker.minute = '';
-        this.forms.request.description = '';
-        this.forms.request.id = '';
-        this.forms.request.client.client_id = '';
-        this.forms.request.client.client_name = '';
-        this.forms.request.submit = 'Create Appointment';
-        this.forms.request.isedit = false;
+        request.selectedDate = new Date();
+        request.timepicker.hours = '';
+        request.timepicker.minute = '';
+        request.location = '';
+        request.service_topic = '';
+        request.client_id = '';
+        request.client_name = '';
+        request.id = '';
+        request.submit = 'Buat Jadwal';
+        request.isedit = false;
       }
       else
       {
-        this.forms.request.selectedDate = new Date( this.$root.formatDate( data.schedule_date, 'ddd, DD MMMM YYYY' ) );
-        this.forms.request.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH');
-        this.forms.request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
-        this.forms.request.description = data.description;
-        this.forms.request.id = data.apt_id;
-        this.forms.request.client.client_id = data.client_id;
-        this.forms.request.client.client_name = data.client_fullname;
-        this.forms.request.submit = 'Save Changes';
-        this.forms.request.isedit = true;
+        request.selectedDate = new Date( this.$root.formatDate( data.schedule_date, 'ddd, DD MMMM YYYY' ) );
+        request.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH');
+        request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
+        request.location = data.location;
+        request.service_topic = data.service_topic;
+        request.client.client_id = data.client_id;
+        request.client.client_name = data.client_fullname;
+        request.id = data.apt_id;
+        request.submit = 'Simpan Perubahan';
+        request.isedit = true;
       }
+      console.log( request );
       UIkit.modal('#modal-request').show();
     },
     onCreateRequest()
