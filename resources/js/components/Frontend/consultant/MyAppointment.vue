@@ -7,7 +7,7 @@
     <view-request-detail :detailrequest="getrequest.details" />
 
     <div class="uk-padding banner-index_header">
-      <div class="uk-container">My Appointment</div>
+      <div class="uk-container">Jadwal Pertemuan</div>
     </div>
 
     <!-- add / update appointment -->
@@ -15,8 +15,8 @@
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">
-          <span v-if="forms.request.isedit">Edit Request Appointment</span>
-          <span v-else>Add Request Appointment</span>
+          <span v-if="forms.request.isedit">Edit Jadwal Pertemuan</span>
+          <span v-else>Buat Jadwal Pertemuan</span>
         </div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
@@ -26,9 +26,9 @@
         </div>
         <form class="uk-form-stacked uk-margin-top" @submit.prevent="forms.request.isedit === true ? onSaveRequest() : onCreateRequest()">
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Client</label>
+            <label class="uk-form-label gl-label">Klien</label>
             <div class="uk-form-controls">
-              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" :disabled="forms.request.isedit" />
+              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Cari nama klien" @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" :disabled="forms.request.isedit" />
             </div>
             <div v-show="messages.errors.client_name" class="uk-text-small uk-text-danger">{{ messages.errors.client_name }}</div>
             <div v-if="existingClient.isLoading" class="uk-text-center uk-margin-top">
@@ -48,23 +48,35 @@
               </div>
             </div>
           </div>
+
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Select Date</label>
+            <label class="uk-form-label gl-label">Topik</label>
             <div class="uk-form-controls">
+              <select class="uk-select gl-input-default" v-model="forms.request.service_topic">
+                <option value="">-- Pilih Topik --</option>
+                <option v-for="topic in servicetopic.data" :value="topic.topic_id">{{ topic.topic_name }}</option>
+              </select>
+            </div>
+            <div v-show="messages.errors.service_topic" class="uk-text-small uk-text-danger">{{ messages.errors.service_topic }}</div>
+          </div>
+
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Pilih Tanggal</label>
+            <div class="uk-form-controls">
+              <input type="text" class="uk-input gl-input-default uk-margin-small-bottom" :value="selectedDate" disabled />
               <v-date-picker v-model="forms.request.selectedDate"
+              mode="single"
+              :is-inline="true"
               :min-date="datepicker.mindate"
-              :popover="datepicker.popover"
-              :columns="2"
+              :formats="datepicker.formats"
+              show-caps is-double-paned
               >
-              <div class="uk-width-1-1 uk-inline">
-                <span class="uk-form-icon" uk-icon="calendar"></span>
-                <input type="text" class="uk-width-1-1 uk-input gl-input-default" :value="$root.formatDate( forms.request.selectedDate, 'ddd, DD MMMM YYYY' )" readonly />
-              </div>
               </v-date-picker>
             </div>
           </div>
+
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Select Time</label>
+            <label class="uk-form-label gl-label">Pilih Waktu</label>
             <div class="uk-form-controls">
               <div class="uk-width-1-1 uk-inline">
                 <a class="uk-form-icon" uk-icon="clock"></a>
@@ -75,7 +87,7 @@
               <div class="uk-width-large dropdown-timepicker" uk-dropdown="mode: click;">
                 <div class="uk-dropdown-grid uk-child-width-1-2" uk-grid>
                   <div>
-                    <div class="dropdown-timepicker-header">Hours</div>
+                    <div class="dropdown-timepicker-header">Jam</div>
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
                         <li>
@@ -92,7 +104,7 @@
                     </div>
                   </div>
                   <div>
-                    <div class="dropdown-timepicker-header">Minute</div>
+                    <div class="dropdown-timepicker-header">Menit</div>
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
                         <li>
@@ -113,16 +125,19 @@
             </div>
             <div v-show="messages.errors.timepicker" class="uk-text-small uk-text-danger">{{ messages.errors.timepicker }}</div>
           </div>
+
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Description</label>
+            <label class="uk-form-label gl-label">Lokasi Pertemuan</label>
             <div class="uk-form-controls">
-              <textarea class="uk-textarea uk-height-small gl-input-default" v-model="forms.request.description" placeholder="Enter a description"></textarea>
+              <input type="text" v-model="forms.request.location" class="uk-input gl-input-default" />
             </div>
-            <div v-show="messages.errors.description" class="uk-text-small uk-text-danger">{{ messages.errors.description }}</div>
+            <div v-show="messages.errors.location" class="uk-text-small uk-text-danger">{{ messages.errors.location }}</div>
           </div>
+
           <div class="uk-margin">
             <button class="uk-button uk-button-default gl-button-default" v-html="forms.request.submit"></button>
           </div>
+
         </form>
       </div>
     </div>
@@ -134,10 +149,10 @@
           <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.limit" @change="showRequest()">
-                <option value="6">6 rows</option>
-                <option value="12">12 rows</option>
-                <option value="24">24 rows</option>
-                <option value="36">36 rows</option>
+                <option value="6">6 baris</option>
+                <option value="12">12 baris</option>
+                <option value="24">24 baris</option>
+                <option value="36">36 baris</option>
               </select>
             </div>
             <div>
@@ -145,18 +160,18 @@
             </div>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
-                <option value="all">All Status</option>
-                <option value="waiting_respond">Upcoming</option>
-                <option value="accept">Accepted</option>
-                <option value="decline">Declined</option>
-                <option value="cancel">Canceled</option>
-                <option value="done">Completed</option>
+                <option value="all">Semua</option>
+                <option value="waiting">Menunggu Tanggapan</option>
+                <option value="accept">Diterima</option>
+                <option value="decline">Ditolak</option>
+                <option value="cancel">Dibatalkan</option>
+                <option value="done">Selesai</option>
               </select>
             </div>
           </div>
         </div>
         <div class="uk-float-right">
-          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Add Appointment</a>
+          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Buat Jadwal Pertemuan</a>
         </div>
       </div>
 
@@ -172,29 +187,23 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no
-            <span v-if="forms.status_request === 'waiting_respond'">upcoming</span>
-            <span v-else-if="forms.status_request === 'accept'">accepted</span>
-            <span v-else-if="forms.status_request === 'decline'">declined</span>
-            <span v-else-if="forms.status_request === 'cancel'">canceled</span>
-            <span v-else-if="forms.status_request === 'done'">completed</span>
-            <span v-else>any</span> appointment.
+            Tidak ada jadwal pertemuan
           </div>
-          <a class="uk-button uk-button-primary gl-button-primary">Create Appointment</a>
+          <a @click="onClickModal()" class="uk-button uk-button-primary gl-button-primary">Buat Jadwal Pertemuan</a>
         </div>
         <div v-else class="uk-grid-medium uk-grid-match" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
               <div class="uk-clearfix uk-margin-small">
                 <div class="uk-float-left">
-                  <span v-if="req.status_request === 'waiting_respond'" class="request-status-badge upcoming">Waiting Response</span>
-                  <span v-else-if="req.status_request === 'accept'" class="request-status-badge accept">Accept</span>
-                  <span v-else-if="req.status_request === 'decline'" class="request-status-badge decline">Decline</span>
-                  <span v-else-if="req.status_request === 'cancel'" class="request-status-badge cancel">Cancel</span>
-                  <span v-else class="request-status-badge done">Done</span>
+                  <span v-if="req.status_request === 'waiting'" class="request-status-badge upcoming">Menunggu Tanggapan</span>
+                  <span v-else-if="req.status_request === 'accept'" class="request-status-badge accept">Diterima</span>
+                  <span v-else-if="req.status_request === 'decline'" class="request-status-badge decline">Ditolak</span>
+                  <span v-else-if="req.status_request === 'cancel'" class="request-status-badge cancel">Dibatalkan</span>
+                  <span v-else class="request-status-badge done">Selesai</span>
 
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Solved</span>
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Not Solved</span>
+                  <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Berhasil</span>
+                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Gagal</span>
                 </div>
               </div>
               <div class="uk-clearfix uk-margin-small">

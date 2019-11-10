@@ -46,6 +46,7 @@ class AppointmentRequest extends Model
       'appointment_request.created_by',
       'appointment_request.schedule_date',
       'appointment_request.location',
+      'appointment_request.service_topic',
       'appointment_request.status_request',
       'appointment_request.is_solved',
       'appointment_request.created_at',
@@ -61,7 +62,7 @@ class AppointmentRequest extends Model
       'feedbacks.feedback'
     )
     ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
-    ->join('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
+    ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
     ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id');
 
     if( $status !== 'all' )
@@ -114,70 +115,33 @@ class AppointmentRequest extends Model
 
   public function addRequest( $request )
   {
-    $schedule_date = $request->schedule_date;
-    $description = $request->description;
-    $consult_id = $request->consult_id;
-    $client_id = $request->client_id;
-    $created_by = $request->created_by;
-    $apt_id = $this->getId();
-    $res = ['responseCode' => 200, 'responseMessage' => ''];
-    $data_notif = [];
-    $notification = new Notification;
+    $schedule_date  = $request->schedule_date;
+    $location       = $request->location;
+    $service_topic  = $request->topic;
+    $created_by     = $request->created_by;
+    $user_id        = $request->user_id;
+    $apt_id         = $this->getId();
+    $res            = ['responseCode' => 200, 'responseMessage' => ''];
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
-      if( $created_by === 'client' )
+      $this->apt_id = $apt_id;
+      if( session()->has('isClient') )
       {
-        array_push( $data_notif, [
-          'parent_id' => $apt_id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => 'Anda mendapat permintaan pertemuan dari klien dengan ID ' . $apt_id,
-          'user_id' => $consult_id
-        ]);
-
-        array_push( $data_notif, [
-          'parent_id' => $apt_id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => 'Anda telah membuat jadwal pertemuan dengan ID ' . $apt_id,
-          'user_id' => $client_id
-        ]);
+        $this->client_id = $user_id;
       }
       else
       {
-        array_push( $data_notif, [
-          'parent_id' => $apt_id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => 'Anda telah membuat jadwal pertemuan klien dengan ID ' . $apt_id,
-          'user_id' => $consult_id
-        ]);
-
-        array_push( $data_notif, [
-          'parent_id' => $apt_id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => 'Anda mendapat permintaan pertemuan dari konsultan dengan ID ' . $apt_id,
-          'user_id' => $client_id
-        ]);
+        $this->consultant_id = $user_id;
       }
-
-      $this->apt_id = $apt_id;
-      $this->client_id = $client_id;
-      $this->consultant_id = $consult_id;
-      $this->created_by = $created_by;
-      $this->schedule_date = $schedule_date;
-      $this->description = $description;
+      $this->created_by       = $created_by;
+      $this->schedule_date    = $schedule_date;
+      $this->location         = $location;
+      $this->service_topic    = $service_topic;
 
       if( $created_by === 'client' )
       {
         $this->save();
-        $notification->addNotification( $data_notif );
       }
       else
       {
@@ -185,7 +149,6 @@ class AppointmentRequest extends Model
         if( $check_client === 1 )
         {
           $this->save();
-          $notification->addNotification( $data_notif );
         }
         else
         {
@@ -208,43 +171,24 @@ class AppointmentRequest extends Model
 
   public function saveRequest( $id, $request )
   {
-    $schedule_date = $request->schedule_date;
-    $description = $request->description;
-    $res = ['responseCode' => 200, 'responseMessage' => ''];
-    $getrequest = $this->where( 'apt_id', $id )->first();
-    $notification = new Notification;
-    $data_notif = [];
+    $schedule_date  = $request->schedule_date;
+    $location       = $request->location;
+    $service_topic  = $request->topic;
+    $res            = ['responseCode' => 200, 'responseMessage' => ''];
+    $getrequest     = $this->where('apt_id', $id)->first();
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
-      $current_schedule = new DateTime( $getrequest->schedule_date );
-      $getrequest->description = $description;
+      $current_schedule           = new DateTime( $getrequest->schedule_date );
+      $getrequest->location       = $location;
+      $getrequest->service_topic  = $service_topic;
+
       if( $current_schedule->format('Y-m-d H:i') != $schedule_date )
       {
-        array_push( $data_notif, [
-          'parent_id' => $id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => 'Request appointment with ID ' . $id . ' rescheduled',
-          'user_id' => $getrequest->consultant_id
-        ]);
-
-        array_push( $data_notif, [
-          'parent_id' => $id,
-          'notif_date' => date('Y-m-d H:i:s'),
-          'notif_read' => 'N',
-          'notif_type' => 'request',
-          'notif_message' => 'Request appointment with ID ' . $id . ' rescheduled',
-          'user_id' => $getrequest->client_id
-        ]);
-
-        $getrequest->status_request = 'waiting_respond';
+        $getrequest->status_request = 'waiting';
         $getrequest->schedule_date = $schedule_date;
         $getrequest->is_solved = 'P';
         $getrequest->save();
-
-        $notification->addNotification( $data_notif );
       }
       else
       {
@@ -255,7 +199,7 @@ class AppointmentRequest extends Model
     {
       $res = [
         'responseCode' => 401,
-        'responseMessage' => 'You have to sign in first.'
+        'responseMessage' => 'Anda harus login terlebih dahulu.'
       ];
     }
     return $res;

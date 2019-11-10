@@ -14,8 +14,8 @@
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">
-          <span v-if="forms.request.isedit">Ubah Permintaan</span>
-          <span v-else>Buat Permintaan</span>
+          <span v-if="forms.request.isedit">Ubah Jadwal</span>
+          <span v-else>Buat Jadwal</span>
         </div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
@@ -119,7 +119,7 @@
     <div id="givereview" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
-        <div class="modal-title">Review Konsultan</div>
+        <div class="modal-title">Ulasan Konsultan</div>
 
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
@@ -130,14 +130,14 @@
 
         <form class="uk-form-stacked uk-margin-top" @submit.prevent="onGiveReview">
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Write a Review</label>
+            <label class="uk-form-label gl-label">Ketik ulasan</label>
             <div class="uk-form-controls">
               <textarea v-model="forms.rating.review_description" class="uk-textarea uk-height-small gl-input-default" placeholder="Write your complete review"></textarea>
             </div>
             <div v-show="messages.errors.review_description" class="uk-text-danger uk-text-small">{{ messages.errors.review_description }}</div>
           </div>
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">How do you review it?</label>
+            <label class="uk-form-label gl-label">Berikan nilai</label>
             <div class="uk-form-controls">
               <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-5">
@@ -194,7 +194,7 @@
     </div>
 
     <div class="uk-padding banner-index_header">
-      <div class="uk-container">Permintaan Pertemuan</div>
+      <div class="uk-container">Jadwal Konsultasi</div>
     </div>
     <div class="uk-container uk-margin-top uk-margin-large-bottom container-request-list">
       <div class="uk-clearfix uk-margin-bottom">
@@ -202,10 +202,10 @@
           <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.limit" @change="showRequest()">
-                <option value="6">6 rows</option>
-                <option value="12">12 rows</option>
-                <option value="24">24 rows</option>
-                <option value="36">36 rows</option>
+                <option value="6">6 baris</option>
+                <option value="12">12 baris</option>
+                <option value="24">24 baris</option>
+                <option value="36">36 baris</option>
               </select>
             </div>
             <div>
@@ -224,7 +224,7 @@
           </div>
         </div>
         <div class="uk-float-right">
-          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Buat Permintaan Pertemuan</a>
+          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Buat Jadwal Konsultasi</a>
         </div>
       </div>
 
@@ -240,29 +240,23 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no
-            <span v-if="forms.status_request === 'waiting_respond'">upcoming</span>
-            <span v-else-if="forms.status_request === 'accept'">accepted</span>
-            <span v-else-if="forms.status_request === 'decline'">declined</span>
-            <span v-else-if="forms.status_request === 'cancel'">canceled</span>
-            <span v-else-if="forms.status_request === 'done'">completed</span>
-            <span v-else>any</span> appointment.
+            Tidak ada jadwal pertemuan
           </div>
-          <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
+          <a @click="onClickModal()" class="uk-button uk-button-primary gl-button-primary">Buat Jadwal Konsultasi</a>
         </div>
         <div v-else class="uk-grid-medium uk-grid-match" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
             <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
               <div class="uk-clearfix uk-margin-small">
                 <div class="uk-float-left">
-                  <span v-if="req.status_request === 'waiting_respond'" class="request-status-badge upcoming">Waiting Response</span>
-                  <span v-else-if="req.status_request === 'accept'" class="request-status-badge accept">Accept</span>
-                  <span v-else-if="req.status_request === 'decline'" class="request-status-badge decline">Decline</span>
-                  <span v-else-if="req.status_request === 'cancel'" class="request-status-badge cancel">Cancel</span>
-                  <span v-else class="request-status-badge done">Done</span>
+                  <span v-if="req.status_request === 'waiting'" class="request-status-badge upcoming">Menunggu Tanggapan</span>
+                  <span v-else-if="req.status_request === 'accept'" class="request-status-badge accept">Diterima</span>
+                  <span v-else-if="req.status_request === 'decline'" class="request-status-badge decline">Ditolak</span>
+                  <span v-else-if="req.status_request === 'cancel'" class="request-status-badge cancel">Dibatalkan</span>
+                  <span v-else class="request-status-badge done">Selesai</span>
 
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Solved</span>
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Unfinished</span>
+                  <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Berhasil</span>
+                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Gagal</span>
                 </div>
               </div>
               <div class="uk-clearfix uk-margin-small">
@@ -279,19 +273,19 @@
                           View
                         </a>
                       </li>
-                      <li v-show="(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved === 'N')">
-                        <a @click="modalEditRequest( req )">
+                      <li v-show="req.status_request !== 'done' || req.is_solved === 'N'">
+                        <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Edit
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client' && req.status_request !== 'done'">
+                      <li v-show="req.status_request !== 'done'">
                         <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
                           Delete
                         </a>
                       </li>
-                      <li v-show="req.status_request === 'client' && req.status_request !== 'done' && req.status_request !== 'cancel'">
+                      <li v-show="req.status_request !== 'done' && req.status_request !== 'cancel'">
                         <a @click="onUpdateStatus( req.apt_id, 'cancel' )">
                           <span class="uk-margin-small-right" uk-icon="icon: ban; ratio: 0.8"></span>
                           Cancel
@@ -322,7 +316,7 @@
                   {{ req.consultant_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'consultant' && req.status_request === 'waiting_respond'" class="uk-margin-small">
+              <div v-show="req.created_by === 'consultant' && req.status_request === 'waiting'" class="uk-margin-small">
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
@@ -558,7 +552,7 @@ export default {
         request.location = '';
         request.service_topic = '';
         request.id = '';
-        request.submit = 'Buat Permintaan';
+        request.submit = 'Buat Jadwal';
         request.isedit = false;
       }
       else
@@ -613,19 +607,21 @@ export default {
       let service_topic = request.service_topic;
       let created_by = 'client';
       let location = request.location;
+      let user_id = this.getuser.client_id;
 
-      this.forms.submit = '<span uk-spinner></span>';
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
         url: this.$root.url + '/client/add_request',
         params: {
-          start_date: start_date,
-          end_date: end_date,
+          schedule_date: schedule_date,
+          location: location,
           topic: service_topic,
-          service_time: service_time
+          created_by: created_by,
+          user_id: user_id
         }
       }).then( res => {
-        let message = 'Permintaan berhasil dibuat'
+        let message = 'Jadwal konsultasi berhasil dibuat'
         this.messages.successMessage = message;
         swal({
           text: message,
@@ -637,7 +633,7 @@ export default {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
-        this.forms.submit = 'Create Request';
+        request.submit = 'Buat Jadwal';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });
@@ -659,6 +655,16 @@ export default {
         this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
+      if( request.timepicker.hours === '' || request.timepicker.minute === '' )
+      {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+      if( request.location === '' )
+      {
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
       if( request.service_time === '' )
       {
         this.messages.errors.service_time = message_form;
@@ -666,21 +672,19 @@ export default {
       }
 
       if( this.messages.iserror === true ) return false;
-
-      let start_date = this.$root.formatDate( request.selectedDate.start, 'YYYY-MM-DD' );
-      let end_date = this.$root.formatDate( request.selectedDate.end, 'YYYY-MM-DD' );
-      let service_time = request.service_time;
+      let datepicker = this.$root.formatDate( request.selectedDate, 'YYYY-MM-DD' );
+      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       let service_topic = request.service_topic;
+      let location = request.location;
 
-      this.forms.submit = '<span uk-spinner></span>';
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_request/' + request.service_id,
+        url: this.$root.url + '/client/save_request/' + request.id,
         params: {
-          start_date: start_date,
-          end_date: end_date,
-          topic: service_topic,
-          service_time: service_time
+          schedule_date: schedule_date,
+          location: location,
+          topic: service_topic
         }
       }).then( res => {
         let message = 'Berhasil menyimpan perubahan';
@@ -695,7 +699,7 @@ export default {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
-        request.submit = 'Save Changes';
+        request.submit = 'Simpan Perubahan';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });

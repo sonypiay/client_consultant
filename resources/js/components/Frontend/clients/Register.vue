@@ -3,7 +3,7 @@
     <div class="uk-container">
       <div class="uk-width-2-5 uk-align-center uk-margin-top uk-margin-bottom">
         <div class="uk-card uk-card-body uk-card-default card-panel">
-          <div class="uk-card-title card-panel-title">Masuk Client</div>
+          <div class="uk-card-title card-panel-title">Daftar Klien</div>
           <div v-show="messages.successMessage" class="uk-alert-success" uk-alert>{{ messages.successMessage }}</div>
           <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>{{ messages.errorMessage }}</div>
           <form class="uk-form-stacked uk-margin-top" @submit.prevent="doRegister">

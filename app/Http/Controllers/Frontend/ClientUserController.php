@@ -41,7 +41,7 @@ class ClientUserController extends Controller
       $clientUser->logout();
     }
 
-    return redirect()->route('homepage');
+    return redirect()->route('client_login_page');
   }
 
   public function change_password( Request $request, ClientUser $clientUser )

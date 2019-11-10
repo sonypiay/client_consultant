@@ -3111,12 +3111,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -3308,7 +3302,7 @@ document.addEventListener("DOMContentLoaded", function () {
         request.location = '';
         request.service_topic = '';
         request.id = '';
-        request.submit = 'Buat Permintaan';
+        request.submit = 'Buat Jadwal';
         request.isedit = false;
       } else {
         request.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'ddd, DD MMMM YYYY'));
@@ -3361,18 +3355,20 @@ document.addEventListener("DOMContentLoaded", function () {
       var service_topic = request.service_topic;
       var created_by = 'client';
       var location = request.location;
-      this.forms.submit = '<span uk-spinner></span>';
+      var user_id = this.getuser.client_id;
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
         url: this.$root.url + '/client/add_request',
         params: {
-          start_date: start_date,
-          end_date: end_date,
+          schedule_date: schedule_date,
+          location: location,
           topic: service_topic,
-          service_time: service_time
+          created_by: created_by,
+          user_id: user_id
         }
       }).then(function (res) {
-        var message = 'Permintaan berhasil dibuat';
+        var message = 'Jadwal konsultasi berhasil dibuat';
         _this3.messages.successMessage = message;
         swal({
           text: message,
@@ -3385,7 +3381,7 @@ document.addEventListener("DOMContentLoaded", function () {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
-        _this3.forms.submit = 'Create Request';
+        request.submit = 'Buat Jadwal';
         if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
       });
     },
@@ -3406,25 +3402,34 @@ document.addEventListener("DOMContentLoaded", function () {
         this.messages.iserror = true;
       }
 
+      if (request.timepicker.hours === '' || request.timepicker.minute === '') {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (request.location === '') {
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
+
       if (request.service_time === '') {
         this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if (this.messages.iserror === true) return false;
-      var start_date = this.$root.formatDate(request.selectedDate.start, 'YYYY-MM-DD');
-      var end_date = this.$root.formatDate(request.selectedDate.end, 'YYYY-MM-DD');
-      var service_time = request.service_time;
+      var datepicker = this.$root.formatDate(request.selectedDate, 'YYYY-MM-DD');
+      var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       var service_topic = request.service_topic;
-      this.forms.submit = '<span uk-spinner></span>';
+      var location = request.location;
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_request/' + request.service_id,
+        url: this.$root.url + '/client/save_request/' + request.id,
         params: {
-          start_date: start_date,
-          end_date: end_date,
-          topic: service_topic,
-          service_time: service_time
+          schedule_date: schedule_date,
+          location: location,
+          topic: service_topic
         }
       }).then(function (res) {
         var message = 'Berhasil menyimpan perubahan';
@@ -3440,7 +3445,7 @@ document.addEventListener("DOMContentLoaded", function () {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
-        request.submit = 'Save Changes';
+        request.submit = 'Simpan Perubahan';
         if (err.response.status === 500) _this4.messages.errorMessage = err.response.statusText;else _this4.messages.errorMessage = err.response.data.responseMessage;
       });
     },
@@ -5147,6 +5152,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! v-calendar */ "./node_modules/v-calendar/lib/v-calendar.min.js");
 /* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(v_calendar__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ViewRequest_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewRequest.vue */ "./resources/js/components/Frontend/consultant/ViewRequest.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -62668,7 +62682,7 @@ var render = function() {
             { staticClass: "uk-card uk-card-body uk-card-default card-panel" },
             [
               _c("div", { staticClass: "uk-card-title card-panel-title" }, [
-                _vm._v("Masuk Client")
+                _vm._v("Masuk Klien")
               ]),
               _vm._v(" "),
               _c(
@@ -62882,8 +62896,8 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
               _vm.forms.request.isedit
-                ? _c("span", [_vm._v("Ubah Permintaan")])
-                : _c("span", [_vm._v("Buat Permintaan")])
+                ? _c("span", [_vm._v("Ubah Jadwal")])
+                : _c("span", [_vm._v("Buat Jadwal")])
             ]),
             _vm._v(" "),
             _c(
@@ -63375,7 +63389,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
-              _vm._v("Review Konsultan")
+              _vm._v("Ulasan Konsultan")
             ]),
             _vm._v(" "),
             _c(
@@ -63436,7 +63450,7 @@ var render = function() {
               [
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Write a Review")
+                    _vm._v("Ketik ulasan")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-form-controls" }, [
@@ -63487,7 +63501,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("How do you review it?")
+                    _vm._v("Berikan nilai")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-form-controls" }, [
@@ -63739,19 +63753,19 @@ var render = function() {
                       },
                       [
                         _c("option", { attrs: { value: "6" } }, [
-                          _vm._v("6 rows")
+                          _vm._v("6 baris")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "12" } }, [
-                          _vm._v("12 rows")
+                          _vm._v("12 baris")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "24" } }, [
-                          _vm._v("24 rows")
+                          _vm._v("24 baris")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "36" } }, [
-                          _vm._v("36 rows")
+                          _vm._v("36 baris")
                         ])
                       ]
                     )
@@ -63879,7 +63893,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Buat Permintaan Pertemuan")]
+                [_vm._v("Buat Jadwal Konsultasi")]
               )
             ])
           ]),
@@ -63914,31 +63928,20 @@ var render = function() {
                 _vm._v(" "),
                 _vm.getrequest.total === 0
                   ? _c("div", { staticClass: "no-request-list" }, [
-                      _c("div", { staticClass: "uk-margin-remove" }, [
-                        _vm._m(1),
-                        _vm._v("\n          You have no\n          "),
-                        _vm.forms.status_request === "waiting_respond"
-                          ? _c("span", [_vm._v("upcoming")])
-                          : _vm.forms.status_request === "accept"
-                          ? _c("span", [_vm._v("accepted")])
-                          : _vm.forms.status_request === "decline"
-                          ? _c("span", [_vm._v("declined")])
-                          : _vm.forms.status_request === "cancel"
-                          ? _c("span", [_vm._v("canceled")])
-                          : _vm.forms.status_request === "done"
-                          ? _c("span", [_vm._v("completed")])
-                          : _c("span", [_vm._v("any")]),
-                        _vm._v(" appointment.\n        ")
-                      ]),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c(
                         "a",
                         {
                           staticClass:
                             "uk-button uk-button-primary gl-button-primary",
-                          attrs: { href: _vm.$root.url + "/search" }
+                          on: {
+                            click: function($event) {
+                              return _vm.onClickModal()
+                            }
+                          }
                         },
-                        [_vm._v("Find consultant")]
+                        [_vm._v("Buat Jadwal Konsultasi")]
                       )
                     ])
                   : _c(
@@ -63961,14 +63964,14 @@ var render = function() {
                                 { staticClass: "uk-clearfix uk-margin-small" },
                                 [
                                   _c("div", { staticClass: "uk-float-left" }, [
-                                    req.status_request === "waiting_respond"
+                                    req.status_request === "waiting"
                                       ? _c(
                                           "span",
                                           {
                                             staticClass:
                                               "request-status-badge upcoming"
                                           },
-                                          [_vm._v("Waiting Response")]
+                                          [_vm._v("Menunggu Tanggapan")]
                                         )
                                       : req.status_request === "accept"
                                       ? _c(
@@ -63977,7 +63980,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge accept"
                                           },
-                                          [_vm._v("Accept")]
+                                          [_vm._v("Diterima")]
                                         )
                                       : req.status_request === "decline"
                                       ? _c(
@@ -63986,7 +63989,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge decline"
                                           },
-                                          [_vm._v("Decline")]
+                                          [_vm._v("Ditolak")]
                                         )
                                       : req.status_request === "cancel"
                                       ? _c(
@@ -63995,7 +63998,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge cancel"
                                           },
-                                          [_vm._v("Cancel")]
+                                          [_vm._v("Dibatalkan")]
                                         )
                                       : _c(
                                           "span",
@@ -64003,7 +64006,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge done"
                                           },
-                                          [_vm._v("Done")]
+                                          [_vm._v("Selesai")]
                                         ),
                                     _vm._v(" "),
                                     req.status_request === "done" &&
@@ -64014,7 +64017,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge accept"
                                           },
-                                          [_vm._v("Solved")]
+                                          [_vm._v("Berhasil")]
                                         )
                                       : _vm._e(),
                                     _vm._v(" "),
@@ -64026,7 +64029,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge decline"
                                           },
-                                          [_vm._v("Unfinished")]
+                                          [_vm._v("Gagal")]
                                         )
                                       : _vm._e()
                                   ])
@@ -64102,15 +64105,11 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      (req.created_by ===
-                                                        "client" &&
-                                                        req.status_request !==
-                                                          "done") ||
-                                                      (req.created_by ===
-                                                        "client" &&
-                                                        req.is_solved === "N"),
+                                                      req.status_request !==
+                                                        "done" ||
+                                                      req.is_solved === "N",
                                                     expression:
-                                                      "(req.created_by === 'client' && req.status_request !== 'done') || (req.created_by === 'client' && req.is_solved === 'N')"
+                                                      "req.status_request !== 'done' || req.is_solved === 'N'"
                                                   }
                                                 ]
                                               },
@@ -64120,7 +64119,7 @@ var render = function() {
                                                   {
                                                     on: {
                                                       click: function($event) {
-                                                        return _vm.modalEditRequest(
+                                                        return _vm.onClickModal(
                                                           req
                                                         )
                                                       }
@@ -64151,12 +64150,10 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.created_by ===
-                                                        "client" &&
                                                       req.status_request !==
-                                                        "done",
+                                                      "done",
                                                     expression:
-                                                      "req.created_by === 'client' && req.status_request !== 'done'"
+                                                      "req.status_request !== 'done'"
                                                   }
                                                 ]
                                               },
@@ -64197,14 +64194,12 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.status_request ===
-                                                        "client" &&
                                                       req.status_request !==
                                                         "done" &&
                                                       req.status_request !==
                                                         "cancel",
                                                     expression:
-                                                      "req.status_request === 'client' && req.status_request !== 'done' && req.status_request !== 'cancel'"
+                                                      "req.status_request !== 'done' && req.status_request !== 'cancel'"
                                                   }
                                                 ]
                                               },
@@ -64380,10 +64375,9 @@ var render = function() {
                                       rawName: "v-show",
                                       value:
                                         req.created_by === "consultant" &&
-                                        req.status_request ===
-                                          "waiting_respond",
+                                        req.status_request === "waiting",
                                       expression:
-                                        "req.created_by === 'consultant' && req.status_request === 'waiting_respond'"
+                                        "req.created_by === 'consultant' && req.status_request === 'waiting'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -64526,9 +64520,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [
-        _vm._v("Permintaan Pertemuan")
-      ])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Jadwal Konsultasi")])
     ])
   },
   function() {
@@ -64536,7 +64528,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-margin-remove" }, [
-      _c("span", { staticClass: "far fa-frown" })
+      _c("div", { staticClass: "uk-margin-remove" }, [
+        _c("span", { staticClass: "far fa-frown" })
+      ]),
+      _vm._v("\n          Tidak ada jadwal pertemuan\n        ")
     ])
   },
   function() {
@@ -65662,7 +65657,7 @@ var render = function() {
             { staticClass: "uk-card uk-card-body uk-card-default card-panel" },
             [
               _c("div", { staticClass: "uk-card-title card-panel-title" }, [
-                _vm._v("Masuk Client")
+                _vm._v("Daftar Klien")
               ]),
               _vm._v(" "),
               _c(
@@ -67740,8 +67735,8 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
               _vm.forms.request.isedit
-                ? _c("span", [_vm._v("Edit Request Appointment")])
-                : _c("span", [_vm._v("Add Request Appointment")])
+                ? _c("span", [_vm._v("Edit Jadwal Pertemuan")])
+                : _c("span", [_vm._v("Buat Jadwal Pertemuan")])
             ]),
             _vm._v(" "),
             _c(
@@ -67804,7 +67799,7 @@ var render = function() {
               [
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Client")
+                    _vm._v("Klien")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-form-controls" }, [
@@ -67820,7 +67815,7 @@ var render = function() {
                       staticClass: "uk-input gl-input-default",
                       attrs: {
                         type: "text",
-                        placeholder: "Find by client name or id...",
+                        placeholder: "Cari nama klien",
                         disabled: _vm.forms.request.isedit
                       },
                       domProps: { value: _vm.forms.request.client.client_name },
@@ -67941,50 +67936,109 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Select Date")
+                    _vm._v("Topik")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.forms.request.service_topic,
+                            expression: "forms.request.service_topic"
+                          }
+                        ],
+                        staticClass: "uk-select gl-input-default",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.forms.request,
+                              "service_topic",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("-- Pilih Topik --")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.servicetopic.data, function(topic) {
+                          return _c(
+                            "option",
+                            { domProps: { value: topic.topic_id } },
+                            [_vm._v(_vm._s(topic.topic_name))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.messages.errors.service_topic,
+                          expression: "messages.errors.service_topic"
+                        }
+                      ],
+                      staticClass: "uk-text-small uk-text-danger"
+                    },
+                    [_vm._v(_vm._s(_vm.messages.errors.service_topic))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("Pilih Tanggal")
                   ]),
                   _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "uk-form-controls" },
                     [
-                      _c(
-                        "v-date-picker",
-                        {
-                          attrs: {
-                            "min-date": _vm.datepicker.mindate,
-                            popover: _vm.datepicker.popover,
-                            columns: 2
-                          },
-                          model: {
-                            value: _vm.forms.request.selectedDate,
-                            callback: function($$v) {
-                              _vm.$set(_vm.forms.request, "selectedDate", $$v)
-                            },
-                            expression: "forms.request.selectedDate"
-                          }
+                      _c("input", {
+                        staticClass:
+                          "uk-input gl-input-default uk-margin-small-bottom",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: { value: _vm.selectedDate }
+                      }),
+                      _vm._v(" "),
+                      _c("v-date-picker", {
+                        attrs: {
+                          mode: "single",
+                          "is-inline": true,
+                          "min-date": _vm.datepicker.mindate,
+                          formats: _vm.datepicker.formats,
+                          "show-caps": "",
+                          "is-double-paned": ""
                         },
-                        [
-                          _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
-                            _c("span", {
-                              staticClass: "uk-form-icon",
-                              attrs: { "uk-icon": "calendar" }
-                            }),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass:
-                                "uk-width-1-1 uk-input gl-input-default",
-                              attrs: { type: "text", readonly: "" },
-                              domProps: {
-                                value: _vm.$root.formatDate(
-                                  _vm.forms.request.selectedDate,
-                                  "ddd, DD MMMM YYYY"
-                                )
-                              }
-                            })
-                          ])
-                        ]
-                      )
+                        model: {
+                          value: _vm.forms.request.selectedDate,
+                          callback: function($$v) {
+                            _vm.$set(_vm.forms.request, "selectedDate", $$v)
+                          },
+                          expression: "forms.request.selectedDate"
+                        }
+                      })
                     ],
                     1
                   )
@@ -67992,7 +68046,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Select Time")
+                    _vm._v("Pilih Waktu")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-form-controls" }, [
@@ -68043,7 +68097,7 @@ var render = function() {
                               _c(
                                 "div",
                                 { staticClass: "dropdown-timepicker-header" },
-                                [_vm._v("Hours")]
+                                [_vm._v("Jam")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -68131,7 +68185,7 @@ var render = function() {
                               _c(
                                 "div",
                                 { staticClass: "dropdown-timepicker-header" },
-                                [_vm._v("Minute")]
+                                [_vm._v("Menit")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -68239,23 +68293,22 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Description")
+                    _vm._v("Lokasi Pertemuan")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-form-controls" }, [
-                    _c("textarea", {
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.forms.request.description,
-                          expression: "forms.request.description"
+                          value: _vm.forms.request.location,
+                          expression: "forms.request.location"
                         }
                       ],
-                      staticClass:
-                        "uk-textarea uk-height-small gl-input-default",
-                      attrs: { placeholder: "Enter a description" },
-                      domProps: { value: _vm.forms.request.description },
+                      staticClass: "uk-input gl-input-default",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.forms.request.location },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
@@ -68263,7 +68316,7 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.forms.request,
-                            "description",
+                            "location",
                             $event.target.value
                           )
                         }
@@ -68278,13 +68331,13 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.messages.errors.description,
-                          expression: "messages.errors.description"
+                          value: _vm.messages.errors.location,
+                          expression: "messages.errors.location"
                         }
                       ],
                       staticClass: "uk-text-small uk-text-danger"
                     },
-                    [_vm._v(_vm._s(_vm.messages.errors.description))]
+                    [_vm._v(_vm._s(_vm.messages.errors.location))]
                   )
                 ]),
                 _vm._v(" "),
@@ -68357,19 +68410,19 @@ var render = function() {
                       },
                       [
                         _c("option", { attrs: { value: "6" } }, [
-                          _vm._v("6 rows")
+                          _vm._v("6 baris")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "12" } }, [
-                          _vm._v("12 rows")
+                          _vm._v("12 baris")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "24" } }, [
-                          _vm._v("24 rows")
+                          _vm._v("24 baris")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "36" } }, [
-                          _vm._v("36 rows")
+                          _vm._v("36 baris")
                         ])
                       ]
                     )
@@ -68457,27 +68510,27 @@ var render = function() {
                       },
                       [
                         _c("option", { attrs: { value: "all" } }, [
-                          _vm._v("All Status")
+                          _vm._v("Semua")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "waiting_respond" } }, [
-                          _vm._v("Upcoming")
+                        _c("option", { attrs: { value: "waiting" } }, [
+                          _vm._v("Menunggu Tanggapan")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "accept" } }, [
-                          _vm._v("Accepted")
+                          _vm._v("Diterima")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "decline" } }, [
-                          _vm._v("Declined")
+                          _vm._v("Ditolak")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "cancel" } }, [
-                          _vm._v("Canceled")
+                          _vm._v("Dibatalkan")
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "done" } }, [
-                          _vm._v("Completed")
+                          _vm._v("Selesai")
                         ])
                       ]
                     )
@@ -68497,7 +68550,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Add Appointment")]
+                [_vm._v("Buat Jadwal Pertemuan")]
               )
             ])
           ]),
@@ -68532,30 +68585,20 @@ var render = function() {
                 _vm._v(" "),
                 _vm.getrequest.total === 0
                   ? _c("div", { staticClass: "no-request-list" }, [
-                      _c("div", { staticClass: "uk-margin-remove" }, [
-                        _vm._m(1),
-                        _vm._v("\n          You have no\n          "),
-                        _vm.forms.status_request === "waiting_respond"
-                          ? _c("span", [_vm._v("upcoming")])
-                          : _vm.forms.status_request === "accept"
-                          ? _c("span", [_vm._v("accepted")])
-                          : _vm.forms.status_request === "decline"
-                          ? _c("span", [_vm._v("declined")])
-                          : _vm.forms.status_request === "cancel"
-                          ? _c("span", [_vm._v("canceled")])
-                          : _vm.forms.status_request === "done"
-                          ? _c("span", [_vm._v("completed")])
-                          : _c("span", [_vm._v("any")]),
-                        _vm._v(" appointment.\n        ")
-                      ]),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c(
                         "a",
                         {
                           staticClass:
-                            "uk-button uk-button-primary gl-button-primary"
+                            "uk-button uk-button-primary gl-button-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.onClickModal()
+                            }
+                          }
                         },
-                        [_vm._v("Create Appointment")]
+                        [_vm._v("Buat Jadwal Pertemuan")]
                       )
                     ])
                   : _c(
@@ -68578,14 +68621,14 @@ var render = function() {
                                 { staticClass: "uk-clearfix uk-margin-small" },
                                 [
                                   _c("div", { staticClass: "uk-float-left" }, [
-                                    req.status_request === "waiting_respond"
+                                    req.status_request === "waiting"
                                       ? _c(
                                           "span",
                                           {
                                             staticClass:
                                               "request-status-badge upcoming"
                                           },
-                                          [_vm._v("Waiting Response")]
+                                          [_vm._v("Menunggu Tanggapan")]
                                         )
                                       : req.status_request === "accept"
                                       ? _c(
@@ -68594,7 +68637,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge accept"
                                           },
-                                          [_vm._v("Accept")]
+                                          [_vm._v("Diterima")]
                                         )
                                       : req.status_request === "decline"
                                       ? _c(
@@ -68603,7 +68646,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge decline"
                                           },
-                                          [_vm._v("Decline")]
+                                          [_vm._v("Ditolak")]
                                         )
                                       : req.status_request === "cancel"
                                       ? _c(
@@ -68612,7 +68655,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge cancel"
                                           },
-                                          [_vm._v("Cancel")]
+                                          [_vm._v("Dibatalkan")]
                                         )
                                       : _c(
                                           "span",
@@ -68620,7 +68663,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge done"
                                           },
-                                          [_vm._v("Done")]
+                                          [_vm._v("Selesai")]
                                         ),
                                     _vm._v(" "),
                                     req.status_request === "done" &&
@@ -68631,7 +68674,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge accept"
                                           },
-                                          [_vm._v("Solved")]
+                                          [_vm._v("Berhasil")]
                                         )
                                       : _vm._e(),
                                     _vm._v(" "),
@@ -68643,7 +68686,7 @@ var render = function() {
                                             staticClass:
                                               "request-status-badge decline"
                                           },
-                                          [_vm._v("Not Solved")]
+                                          [_vm._v("Gagal")]
                                         )
                                       : _vm._e()
                                   ])
@@ -68996,7 +69039,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("My Appointment")])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Jadwal Pertemuan")])
     ])
   },
   function() {
@@ -69004,7 +69047,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-margin-remove" }, [
-      _c("span", { staticClass: "far fa-frown" })
+      _c("div", { staticClass: "uk-margin-remove" }, [
+        _c("span", { staticClass: "far fa-frown" })
+      ]),
+      _vm._v("\n          Tidak ada jadwal pertemuan\n        ")
     ])
   },
   function() {
