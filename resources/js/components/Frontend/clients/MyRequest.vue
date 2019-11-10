@@ -4,13 +4,13 @@
     :haslogin="haslogin"
     :getuser="getuser" />
 
-    <view-request-detail :detailrequest="getrequest.details" />
+    <!--<view-request-detail :detailrequest="getrequest.details" />-->
 
     <div class="uk-padding banner-index_header">
       <div class="uk-container">Permintaan Konsultasi</div>
     </div>
 
-    <!-- add / update appointment -->
+    <!-- add / update request -->
     <div id="modal-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
@@ -26,99 +26,40 @@
         </div>
         <form class="uk-form-stacked uk-margin-top" @submit.prevent="forms.request.isedit === true ? onSaveRequest() : onCreateRequest()">
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Client</label>
+            <label class="uk-form-label gl-label">Topik</label>
             <div class="uk-form-controls">
-              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Find by client name or id..." @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" :disabled="forms.request.isedit" />
-            </div>
-            <div v-show="messages.errors.client_name" class="uk-text-small uk-text-danger">{{ messages.errors.client_name }}</div>
-            <div v-if="existingClient.isLoading" class="uk-text-center uk-margin-top">
-              <span uk-spinner></span>
-            </div>
-            <div v-else>
-              <div v-show="existingClient.isFinding" class="uk-card uk-card-default uk-margin-top uk-margin-bottom uk-width-large dropdown-timepicker">
-                <div class="dropdown-timepicker-content">
-                  <ul class="uk-nav uk-nav-default nav-timepicker">
-                    <li v-for="client in existingClient.results">
-                      <a @click="onChooseExistingClient( client.client_id, client.client_fullname )">
-                        {{ client.client_fullname }}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <select class="uk-select gl-input-default" v-model="forms.request.servicetopic">
+                <option value="">-- Pilih Topik --</option>
+                <option v-for="topic in servicetopic.data" :value="topic.topic_id">{{ topic.topic_name }}</option>
+              </select>
             </div>
           </div>
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Select Date</label>
+            <label class="uk-form-label gl-label">Pilih Jadwal</label>
             <div class="uk-form-controls">
+              <input type="text" class="uk-input gl-input-default uk-margin-small-bottom" :value="selectedDate" disabled />
               <v-date-picker v-model="forms.request.selectedDate"
+              mode="range"
+              :is-inline="true"
               :min-date="datepicker.mindate"
-              :popover="datepicker.popover"
-              :columns="2"
+              :formats="datepicker.formats"
+              show-caps is-double-paned
               >
-              <div class="uk-width-1-1 uk-inline">
-                <span class="uk-form-icon" uk-icon="calendar"></span>
-                <input type="text" class="uk-width-1-1 uk-input gl-input-default" :value="$root.formatDate( forms.request.selectedDate, 'ddd, DD MMMM YYYY' )" readonly />
-              </div>
               </v-date-picker>
             </div>
           </div>
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Select Time</label>
+            <label class="uk-form-label gl-label">Waktu</label>
             <div class="uk-form-controls">
-              <div class="uk-width-1-1 uk-inline">
-                <a class="uk-form-icon" uk-icon="clock"></a>
-                <input type="text" class="uk-width-1-1 uk-input gl-input-default"
-                v-model="selectedTime"
-                readonly />
-              </div>
-              <div class="uk-width-large dropdown-timepicker" uk-dropdown="mode: click;">
-                <div class="uk-dropdown-grid uk-child-width-1-2" uk-grid>
-                  <div>
-                    <div class="dropdown-timepicker-header">Hours</div>
-                    <div class="dropdown-timepicker-content">
-                      <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
-                        <li>
-                          <a :class="{'active': $root.padNumber( 0, 2 ) == forms.request.timepicker.hours}" @click="onSelectedTime( 0, 'hours' )">
-                            {{ $root.padNumber( 0, 2 ) }}
-                          </a>
-                        </li>
-                        <li v-for="i in 23">
-                          <a :class="{'active': $root.padNumber( i, 2 ) == forms.request.timepicker.hours}" @click="onSelectedTime( i, 'hours' )">
-                            {{ $root.padNumber( i, 2 ) }}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="dropdown-timepicker-header">Minute</div>
-                    <div class="dropdown-timepicker-content">
-                      <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
-                        <li>
-                          <a :class="{'active': $root.padNumber( 0, 2 ) == forms.request.timepicker.minute}" @click="onSelectedTime( 0, 'minute' )">
-                            {{ $root.padNumber( 0, 2 ) }}
-                          </a>
-                        </li>
-                        <li v-for="i in 59">
-                          <a :class="{'active': $root.padNumber( i, 2 ) == forms.request.timepicker.minute}" @click="onSelectedTime( i, 'minute' )">
-                            {{ $root.padNumber( i, 2 ) }}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <select class="uk-select gl-input-default" v-model="forms.request.servicetime">
+                <option value="">-- Pilih waktu --</option>
+                <option value="pagi">Pagi</option>
+                <option value="siang">Siang</option>
+                <option value="sore">Sore</option>
+                <option value="malam">Malam</option>
+              </select>
             </div>
-            <div v-show="messages.errors.timepicker" class="uk-text-small uk-text-danger">{{ messages.errors.timepicker }}</div>
-          </div>
-          <div class="uk-margin">
-            <label class="uk-form-label gl-label">Description</label>
-            <div class="uk-form-controls">
-              <textarea class="uk-textarea uk-height-small gl-input-default" v-model="forms.request.description" placeholder="Enter a description"></textarea>
-            </div>
-            <div v-show="messages.errors.description" class="uk-text-small uk-text-danger">{{ messages.errors.description }}</div>
+            <div v-show="messages.errors.servicetime" class="uk-text-small uk-text-danger">{{ messages.errors.servicetime }}</div>
           </div>
           <div class="uk-margin">
             <button class="uk-button uk-button-default gl-button-default" v-html="forms.request.submit"></button>
@@ -129,7 +70,6 @@
     <!-- add / update appointment -->
 
     <div class="uk-container uk-margin-top uk-margin-large-bottom container-request-list">
-      {{ servicetopic }}
       <div class="uk-clearfix uk-margin-bottom">
         <div class="uk-float-left">
           <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
@@ -283,6 +223,7 @@
 
 <script>
 import VCalendar from 'v-calendar';
+import 'v-calendar/lib/v-calendar.min.css';
 import ViewRequest from './ViewRequest.vue';
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -313,17 +254,19 @@ export default {
         },
         details: {}
       },
-      existingClient: {
-        isLoading: false,
-        isFinding: false,
-        total: 0,
-        results: []
-      },
       datepicker: {
         mindate: new Date(),
         popover: {
           placement: 'bottom',
           visibility: 'click'
+        },
+        formats: {
+          title: 'MMMM YYYY',
+          weekdays: 'W',
+          navMonths: 'MMM',
+          input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+          dayPopover: 'L',
+          data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD']
         }
       },
       forms: {
@@ -332,19 +275,14 @@ export default {
         status_request: 'all',
         request: {
           id: '',
-          selectedDate: new Date(),
-          timepicker: {
-            selected: '',
-            isSelecting: false,
-            hours: '',
-            minute: ''
+          selectedDate: {
+            start: new Date(), // Jan 16th, 2018
+            end: new Date()
           },
-          client: {
-            client_id: '',
-            client_name: ''
-          },
-          description: '',
-          submit: 'Make Appointment'
+          isedit: false,
+          servicetime: '',
+          servicetopic: '',
+          submit: 'Buat Permintaan'
         }
       },
       messages: {
@@ -435,12 +373,6 @@ export default {
         }
       });
     },
-    onSelectedTime( val, time )
-    {
-      let str = this.$root.padNumber( val, 2 );
-      if( time === 'hours' ) this.forms.request.timepicker.hours = str;
-      if( time === 'minute' ) this.forms.request.timepicker.minute = str;
-    },
     onClickModal( data )
     {
       this.messages = {
@@ -449,30 +381,28 @@ export default {
         successMessage: '',
         iserror: false
       };
+      let request = this.forms.request;
 
       if( data === undefined )
       {
-        this.forms.request.selectedDate = new Date();
-        this.forms.request.timepicker.hours = '';
-        this.forms.request.timepicker.minute = '';
-        this.forms.request.description = '';
-        this.forms.request.id = '';
-        this.forms.request.client.client_id = '';
-        this.forms.request.client.client_name = '';
-        this.forms.request.submit = 'Create Appointment';
-        this.forms.request.isedit = false;
+        request.selectedDate.start = new Date();
+        request.selectedDate.end = new Date();
+        request.servicetime = '';
+        request.servicetopic = '';
+        request.service_id = '';
+        request.submit = 'Buat Permintaan';
+        request.isedit = false;
       }
       else
       {
-        this.forms.request.selectedDate = new Date( this.$root.formatDate( data.schedule_date, 'ddd, DD MMMM YYYY' ) );
-        this.forms.request.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH');
-        this.forms.request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
-        this.forms.request.description = data.description;
-        this.forms.request.id = data.apt_id;
-        this.forms.request.client.client_id = data.client_id;
-        this.forms.request.client.client_name = data.client_fullname;
-        this.forms.request.submit = 'Save Changes';
-        this.forms.request.isedit = true;
+        request.selectedDate.start = new Date( data.start_date );
+        request.selectedDate.end = new Date( data.end_date );
+        this.datepicker.mindate = new Date( data.end_date );
+        request.servicetime = data.service_time;
+        request.servicetopic = data.service_topic;
+        request.service_id = data.service_id;
+        request.submit = 'Simpan Perubahan';
+        request.isedit = true;
       }
       UIkit.modal('#modal-request').show();
     },
@@ -484,20 +414,16 @@ export default {
         successMessage: '',
         iserror: false
       }
-      let message_form = 'This field must be required';
-      if( this.forms.request.client.client_name === '' )
+      let message_form = 'Harap diisi';
+      let request = this.forms.request;
+      if( request.service_topic === '' )
       {
-        this.messages.errors.client_name = message_form;
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
+      if( request.service_time === '' )
       {
-        this.messages.errors.timepicker = message_form;
-        this.messages.iserror = true;
-      }
-      if( this.forms.request.description === '' )
-      {
-        this.messages.errors.description = message_form;
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
@@ -596,29 +522,6 @@ export default {
         else this.messages.errorMessage = err.response.data.responseMessage;
       });
     },
-    findExistingClient( e )
-    {
-      this.existingClient.isLoading = true;
-      axios({
-        method: 'get',
-        url: this.$root.url + '/consultant/existing_client?keywords=' + this.forms.request.client.client_name
-      }).then( res => {
-        let result = res.data;
-        this.existingClient.total = result.total;
-        this.existingClient.results = result.data;
-        this.existingClient.isLoading = false;
-        if( result.total == 0 ) this.existingClient.isFinding = false;
-        else this.existingClient.isFinding = true;
-      }).catch( err => {
-        console.log( err.response.statusText );
-      });
-    },
-    onChooseExistingClient( id, name )
-    {
-      this.forms.request.client.client_id = id;
-      this.forms.request.client.client_name = name;
-      this.existingClient.isFinding = false;
-    },
     deleteRequest( id )
     {
       swal({
@@ -656,15 +559,15 @@ export default {
     }
   },
   computed: {
-    selectedTime()
+    selectedDate()
     {
-      let hours = this.forms.request.timepicker.hours;
-      let minute = this.forms.request.timepicker.minute;
+      let dt    = this.forms.request.selectedDate;
+      let start = '';
+      let end   = '';
 
-      if( hours === '' ) hours = 'HH';
-      if( minute === '' ) minute = 'mm';
-      this.forms.request.timepicker.selected = hours + ':' + minute;
-      return this.forms.request.timepicker.selected;
+      start = this.$root.formatDate( new Date( dt.start ), 'DD MMMM YYYY' );
+      end = this.$root.formatDate( new Date( dt.end ), 'DD MMMM YYYY' );
+      return start + ' - ' + end;
     }
   },
   mounted() {
