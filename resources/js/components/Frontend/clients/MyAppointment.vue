@@ -427,6 +427,7 @@ export default {
           location: '',
           service_topic: '',
           request_to: '',
+          created_by: '',
           isedit: false,
           submit: 'Buat Jadwal'
         }
@@ -551,6 +552,8 @@ export default {
         request.location = '';
         request.service_topic = '';
         request.id = '';
+        request.request_to = '';
+        request.created_by = '';
         request.submit = 'Buat Jadwal';
         request.isedit = false;
       }
@@ -562,6 +565,8 @@ export default {
         request.location = data.location;
         request.service_topic = data.service_topic;
         request.id = data.apt_id;
+        request.request_to = data.request_to;
+        request.created_by = data.created_by;
         request.submit = 'Simpan Perubahan';
         request.isedit = true;
       }
