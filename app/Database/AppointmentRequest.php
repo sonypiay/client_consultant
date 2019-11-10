@@ -195,7 +195,14 @@ class AppointmentRequest extends Model
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
       if( session()->has('isClient') ) $getrequest->request_to      = 'consultant';
-      if( session()->has('isConsultant') ) $getrequest->request_to  = 'consultant';
+      if( session()->has('isConsultant') )
+      {
+        $getrequest->request_to  = 'client';
+        if( empty( $getrequest->consultant_id ) || $getrequest->consultant_id === null )
+        {
+          $getrequest->consultant_id = session()->get('consultantId');
+        }
+      }
 
       $current_schedule = new DateTime( $getrequest->schedule_date );
       if( $current_schedule->format('Y-m-d H:i') != $schedule_date )

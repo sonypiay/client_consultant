@@ -426,6 +426,7 @@ export default {
           },
           location: '',
           service_topic: '',
+          request_to: '',
           isedit: false,
           submit: 'Buat Jadwal'
         }

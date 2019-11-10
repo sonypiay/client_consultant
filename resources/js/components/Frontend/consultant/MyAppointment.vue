@@ -52,7 +52,7 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Topik</label>
             <div class="uk-form-controls">
-              <select class="uk-select gl-input-default" v-model="forms.request.service_topic">
+              <select class="uk-select gl-input-default" v-model="forms.request.service_topic" :disabled="">
                 <option value="">-- Pilih Topik --</option>
                 <option v-for="topic in servicetopic.data" :value="topic.topic_id">{{ topic.topic_name }}</option>
               </select>
@@ -349,7 +349,10 @@ export default {
             client_id: '',
             client_name: ''
           },
-          description: '',
+          location: '',
+          service_topic: '',
+          request_to: '',
+          isedit: false,
           submit: 'Buat Jadwal'
         }
       },
@@ -468,6 +471,7 @@ export default {
         request.client_name = '';
         request.id = '';
         request.submit = 'Buat Jadwal';
+        request.request_to = '';
         request.isedit = false;
       }
       else
@@ -480,6 +484,7 @@ export default {
         request.client.client_id = data.client_id;
         request.client.client_name = data.client_fullname;
         request.id = data.apt_id;
+        request.request_to = data.request_to;
         request.submit = 'Simpan Perubahan';
         request.isedit = true;
       }
