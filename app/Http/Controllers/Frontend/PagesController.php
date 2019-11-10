@@ -185,10 +185,12 @@ class PagesController extends Controller
     }
 
     $client = new ClientUser;
+    $topic = new ServiceTopic;
     $data['request'] = $request;
     $data['hasLogin']['user'] = 'client';
     $data['hasLogin']['isLogin'] = true;
     $data['getuser'] = $client->getProfile();
+    $data['service_topic'] = $topic->getTopic();
     return response()->view('frontend.pages.clients.appointment', $data);
   }
 

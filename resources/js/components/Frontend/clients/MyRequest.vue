@@ -440,7 +440,7 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/consultant/add_request',
+        url: this.$root.url + '/client/add_request',
         params: {
           start_date: start_date,
           end_date: end_date,
@@ -448,7 +448,7 @@ export default {
           service_time: service_time
         }
       }).then( res => {
-        let message = 'Request appointment has been successfully created.'
+        let message = 'Permintaan berhasil dibuat'
         this.messages.successMessage = message;
         swal({
           text: message,
@@ -498,7 +498,7 @@ export default {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/consultant/save_request/' + request.service_id,
+        url: this.$root.url + '/client/save_request/' + request.service_id,
         params: {
           start_date: start_date,
           end_date: end_date,

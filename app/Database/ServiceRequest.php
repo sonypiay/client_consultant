@@ -58,4 +58,21 @@ class ServiceRequest extends Model
 
     return $res;
   }
+
+  public function getServiceRequest( $status = null, $request = null )
+  {
+    $whereClauses = [];
+    $status = $status === null ? 'all' : $status;
+    $keywords = $request !== null ? ( isset( $request->keywords ) ? $request->keywords : '' ) : '';
+    $limit = $request !== null ? ( isset( $request->limit ) ? $request->limit : 6 ) : 6;
+
+    $query = $this->select(
+      'service_request.service_id',
+      'service_request.start_date',
+      'service_request.end_date',
+      'service_request.service_time',
+      'service_request.status_service',
+      'appointment_request.'
+    );
+  }
 }

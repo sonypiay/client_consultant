@@ -45,7 +45,7 @@ class AppointmentRequest extends Model
       'appointment_request.consultant_id',
       'appointment_request.created_by',
       'appointment_request.schedule_date',
-      'appointment_request.description',
+      'appointment_request.location',
       'appointment_request.status_request',
       'appointment_request.is_solved',
       'appointment_request.created_at',
@@ -133,7 +133,7 @@ class AppointmentRequest extends Model
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
+          'notif_message' => 'Anda mendapat permintaan pertemuan dari klien dengan ID ' . $apt_id,
           'user_id' => $consult_id
         ]);
 
@@ -142,7 +142,7 @@ class AppointmentRequest extends Model
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'You create a new request appointment with ID ' . $apt_id,
+          'notif_message' => 'Anda telah membuat jadwal pertemuan dengan ID ' . $apt_id,
           'user_id' => $client_id
         ]);
       }
@@ -153,7 +153,7 @@ class AppointmentRequest extends Model
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'You created a new request appointment with ID ' . $apt_id,
+          'notif_message' => 'Anda telah membuat jadwal pertemuan klien dengan ID ' . $apt_id,
           'user_id' => $consult_id
         ]);
 
@@ -162,7 +162,7 @@ class AppointmentRequest extends Model
           'notif_date' => date('Y-m-d H:i:s'),
           'notif_read' => 'N',
           'notif_type' => 'request',
-          'notif_message' => 'You have a new request appointment with ID ' . $apt_id,
+          'notif_message' => 'Anda mendapat permintaan pertemuan dari konsultan dengan ID ' . $apt_id,
           'user_id' => $client_id
         ]);
       }

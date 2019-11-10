@@ -9,35 +9,48 @@
 
     <view-request-detail :detailrequest="getrequest.details" />
 
-    <!-- edit appointment -->
-    <div id="modal-edit-request" uk-modal>
+    <!-- add / update request -->
+    <div id="modal-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
-        <div class="modal-title">Edit Request Appointment</div>
+        <div class="modal-title">
+          <span v-if="forms.request.isedit">Ubah Permintaan</span>
+          <span v-else>Buat Permintaan</span>
+        </div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
         </div>
         <div v-show="messages.errorMessage" class="uk-margin-top uk-alert-danger" uk-alert>
           {{ messages.errorMessage }}
         </div>
-        <form class="uk-form-stacked uk-margin-top" @submit.prevent="onSaveRequest">
+        <form class="uk-form-stacked uk-margin-top" @submit.prevent="forms.request.isedit === true ? onSaveRequest() : onCreateRequest()">
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Select Date</label>
+            <label class="uk-form-label gl-label">Topik</label>
             <div class="uk-form-controls">
+              <select class="uk-select gl-input-default" v-model="forms.request.service_topic">
+                <option value="">-- Pilih Topik --</option>
+                <option v-for="topic in servicetopic.data" :value="topic.topic_id">{{ topic.topic_name }}</option>
+              </select>
+            </div>
+            <div v-show="messages.errors.service_topic" class="uk-text-small uk-text-danger">{{ messages.errors.service_topic }}</div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Pilih Tanggal</label>
+            <div class="uk-form-controls">
+              <input type="text" class="uk-input gl-input-default uk-margin-small-bottom" :value="selectedDate" disabled />
               <v-date-picker v-model="forms.request.selectedDate"
+              mode="single"
+              :is-inline="true"
               :min-date="datepicker.mindate"
-              :popover="datepicker.popover"
-              :columns="2"
+              :formats="datepicker.formats"
+              show-caps is-double-paned
               >
-              <div class="uk-width-1-1 uk-inline">
-                <span class="uk-form-icon" uk-icon="calendar"></span>
-                <input type="text" class="uk-width-1-1 uk-input gl-input-default" :value="$root.formatDate( forms.request.selectedDate, 'ddd, DD MMMM YYYY' )" readonly />
-              </div>
               </v-date-picker>
             </div>
           </div>
+
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Select Time</label>
+            <label class="uk-form-label gl-label">Pilih Waktu</label>
             <div class="uk-form-controls">
               <div class="uk-width-1-1 uk-inline">
                 <a class="uk-form-icon" uk-icon="clock"></a>
@@ -48,7 +61,7 @@
               <div class="uk-width-large dropdown-timepicker" uk-dropdown="mode: click;">
                 <div class="uk-dropdown-grid uk-child-width-1-2" uk-grid>
                   <div>
-                    <div class="dropdown-timepicker-header">Hours</div>
+                    <div class="dropdown-timepicker-header">Jam</div>
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
                         <li>
@@ -65,7 +78,7 @@
                     </div>
                   </div>
                   <div>
-                    <div class="dropdown-timepicker-header">Minute</div>
+                    <div class="dropdown-timepicker-header">Menit</div>
                     <div class="dropdown-timepicker-content">
                       <ul class="uk-nav uk-nav-default uk-dropdown-nav nav-timepicker">
                         <li>
@@ -86,25 +99,27 @@
             </div>
             <div v-show="messages.errors.timepicker" class="uk-text-small uk-text-danger">{{ messages.errors.timepicker }}</div>
           </div>
+
           <div class="uk-margin">
-            <label class="uk-form-label gl-label">Description</label>
+            <label class="uk-form-label gl-label">Lokasi Pertemuan</label>
             <div class="uk-form-controls">
-              <textarea class="uk-textarea uk-height-small gl-input-default" v-model="forms.request.description" placeholder="Enter a description"></textarea>
+              <input type="text" v-model="forms.request.location" class="uk-input gl-input-default" />
             </div>
-            <div v-show="messages.errors.description" class="uk-text-small uk-text-danger">{{ messages.errors.description }}</div>
+            <div v-show="messages.errors.location" class="uk-text-small uk-text-danger">{{ messages.errors.location }}</div>
           </div>
+
           <div class="uk-margin">
             <button class="uk-button uk-button-default gl-button-default" v-html="forms.request.submit"></button>
           </div>
         </form>
       </div>
     </div>
-    <!-- edit appointment -->
+    <!-- add / update appointment -->
 
     <div id="givereview" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
-        <div class="modal-title">Review a Consultant</div>
+        <div class="modal-title">Review Konsultan</div>
 
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
@@ -179,32 +194,37 @@
     </div>
 
     <div class="uk-padding banner-index_header">
-      <div class="uk-container">My Appointment</div>
+      <div class="uk-container">Permintaan Pertemuan</div>
     </div>
     <div class="uk-container uk-margin-top uk-margin-large-bottom container-request-list">
-      <div class="uk-margin-bottom">
-        <div class="uk-grid-small uk-child-width-auto" uk-grid>
-          <div>
-            <select class="uk-select gl-input-default" v-model="forms.limit" @change="showRequest()">
-              <option value="6">6 rows</option>
-              <option value="12">12 rows</option>
-              <option value="24">24 rows</option>
-              <option value="36">36 rows</option>
-            </select>
+      <div class="uk-clearfix uk-margin-bottom">
+        <div class="uk-float-left">
+          <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
+            <div>
+              <select class="uk-select gl-input-default" v-model="forms.limit" @change="showRequest()">
+                <option value="6">6 rows</option>
+                <option value="12">12 rows</option>
+                <option value="24">24 rows</option>
+                <option value="36">36 rows</option>
+              </select>
+            </div>
+            <div>
+              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Masukkan id permintaan, nama konsultan" @keyup.enter="showRequest()" />
+            </div>
+            <div>
+              <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
+                <option value="all">Semua</option>
+                <option value="waiting">Menunggu Tanggapan</option>
+                <option value="accept">Diterima</option>
+                <option value="decline">Ditolak</option>
+                <option value="cancel">Dibatalkan</option>
+                <option value="done">Selesai</option>
+              </select>
+            </div>
           </div>
-          <div>
-            <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Find by id, consultant name..." @keyup.enter="showRequest()" />
-          </div>
-          <div>
-            <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
-              <option value="all">All Status</option>
-              <option value="waiting_respond">Upcoming</option>
-              <option value="accept">Accepted</option>
-              <option value="decline">Declined</option>
-              <option value="cancel">Canceled</option>
-              <option value="done">Completed</option>
-            </select>
-          </div>
+        </div>
+        <div class="uk-float-right">
+          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Buat Permintaan Pertemuan</a>
         </div>
       </div>
 
@@ -358,7 +378,8 @@ document.addEventListener("DOMContentLoaded", function() {
 export default {
   props: [
     'haslogin',
-    'getuser'
+    'getuser',
+    'servicetopic'
   ],
   components: {
     VCalendar,
@@ -383,6 +404,14 @@ export default {
         popover: {
           placement: 'bottom',
           visibility: 'click'
+        },
+        formats: {
+          title: 'MMMM YYYY',
+          weekdays: 'W',
+          navMonths: 'MMM',
+          input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+          dayPopover: 'L',
+          data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD']
         }
       },
       forms: {
@@ -403,8 +432,10 @@ export default {
             hours: '',
             minute: ''
           },
-          description: '',
-          submit: 'Save Changes'
+          location: '',
+          service_topic: '',
+          isedit: false,
+          submit: 'Buat Permintaan'
         }
       },
       messages: {
@@ -509,7 +540,7 @@ export default {
       if( time === 'hours' ) this.forms.request.timepicker.hours = str;
       if( time === 'minute' ) this.forms.request.timepicker.minute = str;
     },
-    modalEditRequest( data )
+    onClickModal( data )
     {
       this.messages = {
         errors: {},
@@ -517,12 +548,99 @@ export default {
         successMessage: '',
         iserror: false
       };
-      this.forms.request.selectedDate = new Date( this.$root.formatDate( data.schedule_date, 'ddd, DD MMMM YYYY' ) );
-      this.forms.request.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH');
-      this.forms.request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
-      this.forms.request.description = data.description;
-      this.forms.request.id = data.apt_id;
-      UIkit.modal('#modal-edit-request').show();
+      let request = this.forms.request;
+
+      if( data === undefined )
+      {
+        request.selectedDate = new Date();
+        request.timepicker.hours = '';
+        request.timepicker.minute = '';
+        request.location = '';
+        request.service_topic = '';
+        request.id = '';
+        request.submit = 'Buat Permintaan';
+        request.isedit = false;
+      }
+      else
+      {
+        request.selectedDate = new Date( this.$root.formatDate( data.schedule_date, 'ddd, DD MMMM YYYY' ) );
+        request.timepicker.hours = this.$root.formatDate( data.schedule_date, 'HH');
+        request.timepicker.minute = this.$root.formatDate( data.schedule_date, 'mm');
+        request.location = data.location;
+        request.service_topic = data.service_topic;
+        request.id = data.apt_id;
+        request.submit = 'Simpan Perubahan';
+        request.isedit = true;
+      }
+      UIkit.modal('#modal-request').show();
+    },
+    onCreateRequest()
+    {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      }
+
+      let message_form = 'Harap diisi';
+      let request = this.forms.request;
+
+      if( request.service_topic === '' )
+      {
+        this.messages.errors.service_topic = message_form;
+        this.messages.iserror = true;
+      }
+      if( request.timepicker.hours === '' || request.timepicker.minute === '' )
+      {
+        this.messages.errors.timepicker = message_form;
+        this.messages.iserror = true;
+      }
+      if( request.location === '' )
+      {
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
+      if( request.service_time === '' )
+      {
+        this.messages.errors.service_time = message_form;
+        this.messages.iserror = true;
+      }
+
+      if( this.messages.iserror === true ) return false;
+      let datepicker = this.$root.formatDate( request.selectedDate, 'YYYY-MM-DD' );
+      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
+      let service_topic = request.service_topic;
+      let created_by = 'client';
+      let location = request.location;
+
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/client/add_request',
+        params: {
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
+        }
+      }).then( res => {
+        let message = 'Permintaan berhasil dibuat'
+        this.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success',
+          timer: 2000
+        });
+        setTimeout(() => {
+          this.showRequest();
+          UIkit.modal('#modal-request').hide();
+        }, 2000);
+      }).catch( err => {
+        this.forms.submit = 'Create Request';
+        if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
+        else this.messages.errorMessage = err.response.data.responseMessage;
+      });
     },
     onSaveRequest()
     {
@@ -533,33 +651,39 @@ export default {
         iserror: false
       }
 
-      let message_form = 'This field must be required';
-      if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
+      let message_form = 'Harap diisi';
+      let request = this.forms.request;
+
+      if( request.service_topic === '' )
       {
-        this.messages.errors.timepicker = message_form;
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.description === '' )
+      if( request.service_time === '' )
       {
-        this.messages.errors.description = message_form;
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if( this.messages.iserror === true ) return false;
-      let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
-      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      let description = this.forms.request.description;
+
+      let start_date = this.$root.formatDate( request.selectedDate.start, 'YYYY-MM-DD' );
+      let end_date = this.$root.formatDate( request.selectedDate.end, 'YYYY-MM-DD' );
+      let service_time = request.service_time;
+      let service_topic = request.service_topic;
 
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_request/' + this.forms.request.id,
+        url: this.$root.url + '/client/save_request/' + request.service_id,
         params: {
-          schedule_date: schedule_date,
-          description: description
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
         }
       }).then( res => {
-        let message = 'Request ' + this.forms.request.id + ' updated.';
+        let message = 'Berhasil menyimpan perubahan';
         this.messages.successMessage = message;
         swal({
           text: message,
@@ -568,10 +692,10 @@ export default {
         });
         setTimeout(() => {
           this.showRequest();
-          UIkit.modal('#modal-edit-request').hide();
+          UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
-        this.forms.request.submit = 'Save Changes';
+        request.submit = 'Save Changes';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });
@@ -665,6 +789,11 @@ export default {
     }
   },
   computed: {
+    selectedDate()
+    {
+      let date = this.forms.request.selectedDate;
+      return this.$root.formatDate( new Date( date ), 'dddd, DD MMMM YYYY' );
+    },
     selectedTime()
     {
       let hours = this.forms.request.timepicker.hours;

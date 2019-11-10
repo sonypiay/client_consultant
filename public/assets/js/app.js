@@ -3097,13 +3097,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser'],
+  props: ['haslogin', 'getuser', 'servicetopic'],
   components: {
     VCalendar: v_calendar__WEBPACK_IMPORTED_MODULE_0___default.a,
     'view-request-detail': _ViewRequest_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -3127,6 +3147,14 @@ document.addEventListener("DOMContentLoaded", function () {
         popover: {
           placement: 'bottom',
           visibility: 'click'
+        },
+        formats: {
+          title: 'MMMM YYYY',
+          weekdays: 'W',
+          navMonths: 'MMM',
+          input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+          dayPopover: 'L',
+          data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD']
         }
       },
       forms: {
@@ -3147,8 +3175,10 @@ document.addEventListener("DOMContentLoaded", function () {
             hours: '',
             minute: ''
           },
-          description: '',
-          submit: 'Save Changes'
+          location: '',
+          service_topic: '',
+          isedit: false,
+          submit: 'Buat Permintaan'
         }
       },
       messages: {
@@ -3262,21 +3292,38 @@ document.addEventListener("DOMContentLoaded", function () {
       if (time === 'hours') this.forms.request.timepicker.hours = str;
       if (time === 'minute') this.forms.request.timepicker.minute = str;
     },
-    modalEditRequest: function modalEditRequest(data) {
+    onClickModal: function onClickModal(data) {
       this.messages = {
         errors: {},
         errorMessage: '',
         successMessage: '',
         iserror: false
       };
-      this.forms.request.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'ddd, DD MMMM YYYY'));
-      this.forms.request.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
-      this.forms.request.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
-      this.forms.request.description = data.description;
-      this.forms.request.id = data.apt_id;
-      UIkit.modal('#modal-edit-request').show();
+      var request = this.forms.request;
+
+      if (data === undefined) {
+        request.selectedDate = new Date();
+        request.timepicker.hours = '';
+        request.timepicker.minute = '';
+        request.location = '';
+        request.service_topic = '';
+        request.id = '';
+        request.submit = 'Buat Permintaan';
+        request.isedit = false;
+      } else {
+        request.selectedDate = new Date(this.$root.formatDate(data.schedule_date, 'ddd, DD MMMM YYYY'));
+        request.timepicker.hours = this.$root.formatDate(data.schedule_date, 'HH');
+        request.timepicker.minute = this.$root.formatDate(data.schedule_date, 'mm');
+        request.location = data.location;
+        request.service_topic = data.service_topic;
+        request.id = data.apt_id;
+        request.submit = 'Simpan Perubahan';
+        request.isedit = true;
+      }
+
+      UIkit.modal('#modal-request').show();
     },
-    onSaveRequest: function onSaveRequest() {
+    onCreateRequest: function onCreateRequest() {
       var _this3 = this;
 
       this.messages = {
@@ -3285,32 +3332,47 @@ document.addEventListener("DOMContentLoaded", function () {
         successMessage: '',
         iserror: false
       };
-      var message_form = 'This field must be required';
+      var message_form = 'Harap diisi';
+      var request = this.forms.request;
 
-      if (this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '') {
+      if (request.service_topic === '') {
+        this.messages.errors.service_topic = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (request.timepicker.hours === '' || request.timepicker.minute === '') {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
 
-      if (this.forms.request.description === '') {
-        this.messages.errors.description = message_form;
+      if (request.location === '') {
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (request.service_time === '') {
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if (this.messages.iserror === true) return false;
-      var datepicker = this.$root.formatDate(this.forms.request.selectedDate, 'YYYY-MM-DD');
+      var datepicker = this.$root.formatDate(request.selectedDate, 'YYYY-MM-DD');
       var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      var description = this.forms.request.description;
+      var service_topic = request.service_topic;
+      var created_by = 'client';
+      var location = request.location;
       this.forms.submit = '<span uk-spinner></span>';
       axios({
-        method: 'put',
-        url: this.$root.url + '/client/save_request/' + this.forms.request.id,
+        method: 'post',
+        url: this.$root.url + '/client/add_request',
         params: {
-          schedule_date: schedule_date,
-          description: description
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
         }
       }).then(function (res) {
-        var message = 'Request ' + _this3.forms.request.id + ' updated.';
+        var message = 'Permintaan berhasil dibuat';
         _this3.messages.successMessage = message;
         swal({
           text: message,
@@ -3320,11 +3382,66 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
           _this3.showRequest();
 
-          UIkit.modal('#modal-edit-request').hide();
+          UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
-        _this3.forms.request.submit = 'Save Changes';
+        _this3.forms.submit = 'Create Request';
         if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
+      });
+    },
+    onSaveRequest: function onSaveRequest() {
+      var _this4 = this;
+
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var message_form = 'Harap diisi';
+      var request = this.forms.request;
+
+      if (request.service_topic === '') {
+        this.messages.errors.service_topic = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (request.service_time === '') {
+        this.messages.errors.service_time = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (this.messages.iserror === true) return false;
+      var start_date = this.$root.formatDate(request.selectedDate.start, 'YYYY-MM-DD');
+      var end_date = this.$root.formatDate(request.selectedDate.end, 'YYYY-MM-DD');
+      var service_time = request.service_time;
+      var service_topic = request.service_topic;
+      this.forms.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'put',
+        url: this.$root.url + '/client/save_request/' + request.service_id,
+        params: {
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
+        }
+      }).then(function (res) {
+        var message = 'Berhasil menyimpan perubahan';
+        _this4.messages.successMessage = message;
+        swal({
+          text: message,
+          icon: 'success',
+          timer: 2000
+        });
+        setTimeout(function () {
+          _this4.showRequest();
+
+          UIkit.modal('#modal-request').hide();
+        }, 2000);
+      })["catch"](function (err) {
+        request.submit = 'Save Changes';
+        if (err.response.status === 500) _this4.messages.errorMessage = err.response.statusText;else _this4.messages.errorMessage = err.response.data.responseMessage;
       });
     },
     modalReview: function modalReview(data) {
@@ -3335,7 +3452,7 @@ document.addEventListener("DOMContentLoaded", function () {
       UIkit.modal('#givereview').show();
     },
     onGiveReview: function onGiveReview() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.messages = {
         errors: {},
@@ -3365,21 +3482,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }).then(function (res) {
         var msg = 'Review has been given';
-        _this4.messages.successMessage = msg;
+        _this5.messages.successMessage = msg;
         swal({
           text: msg,
           icon: 'success',
           timer: 2000
         });
         setTimeout(function () {
-          _this4.showRequest();
+          _this5.showRequest();
 
           UIkit.modal('#givereview').hide();
         }, 2000);
       });
     },
     deleteRequest: function deleteRequest(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       swal({
         title: 'Confirmation',
@@ -3396,10 +3513,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (val) {
           axios({
             method: 'delete',
-            url: _this5.$root.url + '/client/delete_request/' + id
+            url: _this6.$root.url + '/client/delete_request/' + id
           }).then(function (res) {
             setTimeout(function () {
-              _this5.showRequest();
+              _this6.showRequest();
             }, 2000);
           })["catch"](function (err) {
             swal({
@@ -3417,6 +3534,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   },
   computed: {
+    selectedDate: function selectedDate() {
+      var date = this.forms.request.selectedDate;
+      return this.$root.formatDate(new Date(date), 'dddd, DD MMMM YYYY');
+    },
     selectedTime: function selectedTime() {
       var hours = this.forms.request.timepicker.hours;
       var minute = this.forms.request.timepicker.minute;
@@ -3885,7 +4006,7 @@ document.addEventListener("DOMContentLoaded", function () {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/consultant/add_request',
+        url: this.$root.url + '/client/add_request',
         params: {
           start_date: start_date,
           end_date: end_date,
@@ -3893,7 +4014,7 @@ document.addEventListener("DOMContentLoaded", function () {
           service_time: service_time
         }
       }).then(function (res) {
-        var message = 'Request appointment has been successfully created.';
+        var message = 'Permintaan berhasil dibuat';
         _this3.messages.successMessage = message;
         swal({
           text: message,
@@ -3940,7 +4061,7 @@ document.addEventListener("DOMContentLoaded", function () {
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/consultant/save_request/' + request.service_id,
+        url: this.$root.url + '/client/save_request/' + request.service_id,
         params: {
           start_date: start_date,
           end_date: end_date,
@@ -62749,7 +62870,7 @@ var render = function() {
         attrs: { detailrequest: _vm.getrequest.details }
       }),
       _vm._v(" "),
-      _c("div", { attrs: { id: "modal-edit-request", "uk-modal": "" } }, [
+      _c("div", { attrs: { id: "modal-request", "uk-modal": "" } }, [
         _c(
           "div",
           { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" },
@@ -62760,7 +62881,9 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
-              _vm._v("Edit Request Appointment")
+              _vm.forms.request.isedit
+                ? _c("span", [_vm._v("Ubah Permintaan")])
+                : _c("span", [_vm._v("Buat Permintaan")])
             ]),
             _vm._v(" "),
             _c(
@@ -62814,57 +62937,118 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    return _vm.onSaveRequest($event)
+                    _vm.forms.request.isedit === true
+                      ? _vm.onSaveRequest()
+                      : _vm.onCreateRequest()
                   }
                 }
               },
               [
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Select Date")
+                    _vm._v("Topik")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-form-controls" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.forms.request.service_topic,
+                            expression: "forms.request.service_topic"
+                          }
+                        ],
+                        staticClass: "uk-select gl-input-default",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.forms.request,
+                              "service_topic",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("-- Pilih Topik --")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.servicetopic.data, function(topic) {
+                          return _c(
+                            "option",
+                            { domProps: { value: topic.topic_id } },
+                            [_vm._v(_vm._s(topic.topic_name))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.messages.errors.service_topic,
+                          expression: "messages.errors.service_topic"
+                        }
+                      ],
+                      staticClass: "uk-text-small uk-text-danger"
+                    },
+                    [_vm._v(_vm._s(_vm.messages.errors.service_topic))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin" }, [
+                  _c("label", { staticClass: "uk-form-label gl-label" }, [
+                    _vm._v("Pilih Tanggal")
                   ]),
                   _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "uk-form-controls" },
                     [
-                      _c(
-                        "v-date-picker",
-                        {
-                          attrs: {
-                            "min-date": _vm.datepicker.mindate,
-                            popover: _vm.datepicker.popover,
-                            columns: 2
-                          },
-                          model: {
-                            value: _vm.forms.request.selectedDate,
-                            callback: function($$v) {
-                              _vm.$set(_vm.forms.request, "selectedDate", $$v)
-                            },
-                            expression: "forms.request.selectedDate"
-                          }
+                      _c("input", {
+                        staticClass:
+                          "uk-input gl-input-default uk-margin-small-bottom",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: { value: _vm.selectedDate }
+                      }),
+                      _vm._v(" "),
+                      _c("v-date-picker", {
+                        attrs: {
+                          mode: "single",
+                          "is-inline": true,
+                          "min-date": _vm.datepicker.mindate,
+                          formats: _vm.datepicker.formats,
+                          "show-caps": "",
+                          "is-double-paned": ""
                         },
-                        [
-                          _c("div", { staticClass: "uk-width-1-1 uk-inline" }, [
-                            _c("span", {
-                              staticClass: "uk-form-icon",
-                              attrs: { "uk-icon": "calendar" }
-                            }),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass:
-                                "uk-width-1-1 uk-input gl-input-default",
-                              attrs: { type: "text", readonly: "" },
-                              domProps: {
-                                value: _vm.$root.formatDate(
-                                  _vm.forms.request.selectedDate,
-                                  "ddd, DD MMMM YYYY"
-                                )
-                              }
-                            })
-                          ])
-                        ]
-                      )
+                        model: {
+                          value: _vm.forms.request.selectedDate,
+                          callback: function($$v) {
+                            _vm.$set(_vm.forms.request, "selectedDate", $$v)
+                          },
+                          expression: "forms.request.selectedDate"
+                        }
+                      })
                     ],
                     1
                   )
@@ -62872,7 +63056,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Select Time")
+                    _vm._v("Pilih Waktu")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-form-controls" }, [
@@ -62923,7 +63107,7 @@ var render = function() {
                               _c(
                                 "div",
                                 { staticClass: "dropdown-timepicker-header" },
-                                [_vm._v("Hours")]
+                                [_vm._v("Jam")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -63011,7 +63195,7 @@ var render = function() {
                               _c(
                                 "div",
                                 { staticClass: "dropdown-timepicker-header" },
-                                [_vm._v("Minute")]
+                                [_vm._v("Menit")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -63119,23 +63303,22 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
                   _c("label", { staticClass: "uk-form-label gl-label" }, [
-                    _vm._v("Description")
+                    _vm._v("Lokasi Pertemuan")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-form-controls" }, [
-                    _c("textarea", {
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.forms.request.description,
-                          expression: "forms.request.description"
+                          value: _vm.forms.request.location,
+                          expression: "forms.request.location"
                         }
                       ],
-                      staticClass:
-                        "uk-textarea uk-height-small gl-input-default",
-                      attrs: { placeholder: "Enter a description" },
-                      domProps: { value: _vm.forms.request.description },
+                      staticClass: "uk-input gl-input-default",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.forms.request.location },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
@@ -63143,7 +63326,7 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.forms.request,
-                            "description",
+                            "location",
                             $event.target.value
                           )
                         }
@@ -63158,13 +63341,13 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.messages.errors.description,
-                          expression: "messages.errors.description"
+                          value: _vm.messages.errors.location,
+                          expression: "messages.errors.location"
                         }
                       ],
                       staticClass: "uk-text-small uk-text-danger"
                     },
-                    [_vm._v(_vm._s(_vm.messages.errors.description))]
+                    [_vm._v(_vm._s(_vm.messages.errors.location))]
                   )
                 ]),
                 _vm._v(" "),
@@ -63192,7 +63375,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
-              _vm._v("Review a Consultant")
+              _vm._v("Review Konsultan")
             ]),
             _vm._v(" "),
             _c(
@@ -63507,181 +63690,198 @@ var render = function() {
             "uk-container uk-margin-top uk-margin-large-bottom container-request-list"
         },
         [
-          _c("div", { staticClass: "uk-margin-bottom" }, [
-            _c(
-              "div",
-              {
-                staticClass: "uk-grid-small uk-child-width-auto",
-                attrs: { "uk-grid": "" }
-              },
-              [
-                _c("div", [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.forms.limit,
-                          expression: "forms.limit"
-                        }
-                      ],
-                      staticClass: "uk-select gl-input-default",
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.forms,
-                              "limit",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          },
-                          function($event) {
-                            return _vm.showRequest()
-                          }
-                        ]
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "6" } }, [
-                        _vm._v("6 rows")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "12" } }, [
-                        _vm._v("12 rows")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "24" } }, [
-                        _vm._v("24 rows")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "36" } }, [
-                        _vm._v("36 rows")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("input", {
-                    directives: [
+          _c("div", { staticClass: "uk-clearfix uk-margin-bottom" }, [
+            _c("div", { staticClass: "uk-float-left" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "uk-grid uk-grid-small uk-child-width-auto",
+                  attrs: { "uk-grid": "" }
+                },
+                [
+                  _c("div", [
+                    _c(
+                      "select",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.forms.keywords,
-                        expression: "forms.keywords"
-                      }
-                    ],
-                    staticClass: "uk-input gl-input-default",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Find by id, consultant name..."
-                    },
-                    domProps: { value: _vm.forms.keywords },
-                    on: {
-                      keyup: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.forms.limit,
+                            expression: "forms.limit"
+                          }
+                        ],
+                        staticClass: "uk-select gl-input-default",
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.forms,
+                                "limit",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            function($event) {
+                              return _vm.showRequest()
+                            }
+                          ]
                         }
-                        return _vm.showRequest()
                       },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.forms, "keywords", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "select",
-                    {
+                      [
+                        _c("option", { attrs: { value: "6" } }, [
+                          _vm._v("6 rows")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "12" } }, [
+                          _vm._v("12 rows")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "24" } }, [
+                          _vm._v("24 rows")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "36" } }, [
+                          _vm._v("36 rows")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.forms.status_request,
-                          expression: "forms.status_request"
+                          value: _vm.forms.keywords,
+                          expression: "forms.keywords"
                         }
                       ],
-                      staticClass: "uk-select gl-input-default",
+                      staticClass: "uk-input gl-input-default",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Masukkan id permintaan, nama konsultan"
+                      },
+                      domProps: { value: _vm.forms.keywords },
                       on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.forms,
-                              "status_request",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
                             )
-                          },
-                          function($event) {
-                            return _vm.showRequest()
+                          ) {
+                            return null
                           }
-                        ]
+                          return _vm.showRequest()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.forms, "keywords", $event.target.value)
+                        }
                       }
-                    },
-                    [
-                      _c("option", { attrs: { value: "all" } }, [
-                        _vm._v("All Status")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "waiting_respond" } }, [
-                        _vm._v("Upcoming")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "accept" } }, [
-                        _vm._v("Accepted")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "decline" } }, [
-                        _vm._v("Declined")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "cancel" } }, [
-                        _vm._v("Canceled")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "done" } }, [
-                        _vm._v("Completed")
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            )
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.forms.status_request,
+                            expression: "forms.status_request"
+                          }
+                        ],
+                        staticClass: "uk-select gl-input-default",
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.forms,
+                                "status_request",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            function($event) {
+                              return _vm.showRequest()
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "all" } }, [
+                          _vm._v("Semua")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "waiting" } }, [
+                          _vm._v("Menunggu Tanggapan")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "accept" } }, [
+                          _vm._v("Diterima")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "decline" } }, [
+                          _vm._v("Ditolak")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "cancel" } }, [
+                          _vm._v("Dibatalkan")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "done" } }, [
+                          _vm._v("Selesai")
+                        ])
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-float-right" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "uk-button uk-button-default gl-button-default",
+                  on: {
+                    click: function($event) {
+                      return _vm.onClickModal()
+                    }
+                  }
+                },
+                [_vm._v("Buat Permintaan Pertemuan")]
+              )
+            ])
           ]),
           _vm._v(" "),
           _vm.getrequest.isLoading
@@ -64326,7 +64526,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("My Appointment")])
+      _c("div", { staticClass: "uk-container" }, [
+        _vm._v("Permintaan Pertemuan")
+      ])
     ])
   },
   function() {
