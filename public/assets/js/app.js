@@ -4710,24 +4710,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['getuser', 'getcity'],
   data: function data() {
@@ -4736,11 +4718,9 @@ __webpack_require__.r(__webpack_exports__);
         fullname: this.getuser.consultant_fullname,
         email: this.getuser.consultant_email,
         phone_number: this.getuser.consultant_phone_number === null ? '' : this.getuser.consultant_phone_number,
-        gender: this.getuser.consultant_gender === null ? '' : this.getuser.consultant_gender,
-        type: this.getuser.consultant_type,
         address: this.getuser.consultant_address === null ? '' : this.getuser.consultant_address,
         city: this.getuser.city_id === null ? '' : this.getuser.city_id,
-        submit: 'Save Changes'
+        submit: 'Simpan Perubahan'
       },
       messages: {
         errors: {},
@@ -4761,7 +4741,7 @@ __webpack_require__.r(__webpack_exports__);
         iserror: false
       };
       var f = this.forms;
-      var message_form = 'This field can not be empty';
+      var message_form = 'Harap diisi';
 
       if (f.fullname === '') {
         this.messages.errors.fullname = message_form;
@@ -4775,11 +4755,6 @@ __webpack_require__.r(__webpack_exports__);
 
       if (f.phone_number === '') {
         this.messages.errors.phone_number = message_form;
-        this.messages.iserror = true;
-      }
-
-      if (f.gender === '') {
-        this.messages.errors.gender = message_form;
         this.messages.iserror = true;
       }
 
@@ -4801,14 +4776,12 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           fullname: f.fullname,
           email: f.email,
-          type: f.type,
           phone_number: f.phone_number,
           address: f.address,
-          city: f.city,
-          gender: f.gender
+          city: f.city
         }
       }).then(function (res) {
-        var msg = 'Profile updated';
+        var msg = 'Berhasil menyimpan perubahan';
         _this.messages.successMessage = msg;
         swal({
           text: msg,
@@ -66665,7 +66638,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "uk-card-title uk-text-left card-panel-title" },
-          [_vm._v("Account Information")]
+          [_vm._v("Informasi Akun")]
         ),
         _vm._v(" "),
         _c(
@@ -66699,7 +66672,7 @@ var render = function() {
           [
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Fullname")
+                _vm._v("Nama Lengkap")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -66745,7 +66718,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Email")
+                _vm._v("Alamat Email")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -66791,7 +66764,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Phone Number")
+                _vm._v("No. Telepon")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -66837,145 +66810,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Consultant Type")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "uk-form-controls" }, [
-                _c("label", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.forms.type,
-                        expression: "forms.type"
-                      }
-                    ],
-                    staticClass: "uk-radio",
-                    attrs: { type: "radio", value: "individual" },
-                    domProps: {
-                      checked: _vm.forms.type === "individual",
-                      checked: _vm._q(_vm.forms.type, "individual")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.forms, "type", "individual")
-                      }
-                    }
-                  }),
-                  _vm._v(" Individual")
-                ]),
-                _vm._v(" "),
-                _c("label", { staticClass: "uk-margin-left" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.forms.type,
-                        expression: "forms.type"
-                      }
-                    ],
-                    staticClass: "uk-radio",
-                    attrs: { type: "radio", value: "company" },
-                    domProps: { checked: _vm._q(_vm.forms.type, "company") },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.forms, "type", "company")
-                      }
-                    }
-                  }),
-                  _vm._v(" Company")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.forms.type === "individual",
-                    expression: "forms.type === 'individual'"
-                  }
-                ],
-                staticClass: "uk-margin"
-              },
-              [
-                _c("label", { staticClass: "uk-form-label gl-label" }, [
-                  _vm._v("Gender")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "uk-form-controls" }, [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.forms.gender,
-                          expression: "forms.gender"
-                        }
-                      ],
-                      staticClass: "uk-select gl-input-default",
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.forms,
-                            "gender",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [
-                        _vm._v("- Select your gender -")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "L" } }, [_vm._v("Male")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "P" } }, [
-                        _vm._v("Female")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.messages.errors.gender,
-                        expression: "messages.errors.gender"
-                      }
-                    ],
-                    staticClass: "uk-text-danger uk-text-small"
-                  },
-                  [_vm._v(_vm._s(_vm.messages.errors.gender))]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-margin" }, [
-              _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("City")
+                _vm._v("Kota")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -67013,7 +66848,7 @@ var render = function() {
                   },
                   [
                     _c("option", { attrs: { value: "" } }, [
-                      _vm._v("- Select your city -")
+                      _vm._v("- Pilih kota -")
                     ]),
                     _vm._v(" "),
                     _vm._l(_vm.getcity, function(city) {
@@ -67047,7 +66882,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Address")
+                _vm._v("Alamat")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -67392,7 +67227,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "profile-join" }, [
                           _vm._v(
-                            "\n                Member since\n                " +
+                            "\n                Terdaftar sejak\n                " +
                               _vm._s(
                                 _vm.$root.formatDate(
                                   _vm.getuser.created_at,
@@ -67424,7 +67259,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                  Edit Profile\n                "
+                                "\n                  Informasi Akun\n                "
                               )
                             ]
                           )
@@ -67445,7 +67280,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                  Change Password\n                "
+                                "\n                  Ganti Kata Sandi\n                "
                               )
                             ]
                           )
@@ -68778,11 +68613,13 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.status_request !==
-                                                        "done" ||
+                                                      (req.status_request !==
+                                                        "waiting" &&
+                                                        req.status_request !==
+                                                          "done") ||
                                                       req.is_solved === "N",
                                                     expression:
-                                                      "(req.status_request !== 'done') || (req.is_solved === 'N')"
+                                                      "(req.status_request !== 'waiting' && req.status_request !== 'done') || (req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },

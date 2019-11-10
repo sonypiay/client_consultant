@@ -109,8 +109,6 @@ class ConsultantUser extends Model
   {
     $fullname = $request->fullname;
     $email = $request->email;
-    $type = $request->type;
-    $gender = $request->gender;
     $address = $request->address;
     $phone_number = $request->phone_number;
     $city = $request->city;
@@ -118,12 +116,9 @@ class ConsultantUser extends Model
 
     $getconsult = $this->getProfile();
     $getconsult->consultant_fullname = $fullname;
-    $getconsult->consultant_type = $type;
     $getconsult->consultant_phone_number = $phone_number;
     $getconsult->consultant_address = $address;
     $getconsult->city_id = $city;
-    if( $type === 'individual' ) $getconsult->consultant_gender = $gender;
-    else $getconsult->consultant_gender = null;
 
     if( $getconsult->consultant_email === $email )
     {

@@ -244,24 +244,6 @@ class AppointmentRequest extends Model
           break;
       }
 
-      array_push( $data_notif, [
-        'parent_id' => $id,
-        'notif_date' => date('Y-m-d H:i:s'),
-        'notif_read' => 'N',
-        'notif_type' => 'request',
-        'notif_message' => $notif_message,
-        'user_id' => $update->consultant_id
-      ]);
-
-      array_push( $data_notif, [
-        'parent_id' => $id,
-        'notif_date' => date('Y-m-d H:i:s'),
-        'notif_read' => 'N',
-        'notif_type' => 'request',
-        'notif_message' => $notif_message,
-        'user_id' => $update->client_id
-      ]);
-
       if( $status === 'solved' )
       {
         $update->is_solved = 'Y';
@@ -276,7 +258,7 @@ class AppointmentRequest extends Model
       }
 
       $update->save();
-      $notification->addNotification( $data_notif );
+      //$notification->addNotification( $data_notif );
     }
 
     return $res;
