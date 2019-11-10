@@ -64134,7 +64134,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Edit\n                      "
+                                                      "\n                        Ubah Jadwal\n                      "
                                                     )
                                                   ]
                                                 )
@@ -68641,7 +68641,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Ubah\n                      "
+                                                      "\n                        Ubah Jadwal\n                      "
                                                     )
                                                   ]
                                                 )
