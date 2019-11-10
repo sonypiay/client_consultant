@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', 'Frontend\PagesController@homepage')->name('homepage');
-Route::get('/search', 'Frontend\PagesController@search_consultant')->name('search_consultant');
-Route::get('/search/consultant', 'Frontend\ConsultantUserController@search_consultant');
+//Route::get('/', 'Frontend\PagesController@homepage')->name('homepage');
+Route::get('/', function() {
+  return redirect()->route('client_login_page');
+});
+//Route::get('/search', 'Frontend\PagesController@search_consultant')->name('search_consultant');
+//Route::get('/search/consultant', 'Frontend\ConsultantUserController@search_consultant');
 
 Route::group(['prefix' => 'client'], function() {
   Route::get('/dashboard', 'Frontend\PagesController@client_dashboard_page')->name('client_dashboard_page');

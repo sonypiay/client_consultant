@@ -37,10 +37,9 @@ class ClientUser extends Model
       'client_user.client_fullname',
       'client_user.client_email',
       'client_user.client_phone_number',
-      'client_user.client_gender',
-      'client_user.client_photo',
       'client_user.client_type',
       'client_user.client_address',
+      'client_user.client_npwp',
       'client_user.created_at',
       'client_user.updated_at',
       'city.city_id',
@@ -108,11 +107,11 @@ class ClientUser extends Model
   {
     $fullname = $request->fullname;
     $type = $request->type;
-    $gender = $request->gender;
     $address = $request->address;
     $phone_number = $request->phone_number;
-    $city = $request->city;
     $email = $request->email;
+    $npwp = $request->npwp;
+    $city = $request->city;
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $getclient = $this->getProfile();
@@ -120,9 +119,8 @@ class ClientUser extends Model
     $getclient->client_type = $type;
     $getclient->client_phone_number = $phone_number;
     $getclient->client_address = $address;
+    $getclient->client_npwp = $npwp;
     $getclient->city_id = $city;
-    if( $type === 'individual' ) $getclient->client_gender = $gender;
-    else $getclient->client_gender = null;
 
     if( $getclient->client_email === $email )
     {
@@ -135,7 +133,7 @@ class ClientUser extends Model
       {
         $res = [
           'responseCode' => 409,
-          'responseMessage' => $email . ' has already taken!'
+          'responseMessage' => $email . ' sudah terdaftar'
         ];
       }
       else
@@ -235,7 +233,7 @@ class ClientUser extends Model
       'client_user.client_fullname'
     )
     ->join('appointment_request', 'client_user.client_id', '=', 'appointment_request.client_id');
-    
+
     if( ! empty( $keywords ) )
     {
       $query = $query->where([

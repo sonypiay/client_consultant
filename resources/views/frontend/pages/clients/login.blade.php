@@ -1,5 +1,5 @@
 @extends('frontend.master')
-@section('title', 'Log in as Client')
+@section('title', 'Masuk Client')
 @section('content')
 <client-login-page />
 @endsection

@@ -3,21 +3,21 @@
     <div class="uk-container">
       <div class="uk-width-2-5 uk-align-center uk-margin-large-top uk-margin-bottom">
         <div class="uk-card uk-card-body uk-card-default card-panel">
-          <div class="uk-card-title card-panel-title">Sign in as Client</div>
+          <div class="uk-card-title card-panel-title">Masuk Client</div>
           <div v-show="messages.successMessage" class="uk-alert-success" uk-alert>{{ messages.successMessage }}</div>
           <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>{{ messages.errorMessage }}</div>
           <form class="uk-form-stacked uk-margin-top" @submit.prevent="doLogin">
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Email Account</label>
+              <label class="uk-form-label gl-label">Alamat Email</label>
               <div class="uk-form-controls">
-                <input type="email" v-model="forms.email" placeholder="Enter your email account" class="uk-input gl-input-default" />
+                <input type="email" v-model="forms.email" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.email" class="uk-text-small uk-text-danger">{{ messages.errors.email }}</div>
             </div>
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Password</label>
+              <label class="uk-form-label gl-label">Kata Sandi</label>
               <div class="uk-form-controls">
-                <input type="password" v-model="forms.password" placeholder="Enter your password" class="uk-input gl-input-default" />
+                <input type="password" v-model="forms.password" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.password" class="uk-text-small uk-text-danger">{{ messages.errors.password }}</div>
             </div>
@@ -26,7 +26,7 @@
             </div>
           </form>
           <div class="uk-text-center uk-margin-small-top card-link">
-            <a :href="$root.url + '/client/signup'">Don't have account? Sign up now</a>
+            <a :href="$root.url + '/client/signup'">Belum punya akun? Daftar sekarang</a>
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default {
       forms: {
         email: '',
         password: '',
-        submit: 'Sign in'
+        submit: 'Masuk'
       },
       messages: {
         errors: {},
@@ -63,12 +63,12 @@ export default {
 
       if( forms.email === '' )
       {
-        this.messages.errors.email = 'Please enter your email';
+        this.messages.errors.email = 'Harap masukkan alamat email anda';
         this.messages.iserror = true;
       }
       if( forms.password === '' )
       {
-        this.messages.errors.password = 'This field is required.';
+        this.messages.errors.password = 'Harap masukkan kata sandi';
         this.messages.iserror = true;
       }
       if( this.messages.iserror === true ) return false;
@@ -82,7 +82,7 @@ export default {
           client_password: forms.password,
         }
       }).then( res => {
-        let message = 'You have successfully signed in.';
+        let message = 'Login berhasil';
         this.messages.successMessage = message;
         swal({ text: message, icon: 'success' });
 
@@ -92,7 +92,7 @@ export default {
       }).catch( err => {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
-        this.forms.submit = 'Sign in';
+        this.forms.submit = 'Masuk';
       });
     }
   }

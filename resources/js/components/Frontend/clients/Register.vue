@@ -3,35 +3,35 @@
     <div class="uk-container">
       <div class="uk-width-2-5 uk-align-center uk-margin-top uk-margin-bottom">
         <div class="uk-card uk-card-body uk-card-default card-panel">
-          <div class="uk-card-title card-panel-title">Sign up as Client</div>
+          <div class="uk-card-title card-panel-title">Masuk Client</div>
           <div v-show="messages.successMessage" class="uk-alert-success" uk-alert>{{ messages.successMessage }}</div>
           <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>{{ messages.errorMessage }}</div>
           <form class="uk-form-stacked uk-margin-top" @submit.prevent="doRegister">
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Fullname</label>
+              <label class="uk-form-label gl-label">Nama Lengkap</label>
               <div class="uk-form-controls">
-                <input type="text" v-model="forms.fullname" placeholder="Fullname" class="uk-input gl-input-default" />
+                <input type="text" v-model="forms.fullname" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.fullname" class="uk-text-small uk-text-danger">{{ messages.errors.fullname }}</div>
             </div>
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Email Account</label>
+              <label class="uk-form-label gl-label">Alamat Email</label>
               <div class="uk-form-controls">
-                <input type="email" v-model="forms.email" placeholder="Email Account" class="uk-input gl-input-default" />
+                <input type="email" v-model="forms.email" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.email" class="uk-text-small uk-text-danger">{{ messages.errors.email }}</div>
             </div>
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Create Password</label>
+              <label class="uk-form-label gl-label">Buat Kata Sandi</label>
               <div class="uk-form-controls">
-                <input type="password" v-model="forms.password" placeholder="Create Password" class="uk-input gl-input-default" />
+                <input type="password" v-model="forms.password" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.password" class="uk-text-small uk-text-danger">{{ messages.errors.password }}</div>
             </div>
             <div class="uk-margin">
               <div class="uk-form-controls">
-                <label><input class="uk-radio" type="radio" v-model="forms.type" value="individual" :checked="forms.type === 'individual'" /> Individual</label>
-                <label class="uk-margin-left"><input class="uk-radio" type="radio" v-model="forms.type" value="company" /> Company</label>
+                <label><input class="uk-radio" type="radio" v-model="forms.type" value="perorangan" :checked="forms.type === 'perorangan'" /> Perorangan</label>
+                <label class="uk-margin-left"><input class="uk-radio" type="radio" v-model="forms.type" value="pt" :checked="forms.type === 'pt'" /> Perusahaan</label>
               </div>
             </div>
             <div class="uk-margin">
@@ -39,7 +39,7 @@
             </div>
           </form>
           <div class="uk-text-center uk-margin-small-top card-link">
-            <a :href="$root.url + '/client/signin'">Already have account? Sign in now</a>
+            <a :href="$root.url + '/client/signin'">Sudah punya akun? Masuk sekarang</a>
           </div>
         </div>
       </div>
@@ -56,8 +56,8 @@ export default {
         fullname: '',
         email: '',
         password: '',
-        type: 'individual',
-        submit: 'Create Account'
+        type: 'perorangan',
+        submit: 'Buat Akun'
       },
       messages: {
         errors: {},
@@ -78,17 +78,17 @@ export default {
 
       if( forms.fullname === '' )
       {
-        this.messages.errors.fullname = 'Please fill your name';
+        this.messages.errors.fullname = 'Masukkan nama Anda';
         this.messages.iserror = true;
       }
       if( forms.email === '' )
       {
-        this.messages.errors.email = 'Please enter your email';
+        this.messages.errors.email = 'Masukkan alamat email Anda';
         this.messages.iserror = true;
       }
       if( forms.password === '' )
       {
-        this.messages.errors.password = 'This field is required.';
+        this.messages.errors.password = 'Masukkan kata sandi.';
         this.messages.iserror = true;
       }
       if( this.messages.iserror === true ) return false;
@@ -104,7 +104,7 @@ export default {
           client_type: forms.type
         }
       }).then( res => {
-        let message = 'You have successfully signed up.';
+        let message = 'Anda berhasil membuat akun.';
         this.messages.successMessage = message;
         swal({ text: message, icon: 'success' });
 
@@ -114,7 +114,7 @@ export default {
       }).catch( err => {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
-        this.forms.submit = 'Create Account';
+        this.forms.submit = 'Buat Akun';
       });
     }
   }

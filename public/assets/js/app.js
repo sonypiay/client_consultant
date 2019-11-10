@@ -2110,10 +2110,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['getuser', 'getcity'],
   data: function data() {
@@ -2122,11 +2118,11 @@ __webpack_require__.r(__webpack_exports__);
         fullname: this.getuser.client_fullname,
         email: this.getuser.client_email,
         phone_number: this.getuser.client_phone_number === null ? '' : this.getuser.client_phone_number,
-        gender: this.getuser.client_gender === null ? '' : this.getuser.client_gender,
+        npwp: this.getuser.client_npwp === null ? '' : this.getuser.client_npwp,
         type: this.getuser.client_type,
         address: this.getuser.client_address === null ? '' : this.getuser.client_address,
         city: this.getuser.city_id === null ? '' : this.getuser.city_id,
-        submit: 'Save Changes'
+        submit: 'Simpan Perubahan'
       },
       messages: {
         errors: {},
@@ -2147,7 +2143,7 @@ __webpack_require__.r(__webpack_exports__);
         iserror: false
       };
       var f = this.forms;
-      var message_form = 'This field can not be empty';
+      var message_form = 'Harap diisi';
 
       if (f.fullname === '') {
         this.messages.errors.fullname = message_form;
@@ -2159,8 +2155,8 @@ __webpack_require__.r(__webpack_exports__);
         this.messages.iserror = true;
       }
 
-      if (f.gender === '') {
-        this.messages.errors.gender = message_form;
+      if (f.npwp === '') {
+        this.messages.errors.npwp = message_form;
         this.messages.iserror = true;
       }
 
@@ -2185,11 +2181,11 @@ __webpack_require__.r(__webpack_exports__);
           phone_number: f.phone_number,
           address: f.address,
           city: f.city,
-          gender: f.gender,
+          npwp: f.npwp,
           email: f.email
         }
       }).then(function (res) {
-        var msg = 'Profile updated';
+        var msg = 'Berhasil menyimpan perubahan';
         _this.messages.successMessage = msg;
         swal({
           text: msg,
@@ -2681,7 +2677,7 @@ __webpack_require__.r(__webpack_exports__);
       forms: {
         email: '',
         password: '',
-        submit: 'Sign in'
+        submit: 'Masuk'
       },
       messages: {
         errors: {},
@@ -2702,12 +2698,12 @@ __webpack_require__.r(__webpack_exports__);
       var forms = this.forms;
 
       if (forms.email === '') {
-        this.messages.errors.email = 'Please enter your email';
+        this.messages.errors.email = 'Harap masukkan alamat email anda';
         this.messages.iserror = true;
       }
 
       if (forms.password === '') {
-        this.messages.errors.password = 'This field is required.';
+        this.messages.errors.password = 'Harap masukkan kata sandi';
         this.messages.iserror = true;
       }
 
@@ -2721,7 +2717,7 @@ __webpack_require__.r(__webpack_exports__);
           client_password: forms.password
         }
       }).then(function (res) {
-        var message = 'You have successfully signed in.';
+        var message = 'Login berhasil';
         _this.messages.successMessage = message;
         swal({
           text: message,
@@ -2732,7 +2728,7 @@ __webpack_require__.r(__webpack_exports__);
         }, 2000);
       })["catch"](function (err) {
         if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
-        _this.forms.submit = 'Sign in';
+        _this.forms.submit = 'Masuk';
       });
     }
   }
@@ -3503,8 +3499,8 @@ __webpack_require__.r(__webpack_exports__);
         fullname: '',
         email: '',
         password: '',
-        type: 'individual',
-        submit: 'Create Account'
+        type: 'perorangan',
+        submit: 'Buat Akun'
       },
       messages: {
         errors: {},
@@ -3525,17 +3521,17 @@ __webpack_require__.r(__webpack_exports__);
       var forms = this.forms;
 
       if (forms.fullname === '') {
-        this.messages.errors.fullname = 'Please fill your name';
+        this.messages.errors.fullname = 'Masukkan nama Anda';
         this.messages.iserror = true;
       }
 
       if (forms.email === '') {
-        this.messages.errors.email = 'Please enter your email';
+        this.messages.errors.email = 'Masukkan alamat email Anda';
         this.messages.iserror = true;
       }
 
       if (forms.password === '') {
-        this.messages.errors.password = 'This field is required.';
+        this.messages.errors.password = 'Masukkan kata sandi.';
         this.messages.iserror = true;
       }
 
@@ -3551,7 +3547,7 @@ __webpack_require__.r(__webpack_exports__);
           client_type: forms.type
         }
       }).then(function (res) {
-        var message = 'You have successfully signed up.';
+        var message = 'Anda berhasil membuat akun.';
         _this.messages.successMessage = message;
         swal({
           text: message,
@@ -3562,7 +3558,7 @@ __webpack_require__.r(__webpack_exports__);
         }, 2000);
       })["catch"](function (err) {
         if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
-        _this.forms.submit = 'Create Account';
+        _this.forms.submit = 'Buat Akun';
       });
     }
   }
@@ -60709,7 +60705,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "uk-card-title uk-text-left card-panel-title" },
-          [_vm._v("Account Information")]
+          [_vm._v("Informasi Akun")]
         ),
         _vm._v(" "),
         _c(
@@ -60743,7 +60739,7 @@ var render = function() {
           [
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Fullname")
+                _vm._v("Nama Lengkap")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -60789,7 +60785,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Email")
+                _vm._v("Alamat Email")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -60819,7 +60815,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Phone Number")
+                _vm._v("No. Telepon / Whatsapp")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -60865,7 +60861,53 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Client Type")
+                _vm._v("NPWP")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.npwp,
+                      expression: "forms.npwp"
+                    }
+                  ],
+                  staticClass: "uk-input gl-input-default",
+                  attrs: { type: "tel" },
+                  domProps: { value: _vm.forms.npwp },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "npwp", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.npwp,
+                      expression: "messages.errors.npwp"
+                    }
+                  ],
+                  staticClass: "uk-text-danger uk-text-small"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.npwp))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("Tipe Client")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -60880,14 +60922,14 @@ var render = function() {
                       }
                     ],
                     staticClass: "uk-radio",
-                    attrs: { type: "radio", value: "individual" },
+                    attrs: { type: "radio", value: "perorangan" },
                     domProps: {
-                      checked: _vm.forms.type === "individual",
-                      checked: _vm._q(_vm.forms.type, "individual")
+                      checked: _vm.forms.type === "perorangan",
+                      checked: _vm._q(_vm.forms.type, "perorangan")
                     },
                     on: {
                       change: function($event) {
-                        return _vm.$set(_vm.forms, "type", "individual")
+                        return _vm.$set(_vm.forms, "type", "perorangan")
                       }
                     }
                   }),
@@ -60905,11 +60947,14 @@ var render = function() {
                       }
                     ],
                     staticClass: "uk-radio",
-                    attrs: { type: "radio", value: "company" },
-                    domProps: { checked: _vm._q(_vm.forms.type, "company") },
+                    attrs: { type: "radio", value: "pt" },
+                    domProps: {
+                      checked: _vm.forms.type === "pt",
+                      checked: _vm._q(_vm.forms.type, "pt")
+                    },
                     on: {
                       change: function($event) {
-                        return _vm.$set(_vm.forms, "type", "company")
+                        return _vm.$set(_vm.forms, "type", "pt")
                       }
                     }
                   }),
@@ -60918,92 +60963,9 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.forms.type === "individual",
-                    expression: "forms.type === 'individual'"
-                  }
-                ],
-                staticClass: "uk-margin"
-              },
-              [
-                _c("label", { staticClass: "uk-form-label gl-label" }, [
-                  _vm._v("Gender")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "uk-form-controls" }, [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.forms.gender,
-                          expression: "forms.gender"
-                        }
-                      ],
-                      staticClass: "uk-select gl-input-default",
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.forms,
-                            "gender",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [
-                        _vm._v("- Select your gender -")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "L" } }, [_vm._v("Male")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "P" } }, [
-                        _vm._v("Female")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.messages.errors.gender,
-                        expression: "messages.errors.gender"
-                      }
-                    ],
-                    staticClass: "uk-text-danger uk-text-small"
-                  },
-                  [_vm._v(_vm._s(_vm.messages.errors.gender))]
-                )
-              ]
-            ),
-            _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("City")
+                _vm._v("Kota")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -61041,7 +61003,7 @@ var render = function() {
                   },
                   [
                     _c("option", { attrs: { value: "" } }, [
-                      _vm._v("- Select your city -")
+                      _vm._v("- Pilih kota -")
                     ]),
                     _vm._v(" "),
                     _vm._l(_vm.getcity, function(city) {
@@ -61075,7 +61037,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Address")
+                _vm._v("Alamat")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -61992,7 +61954,7 @@ var render = function() {
             { staticClass: "uk-card uk-card-body uk-card-default card-panel" },
             [
               _c("div", { staticClass: "uk-card-title card-panel-title" }, [
-                _vm._v("Sign in as Client")
+                _vm._v("Masuk Client")
               ]),
               _vm._v(" "),
               _c(
@@ -62043,7 +62005,7 @@ var render = function() {
                 [
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Email Account")
+                      _vm._v("Alamat Email")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -62057,10 +62019,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: {
-                          type: "email",
-                          placeholder: "Enter your email account"
-                        },
+                        attrs: { type: "email" },
                         domProps: { value: _vm.forms.email },
                         on: {
                           input: function($event) {
@@ -62092,7 +62051,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Password")
+                      _vm._v("Kata Sandi")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -62106,10 +62065,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: {
-                          type: "password",
-                          placeholder: "Enter your password"
-                        },
+                        attrs: { type: "password" },
                         domProps: { value: _vm.forms.password },
                         on: {
                           input: function($event) {
@@ -62156,7 +62112,7 @@ var render = function() {
                   _c(
                     "a",
                     { attrs: { href: _vm.$root.url + "/client/signup" } },
-                    [_vm._v("Don't have account? Sign up now")]
+                    [_vm._v("Belum punya akun? Daftar sekarang")]
                   )
                 ]
               )
@@ -63860,7 +63816,7 @@ var render = function() {
             { staticClass: "uk-card uk-card-body uk-card-default card-panel" },
             [
               _c("div", { staticClass: "uk-card-title card-panel-title" }, [
-                _vm._v("Sign up as Client")
+                _vm._v("Masuk Client")
               ]),
               _vm._v(" "),
               _c(
@@ -63911,7 +63867,7 @@ var render = function() {
                 [
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Fullname")
+                      _vm._v("Nama Lengkap")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -63925,7 +63881,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: { type: "text", placeholder: "Fullname" },
+                        attrs: { type: "text" },
                         domProps: { value: _vm.forms.fullname },
                         on: {
                           input: function($event) {
@@ -63957,7 +63913,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Email Account")
+                      _vm._v("Alamat Email")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -63971,7 +63927,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: { type: "email", placeholder: "Email Account" },
+                        attrs: { type: "email" },
                         domProps: { value: _vm.forms.email },
                         on: {
                           input: function($event) {
@@ -64003,7 +63959,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Create Password")
+                      _vm._v("Buat Kata Sandi")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -64017,10 +63973,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: {
-                          type: "password",
-                          placeholder: "Create Password"
-                        },
+                        attrs: { type: "password" },
                         domProps: { value: _vm.forms.password },
                         on: {
                           input: function($event) {
@@ -64063,18 +64016,18 @@ var render = function() {
                             }
                           ],
                           staticClass: "uk-radio",
-                          attrs: { type: "radio", value: "individual" },
+                          attrs: { type: "radio", value: "perorangan" },
                           domProps: {
-                            checked: _vm.forms.type === "individual",
-                            checked: _vm._q(_vm.forms.type, "individual")
+                            checked: _vm.forms.type === "perorangan",
+                            checked: _vm._q(_vm.forms.type, "perorangan")
                           },
                           on: {
                             change: function($event) {
-                              return _vm.$set(_vm.forms, "type", "individual")
+                              return _vm.$set(_vm.forms, "type", "perorangan")
                             }
                           }
                         }),
-                        _vm._v(" Individual")
+                        _vm._v(" Perorangan")
                       ]),
                       _vm._v(" "),
                       _c("label", { staticClass: "uk-margin-left" }, [
@@ -64088,17 +64041,18 @@ var render = function() {
                             }
                           ],
                           staticClass: "uk-radio",
-                          attrs: { type: "radio", value: "company" },
+                          attrs: { type: "radio", value: "pt" },
                           domProps: {
-                            checked: _vm._q(_vm.forms.type, "company")
+                            checked: _vm.forms.type === "pt",
+                            checked: _vm._q(_vm.forms.type, "pt")
                           },
                           on: {
                             change: function($event) {
-                              return _vm.$set(_vm.forms, "type", "company")
+                              return _vm.$set(_vm.forms, "type", "pt")
                             }
                           }
                         }),
-                        _vm._v(" Company")
+                        _vm._v(" Perusahaan")
                       ])
                     ])
                   ]),
@@ -64120,7 +64074,7 @@ var render = function() {
                   _c(
                     "a",
                     { attrs: { href: _vm.$root.url + "/client/signin" } },
-                    [_vm._v("Already have account? Sign in now")]
+                    [_vm._v("Sudah punya akun? Masuk sekarang")]
                   )
                 ]
               )

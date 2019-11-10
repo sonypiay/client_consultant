@@ -1,5 +1,5 @@
 @extends('frontend.master')
-@section('title', 'Sign up as Client')
+@section('title', 'Daftar Client')
 @section('content')
 <client-register-page />
 @endsection
