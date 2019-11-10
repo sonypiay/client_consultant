@@ -26,7 +26,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no upcoming appointment.
+            Tidak ada jadwal permintaan konsultasi.
           </div>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
@@ -43,13 +43,13 @@
                       <li>
                         <a @click="onViewDetail( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
-                          View
+                          Lihat
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'consultant'">
+                      <li>
                         <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
-                          Delete
+                          Hapus
                         </a>
                       </li>
                     </ul>
@@ -65,9 +65,9 @@
                   {{ req.client_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'client'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
+              <div class="uk-margin-small">
+                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Terima</a>
+                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
               </div>
             </div>
           </div>
@@ -133,14 +133,14 @@ export default {
     },
     onUpdateStatus( id, approval )
     {
-      let confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      let confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: confirmation,
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batalkan'
         }
       }).then( val => {
         if( val )
@@ -149,7 +149,7 @@ export default {
             method: 'put',
             url: this.$root.url + '/consultant/status_appointment/' + approval + '/' + id
           }).then( res => {
-            let message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
+            let message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id +' diterima' : 'Permintaan jadwal konsultasi ' + id +' ditolak';
             swal({
               text: message,
               icon: 'success'
@@ -169,11 +169,11 @@ export default {
     {
       swal({
         title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batal'
         }
       }).then( val => {
         if( val )
@@ -182,9 +182,14 @@ export default {
             method: 'delete',
             url: this.$root.url + '/consultant/delete_request/' + id
           }).then( res => {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(() => {
-              this.showRequest();
-            }, 2000);
+              this.showUpcomingRequest();
+            }, 1000);
           }).catch( err => {
             swal({
               text: err.response.statusText,

@@ -5520,35 +5520,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
       switch (status) {
         case 'accept':
-          confirmation = 'Are you sure want to accept this request?';
-          message = 'Request ' + id + ' has been accepted.';
+          confirmation = 'Apakah anda ingin menerima permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' diterima';
           break;
 
         case 'decline':
-          confirmation = 'Are you sure want to decline this request?';
-          message = 'Request ' + id + ' has been declined.';
+          confirmation = 'Apakah anda ingin menolak permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' ditolak';
           break;
 
         case 'cancel':
-          confirmation = 'Are you sure want to cancel this request?';
-          message = 'Request ' + id + ' has been canceled.';
+          confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' dibatalkan';
           break;
 
         default:
-          confirmation = 'Are you sure want to mark this as completed?';
-          message = 'Request ' + id + ' has been completed.';
+          confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
+          message = 'Permintaan jadwal konsultasi ' + id + ' diterima';
       }
 
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: confirmation,
         icon: 'warning',
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batalkan'
         }
       }).then(function (val) {
         if (val) {
@@ -5611,7 +5611,6 @@ document.addEventListener("DOMContentLoaded", function () {
         request.isedit = true;
       }
 
-      console.log(request);
       UIkit.modal('#modal-request').show();
     },
     onCreateRequest: function onCreateRequest() {
@@ -5774,15 +5773,15 @@ document.addEventListener("DOMContentLoaded", function () {
       var _this6 = this;
 
       swal({
-        title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {
@@ -5790,9 +5789,14 @@ document.addEventListener("DOMContentLoaded", function () {
             method: 'delete',
             url: _this6.$root.url + '/consultant/delete_request/' + id
           }).then(function (res) {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(function () {
               _this6.showRequest();
-            }, 2000);
+            }, 1000);
           })["catch"](function (err) {
             swal({
               text: err.response.statusText,
@@ -6096,17 +6100,17 @@ __webpack_require__.r(__webpack_exports__);
     onUpdateStatus: function onUpdateStatus(id, approval) {
       var _this2 = this;
 
-      var confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      var confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: confirmation,
         icon: 'warning',
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batalkan'
         }
       }).then(function (val) {
         if (val) {
@@ -6114,7 +6118,7 @@ __webpack_require__.r(__webpack_exports__);
             method: 'put',
             url: _this2.$root.url + '/consultant/status_appointment/' + approval + '/' + id
           }).then(function (res) {
-            var message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
+            var message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id + ' diterima' : 'Permintaan jadwal konsultasi ' + id + ' ditolak';
             swal({
               text: message,
               icon: 'success'
@@ -6137,14 +6141,14 @@ __webpack_require__.r(__webpack_exports__);
 
       swal({
         title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {
@@ -6152,9 +6156,14 @@ __webpack_require__.r(__webpack_exports__);
             method: 'delete',
             url: _this3.$root.url + '/consultant/delete_request/' + id
           }).then(function (res) {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(function () {
-              _this3.showRequest();
-            }, 2000);
+              _this3.showUpcomingRequest();
+            }, 1000);
           })["catch"](function (err) {
             swal({
               text: err.response.statusText,
@@ -69319,55 +69328,39 @@ var render = function() {
                                                     }
                                                   }),
                                                   _vm._v(
-                                                    "\n                        View\n                      "
+                                                    "\n                        Lihat\n                      "
                                                   )
                                                 ]
                                               )
                                             ]),
                                             _vm._v(" "),
-                                            _c(
-                                              "li",
-                                              {
-                                                directives: [
-                                                  {
-                                                    name: "show",
-                                                    rawName: "v-show",
-                                                    value:
-                                                      req.created_by ===
-                                                      "consultant",
-                                                    expression:
-                                                      "req.created_by === 'consultant'"
-                                                  }
-                                                ]
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    on: {
-                                                      click: function($event) {
-                                                        return _vm.deleteRequest(
-                                                          req.apt_id
-                                                        )
-                                                      }
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deleteRequest(
+                                                        req.apt_id
+                                                      )
                                                     }
-                                                  },
-                                                  [
-                                                    _c("span", {
-                                                      staticClass:
-                                                        "uk-margin-small-right",
-                                                      attrs: {
-                                                        "uk-icon":
-                                                          "icon: trash; ratio: 0.8"
-                                                      }
-                                                    }),
-                                                    _vm._v(
-                                                      "\n                        Delete\n                      "
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
+                                                  }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "uk-margin-small-right",
+                                                    attrs: {
+                                                      "uk-icon":
+                                                        "icon: trash; ratio: 0.8"
+                                                    }
+                                                  }),
+                                                  _vm._v(
+                                                    "\n                        Hapus\n                      "
+                                                  )
+                                                ]
+                                              )
+                                            ])
                                           ]
                                         )
                                       ]
@@ -69410,55 +69403,41 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: req.created_by === "client",
-                                      expression: "req.created_by === 'client'"
+                              _c("div", { staticClass: "uk-margin-small" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onUpdateStatus(
+                                          req.apt_id,
+                                          "accept"
+                                        )
+                                      }
                                     }
-                                  ],
-                                  staticClass: "uk-margin-small"
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onUpdateStatus(
-                                            req.apt_id,
-                                            "accept"
-                                          )
-                                        }
+                                  },
+                                  [_vm._v("Terima")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onUpdateStatus(
+                                          req.apt_id,
+                                          "decline"
+                                        )
                                       }
-                                    },
-                                    [_vm._v("Accept")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onUpdateStatus(
-                                            req.apt_id,
-                                            "decline"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Decline")]
-                                  )
-                                ]
-                              )
+                                    }
+                                  },
+                                  [_vm._v("Tolak")]
+                                )
+                              ])
                             ]
                           )
                         ])
@@ -69481,7 +69460,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "uk-margin-remove" }, [
         _c("span", { staticClass: "far fa-frown" })
       ]),
-      _vm._v("\n          You have no upcoming appointment.\n        ")
+      _vm._v("\n          Tidak ada jadwal permintaan konsultasi.\n        ")
     ])
   }
 ]

@@ -397,29 +397,29 @@ export default {
 
       switch (status) {
         case 'accept':
-          confirmation = 'Are you sure want to accept this request?';
-          message = 'Request ' + id + ' has been accepted.';
+          confirmation = 'Apakah anda ingin menerima permintaan ini?';
+          message = 'Permintaan jadwal konsultasi ' + id +' diterima';
           break;
         case 'decline':
-          confirmation = 'Are you sure want to decline this request?';
-          message = 'Request ' + id + ' has been declined.';
+        confirmation = 'Apakah anda ingin menolak permintaan ini?';
+        message = 'Permintaan jadwal konsultasi ' + id +' ditolak';
           break;
         case 'cancel':
-          confirmation = 'Are you sure want to cancel this request?';
-          message = 'Request ' + id + ' has been canceled.';
+        confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
+        message = 'Permintaan jadwal konsultasi ' + id +' dibatalkan';
           break;
         default:
-          confirmation = 'Are you sure want to mark this as completed?';
-          message = 'Request ' + id + ' has been completed.';
+        confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
+        message = 'Permintaan jadwal konsultasi ' + id +' diterima';
       }
 
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: confirmation,
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batalkan'
         }
       }).then( val => {
         if( val )
@@ -485,7 +485,6 @@ export default {
         request.submit = 'Simpan Perubahan';
         request.isedit = true;
       }
-      console.log( request );
       UIkit.modal('#modal-request').show();
     },
     onCreateRequest()
@@ -652,12 +651,12 @@ export default {
     deleteRequest( id )
     {
       swal({
-        title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batal'
         }
       }).then( val => {
         if( val )
@@ -666,9 +665,14 @@ export default {
             method: 'delete',
             url: this.$root.url + '/consultant/delete_request/' + id
           }).then( res => {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(() => {
               this.showRequest();
-            }, 2000);
+            }, 1000);
           }).catch( err => {
             swal({
               text: err.response.statusText,
