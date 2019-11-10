@@ -28,11 +28,12 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Topik</label>
             <div class="uk-form-controls">
-              <select class="uk-select gl-input-default" v-model="forms.request.servicetopic">
+              <select class="uk-select gl-input-default" v-model="forms.request.service_topic">
                 <option value="">-- Pilih Topik --</option>
                 <option v-for="topic in servicetopic.data" :value="topic.topic_id">{{ topic.topic_name }}</option>
               </select>
             </div>
+            <div v-show="messages.errors.service_topic" class="uk-text-small uk-text-danger">{{ messages.errors.service_topic }}</div>
           </div>
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Pilih Jadwal</label>
@@ -51,7 +52,7 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Waktu</label>
             <div class="uk-form-controls">
-              <select class="uk-select gl-input-default" v-model="forms.request.servicetime">
+              <select class="uk-select gl-input-default" v-model="forms.request.service_time">
                 <option value="">-- Pilih waktu --</option>
                 <option value="pagi">Pagi</option>
                 <option value="siang">Siang</option>
@@ -59,7 +60,7 @@
                 <option value="malam">Malam</option>
               </select>
             </div>
-            <div v-show="messages.errors.servicetime" class="uk-text-small uk-text-danger">{{ messages.errors.servicetime }}</div>
+            <div v-show="messages.errors.service_time" class="uk-text-small uk-text-danger">{{ messages.errors.service_time }}</div>
           </div>
           <div class="uk-margin">
             <button class="uk-button uk-button-default gl-button-default" v-html="forms.request.submit"></button>
@@ -280,8 +281,8 @@ export default {
             end: new Date()
           },
           isedit: false,
-          servicetime: '',
-          servicetopic: '',
+          service_time: '',
+          service_topic: '',
           submit: 'Buat Permintaan'
         }
       },
@@ -387,8 +388,8 @@ export default {
       {
         request.selectedDate.start = new Date();
         request.selectedDate.end = new Date();
-        request.servicetime = '';
-        request.servicetopic = '';
+        request.service_time = '';
+        request.service_topic = '';
         request.service_id = '';
         request.submit = 'Buat Permintaan';
         request.isedit = false;
@@ -397,13 +398,14 @@ export default {
       {
         request.selectedDate.start = new Date( data.start_date );
         request.selectedDate.end = new Date( data.end_date );
-        this.datepicker.mindate = new Date( data.end_date );
-        request.servicetime = data.service_time;
-        request.servicetopic = data.service_topic;
+        request.service_time = data.service_time;
+        request.service_topic = data.service_topic;
         request.service_id = data.service_id;
         request.submit = 'Simpan Perubahan';
         request.isedit = true;
+        this.datepicker.mindate = new Date( data.end_date );
       }
+
       UIkit.modal('#modal-request').show();
     },
     onCreateRequest()
@@ -414,8 +416,10 @@ export default {
         successMessage: '',
         iserror: false
       }
+
       let message_form = 'Harap diisi';
       let request = this.forms.request;
+
       if( request.service_topic === '' )
       {
         this.messages.errors.service_topic = message_form;
@@ -428,23 +432,20 @@ export default {
       }
 
       if( this.messages.iserror === true ) return false;
-      let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
-      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      let consult_id = this.getuser.consultant_id;
-      let client_id = this.forms.request.client.client_id;
-      let description = this.forms.request.description;
-      let created_by = 'consultant';
+      let start_date = this.$root.formatDate( request.selectedDate.start, 'YYYY-MM-DD' );
+      let end_date = this.$root.formatDate( request.selectedDate.end, 'YYYY-MM-DD' );
+      let service_time = request.service_time;
+      let service_topic = request.service_topic;
 
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
         url: this.$root.url + '/consultant/add_request',
         params: {
-          schedule_date: schedule_date,
-          consult_id: consult_id,
-          client_id: client_id,
-          description: description,
-          created_by: created_by
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
         }
       }).then( res => {
         let message = 'Request appointment has been successfully created.'
@@ -473,39 +474,39 @@ export default {
         iserror: false
       }
 
-      let message_form = 'This field must be required';
-      if( this.forms.request.client.client_name === '' )
+      let message_form = 'Harap diisi';
+      let request = this.forms.request;
+
+      if( request.service_topic === '' )
       {
-        this.messages.errors.client_name = message_form;
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
+      if( request.service_time === '' )
       {
-        this.messages.errors.timepicker = message_form;
-        this.messages.iserror = true;
-      }
-      if( this.forms.request.description === '' )
-      {
-        this.messages.errors.description = message_form;
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if( this.messages.iserror === true ) return false;
 
-      let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
-      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      let description = this.forms.request.description;
+      let start_date = this.$root.formatDate( request.selectedDate.start, 'YYYY-MM-DD' );
+      let end_date = this.$root.formatDate( request.selectedDate.end, 'YYYY-MM-DD' );
+      let service_time = request.service_time;
+      let service_topic = request.service_topic;
 
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/consultant/save_request/' + this.forms.request.id,
+        url: this.$root.url + '/consultant/save_request/' + request.service_id,
         params: {
-          schedule_date: schedule_date,
-          description: description
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
         }
       }).then( res => {
-        let message = 'Request ' + this.forms.request.id + ' updated.';
+        let message = 'Berhasil menyimpan perubahan';
         this.messages.successMessage = message;
         swal({
           text: message,
@@ -517,7 +518,7 @@ export default {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
-        this.forms.request.submit = 'Save Changes';
+        request.submit = 'Save Changes';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });

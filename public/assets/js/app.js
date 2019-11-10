@@ -3670,6 +3670,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3723,8 +3724,8 @@ document.addEventListener("DOMContentLoaded", function () {
             end: new Date()
           },
           isedit: false,
-          servicetime: '',
-          servicetopic: '',
+          service_time: '',
+          service_topic: '',
           submit: 'Buat Permintaan'
         }
       },
@@ -3836,20 +3837,20 @@ document.addEventListener("DOMContentLoaded", function () {
       if (data === undefined) {
         request.selectedDate.start = new Date();
         request.selectedDate.end = new Date();
-        request.servicetime = '';
-        request.servicetopic = '';
+        request.service_time = '';
+        request.service_topic = '';
         request.service_id = '';
         request.submit = 'Buat Permintaan';
         request.isedit = false;
       } else {
         request.selectedDate.start = new Date(data.start_date);
         request.selectedDate.end = new Date(data.end_date);
-        this.datepicker.mindate = new Date(data.end_date);
-        request.servicetime = data.service_time;
-        request.servicetopic = data.service_topic;
+        request.service_time = data.service_time;
+        request.service_topic = data.service_topic;
         request.service_id = data.service_id;
         request.submit = 'Simpan Perubahan';
         request.isedit = true;
+        this.datepicker.mindate = new Date(data.end_date);
       }
 
       UIkit.modal('#modal-request').show();
@@ -3877,22 +3878,19 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (this.messages.iserror === true) return false;
-      var datepicker = this.$root.formatDate(this.forms.request.selectedDate, 'YYYY-MM-DD');
-      var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      var consult_id = this.getuser.consultant_id;
-      var client_id = this.forms.request.client.client_id;
-      var description = this.forms.request.description;
-      var created_by = 'consultant';
+      var start_date = this.$root.formatDate(request.selectedDate.start, 'YYYY-MM-DD');
+      var end_date = this.$root.formatDate(request.selectedDate.end, 'YYYY-MM-DD');
+      var service_time = request.service_time;
+      var service_topic = request.service_topic;
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
         url: this.$root.url + '/consultant/add_request',
         params: {
-          schedule_date: schedule_date,
-          consult_id: consult_id,
-          client_id: client_id,
-          description: description,
-          created_by: created_by
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
         }
       }).then(function (res) {
         var message = 'Request appointment has been successfully created.';
@@ -3921,37 +3919,36 @@ document.addEventListener("DOMContentLoaded", function () {
         successMessage: '',
         iserror: false
       };
-      var message_form = 'This field must be required';
+      var message_form = 'Harap diisi';
+      var request = this.forms.request;
 
-      if (this.forms.request.client.client_name === '') {
-        this.messages.errors.client_name = message_form;
+      if (request.service_topic === '') {
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
 
-      if (this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '') {
-        this.messages.errors.timepicker = message_form;
-        this.messages.iserror = true;
-      }
-
-      if (this.forms.request.description === '') {
-        this.messages.errors.description = message_form;
+      if (request.service_time === '') {
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if (this.messages.iserror === true) return false;
-      var datepicker = this.$root.formatDate(this.forms.request.selectedDate, 'YYYY-MM-DD');
-      var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      var description = this.forms.request.description;
+      var start_date = this.$root.formatDate(request.selectedDate.start, 'YYYY-MM-DD');
+      var end_date = this.$root.formatDate(request.selectedDate.end, 'YYYY-MM-DD');
+      var service_time = request.service_time;
+      var service_topic = request.service_topic;
       this.forms.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/consultant/save_request/' + this.forms.request.id,
+        url: this.$root.url + '/consultant/save_request/' + request.service_id,
         params: {
-          schedule_date: schedule_date,
-          description: description
+          start_date: start_date,
+          end_date: end_date,
+          topic: service_topic,
+          service_time: service_time
         }
       }).then(function (res) {
-        var message = 'Request ' + _this4.forms.request.id + ' updated.';
+        var message = 'Berhasil menyimpan perubahan';
         _this4.messages.successMessage = message;
         swal({
           text: message,
@@ -3964,7 +3961,7 @@ document.addEventListener("DOMContentLoaded", function () {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
-        _this4.forms.request.submit = 'Save Changes';
+        request.submit = 'Save Changes';
         if (err.response.status === 500) _this4.messages.errorMessage = err.response.statusText;else _this4.messages.errorMessage = err.response.data.responseMessage;
       });
     },
@@ -64494,8 +64491,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.forms.request.servicetopic,
-                            expression: "forms.request.servicetopic"
+                            value: _vm.forms.request.service_topic,
+                            expression: "forms.request.service_topic"
                           }
                         ],
                         staticClass: "uk-select gl-input-default",
@@ -64511,7 +64508,7 @@ var render = function() {
                               })
                             _vm.$set(
                               _vm.forms.request,
-                              "servicetopic",
+                              "service_topic",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
@@ -64534,7 +64531,23 @@ var render = function() {
                       ],
                       2
                     )
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.messages.errors.service_topic,
+                          expression: "messages.errors.service_topic"
+                        }
+                      ],
+                      staticClass: "uk-text-small uk-text-danger"
+                    },
+                    [_vm._v(_vm._s(_vm.messages.errors.service_topic))]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
@@ -64588,8 +64601,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.forms.request.servicetime,
-                            expression: "forms.request.servicetime"
+                            value: _vm.forms.request.service_time,
+                            expression: "forms.request.service_time"
                           }
                         ],
                         staticClass: "uk-select gl-input-default",
@@ -64605,7 +64618,7 @@ var render = function() {
                               })
                             _vm.$set(
                               _vm.forms.request,
-                              "servicetime",
+                              "service_time",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
@@ -64644,13 +64657,13 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.messages.errors.servicetime,
-                          expression: "messages.errors.servicetime"
+                          value: _vm.messages.errors.service_time,
+                          expression: "messages.errors.service_time"
                         }
                       ],
                       staticClass: "uk-text-small uk-text-danger"
                     },
-                    [_vm._v(_vm._s(_vm.messages.errors.servicetime))]
+                    [_vm._v(_vm._s(_vm.messages.errors.service_time))]
                   )
                 ]),
                 _vm._v(" "),
