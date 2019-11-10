@@ -1,5 +1,5 @@
 @extends('frontend.master')
-@section('title', 'Edit Profile')
+@section('title', 'Profil Client')
 @section('content')
 <client-editprofile-page
 :haslogin="{{ json_encode( $hasLogin ) }}"

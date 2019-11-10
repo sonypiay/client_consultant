@@ -2498,7 +2498,7 @@ __webpack_require__.r(__webpack_exports__);
       forms: {
         password: '',
         confirmpassword: '',
-        submit: 'Change Password'
+        submit: 'Ganti Kata Sandi'
       },
       messages: {
         errors: {},
@@ -2518,7 +2518,7 @@ __webpack_require__.r(__webpack_exports__);
         errorMessage: '',
         iserror: false
       };
-      var msg_form = 'This field is required';
+      var msg_form = 'Harap diisi';
 
       if (this.forms.password === '') {
         this.messages.errors.password = msg_form;
@@ -2526,7 +2526,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.forms.password !== this.forms.confirmpassword) {
-        this.messages.errors.confirmpassword = 'Your password did not match.';
+        this.messages.errors.confirmpassword = 'Kata sandi tidak sama';
         this.messages.iserror = true;
       }
 
@@ -2539,10 +2539,10 @@ __webpack_require__.r(__webpack_exports__);
           password: this.forms.password
         }
       }).then(function (res) {
-        _this.messages.successMessage = 'Your password has been changed';
-        _this.forms.submit = 'Change Password';
+        _this.messages.successMessage = 'Kata sandi berhasil diganti.';
+        _this.forms.submit = 'Ganti Kata Sandi';
       })["catch"](function (err) {
-        _this.forms.submit = 'Change Password';
+        _this.forms.submit = 'Ganti Kata Sandi';
         _this.messages.errorMessage = err.response.statusText;
       });
     }
@@ -61602,7 +61602,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "uk-card-title uk-text-left card-panel-title" },
-          [_vm._v("Change Password")]
+          [_vm._v("Ganti Kata Sandi")]
         ),
         _vm._v(" "),
         _c(
@@ -61653,7 +61653,7 @@ var render = function() {
           [
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("New Password")
+                _vm._v("Kata Sandi Baru")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -61699,7 +61699,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("New Password Confirmation")
+                _vm._v("Konfirmasi Kata Sandi")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -61817,7 +61817,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "profile-join" }, [
                           _vm._v(
-                            "\n                Member since\n                " +
+                            "\n                Terdaftar sejak\n                " +
                               _vm._s(
                                 _vm.$root.formatDate(
                                   _vm.getuser.created_at,
@@ -61849,7 +61849,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                  Edit Profile\n                "
+                                "\n                  Informasi Akun\n                "
                               )
                             ]
                           )
@@ -61870,7 +61870,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                  Change Password\n                "
+                                "\n                  Ganti Kata Sandi\n                "
                               )
                             ]
                           )
@@ -82411,7 +82411,7 @@ var app = new Vue({
   data: {
     url: document.location.origin,
     formatDate: function formatDate(str, format) {
-      var res = moment(str).format(format);
+      var res = moment(str).locale('id').format(format);
       return res;
     },
     getFormatFile: function getFormatFile(files) {

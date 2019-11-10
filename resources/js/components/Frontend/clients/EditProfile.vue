@@ -13,19 +13,19 @@
               <div class="uk-text-center uk-margin-bottom sidebar-profile">
                 <div class="profile-name">{{ getuser.client_fullname }}</div>
                 <div class="profile-join">
-                  Member since
+                  Terdaftar sejak
                   {{ $root.formatDate( getuser.created_at, 'DD MMM, YYYY' ) }}
                 </div>
               </div>
               <ul class="uk-nav uk-nav-default nav-profile">
                 <li>
                   <a :class="{'active': navpage === 'account_information'}" @click="navpage = 'account_information'">
-                    Edit Profile
+                    Informasi Akun
                   </a>
                 </li>
                 <li>
                   <a :class="{'active': navpage === 'edit_password'}" @click="navpage = 'edit_password'">
-                    Change Password
+                    Ganti Kata Sandi
                   </a>
                 </li>
               </ul>

@@ -37,7 +37,7 @@ const app = new Vue({
     data: {
       url: document.location.origin,
       formatDate(str, format) {
-        var res = moment(str).format(format);
+        var res = moment(str).locale('id').format(format);
         return res;
       },
       getFormatFile(files) {
