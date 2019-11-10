@@ -6,8 +6,8 @@
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': navevent === 'appointment'}">Upcoming Appointment</a></li>
-            <li><a :class="{'active': navevent === 'meeting'}">Upcoming Event</a></li>
+            <li><a :class="{'active': navevent === 'appointment'}">Jadwal Konsultasi</a></li>
+            <li><a :class="{'active': navevent === 'meeting'}">Jadwal Acara</a></li>
           </ul>
         </nav>
       </div>
@@ -109,7 +109,7 @@ export default {
     showUpcomingRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/consultant/request_list/waiting_respond?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/consultant/request_list/waiting?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({

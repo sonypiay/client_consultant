@@ -6,7 +6,7 @@
       <div class="uk-container">
         <nav class="uk-navbar">
           <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'waiting_respond'}" @click="status_request = 'waiting_respond'; showUpcomingRequest()">Upcoming Appointment</a></li>
+            <li><a :class="{'active': status_request === 'waiting'}" @click="status_request = 'waiting'; showUpcomingRequest()">Jadwal Konsultasi</a></li>
           </ul>
         </nav>
       </div>

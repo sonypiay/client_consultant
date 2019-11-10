@@ -4877,7 +4877,7 @@ __webpack_require__.r(__webpack_exports__);
       forms: {
         password: '',
         confirmpassword: '',
-        submit: 'Change Password'
+        submit: 'Ganti Kata Sandi'
       },
       messages: {
         errors: {},
@@ -4897,7 +4897,7 @@ __webpack_require__.r(__webpack_exports__);
         errorMessage: '',
         iserror: false
       };
-      var msg_form = 'This field is required';
+      var msg_form = 'Harap diisi';
 
       if (this.forms.password === '') {
         this.messages.errors.password = msg_form;
@@ -4905,7 +4905,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.forms.password !== this.forms.confirmpassword) {
-        this.messages.errors.confirmpassword = 'Your password did not match.';
+        this.messages.errors.confirmpassword = 'Kata sandi tidak sama';
         this.messages.iserror = true;
       }
 
@@ -4918,10 +4918,10 @@ __webpack_require__.r(__webpack_exports__);
           password: this.forms.password
         }
       }).then(function (res) {
-        _this.messages.successMessage = 'Your password has been changed';
-        _this.forms.submit = 'Change Password';
+        _this.messages.successMessage = 'Kata sandi berhasil diganti';
+        _this.forms.submit = 'Ganti Kata Sandi';
       })["catch"](function (err) {
-        _this.forms.submit = 'Change Password';
+        _this.forms.submit = 'Ganti Kata Sandi';
         _this.messages.errorMessage = err.response.statusText;
       });
     }
@@ -6072,7 +6072,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/consultant/request_list/waiting_respond?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/consultant/request_list/waiting?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -62286,7 +62286,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("My Appointment")])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Dashboard")])
     ])
   }
 ]
@@ -65952,15 +65952,15 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    class: { active: _vm.status_request === "waiting_respond" },
+                    class: { active: _vm.status_request === "waiting" },
                     on: {
                       click: function($event) {
-                        _vm.status_request = "waiting_respond"
+                        _vm.status_request = "waiting"
                         _vm.showUpcomingRequest()
                       }
                     }
                   },
-                  [_vm._v("Upcoming Appointment")]
+                  [_vm._v("Jadwal Konsultasi")]
                 )
               ])
             ])
@@ -66979,7 +66979,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("My Event")])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Dashboard")])
     ])
   }
 ]
@@ -67012,7 +67012,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "uk-card-title uk-text-left card-panel-title" },
-          [_vm._v("Change Password")]
+          [_vm._v("Ganti Kata Sandi")]
         ),
         _vm._v(" "),
         _c(
@@ -67063,7 +67063,7 @@ var render = function() {
           [
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("New Password")
+                _vm._v("Kata Sandi Baru")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -67109,7 +67109,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("New Password Confirmation")
+                _vm._v("Konfirmasi Kata Sandi")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
@@ -69198,13 +69198,13 @@ var render = function() {
             _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
               _c("li", [
                 _c("a", { class: { active: _vm.navevent === "appointment" } }, [
-                  _vm._v("Upcoming Appointment")
+                  _vm._v("Jadwal Konsultasi")
                 ])
               ]),
               _vm._v(" "),
               _c("li", [
                 _c("a", { class: { active: _vm.navevent === "meeting" } }, [
-                  _vm._v("Upcoming Event")
+                  _vm._v("Jadwal Acara")
                 ])
               ])
             ])

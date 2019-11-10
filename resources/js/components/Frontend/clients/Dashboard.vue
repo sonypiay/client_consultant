@@ -5,7 +5,7 @@
     :getuser="getuser" />
 
     <div class="uk-padding banner-index_header">
-      <div class="uk-container">My Appointment</div>
+      <div class="uk-container">Dashboard</div>
     </div>
     <request-appointment />
   </div>
