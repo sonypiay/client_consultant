@@ -143,7 +143,7 @@ class AppointmentRequest extends Model
         $this->request_to     = 'client';
         $this->consultant_id  = $user_id;
       }
-      
+
       $this->created_by       = $created_by;
       $this->schedule_date    = $schedule_date;
       $this->location         = $location;
@@ -186,20 +186,23 @@ class AppointmentRequest extends Model
     $service_topic  = $request->topic;
     $created_by     = $request->created_by;
     $res            = ['responseCode' => 200, 'responseMessage' => ''];
-    $getrequest     = $this->where('apt_id', $id)->first();
+
+    $getrequest                 = $this->where('apt_id', $id)->first();
+    $getrequest->location       = $location;
+    $getrequest->service_topic  = $service_topic;
+    $getrequest->created_by     = $created_by;
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
-      $current_schedule           = new DateTime( $getrequest->schedule_date );
-      $getrequest->location       = $location;
-      $getrequest->service_topic  = $service_topic;
-      $getrequest->created_by     = $created_by;
+      if( session()->has('isClient') ) $getrequest->request_to      = 'consultant';
+      if( session()->has('isConsultant') ) $getrequest->request_to  = 'consultant';
 
+      $current_schedule = new DateTime( $getrequest->schedule_date );
       if( $current_schedule->format('Y-m-d H:i') != $schedule_date )
       {
         $getrequest->status_request = 'waiting';
-        $getrequest->schedule_date = $schedule_date;
-        $getrequest->is_solved = 'P';
+        $getrequest->schedule_date  = $schedule_date;
+        $getrequest->is_solved      = 'P';
         $getrequest->save();
       }
       else
