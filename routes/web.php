@@ -23,6 +23,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/signin', 'Frontend\PagesController@client_login_page')->name('client_login_page');
   Route::get('/signup', 'Frontend\PagesController@client_register_page')->name('client_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
+  Route::get('/myrequest', 'Frontend\PagesController@client_request_page')->name('client_request_page');
   Route::get('/myappointment', 'Frontend\PagesController@client_appointment_page')->name('client_appointment_page');
   Route::get('/logout', 'Frontend\ClientUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ClientUserController@request_list');
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'client'], function() {
 Route::group(['prefix' => 'consultant'], function() {
   Route::get('/dashboard', 'Frontend\PagesController@consultant_dashboard_page')->name('consultant_dashboard_page');
   Route::get('/signin', 'Frontend\PagesController@consultant_login_page')->name('consultant_login_page');
-  Route::get('/signup', 'Frontend\PagesController@consultant_register_page')->name('consultant_register_page');
+  //Route::get('/signup', 'Frontend\PagesController@consultant_register_page')->name('consultant_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@consultant_edit_profile')->name('consultant_edit_profile');
   Route::get('/profile/{id}', 'Frontend\PagesController@view_profile_consultant')->name('view_profile_consultant');
   Route::get('/myappointment', 'Frontend\PagesController@consultant_appointment_page')->name('consultant_appointment_page');
