@@ -132,14 +132,14 @@ export default {
     },
     onUpdateStatus( id, approval )
     {
-      let confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      let confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
       swal({
         title: 'Confirmation',
         text: confirmation,
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batal'
         }
       }).then( val => {
         if( val )
@@ -148,7 +148,7 @@ export default {
             method: 'put',
             url: this.$root.url + '/client/status_appointment/' + approval + '/' + id
           }).then( res => {
-            let message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
+            let message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id +' diterima' : 'Permintaan jadwal konsultasi ' + id +' ditolak';
             swal({
               text: message,
               icon: 'success'
@@ -167,12 +167,12 @@ export default {
     deleteRequest( id )
     {
       swal({
-        title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
-          confirm: { value: true, text: 'Yes' },
-          cancel: 'Cancel'
+          confirm: { value: true, text: 'Ya' },
+          cancel: 'Batal'
         }
       }).then( val => {
         if( val )
@@ -181,9 +181,14 @@ export default {
             method: 'delete',
             url: this.$root.url + '/client/delete_request/' + id
           }).then( res => {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(() => {
-              this.showRequest();
-            }, 2000);
+              this.showUpcomingRequest();
+            }, 1000);
           }).catch( err => {
             swal({
               text: err.response.statusText,

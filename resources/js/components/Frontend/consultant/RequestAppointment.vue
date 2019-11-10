@@ -168,7 +168,7 @@ export default {
     deleteRequest( id )
     {
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {

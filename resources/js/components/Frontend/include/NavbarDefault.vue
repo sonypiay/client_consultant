@@ -56,15 +56,9 @@
                       </a>
                     </li>
                     <li>
-                      <a :href="$root.url + '/client/myrequest'">
-                        <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
-                        Permintaan Konsultasi
-                      </a>
-                    </li>
-                    <li>
                       <a :href="$root.url + '/client/myappointment'">
                         <span class="uk-margin-small-right" uk-icon="icon: calendar; ratio: 0.8"></span>
-                        Jadwal Pertemuan
+                        Jadwal Konsultasi
                       </a>
                     </li>
                     <li>

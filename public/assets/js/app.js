@@ -4425,7 +4425,7 @@ __webpack_require__.r(__webpack_exports__);
     onUpdateStatus: function onUpdateStatus(id, approval) {
       var _this2 = this;
 
-      var confirmation = approval === 'accept' ? 'Are you sure want to accept this request?' : 'Are you sure want to decline this request?';
+      var confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
       swal({
         title: 'Confirmation',
         text: confirmation,
@@ -4433,9 +4433,9 @@ __webpack_require__.r(__webpack_exports__);
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {
@@ -4443,7 +4443,7 @@ __webpack_require__.r(__webpack_exports__);
             method: 'put',
             url: _this2.$root.url + '/client/status_appointment/' + approval + '/' + id
           }).then(function (res) {
-            var message = approval === 'accept' ? 'Request ' + id + ' has been accepted.' : 'Request ' + id + ' has been declined.';
+            var message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id + ' diterima' : 'Permintaan jadwal konsultasi ' + id + ' ditolak';
             swal({
               text: message,
               icon: 'success'
@@ -4465,15 +4465,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       swal({
-        title: 'Confirmation',
-        text: 'Are you sure want to delete this request?',
+        title: 'Konfirmasi',
+        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
           confirm: {
             value: true,
-            text: 'Yes'
+            text: 'Ya'
           },
-          cancel: 'Cancel'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {
@@ -4481,9 +4481,14 @@ __webpack_require__.r(__webpack_exports__);
             method: 'delete',
             url: _this3.$root.url + '/client/delete_request/' + id
           }).then(function (res) {
+            swal({
+              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
             setTimeout(function () {
-              _this3.showRequest();
-            }, 2000);
+              _this3.showUpcomingRequest();
+            }, 1000);
           })["catch"](function (err) {
             swal({
               text: err.response.statusText,
@@ -6140,7 +6145,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       swal({
-        title: 'Confirmation',
+        title: 'Konfirmasi',
         text: 'Apakah anda yakin ingin menghapus permintaan ini?',
         icon: 'warning',
         buttons: {
@@ -6633,12 +6638,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -70808,28 +70807,6 @@ var render = function() {
                                   "a",
                                   {
                                     attrs: {
-                                      href: _vm.$root.url + "/client/myrequest"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: file-edit; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Permintaan Konsultasi\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
                                       href:
                                         _vm.$root.url + "/client/myappointment"
                                     }
@@ -70842,7 +70819,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Jadwal Pertemuan\n                    "
+                                      "\n                      Jadwal Konsultasi\n                    "
                                     )
                                   ]
                                 )
