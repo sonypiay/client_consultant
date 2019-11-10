@@ -5548,7 +5548,7 @@ document.addEventListener("DOMContentLoaded", function () {
             value: true,
             text: 'Ya'
           },
-          cancel: 'Batalkan'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {
@@ -6110,7 +6110,7 @@ __webpack_require__.r(__webpack_exports__);
             value: true,
             text: 'Ya'
           },
-          cancel: 'Batalkan'
+          cancel: 'Batal'
         }
       }).then(function (val) {
         if (val) {

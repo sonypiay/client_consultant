@@ -140,7 +140,7 @@ export default {
         icon: 'warning',
         buttons: {
           confirm: { value: true, text: 'Ya' },
-          cancel: 'Batalkan'
+          cancel: 'Batal'
         }
       }).then( val => {
         if( val )
