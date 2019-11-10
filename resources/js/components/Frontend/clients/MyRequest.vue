@@ -7,7 +7,7 @@
     <view-request-detail :detailrequest="getrequest.details" />
 
     <div class="uk-padding banner-index_header">
-      <div class="uk-container">My Appointment</div>
+      <div class="uk-container">Permintaan Konsultasi</div>
     </div>
 
     <!-- add / update appointment -->
@@ -15,8 +15,8 @@
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">
-          <span v-if="forms.request.isedit">Edit Request Appointment</span>
-          <span v-else>Add Request Appointment</span>
+          <span v-if="forms.request.isedit">Ubah Permintaan</span>
+          <span v-else>Buat Permintaan</span>
         </div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
@@ -129,6 +129,7 @@
     <!-- add / update appointment -->
 
     <div class="uk-container uk-margin-top uk-margin-large-bottom container-request-list">
+      {{ servicetopic }}
       <div class="uk-clearfix uk-margin-bottom">
         <div class="uk-float-left">
           <div class="uk-grid uk-grid-small uk-child-width-auto" uk-grid>
@@ -291,7 +292,8 @@ document.addEventListener("DOMContentLoaded", function() {
 export default {
   props: [
     'haslogin',
-    'getuser'
+    'getuser',
+    'servicetopic'
   ],
   components: {
     VCalendar,

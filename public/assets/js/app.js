@@ -3727,13 +3727,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser'],
+  props: ['haslogin', 'getuser', 'servicetopic'],
   components: {
     VCalendar: v_calendar__WEBPACK_IMPORTED_MODULE_0___default.a,
     'view-request-detail': _ViewRequest_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -64490,8 +64491,8 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
               _vm.forms.request.isedit
-                ? _c("span", [_vm._v("Edit Request Appointment")])
-                : _c("span", [_vm._v("Add Request Appointment")])
+                ? _c("span", [_vm._v("Ubah Permintaan")])
+                : _c("span", [_vm._v("Buat Permintaan")])
             ]),
             _vm._v(" "),
             _c(
@@ -65058,6 +65059,7 @@ var render = function() {
             "uk-container uk-margin-top uk-margin-large-bottom container-request-list"
         },
         [
+          _vm._v("\n    " + _vm._s(_vm.servicetopic) + "\n    "),
           _c("div", { staticClass: "uk-clearfix uk-margin-bottom" }, [
             _c("div", { staticClass: "uk-float-left" }, [
               _c(
@@ -65746,7 +65748,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("My Appointment")])
+      _c("div", { staticClass: "uk-container" }, [
+        _vm._v("Permintaan Konsultasi")
+      ])
     ])
   },
   function() {

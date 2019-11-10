@@ -10,6 +10,7 @@ use App\Database\City;
 use App\Database\Province;
 use App\Database\AppointmentRequest;
 use App\Database\EventSchedule;
+use App\Database\ServiceTopic;
 
 class PagesController extends Controller
 {
@@ -199,10 +200,12 @@ class PagesController extends Controller
     }
 
     $client = new ClientUser;
+    $topic = new ServiceTopic;
     $data['request'] = $request;
     $data['hasLogin']['user'] = 'client';
     $data['hasLogin']['isLogin'] = true;
     $data['getuser'] = $client->getProfile();
+    $data['servicetopic'] = $topic->getTopic();
     return response()->view('frontend.pages.clients.myrequest', $data);
   }
 }

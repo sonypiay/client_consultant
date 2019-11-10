@@ -4,5 +4,6 @@
 <client-view-request
 :haslogin="{{ json_encode( $hasLogin ) }}"
 :getuser="{{ json_encode( $getuser ) }}"
+:servicetopic="{{ json_encode( $servicetopic ) }}"
 />
 @endsection
