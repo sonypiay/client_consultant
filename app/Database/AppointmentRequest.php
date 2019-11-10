@@ -135,12 +135,15 @@ class AppointmentRequest extends Model
       $this->apt_id = $apt_id;
       if( session()->has('isClient') )
       {
-        $this->client_id = $user_id;
+        $this->request_to = 'consultant';
+        $this->client_id  = $user_id;
       }
       else
       {
-        $this->consultant_id = $user_id;
+        $this->request_to     = 'client';
+        $this->consultant_id  = $user_id;
       }
+      
       $this->created_by       = $created_by;
       $this->schedule_date    = $schedule_date;
       $this->location         = $location;

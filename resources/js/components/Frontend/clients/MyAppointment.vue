@@ -316,7 +316,7 @@
                   {{ req.consultant_fullname }}
                 </div>
               </div>
-              <div v-show="req.status_request === 'waiting'" class="uk-margin-small">
+              <div v-show="req.request_to === 'client' && req.status_request === 'waiting'" class="uk-margin-small">
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Terima</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
               </div>

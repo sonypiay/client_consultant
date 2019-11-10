@@ -64376,9 +64376,11 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: req.status_request === "waiting",
+                                      value:
+                                        req.request_to === "client" &&
+                                        req.status_request === "waiting",
                                       expression:
-                                        "req.status_request === 'waiting'"
+                                        "req.request_to === 'client' && req.status_request === 'waiting'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -68731,10 +68733,10 @@ var render = function() {
                                       name: "show",
                                       rawName: "v-show",
                                       value:
-                                        req.created_by === "client" &&
+                                        req.request_to === "consultant" &&
                                         req.status_request === "waiting",
                                       expression:
-                                        "req.created_by === 'client' && req.status_request === 'waiting'"
+                                        "req.request_to === 'consultant' && req.status_request === 'waiting'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
