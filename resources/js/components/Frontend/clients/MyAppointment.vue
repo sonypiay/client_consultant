@@ -676,6 +676,7 @@ export default {
       let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       let service_topic = request.service_topic;
       let location = request.location;
+      let created_by = 'client';
 
       request.submit = '<span uk-spinner></span>';
       axios({
@@ -684,7 +685,8 @@ export default {
         params: {
           schedule_date: schedule_date,
           location: location,
-          topic: service_topic
+          topic: service_topic,
+          created_by: created_by
         }
       }).then( res => {
         let message = 'Berhasil menyimpan perubahan';

@@ -29,18 +29,9 @@
               <div v-show="messages.errors.password" class="uk-text-small uk-text-danger">{{ messages.errors.password }}</div>
             </div>
             <div class="uk-margin">
-              <div class="uk-form-controls">
-                <label><input class="uk-radio" type="radio" v-model="forms.type" value="individual" :checked="forms.type === 'individual'" /> Individual</label>
-                <label class="uk-margin-left"><input class="uk-radio" type="radio" v-model="forms.type" value="company" /> Company</label>
-              </div>
-            </div>
-            <div class="uk-margin">
               <button class="uk-width-1-1 uk-button uk-button-primary gl-button-default" v-html="forms.submit"></button>
             </div>
           </form>
-          <div class="uk-text-center uk-margin-small-top card-link">
-            <a :href="$root.url + '/consultant/signin'">Already have account? Sign in now</a>
-          </div>
         </div>
       </div>
     </div>
@@ -100,8 +91,7 @@ export default {
         params: {
           fullname: forms.fullname,
           email: forms.email,
-          password: forms.password,
-          type: forms.type
+          password: forms.password
         }
       }).then( res => {
         let message = 'You have successfully signed up.';

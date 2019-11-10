@@ -15,8 +15,8 @@
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">
-          <span v-if="forms.request.isedit">Edit Jadwal Pertemuan</span>
-          <span v-else>Buat Jadwal Pertemuan</span>
+          <span v-if="forms.request.isedit">Ubah Jadwal</span>
+          <span v-else>Buat Jadwal</span>
         </div>
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
@@ -300,7 +300,8 @@ document.addEventListener("DOMContentLoaded", function() {
 export default {
   props: [
     'haslogin',
-    'getuser'
+    'getuser',
+    'servicetopic'
   ],
   components: {
     VCalendar,
@@ -491,44 +492,52 @@ export default {
         successMessage: '',
         iserror: false
       }
-      let message_form = 'This field must be required';
-      if( this.forms.request.client.client_name === '' )
+
+      let message_form = 'Harap diisi';
+      let request = this.forms.request;
+
+      if( request.service_topic === '' )
       {
-        this.messages.errors.client_name = message_form;
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
+      if( request.timepicker.hours === '' || request.timepicker.minute === '' )
       {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.description === '' )
+      if( request.location === '' )
       {
-        this.messages.errors.description = message_form;
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
+      if( request.service_time === '' )
+      {
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if( this.messages.iserror === true ) return false;
-      let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
+      let datepicker = this.$root.formatDate( request.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      let consult_id = this.getuser.consultant_id;
-      let client_id = this.forms.request.client.client_id;
-      let description = this.forms.request.description;
+      let service_topic = request.service_topic;
       let created_by = 'consultant';
+      let location = request.location;
+      let user_id = this.getuser.client_id;
 
-      this.forms.submit = '<span uk-spinner></span>';
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
         url: this.$root.url + '/consultant/add_request',
         params: {
           schedule_date: schedule_date,
-          consult_id: consult_id,
-          client_id: client_id,
-          description: description,
-          created_by: created_by
+          location: location,
+          topic: service_topic,
+          created_by: created_by,
+          user_id: user_id
         }
       }).then( res => {
-        let message = 'Request appointment has been successfully created.'
+        let message = 'Jadwal konsultasi berhasil dibuat'
         this.messages.successMessage = message;
         swal({
           text: message,
@@ -540,7 +549,7 @@ export default {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
-        this.forms.submit = 'Create Request';
+        request.submit = 'Buat Jadwal';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });
@@ -554,39 +563,49 @@ export default {
         iserror: false
       }
 
-      let message_form = 'This field must be required';
-      if( this.forms.request.client.client_name === '' )
+      let message_form = 'Harap diisi';
+      let request = this.forms.request;
+
+      if( request.service_topic === '' )
       {
-        this.messages.errors.client_name = message_form;
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '' )
+      if( request.timepicker.hours === '' || request.timepicker.minute === '' )
       {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
-      if( this.forms.request.description === '' )
+      if( request.location === '' )
       {
-        this.messages.errors.description = message_form;
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
+      if( request.service_time === '' )
+      {
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if( this.messages.iserror === true ) return false;
-
-      let datepicker = this.$root.formatDate( this.forms.request.selectedDate, 'YYYY-MM-DD' );
+      let datepicker = this.$root.formatDate( request.selectedDate, 'YYYY-MM-DD' );
       let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      let description = this.forms.request.description;
+      let service_topic = request.service_topic;
+      let location = request.location;
+      let created_by = 'consultant';
 
-      this.forms.submit = '<span uk-spinner></span>';
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/consultant/save_request/' + this.forms.request.id,
+        url: this.$root.url + '/consultant/save_request/' + request.id,
         params: {
           schedule_date: schedule_date,
-          description: description
+          location: location,
+          topic: service_topic,
+          created_by: created_by
         }
       }).then( res => {
-        let message = 'Request ' + this.forms.request.id + ' updated.';
+        let message = 'Berhasil menyimpan perubahan';
         this.messages.successMessage = message;
         swal({
           text: message,
@@ -598,7 +617,7 @@ export default {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
-        this.forms.request.submit = 'Save Changes';
+        request.submit = 'Simpan Perubahan';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });
@@ -663,6 +682,11 @@ export default {
     }
   },
   computed: {
+    selectedDate()
+    {
+      let date = this.forms.request.selectedDate;
+      return this.$root.formatDate( new Date( date ), 'dddd, DD MMMM YYYY' );
+    },
     selectedTime()
     {
       let hours = this.forms.request.timepicker.hours;

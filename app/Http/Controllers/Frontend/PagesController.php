@@ -93,6 +93,17 @@ class PagesController extends Controller
     return response()->view('frontend.pages.clients.editprofile', $data);
   }
 
+  public function consultant_register_page( Request $request )
+  {
+    if( session()->has('isConsultant') )
+    {
+      return redirect()->route('consultant_dashboard_page');
+    }
+
+    $data['request'] = $request;
+    return response()->view('frontend.pages.consultant.register', $data);
+  }
+
   public function consultant_login_page( Request $request )
   {
     if( session()->has('isConsultant') )
@@ -170,10 +181,12 @@ class PagesController extends Controller
     }
 
     $consultant = new ConsultantUser;
-    $data['request'] = $request;
-    $data['hasLogin']['user'] = 'consultant';
-    $data['hasLogin']['isLogin'] = true;
-    $data['getuser'] = $consultant->getProfile();
+    $topic = new ServiceTopic;
+    $data['request']              = $request;
+    $data['hasLogin']['user']     = 'consultant';
+    $data['hasLogin']['isLogin']  = true;
+    $data['getuser']              = $consultant->getProfile();
+    $data['service_topic']        = $topic->getTopic();
     return response()->view('frontend.pages.consultant.appointment', $data);
   }
 
@@ -186,11 +199,11 @@ class PagesController extends Controller
 
     $client = new ClientUser;
     $topic = new ServiceTopic;
-    $data['request'] = $request;
-    $data['hasLogin']['user'] = 'client';
-    $data['hasLogin']['isLogin'] = true;
-    $data['getuser'] = $client->getProfile();
-    $data['service_topic'] = $topic->getTopic();
+    $data['request']              = $request;
+    $data['hasLogin']['user']     = 'client';
+    $data['hasLogin']['isLogin']  = true;
+    $data['getuser']              = $client->getProfile();
+    $data['service_topic']        = $topic->getTopic();
     return response()->view('frontend.pages.clients.appointment', $data);
   }
 

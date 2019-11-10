@@ -38,11 +38,7 @@ class ConsultantUser extends Model
       'consultant_user.consultant_fullname',
       'consultant_user.consultant_email',
       'consultant_user.consultant_phone_number',
-      'consultant_user.consultant_gender',
-      'consultant_user.consultant_photo',
-      'consultant_user.consultant_type',
       'consultant_user.consultant_address',
-      'consultant_user.consultant_biography',
       'consultant_user.created_at',
       'consultant_user.updated_at',
       'city.city_id',
@@ -75,12 +71,11 @@ class ConsultantUser extends Model
 
   public function signup( $request )
   {
-    $consult_id = $this->getConsultantId();
-    $fullname = $request->fullname;
-    $email = $request->email;
-    $password = $request->password;
-    $type = $request->type;
-    $hash_password = Hash::make( $password );
+    $consult_id     = $this->getConsultantId();
+    $fullname       = $request->fullname;
+    $email          = $request->email;
+    $password       = $request->password;
+    $hash_password  = Hash::make( $password );
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $check_email = $this->where('consultant_email', $email);
@@ -97,7 +92,6 @@ class ConsultantUser extends Model
       $this->consultant_fullname = $fullname;
       $this->consultant_email = $email;
       $this->consultant_password = $hash_password;
-      $this->consultant_type = $type;
       $this->save();
 
       $getconsult = $this->where('consultant_email', $email)->first();

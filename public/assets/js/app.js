@@ -3422,6 +3422,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
       var service_topic = request.service_topic;
       var location = request.location;
+      var created_by = 'client';
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
@@ -3429,7 +3430,8 @@ document.addEventListener("DOMContentLoaded", function () {
         params: {
           schedule_date: schedule_date,
           location: location,
-          topic: service_topic
+          topic: service_topic,
+          created_by: created_by
         }
       }).then(function (res) {
         var message = 'Berhasil menyimpan perubahan';
@@ -5449,7 +5451,7 @@ document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser'],
+  props: ['haslogin', 'getuser', 'servicetopic'],
   components: {
     VCalendar: v_calendar__WEBPACK_IMPORTED_MODULE_0___default.a,
     'view-request-detail': _ViewRequest_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -5644,43 +5646,49 @@ document.addEventListener("DOMContentLoaded", function () {
         successMessage: '',
         iserror: false
       };
-      var message_form = 'This field must be required';
+      var message_form = 'Harap diisi';
+      var request = this.forms.request;
 
-      if (this.forms.request.client.client_name === '') {
-        this.messages.errors.client_name = message_form;
+      if (request.service_topic === '') {
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
 
-      if (this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '') {
+      if (request.timepicker.hours === '' || request.timepicker.minute === '') {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
 
-      if (this.forms.request.description === '') {
-        this.messages.errors.description = message_form;
+      if (request.location === '') {
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (request.service_time === '') {
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if (this.messages.iserror === true) return false;
-      var datepicker = this.$root.formatDate(this.forms.request.selectedDate, 'YYYY-MM-DD');
+      var datepicker = this.$root.formatDate(request.selectedDate, 'YYYY-MM-DD');
       var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      var consult_id = this.getuser.consultant_id;
-      var client_id = this.forms.request.client.client_id;
-      var description = this.forms.request.description;
+      var service_topic = request.service_topic;
       var created_by = 'consultant';
-      this.forms.submit = '<span uk-spinner></span>';
+      var location = request.location;
+      var user_id = this.getuser.client_id;
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
         url: this.$root.url + '/consultant/add_request',
         params: {
           schedule_date: schedule_date,
-          consult_id: consult_id,
-          client_id: client_id,
-          description: description,
-          created_by: created_by
+          location: location,
+          topic: service_topic,
+          created_by: created_by,
+          user_id: user_id
         }
       }).then(function (res) {
-        var message = 'Request appointment has been successfully created.';
+        var message = 'Jadwal konsultasi berhasil dibuat';
         _this3.messages.successMessage = message;
         swal({
           text: message,
@@ -5693,7 +5701,7 @@ document.addEventListener("DOMContentLoaded", function () {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
-        _this3.forms.submit = 'Create Request';
+        request.submit = 'Buat Jadwal';
         if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
       });
     },
@@ -5706,37 +5714,47 @@ document.addEventListener("DOMContentLoaded", function () {
         successMessage: '',
         iserror: false
       };
-      var message_form = 'This field must be required';
+      var message_form = 'Harap diisi';
+      var request = this.forms.request;
 
-      if (this.forms.request.client.client_name === '') {
-        this.messages.errors.client_name = message_form;
+      if (request.service_topic === '') {
+        this.messages.errors.service_topic = message_form;
         this.messages.iserror = true;
       }
 
-      if (this.forms.request.timepicker.hours === '' && this.forms.request.timepicker.minute === '') {
+      if (request.timepicker.hours === '' || request.timepicker.minute === '') {
         this.messages.errors.timepicker = message_form;
         this.messages.iserror = true;
       }
 
-      if (this.forms.request.description === '') {
-        this.messages.errors.description = message_form;
+      if (request.location === '') {
+        this.messages.errors.location = message_form;
+        this.messages.iserror = true;
+      }
+
+      if (request.service_time === '') {
+        this.messages.errors.service_time = message_form;
         this.messages.iserror = true;
       }
 
       if (this.messages.iserror === true) return false;
-      var datepicker = this.$root.formatDate(this.forms.request.selectedDate, 'YYYY-MM-DD');
+      var datepicker = this.$root.formatDate(request.selectedDate, 'YYYY-MM-DD');
       var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
-      var description = this.forms.request.description;
-      this.forms.submit = '<span uk-spinner></span>';
+      var service_topic = request.service_topic;
+      var location = request.location;
+      var created_by = 'consultant';
+      request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/consultant/save_request/' + this.forms.request.id,
+        url: this.$root.url + '/consultant/save_request/' + request.id,
         params: {
           schedule_date: schedule_date,
-          description: description
+          location: location,
+          topic: service_topic,
+          created_by: created_by
         }
       }).then(function (res) {
-        var message = 'Request ' + _this4.forms.request.id + ' updated.';
+        var message = 'Berhasil menyimpan perubahan';
         _this4.messages.successMessage = message;
         swal({
           text: message,
@@ -5749,7 +5767,7 @@ document.addEventListener("DOMContentLoaded", function () {
           UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
-        _this4.forms.request.submit = 'Save Changes';
+        request.submit = 'Simpan Perubahan';
         if (err.response.status === 500) _this4.messages.errorMessage = err.response.statusText;else _this4.messages.errorMessage = err.response.data.responseMessage;
       });
     },
@@ -5814,6 +5832,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   },
   computed: {
+    selectedDate: function selectedDate() {
+      var date = this.forms.request.selectedDate;
+      return this.$root.formatDate(new Date(date), 'dddd, DD MMMM YYYY');
+    },
     selectedTime: function selectedTime() {
       var hours = this.forms.request.timepicker.hours;
       var minute = this.forms.request.timepicker.minute;
@@ -5839,15 +5861,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5940,8 +5953,7 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           fullname: forms.fullname,
           email: forms.email,
-          password: forms.password,
-          type: forms.type
+          password: forms.password
         }
       }).then(function (res) {
         var message = 'You have successfully signed up.';
@@ -67735,8 +67747,8 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "modal-title" }, [
               _vm.forms.request.isedit
-                ? _c("span", [_vm._v("Edit Jadwal Pertemuan")])
-                : _c("span", [_vm._v("Buat Jadwal Pertemuan")])
+                ? _c("span", [_vm._v("Ubah Jadwal")])
+                : _c("span", [_vm._v("Buat Jadwal")])
             ]),
             _vm._v(" "),
             _c(
@@ -69316,77 +69328,12 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
-                    _c("div", { staticClass: "uk-form-controls" }, [
-                      _c("label", [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.forms.type,
-                              expression: "forms.type"
-                            }
-                          ],
-                          staticClass: "uk-radio",
-                          attrs: { type: "radio", value: "individual" },
-                          domProps: {
-                            checked: _vm.forms.type === "individual",
-                            checked: _vm._q(_vm.forms.type, "individual")
-                          },
-                          on: {
-                            change: function($event) {
-                              return _vm.$set(_vm.forms, "type", "individual")
-                            }
-                          }
-                        }),
-                        _vm._v(" Individual")
-                      ]),
-                      _vm._v(" "),
-                      _c("label", { staticClass: "uk-margin-left" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.forms.type,
-                              expression: "forms.type"
-                            }
-                          ],
-                          staticClass: "uk-radio",
-                          attrs: { type: "radio", value: "company" },
-                          domProps: {
-                            checked: _vm._q(_vm.forms.type, "company")
-                          },
-                          on: {
-                            change: function($event) {
-                              return _vm.$set(_vm.forms, "type", "company")
-                            }
-                          }
-                        }),
-                        _vm._v(" Company")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "uk-margin" }, [
                     _c("button", {
                       staticClass:
                         "uk-width-1-1 uk-button uk-button-primary gl-button-default",
                       domProps: { innerHTML: _vm._s(_vm.forms.submit) }
                     })
                   ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "uk-text-center uk-margin-small-top card-link" },
-                [
-                  _c(
-                    "a",
-                    { attrs: { href: _vm.$root.url + "/consultant/signin" } },
-                    [_vm._v("Already have account? Sign in now")]
-                  )
                 ]
               )
             ]

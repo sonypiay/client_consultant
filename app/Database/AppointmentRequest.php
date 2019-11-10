@@ -73,10 +73,17 @@ class AppointmentRequest extends Model
     {
       array_push( $whereClauses, ['client_user.client_id', session()->get('clientId')]);
     }
+
     if( session()->has('isConsultant') )
     {
-      array_push( $whereClauses, ['consultant_user.consultant_id', session()->get('consultantId')]);
+      $consultant = session()->get('consultantId');
+      $query = $query->where(function( $q ) use ( $consultant ) {
+        $q->where('appointment_request.consultant_id', $consultant)
+        ->orWhereNull('appointment_request.consultant_id');
+      });
+      //array_push( $whereClauses, ['consultant_user.consultant_id', session()->get('consultantId')]);
     }
+
     $query = $query->where($whereClauses);
 
     if( ! empty( $keywords ) )
@@ -174,6 +181,7 @@ class AppointmentRequest extends Model
     $schedule_date  = $request->schedule_date;
     $location       = $request->location;
     $service_topic  = $request->topic;
+    $created_by     = $request->created_by;
     $res            = ['responseCode' => 200, 'responseMessage' => ''];
     $getrequest     = $this->where('apt_id', $id)->first();
 
@@ -182,6 +190,7 @@ class AppointmentRequest extends Model
       $current_schedule           = new DateTime( $getrequest->schedule_date );
       $getrequest->location       = $location;
       $getrequest->service_topic  = $service_topic;
+      $getrequest->created_by     = $created_by;
 
       if( $current_schedule->format('Y-m-d H:i') != $schedule_date )
       {

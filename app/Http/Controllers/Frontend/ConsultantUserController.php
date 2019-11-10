@@ -40,7 +40,7 @@ class ConsultantUserController extends Controller
       $consultantUser->logout();
     }
 
-    return redirect()->route('homepage');
+    return redirect()->route('consultant_login_page');
   }
 
   public function change_password( Request $request, ConsultantUser $consultantUser )
