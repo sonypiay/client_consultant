@@ -6073,6 +6073,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -69146,6 +69152,28 @@ var render = function() {
                                   "a",
                                   {
                                     attrs: {
+                                      href: _vm.$root.url + "/client/myrequest"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: file-edit; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Permintaan Konsultasi\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
                                       href:
                                         _vm.$root.url + "/client/myappointment"
                                     }
@@ -69154,7 +69182,7 @@ var render = function() {
                                     _c("span", {
                                       staticClass: "uk-margin-small-right",
                                       attrs: {
-                                        "uk-icon": "icon: file-edit; ratio: 0.8"
+                                        "uk-icon": "icon: calendar; ratio: 0.8"
                                       }
                                     }),
                                     _vm._v(
