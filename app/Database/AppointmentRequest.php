@@ -254,6 +254,7 @@ class AppointmentRequest extends Model
       }
       else
       {
+        if( $status === 'accept' ) $update->consultant_id = session()->get('consultantId');
         $update->status_request = $status;
       }
 

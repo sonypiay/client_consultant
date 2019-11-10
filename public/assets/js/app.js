@@ -64104,11 +64104,15 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.status_request !==
+                                                      (req.status_request !==
                                                         "done" ||
-                                                      req.is_solved === "N",
+                                                        req.is_solved ===
+                                                          "N") &&
+                                                      (req.status_request !==
+                                                        "accept" ||
+                                                        req.is_solved === "N"),
                                                     expression:
-                                                      "req.status_request !== 'done' || req.is_solved === 'N'"
+                                                      "(req.status_request !== 'done' || req.is_solved === 'N') && (req.status_request !== 'accept' || req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },
@@ -68610,12 +68614,14 @@ var render = function() {
                                                     rawName: "v-show",
                                                     value:
                                                       (req.status_request !==
-                                                        "waiting" &&
-                                                        req.status_request !==
-                                                          "done") ||
-                                                      req.is_solved === "N",
+                                                        "done" ||
+                                                        req.is_solved ===
+                                                          "N") &&
+                                                      (req.status_request !==
+                                                        "accept" ||
+                                                        req.is_solved === "N"),
                                                     expression:
-                                                      "(req.status_request !== 'waiting' && req.status_request !== 'done') || (req.is_solved === 'N')"
+                                                      "(req.status_request !== 'done' || req.is_solved === 'N') && (req.status_request !== 'accept' || req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },
