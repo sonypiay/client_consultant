@@ -6073,30 +6073,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -68978,7 +68954,7 @@ var render = function() {
                   staticClass: "uk-navbar-item uk-logo",
                   attrs: { href: _vm.$root.url }
                 },
-                [_vm._v("Logo")]
+                [_vm._v("Solusi Pajakku")]
               )
             ]),
             _vm._v(" "),
@@ -69028,7 +69004,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Mark as read")]
+                                [_vm._v("Tandai sudah dibaca")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -69041,7 +69017,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Refresh")]
+                                [_vm._v("Muat ulang")]
                               )
                             ])
                           ]),
@@ -69062,7 +69038,7 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("br"),
                                         _vm._v(
-                                          "\n                    You have no notification.\n                  "
+                                          "\n                    Belum ada notifikasi\n                  "
                                         )
                                       ]
                                     )
@@ -69182,15 +69158,11 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      My Appointment\n                    "
+                                      "\n                      Jadwal Pertemuan\n                    "
                                     )
                                   ]
                                 )
                               ]),
-                              _vm._v(" "),
-                              _vm._m(0),
-                              _vm._v(" "),
-                              _vm._m(1),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -69209,7 +69181,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Edit Profile & Settings\n                    "
+                                      "\n                      Ubah Profil\n                    "
                                     )
                                   ]
                                 )
@@ -69231,7 +69203,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Logout\n                    "
+                                      "\n                      Keluar\n                    "
                                     )
                                   ]
                                 )
@@ -69288,7 +69260,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Mark as read")]
+                                [_vm._v("Tandai sudah dibaca")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -69301,7 +69273,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Refresh")]
+                                [_vm._v("Muat ulang")]
                               )
                             ])
                           ]),
@@ -69322,7 +69294,7 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("br"),
                                         _vm._v(
-                                          "\n                    You have no notification.\n                  "
+                                          "\n                    Belum ada notifikasi\n                  "
                                         )
                                       ]
                                     )
@@ -69440,15 +69412,11 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      My Appointment\n                    "
+                                      "\n                      Jadwal Pertemuan\n                    "
                                     )
                                   ]
                                 )
                               ]),
-                              _vm._v(" "),
-                              _vm._m(2),
-                              _vm._v(" "),
-                              _vm._m(3),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -69468,7 +69436,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Edit Profile & Settings\n                    "
+                                      "\n                      Ubah Profil\n                    "
                                     )
                                   ]
                                 )
@@ -69490,7 +69458,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Logout\n                    "
+                                      "\n                      Keluar\n                    "
                                     )
                                   ]
                                 )
@@ -69506,7 +69474,7 @@ var render = function() {
                       _c(
                         "a",
                         { attrs: { href: _vm.$root.url + "/client/signin" } },
-                        [_vm._v("Log in Client")]
+                        [_vm._v("Masuk Client")]
                       )
                     ]),
                     _vm._v(" "),
@@ -69516,7 +69484,7 @@ var render = function() {
                         {
                           attrs: { href: _vm.$root.url + "/consultant/signin" }
                         },
-                        [_vm._v("Log in Consultant")]
+                        [_vm._v("Masuk Konsultan")]
                       )
                     ])
                   ])
@@ -69527,64 +69495,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: bell; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Notification\n                    ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Messages\n                    ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: bell; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Notification\n                    ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Messages\n                    ")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
