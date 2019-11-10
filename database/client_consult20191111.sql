@@ -16,34 +16,55 @@ USE `client_consultant`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+/*Table structure for table `admin_owner` */
+
+DROP TABLE IF EXISTS `admin_owner`;
+
+CREATE TABLE `admin_owner` (
+  `admin_id` varchar(7) NOT NULL,
+  `admin_fullname` varchar(64) NOT NULL,
+  `admin_email` varchar(64) NOT NULL,
+  `admin_password` varchar(60) NOT NULL,
+  `admin_gender` enum('L','P') NOT NULL DEFAULT 'L',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`admin_id`),
+  UNIQUE KEY `admin_email` (`admin_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `admin_owner` */
+
+insert  into `admin_owner`(`admin_id`,`admin_fullname`,`admin_email`,`admin_password`,`admin_gender`,`created_at`,`updated_at`) values ('ADM0001','Administrator','admin@admin.com','$2y$10$ppWmj7rK/WCMcMY8DzD8R.q1PIgW6ZVhpCyBXg9sOU3oWK3d5n/Be','L','2019-11-10 13:29:48','2019-11-10 13:29:48');
+
 /*Table structure for table `appointment_request` */
 
 DROP TABLE IF EXISTS `appointment_request`;
 
 CREATE TABLE `appointment_request` (
   `apt_id` varchar(13) NOT NULL,
-  `client_id` varchar(7) DEFAULT NULL,
-  `consultant_id` varchar(7) NOT NULL,
-  `created_by` varchar(10) NOT NULL DEFAULT 'client',
+  `client_id` varchar(7) NOT NULL,
+  `consultant_id` varchar(7) DEFAULT NULL,
+  `created_by` enum('consultant','client') NOT NULL DEFAULT 'consultant',
+  `request_to` enum('consultant','client') NOT NULL DEFAULT 'consultant',
   `schedule_date` datetime NOT NULL,
   `location` text DEFAULT NULL,
-  `additional_file` varchar(128) DEFAULT NULL,
-  `description` text NOT NULL,
-  `status_request` enum('accept','decline','waiting_respond','cancel','done') NOT NULL DEFAULT 'waiting_respond',
+  `service_topic` varchar(7) NOT NULL,
+  `status_request` enum('accept','waiting','decline','cancel','done') NOT NULL DEFAULT 'waiting',
+  `is_solved` enum('N','Y','P') NOT NULL DEFAULT 'P',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `seqid` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`apt_id`),
   UNIQUE KEY `seqid` (`seqid`),
-  KEY `fk_req_client_idx` (`client_id`),
   KEY `fk_req_consultant_idx` (`consultant_id`),
+  KEY `fk_req_client_idx` (`client_id`),
   CONSTRAINT `fk_req_client_idx` FOREIGN KEY (`client_id`) REFERENCES `client_user` (`client_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_req_consultant_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `appointment_request` */
 
-insert  into `appointment_request`(`apt_id`,`client_id`,`consultant_id`,`created_by`,`schedule_date`,`location`,`additional_file`,`description`,`status_request`,`created_at`,`updated_at`,`seqid`) values ('APT1911050001','CL0001','CLT0001','client','2019-11-09 10:00:00',NULL,NULL,'Hello world','accept','2019-11-05 16:08:32','2019-11-05 19:37:04',1),('APT1911050002','CL0002','CLT0001','client','2019-11-15 10:00:00',NULL,NULL,'testing','accept','2019-11-05 19:43:03','2019-11-05 19:44:31',2),('APT1911050003','CL0002','CLT0002','client','2019-11-18 10:30:00',NULL,NULL,'Jawa Ipsum gelung kalung ayam manah jawah, luh bebed kancing. Sapu sima peksi susu piring tuwi enjing mucal dipun pendhet wos? Peksi cariyos, sakit suku epek-epek ngulemi pedhang, untu manah nyukani maesa. Bidal minggat supena ngulemi? Peksi dhateng, kangge; kinten nyepeng ayam toya peksi, \"sima wilujeng maos sirah kuping ngadeg dolan makarya.\" Jejeran wawarat embok saweg mantun ajrih benang ningali gujeng pedhang tumut swanten awon.','decline','2019-11-05 19:43:22','2019-11-05 21:58:17',3),('APT1911050004','CL0002','CLT0003','client','2019-11-23 13:00:00',NULL,NULL,'testing','waiting_respond','2019-11-05 19:43:45','2019-11-05 19:43:45',4);
+insert  into `appointment_request`(`apt_id`,`client_id`,`consultant_id`,`created_by`,`request_to`,`schedule_date`,`location`,`service_topic`,`status_request`,`is_solved`,`created_at`,`updated_at`,`seqid`) values ('APT1911100003','CL0001','CLT0001','client','consultant','2019-11-12 10:00:00','Mall Taman Anggrek, Jakarta Barat','TPC005','accept','P','2019-11-10 21:06:46','2019-11-10 23:05:29',3),('APT1911100004','CL0001','CLT0001','client','consultant','2019-11-12 12:00:00','Mall Senayan City, Jakarta Pusat','TPC003','accept','P','2019-11-10 23:38:11','2019-11-10 23:53:44',4),('APT1911110005','CL0001','CLT0001','client','consultant','2019-11-13 10:00:00','Senayan City, Jakarta Pusat','TPC001','accept','P','2019-11-11 00:08:27','2019-11-11 00:14:03',5);
 
 /*Table structure for table `city` */
 
@@ -72,10 +93,9 @@ CREATE TABLE `client_user` (
   `client_email` varchar(64) NOT NULL,
   `client_phone_number` varchar(17) DEFAULT NULL,
   `client_password` varchar(60) NOT NULL,
-  `client_gender` enum('L','P') DEFAULT NULL,
-  `client_photo` varchar(64) DEFAULT NULL,
-  `client_type` enum('company','individual') NOT NULL,
+  `client_type` enum('pt','perorangan') NOT NULL,
   `client_address` text DEFAULT NULL,
+  `client_npwp` varchar(30) DEFAULT NULL,
   `city_id` char(3) DEFAULT NULL,
   `seqid` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
@@ -85,11 +105,11 @@ CREATE TABLE `client_user` (
   UNIQUE KEY `seqid` (`seqid`),
   KEY `fk_client_city` (`city_id`),
   CONSTRAINT `fk_client_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `client_user` */
 
-insert  into `client_user`(`client_id`,`client_fullname`,`client_email`,`client_phone_number`,`client_password`,`client_gender`,`client_photo`,`client_type`,`client_address`,`city_id`,`seqid`,`created_at`,`updated_at`) values ('CL0001','Sony Darmawan','sonypiay@mail.com','08561969052','$2y$10$QHeHTZLaY5U1OdCQ0BYmN.un2VkD//tdqKlESE9z6DZQQVLCyJThO','L',NULL,'individual','Jl. Jendral Sudirman Kavling 10 - 11, Gedung Midplaza 2 lantai 8','JKP',1,'2019-11-02 19:05:06','2019-11-03 18:07:36'),('CL0002','Ridwan Dwi Saputra','ridwan_dwi@gmail.com','08561969052','$2y$10$BU.7pZMxjv2otZzZYLLBl.S7X7kBLL5uWxAz3z7YXVYFRHhvmp.CC','L',NULL,'individual','Depok','DPK',2,'2019-11-03 19:51:05','2019-11-03 19:56:55');
+insert  into `client_user`(`client_id`,`client_fullname`,`client_email`,`client_phone_number`,`client_password`,`client_type`,`client_address`,`client_npwp`,`city_id`,`seqid`,`created_at`,`updated_at`) values ('CL0001','Sony Darmawan','sonypiay@mail.com','08129898398','$2y$10$ppWmj7rK/WCMcMY8DzD8R.q1PIgW6ZVhpCyBXg9sOU3oWK3d5n/Be','perorangan','Jl. Jendral Sudirman Kavling 10 - 11, Midplaza 2 lantai 8','66.422.976.2-405.000','JKP',1,'2019-11-10 13:21:52','2019-11-10 13:28:35');
 
 /*Table structure for table `consultant_user` */
 
@@ -101,13 +121,8 @@ CREATE TABLE `consultant_user` (
   `consultant_email` varchar(64) NOT NULL,
   `consultant_password` varchar(60) NOT NULL,
   `consultant_phone_number` varchar(64) DEFAULT NULL,
-  `consultant_gender` enum('L','P') DEFAULT 'L',
-  `consultant_biography` text DEFAULT NULL,
-  `consultant_photo` varchar(64) DEFAULT NULL,
   `consultant_address` text DEFAULT NULL,
-  `consultant_type` enum('company','individual') NOT NULL,
   `city_id` char(3) DEFAULT NULL,
-  `rating` float DEFAULT NULL,
   `seqid` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -116,11 +131,11 @@ CREATE TABLE `consultant_user` (
   UNIQUE KEY `seqid` (`seqid`),
   KEY `fk_consultant_city` (`city_id`),
   CONSTRAINT `fk_consultant_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `consultant_user` */
 
-insert  into `consultant_user`(`consultant_id`,`consultant_fullname`,`consultant_email`,`consultant_password`,`consultant_phone_number`,`consultant_gender`,`consultant_biography`,`consultant_photo`,`consultant_address`,`consultant_type`,`city_id`,`rating`,`seqid`,`created_at`,`updated_at`) values ('CLT0001','Rizqy Caesario','rizqycaesario@gmail.com','$2y$10$TBysW6oQEIvfv2k9.vmt9eXv6Ny50mfaNepRTVgbeCGWTjGw5HidO','08561969052','L',NULL,NULL,'Tambora, Jakarta Barat','individual','JKB',NULL,1,'2019-11-03 19:29:57','2019-11-03 19:58:09'),('CLT0002','Muhammad Ilham','ilham272727@gmail.com','$2y$10$0QKznwrQaqv81jsVDpftc.SEGi7Ms.jzMQtsFOyiSaOqxrtfC3UCy','02189483749','L',NULL,NULL,'Cempaka Baru, Jakarta Pusat','individual','JKP',NULL,2,'2019-11-04 07:18:55','2019-11-04 09:10:05'),('CLT0003','Ardiansyah','ardian@mercubuana.ac.id','$2y$10$KmdTg.4/AR4KTLZ8TT1ArObvCPgFY.cap/F5PQTled46ngFb3Cof6','02187987987','L',NULL,NULL,'Ciledug,','individual','TNG',NULL,3,'2019-11-04 19:36:23','2019-11-04 19:37:20');
+insert  into `consultant_user`(`consultant_id`,`consultant_fullname`,`consultant_email`,`consultant_password`,`consultant_phone_number`,`consultant_address`,`city_id`,`seqid`,`created_at`,`updated_at`) values ('CLT0001','John Doe','johndoe@example.com','$2y$10$6ZIgjzGs5wObTrQttcMFQu8ptjmCbJJD62JgHD9BG7sdxoA.OMZtK','0813939273879','Midplaza 2 lantai 8','JKP',1,'2019-11-10 21:46:35','2019-11-10 22:47:45');
 
 /*Table structure for table `event_schedule` */
 
@@ -152,16 +167,17 @@ DROP TABLE IF EXISTS `feedbacks`;
 
 CREATE TABLE `feedbacks` (
   `fd_id` varchar(7) NOT NULL,
-  `rate` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `comments` text NOT NULL,
-  `comments_reply` text DEFAULT NULL,
-  `consultant_id` varchar(7) NOT NULL,
-  `level_feedback` enum('excellent','good','neutral','poor','disappointed') DEFAULT NULL,
+  `review_description` text NOT NULL,
+  `feedback` enum('excellent','good','neutral','poor','disappointed') NOT NULL,
+  `rateindex` tinyint(1) NOT NULL DEFAULT 0,
+  `apt_id` varchar(13) NOT NULL,
+  `seqid` smallint(4) NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`fd_id`),
-  KEY `fk_fd_consult_idx` (`consultant_id`),
-  CONSTRAINT `fk_fd_consult_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE
+  UNIQUE KEY `seqid` (`seqid`),
+  KEY `fk_fd_aptidx` (`apt_id`),
+  CONSTRAINT `fk_fd_aptidx` FOREIGN KEY (`apt_id`) REFERENCES `appointment_request` (`apt_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `feedbacks` */
@@ -173,22 +189,17 @@ DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `notif_type` enum('chat','request','feedback') DEFAULT NULL,
-  `client_id` varchar(7) DEFAULT NULL,
-  `consultant_id` varchar(7) DEFAULT NULL,
+  `user_id` varchar(7) NOT NULL,
   `notif_message` text NOT NULL,
   `parent_id` varchar(13) NOT NULL,
   `notif_read` enum('R','N') DEFAULT NULL,
   `notif_date` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_notif_client_idx` (`client_id`),
-  KEY `fk_notif_consultan_idx` (`consultant_id`),
-  CONSTRAINT `fk_notif_client_idx` FOREIGN KEY (`client_id`) REFERENCES `client_user` (`client_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_notif_consultan_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `notification` */
 
-insert  into `notification`(`id`,`notif_type`,`client_id`,`consultant_id`,`notif_message`,`parent_id`,`notif_read`,`notif_date`) values (1,'request',NULL,'CLT0001','You have a new request appointment from Sony Darmawan','APT1911050001','R','2019-11-05 16:08:32'),(2,'request','CL0001',NULL,'Your request #APT1911050001 has been accepted','APT1911050001','N','2019-11-05 19:37:04'),(3,'request',NULL,'CLT0001','You have a new request appointment from Ridwan Dwi Saputra','APT1911050002','R','2019-11-05 19:43:03'),(4,'request',NULL,'CLT0002','You have a new request appointment from Ridwan Dwi Saputra','APT1911050003','N','2019-11-05 19:43:22'),(5,'request',NULL,'CLT0003','You have a new request appointment from Ridwan Dwi Saputra','APT1911050004','N','2019-11-05 19:43:45'),(6,'request','CL0002',NULL,'Your request #APT1911050002 has been accepted','APT1911050002','R','2019-11-05 19:44:31'),(7,'request',NULL,'CLT0002','Request APT1911050003 has been rescheduled.','APT1911050003','N','2019-11-05 21:54:57'),(8,'request','CL0002',NULL,'Your request #APT1911050003 has been declined','APT1911050003','R','2019-11-05 21:58:17');
+insert  into `notification`(`id`,`notif_type`,`user_id`,`notif_message`,`parent_id`,`notif_read`,`notif_date`) values (1,'request','','Request appointment APT1911100001 canceled','APT1911100001','N','2019-11-10 20:52:48'),(2,'request','CL0001','Request appointment APT1911100001 canceled','APT1911100001','R','2019-11-10 20:52:48');
 
 /*Table structure for table `province` */
 
@@ -203,6 +214,47 @@ CREATE TABLE `province` (
 /*Data for the table `province` */
 
 insert  into `province`(`province_id`,`province_name`) values ('BT','Banten'),('JB','Jawa Barat'),('JK','DKI Jakarta'),('JT','Jawa Tengah');
+
+/*Table structure for table `service_request` */
+
+DROP TABLE IF EXISTS `service_request`;
+
+CREATE TABLE `service_request` (
+  `service_id` varchar(7) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `topic_id` varchar(6) NOT NULL,
+  `client_id` varchar(7) NOT NULL,
+  `service_time` enum('pagi','siang','sore','malam') DEFAULT NULL,
+  `status_service` enum('accept','waiting') NOT NULL DEFAULT 'waiting',
+  `seqid` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`service_id`),
+  UNIQUE KEY `seqid` (`seqid`),
+  KEY `fk_service_client` (`client_id`),
+  KEY `fk_service_topic` (`topic_id`),
+  CONSTRAINT `fk_service_client` FOREIGN KEY (`client_id`) REFERENCES `client_user` (`client_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_service_topic` FOREIGN KEY (`topic_id`) REFERENCES `service_topic` (`topic_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `service_request` */
+
+/*Table structure for table `service_topic` */
+
+DROP TABLE IF EXISTS `service_topic`;
+
+CREATE TABLE `service_topic` (
+  `topic_id` varchar(6) NOT NULL,
+  `topic_name` varchar(64) NOT NULL,
+  `seqid` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`topic_id`),
+  UNIQUE KEY `seqid` (`seqid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+/*Data for the table `service_topic` */
+
+insert  into `service_topic`(`topic_id`,`topic_name`,`seqid`) values ('TPC001','Audit Pajak',1),('TPC002','Pengaduan Pajak',2),('TPC003','Perencanaan Pajak',3),('TPC004','Penghindaran Pajak',4),('TPC005','Pengampunan Pajak',5);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
