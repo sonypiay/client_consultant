@@ -27,6 +27,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/myappointment', 'Frontend\PagesController@client_appointment_page')->name('client_appointment_page');
   Route::get('/logout', 'Frontend\ClientUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ClientUserController@request_list');
+  Route::get('/get_request/{id}', 'Frontend\ClientUserController@get_request');
   Route::get('/notification', 'Frontend\ClientUserController@get_notification');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');

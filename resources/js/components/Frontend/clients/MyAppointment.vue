@@ -803,23 +803,20 @@ export default {
         }
       })
     },
-    onViewDetail( data )
+    onViewDetail( id )
     {
-      onViewDetail( id )
-      {
-        axios({
-          method: 'get',
-          url: this.$root.url + '/client/get_request/' + id
-        }).then( res => {
-          let result =  res.data;
-          this.getrequest.details.request = result.request;
-          this.getrequest.details.client = result.client;
-          this.getrequest.details.consultant = result.consultant;
-          UIkit.modal('#modal-view-request').show();
-        }).catch( err => {
-          console.log( err.response.statusText );
-        });
-      }
+      axios({
+        method: 'get',
+        url: this.$root.url + '/client/get_request/' + id
+      }).then( res => {
+        let result =  res.data;
+        this.getrequest.details.request = result.request;
+        this.getrequest.details.client = result.client;
+        this.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      }).catch( err => {
+        console.log( err.response.statusText );
+      });
     }
   },
   computed: {

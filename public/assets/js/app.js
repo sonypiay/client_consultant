@@ -3549,35 +3549,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    onViewDetail: function (_onViewDetail) {
-      function onViewDetail(_x) {
-        return _onViewDetail.apply(this, arguments);
-      }
-
-      onViewDetail.toString = function () {
-        return _onViewDetail.toString();
-      };
-
-      return onViewDetail;
-    }(function (data) {
+    onViewDetail: function onViewDetail(id) {
       var _this7 = this;
 
-      onViewDetail(id);
-      {
-        axios({
-          method: 'get',
-          url: this.$root.url + '/client/get_request/' + id
-        }).then(function (res) {
-          var result = res.data;
-          _this7.getrequest.details.request = result.request;
-          _this7.getrequest.details.client = result.client;
-          _this7.getrequest.details.consultant = result.consultant;
-          UIkit.modal('#modal-view-request').show();
-        })["catch"](function (err) {
-          console.log(err.response.statusText);
-        });
-      }
-    })
+      axios({
+        method: 'get',
+        url: this.$root.url + '/client/get_request/' + id
+      }).then(function (res) {
+        var result = res.data;
+        _this7.getrequest.details.request = result.request;
+        _this7.getrequest.details.client = result.client;
+        _this7.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+    }
   },
   computed: {
     selectedDate: function selectedDate() {
@@ -66689,7 +66676,7 @@ var render = function() {
               _c("hr"),
               _vm._v(" "),
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                _vm._v("Ulasan Klien")
+                _vm._v("Ulasan Saya")
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "uk-margin-remove-top" }, [

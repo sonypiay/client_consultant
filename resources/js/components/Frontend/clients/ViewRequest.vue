@@ -88,7 +88,7 @@
           </div>
           <div v-show="detailrequest.request.feedback" class="uk-panel uk-margin">
             <hr>
-            <h6 class="uk-h6 uk-margin-remove-bottom">Ulasan Klien</h6>
+            <h6 class="uk-h6 uk-margin-remove-bottom">Ulasan Saya</h6>
             <p class="uk-margin-remove-top">
               {{ detailrequest.request.review_description }}
             </p>
