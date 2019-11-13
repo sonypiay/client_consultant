@@ -42,16 +42,6 @@ class Feedbacks extends Model
       ->where('apt_id', $id)
       ->first();
 
-      $notification = new Notification;
-      $data_notif = [
-        'parent_id' => $id,
-        'notif_date' => date('Y-m-d H:i:s'),
-        'notif_read' => 'N',
-        'notif_type' => 'request',
-        'notif_message' => 'Client gave you a review with request ' . $id,
-        'user_id' => $getappointment->consultant_id
-      ];
-
       switch ($feedback) {
         case 'excellent':
           $rateindex = 5;
@@ -76,8 +66,6 @@ class Feedbacks extends Model
       $this->rateindex = $rateindex;
       $this->apt_id = $id;
       $this->save();
-
-      $notification->addNotification( $data_notif );
     }
     else
     {
@@ -107,17 +95,17 @@ class Feedbacks extends Model
 
     if( $feedback != 'all' )
     {
-      $query = $query->where( 'feedbacks.feedback', $feedback );
+      $query->where( 'feedbacks.feedback', $feedback );
     }
 
     if( $userid !== null )
     {
-      $query = $query->where( 'appointment_request.consultant_id', $userid );
+      $query->where( 'appointment_request.consultant_id', $userid );
     }
 
     if( ! empty( $keywords ) )
     {
-      $query = $query->where('client_user.client_fullname', 'like', '%' . $keywords . '%');
+      $query->where('client_user.client_fullname', 'like', '%' . $keywords . '%');
     }
 
     $result = $query->orderBy('feedbacks.created_at', 'desc')

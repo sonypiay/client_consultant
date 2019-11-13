@@ -142,42 +142,42 @@
               <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a @click="forms.rating.feedback = 'excellent'" uk-tooltip="Excellent" class="gl-icon-review">
+                    <a @click="forms.rating.feedback = 'excellent'" uk-tooltip="Luar Biasa" class="gl-icon-review">
                       <i :class="{'fas': forms.rating.feedback === 'excellent'}" class="far fa-smile-beam"></i>
                     </a>
-                    <div class="gl-review-text">Excellent</div>
+                    <div class="gl-review-text">Luar Biasa</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a @click="forms.rating.feedback = 'good'" uk-tooltip="Good" class="gl-icon-review">
+                    <a @click="forms.rating.feedback = 'good'" uk-tooltip="Berpengalaman" class="gl-icon-review">
                       <i :class="{'fas': forms.rating.feedback === 'good'}" class="far fa-smile"></i>
                     </a>
-                    <div class="gl-review-text">Good</div>
+                    <div class="gl-review-text">Berpengalaman</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a @click="forms.rating.feedback = 'neutral'" uk-tooltip="Neutral" class="gl-icon-review">
+                    <a @click="forms.rating.feedback = 'neutral'" uk-tooltip="Netral" class="gl-icon-review">
                       <i :class="{'fas': forms.rating.feedback === 'neutral'}" class="far fa-meh"></i>
                     </a>
-                    <div class="gl-review-text">Neutral</div>
+                    <div class="gl-review-text">Netral</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a @click="forms.rating.feedback = 'poor'" uk-tooltip="Poor" class="gl-icon-review">
+                    <a @click="forms.rating.feedback = 'poor'" uk-tooltip="Kurang Berpengalaman" class="gl-icon-review">
                       <i :class="{'fas': forms.rating.feedback === 'poor'}" class="far fa-frown"></i>
                     </a>
-                    <div class="gl-review-text">Poor</div>
+                    <div class="gl-review-text">Kurang Berpengalaman</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a @click="forms.rating.feedback = 'disappointed'" uk-tooltip="Disappointed" class="gl-icon-review">
+                    <a @click="forms.rating.feedback = 'disappointed'" uk-tooltip="Tidak dapat dipercaya" class="gl-icon-review">
                       <i :class="{'fas': forms.rating.feedback === 'disappointed'}" class="far fa-angry"></i>
                     </a>
-                    <div class="gl-review-text">Disappointed</div>
+                    <div class="gl-review-text">Tidak dapat dipercaya</div>
                   </div>
                 </div>
               </div>

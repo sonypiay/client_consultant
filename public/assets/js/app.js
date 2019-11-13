@@ -63581,7 +63581,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "gl-icon-review",
-                                attrs: { "uk-tooltip": "Excellent" },
+                                attrs: { "uk-tooltip": "Luar Biasa" },
                                 on: {
                                   click: function($event) {
                                     _vm.forms.rating.feedback = "excellent"
@@ -63600,7 +63600,7 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "gl-review-text" }, [
-                              _vm._v("Excellent")
+                              _vm._v("Luar Biasa")
                             ])
                           ])
                         ]),
@@ -63611,7 +63611,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "gl-icon-review",
-                                attrs: { "uk-tooltip": "Good" },
+                                attrs: { "uk-tooltip": "Berpengalaman" },
                                 on: {
                                   click: function($event) {
                                     _vm.forms.rating.feedback = "good"
@@ -63629,7 +63629,7 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "gl-review-text" }, [
-                              _vm._v("Good")
+                              _vm._v("Berpengalaman")
                             ])
                           ])
                         ]),
@@ -63640,7 +63640,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "gl-icon-review",
-                                attrs: { "uk-tooltip": "Neutral" },
+                                attrs: { "uk-tooltip": "Netral" },
                                 on: {
                                   click: function($event) {
                                     _vm.forms.rating.feedback = "neutral"
@@ -63658,7 +63658,7 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "gl-review-text" }, [
-                              _vm._v("Neutral")
+                              _vm._v("Netral")
                             ])
                           ])
                         ]),
@@ -63669,7 +63669,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "gl-icon-review",
-                                attrs: { "uk-tooltip": "Poor" },
+                                attrs: { "uk-tooltip": "Kurang Berpengalaman" },
                                 on: {
                                   click: function($event) {
                                     _vm.forms.rating.feedback = "poor"
@@ -63687,7 +63687,7 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "gl-review-text" }, [
-                              _vm._v("Poor")
+                              _vm._v("Kurang Berpengalaman")
                             ])
                           ])
                         ]),
@@ -63698,7 +63698,9 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "gl-icon-review",
-                                attrs: { "uk-tooltip": "Disappointed" },
+                                attrs: {
+                                  "uk-tooltip": "Tidak dapat dipercaya"
+                                },
                                 on: {
                                   click: function($event) {
                                     _vm.forms.rating.feedback = "disappointed"
@@ -63718,7 +63720,7 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "gl-review-text" }, [
-                              _vm._v("Disappointed")
+                              _vm._v("Tidak dapat dipercaya")
                             ])
                           ])
                         ])
@@ -66628,7 +66630,7 @@ var render = function() {
             },
             [
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                _vm._v("Rate")
+                _vm._v("Penilaian anda")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-margin-remove-top" }, [
