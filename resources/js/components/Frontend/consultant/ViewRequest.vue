@@ -86,7 +86,7 @@
               </div>
             </div>
           </div>
-          <div v-show="detailrequest.feedback" class="uk-panel uk-margin">
+          <div v-show="detailrequest.request.feedback" class="uk-panel uk-margin">
             <hr>
             <h6 class="uk-h6 uk-margin-remove-bottom">Ulasan Klien</h6>
             <p class="uk-margin-remove-top">

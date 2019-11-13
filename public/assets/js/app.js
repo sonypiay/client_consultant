@@ -3132,7 +3132,11 @@ document.addEventListener("DOMContentLoaded", function () {
           prev_page_url: '',
           next_page_url: ''
         },
-        details: {}
+        details: {
+          request: {},
+          consultant: {},
+          client: {}
+        }
       },
       datepicker: {
         mindate: new Date(),
@@ -3545,10 +3549,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    onViewDetail: function onViewDetail(data) {
-      this.getrequest.details = data;
-      UIkit.modal('#modal-view-request').show();
-    }
+    onViewDetail: function (_onViewDetail) {
+      function onViewDetail(_x) {
+        return _onViewDetail.apply(this, arguments);
+      }
+
+      onViewDetail.toString = function () {
+        return _onViewDetail.toString();
+      };
+
+      return onViewDetail;
+    }(function (data) {
+      var _this7 = this;
+
+      onViewDetail(id);
+      {
+        axios({
+          method: 'get',
+          url: this.$root.url + '/client/get_request/' + id
+        }).then(function (res) {
+          var result = res.data;
+          _this7.getrequest.details.request = result.request;
+          _this7.getrequest.details.client = result.client;
+          _this7.getrequest.details.consultant = result.consultant;
+          UIkit.modal('#modal-view-request').show();
+        })["catch"](function (err) {
+          console.log(err.response.statusText);
+        });
+      }
+    })
   },
   computed: {
     selectedDate: function selectedDate() {
@@ -4530,6 +4559,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -64234,7 +64267,7 @@ var render = function() {
                                                   on: {
                                                     click: function($event) {
                                                       return _vm.onViewDetail(
-                                                        req
+                                                        req.apt_id
                                                       )
                                                     }
                                                   }
@@ -66434,7 +66467,10 @@ var render = function() {
             _vm._v(
               "\n          " +
                 _vm._s(
-                  _vm.$root.formatDate(_vm.detailrequest.schedule_date, "HH:mm")
+                  _vm.$root.formatDate(
+                    _vm.detailrequest.request.schedule_date,
+                    "HH:mm"
+                  )
                 ) +
                 "\n        "
             )
@@ -66449,10 +66485,22 @@ var render = function() {
               "\n          " +
                 _vm._s(
                   _vm.$root.formatDate(
-                    _vm.detailrequest.schedule_date,
+                    _vm.detailrequest.request.schedule_date,
                     "ddd, DD MMMM YYYY"
                   )
                 ) +
+                "\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "request-date" }, [
+            _c("span", {
+              staticClass: "uk-margin-small-right",
+              attrs: { "uk-icon": "icon: info; ratio: 2.5" }
+            }),
+            _vm._v(
+              "\n          " +
+                _vm._s(_vm.detailrequest.request.topic_name) +
                 "\n        "
             )
           ])
@@ -66477,7 +66525,7 @@ var render = function() {
                       "\n                " +
                         _vm._s(
                           _vm.$root.formatDate(
-                            _vm.detailrequest.created_at,
+                            _vm.detailrequest.request.created_at,
                             "DD MMM YYYY"
                           )
                         ) +
@@ -66496,7 +66544,7 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.apt_id) +
+                        _vm._s(_vm.detailrequest.request.apt_id) +
                         "\n              "
                     )
                   ])
@@ -66523,7 +66571,7 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.consultant_id) +
+                        _vm._s(_vm.detailrequest.consultant.consultant_id) +
                         "\n              "
                     )
                   ])
@@ -66539,7 +66587,9 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.consultant_fullname) +
+                        _vm._s(
+                          _vm.detailrequest.consultant.consultant_fullname
+                        ) +
                         "\n              "
                     )
                   ])
@@ -66555,7 +66605,7 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.consultant_email) +
+                        _vm._s(_vm.detailrequest.consultant.consultant_email) +
                         "\n              "
                     )
                   ])
@@ -66571,7 +66621,9 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.consultant_phone_number) +
+                        _vm._s(
+                          _vm.detailrequest.consultant.consultant_phone_number
+                        ) +
                         "\n              "
                     )
                   ])
@@ -66587,7 +66639,7 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.city_name) +
+                        _vm._s(_vm.detailrequest.consultant.city_name) +
                         "\n              "
                     )
                   ])
@@ -66603,7 +66655,9 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.consultant_address) +
+                        _vm._s(
+                          _vm.detailrequest.consultant.consultant_address
+                        ) +
                         "\n              "
                     )
                   ])
@@ -66619,8 +66673,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.detailrequest.feedback,
-                  expression: "detailrequest.feedback"
+                  value: _vm.detailrequest.request.feedback,
+                  expression: "detailrequest.request.feedback"
                 }
               ],
               staticClass: "uk-panel uk-margin"
@@ -66629,13 +66683,13 @@ var render = function() {
               _c("hr"),
               _vm._v(" "),
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                _vm._v("Ulasan Saya")
+                _vm._v("Ulasan Klien")
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "uk-margin-remove-top" }, [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.detailrequest.review_description) +
+                    _vm._s(_vm.detailrequest.request.review_description) +
                     "\n          "
                 )
               ])
@@ -66649,8 +66703,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.detailrequest.feedback,
-                  expression: "detailrequest.feedback"
+                  value: _vm.detailrequest.request.feedback,
+                  expression: "detailrequest.request.feedback"
                 }
               ],
               staticClass: "uk-panel uk-margin"
@@ -66677,7 +66731,9 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-smile-beam",
                               class: {
-                                fas: _vm.detailrequest.feedback === "excellent"
+                                fas:
+                                  _vm.detailrequest.request.feedback ===
+                                  "excellent"
                               }
                             })
                           ]
@@ -66701,7 +66757,8 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-smile",
                               class: {
-                                fas: _vm.detailrequest.feedback === "good"
+                                fas:
+                                  _vm.detailrequest.request.feedback === "good"
                               }
                             })
                           ]
@@ -66725,7 +66782,9 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-meh",
                               class: {
-                                fas: _vm.detailrequest.feedback === "neutral"
+                                fas:
+                                  _vm.detailrequest.request.feedback ===
+                                  "neutral"
                               }
                             })
                           ]
@@ -66749,7 +66808,8 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-frown",
                               class: {
-                                fas: _vm.detailrequest.feedback === "poor"
+                                fas:
+                                  _vm.detailrequest.request.feedback === "poor"
                               }
                             })
                           ]
@@ -66774,7 +66834,8 @@ var render = function() {
                               staticClass: "far fa-angry",
                               class: {
                                 fas:
-                                  _vm.detailrequest.feedback === "disappointed"
+                                  _vm.detailrequest.request.feedback ===
+                                  "disappointed"
                               }
                             })
                           ]
@@ -70699,8 +70760,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.detailrequest.feedback,
-                  expression: "detailrequest.feedback"
+                  value: _vm.detailrequest.request.feedback,
+                  expression: "detailrequest.request.feedback"
                 }
               ],
               staticClass: "uk-panel uk-margin"
