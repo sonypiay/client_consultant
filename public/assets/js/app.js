@@ -63970,7 +63970,8 @@ var render = function() {
                       staticClass: "uk-input gl-input-default",
                       attrs: {
                         type: "text",
-                        placeholder: "Masukkan id permintaan, nama konsultan"
+                        placeholder:
+                          "Masukkan id konsultasi atau nama konsultan"
                       },
                       domProps: { value: _vm.forms.keywords },
                       on: {
@@ -68592,7 +68593,7 @@ var render = function() {
                       staticClass: "uk-input gl-input-default",
                       attrs: {
                         type: "text",
-                        placeholder: "Find by id, consultant name..."
+                        placeholder: "Cari ID Konsultasi atau nama klien"
                       },
                       domProps: { value: _vm.forms.keywords },
                       on: {
@@ -69265,7 +69266,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("Jadwal Pertemuan")])
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Jadwal Konsultasi")])
     ])
   },
   function() {

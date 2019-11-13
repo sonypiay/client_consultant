@@ -7,7 +7,7 @@
     <view-request-detail :detailrequest="getrequest.details" />
 
     <div class="uk-padding banner-index_header">
-      <div class="uk-container">Jadwal Pertemuan</div>
+      <div class="uk-container">Jadwal Konsultasi</div>
     </div>
 
     <!-- add / update appointment -->
@@ -156,7 +156,7 @@
               </select>
             </div>
             <div>
-              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Find by id, consultant name..." @keyup.enter="showRequest()" />
+              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Cari ID Konsultasi atau nama klien" @keyup.enter="showRequest()" />
             </div>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">

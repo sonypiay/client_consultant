@@ -209,7 +209,7 @@
               </select>
             </div>
             <div>
-              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Masukkan id permintaan, nama konsultan" @keyup.enter="showRequest()" />
+              <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Masukkan id konsultasi atau nama konsultan" @keyup.enter="showRequest()" />
             </div>
             <div>
               <select class="uk-select gl-input-default" v-model="forms.status_request" @change="showRequest()">
