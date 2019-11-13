@@ -1858,6 +1858,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -5149,7 +5197,7 @@ __webpack_require__.r(__webpack_exports__);
           password: forms.password
         }
       }).then(function (res) {
-        var message = 'You have successfully signed in.';
+        var message = 'Login berhasil';
         _this.messages.successMessage = message;
         swal({
           text: message,
@@ -60971,33 +61019,39 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass: "uk-background-cover uk-height-viewport",
-        style: {
-          "background-image":
-            "url(" + _vm.$root.url + "/assets/images/banner/homepage.jpg" + ")"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass:
-              "uk-overlay uk-position-cover uk-padding-remove banner-homepage-overlay"
-          },
-          [
-            _c("navbar-homepage", {
-              attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
-            }),
-            _vm._v(" "),
-            _vm._m(0)
-          ],
-          1
-        )
-      ]
-    )
+    _c("div", { staticClass: "uk-height-viewport banner-homepage-overlay" }, [
+      _c(
+        "div",
+        {
+          staticClass: "uk-grid-collapse uk-grid-match",
+          attrs: { "uk-grid": "" }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-expand" }, [
+            _c(
+              "div",
+              {
+                staticClass: "uk-background-cover uk-height-viewport",
+                style: {
+                  "background-image":
+                    "url(" +
+                    _vm.$root.url +
+                    "/assets/images/banner/homebanner.jpg)"
+                }
+              },
+              [
+                _c("navbar-homepage", {
+                  attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
+                })
+              ],
+              1
+            )
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -61005,20 +61059,92 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "uk-width-2-3 uk-align-center uk-text-center banner-find-consultant"
-      },
-      [
-        _c("div", { staticClass: "banner-text" }, [
-          _vm._v("\n          Find a professional consultant you needs. "),
-          _c("br"),
-          _vm._v("Make your appointment today.\n        ")
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "uk-width-2-5" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "uk-tile uk-tile-default uk-text-center banner-text-homepage"
+        },
+        [
+          _c("div", { staticClass: "uk-position-center uk-padding" }, [
+            _c("div", { staticClass: "uk-light", attrs: { "uk-slider": "" } }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "uk-position-relative uk-visible-toggle uk-light",
+                  attrs: { tabindex: "-1" }
+                },
+                [
+                  _c(
+                    "ul",
+                    {
+                      staticClass:
+                        "uk-slider-items uk-child-width-1-1@s uk-grid"
+                    },
+                    [
+                      _c("li", [
+                        _c("div", { staticClass: "banner-slider" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c("div", { staticClass: "banner-slider-text" }, [
+                              _vm._v(
+                                "\n                          Solusi Anda untuk Masalah Pajak-Klien\n                        "
+                              )
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c("div", { staticClass: "banner-slider" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c("div", { staticClass: "banner-slider-text" }, [
+                              _vm._v(
+                                "\n                          Buat janji dan atur jadwal bersama\n                        "
+                              )
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c("div", { staticClass: "banner-slider" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c("div", { staticClass: "banner-slider-text" }, [
+                              _vm._v(
+                                "\n                          Bertemu dengan Konsultan\n                        "
+                              )
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c("div", { staticClass: "banner-slider" }, [
+                          _c("div", { staticClass: "uk-text-center" }, [
+                            _c("div", { staticClass: "banner-slider-text" }, [
+                              _vm._v(
+                                "\n                          Masalah Terselesaikan! Beri Ulasan\n                        "
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("ul", {
+                    staticClass:
+                      "uk-slider-nav uk-dotnav uk-flex-center uk-margin"
+                  })
+                ]
+              )
+            ])
+          ])
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -63448,9 +63574,7 @@ var render = function() {
               attrs: { "uk-close": "" }
             }),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-title" }, [
-              _vm._v("Ulasan Konsultan")
-            ]),
+            _c("div", { staticClass: "modal-title" }, [_vm._v("Ulasan")]),
             _vm._v(" "),
             _c(
               "div",
@@ -64657,7 +64781,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "uk-margin-remove" }, [
         _c("span", { staticClass: "far fa-frown" })
       ]),
-      _vm._v("\n          Tidak ada jadwal pertemuan\n        ")
+      _vm._v("\n          Tidak ada jadwal konsultasi.\n        ")
     ])
   },
   function() {
@@ -66367,7 +66491,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "uk-margin-remove" }, [
         _c("span", { staticClass: "far fa-frown" })
       ]),
-      _vm._v("\n          You have no upcoming appointment.\n        ")
+      _vm._v("\n          Tidak ada jadwal konsultasi.\n        ")
     ])
   }
 ]
@@ -68577,7 +68701,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Buat Jadwal Pertemuan")]
+                [_vm._v("Buat Jadwal Konsultasi")]
               )
             ])
           ]),
@@ -68625,7 +68749,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Buat Jadwal Pertemuan")]
+                        [_vm._v("Buat Jadwal")]
                       )
                     ])
                   : _c(
@@ -69152,7 +69276,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "uk-margin-remove" }, [
         _c("span", { staticClass: "far fa-frown" })
       ]),
-      _vm._v("\n          Tidak ada jadwal pertemuan\n        ")
+      _vm._v("\n          Tidak ada jadwal konsultasi.\n        ")
     ])
   },
   function() {
@@ -69709,7 +69833,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "uk-margin-remove" }, [
         _c("span", { staticClass: "far fa-frown" })
       ]),
-      _vm._v("\n          Tidak ada jadwal permintaan konsultasi.\n        ")
+      _vm._v("\n          Tidak ada jadwal konsultasi.\n        ")
     ])
   }
 ]
@@ -71377,7 +71501,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Jadwal Pertemuan\n                    "
+                                      "\n                      Jadwal Konsultasi\n                    "
                                     )
                                   ]
                                 )
@@ -71483,7 +71607,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("header", { staticClass: "headerhomepage" }, [
+    _c("header", { staticClass: "uk-position-relative headerhomepage" }, [
       _c("div", { staticClass: "uk-container" }, [
         _c(
           "nav",
@@ -71631,23 +71755,17 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("li", [
-                      _c(
-                        "a",
-                        { attrs: { href: _vm.$root.url + "/client/signin" } },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(_vm.getuser.client_fullname) +
-                              "\n                "
-                          ),
-                          _c("span", {
-                            staticClass: "uk-margin-small-left",
-                            attrs: {
-                              "uk-icon": "icon: chevron-down; ratio: 0.7"
-                            }
-                          })
-                        ]
-                      ),
+                      _c("a", { attrs: { href: "#" } }, [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.getuser.client_fullname) +
+                            "\n                "
+                        ),
+                        _c("span", {
+                          staticClass: "uk-margin-small-left",
+                          attrs: { "uk-icon": "icon: chevron-down; ratio: 0.7" }
+                        })
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -71957,7 +72075,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Jadwal Pertemuan\n                    "
+                                      "\n                      Jadwal Konsultasi\n                    "
                                     )
                                   ]
                                 )

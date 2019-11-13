@@ -82,7 +82,7 @@ export default {
           password: forms.password,
         }
       }).then( res => {
-        let message = 'You have successfully signed in.';
+        let message = 'Login berhasil';
         this.messages.successMessage = message;
         swal({ text: message, icon: 'success' });
 

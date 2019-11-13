@@ -3,14 +3,14 @@
   //border-bottom: 1px solid darken( $color-base, 10% );
   .navbarhomepage {
     .uk-logo {
-      color: #ffffff;
+      color: #333333;
       @include global_font_style( 700, 26px, normal, 0.4px );
       text-transform: capitalize;
     }
     .navhomepage {
       li {
         a {
-          color: #ffffff;
+          color: #333333;
           @include global_font_style( 700, 16px, normal, 0.4px );
           text-transform: capitalize;
           .count-notification {

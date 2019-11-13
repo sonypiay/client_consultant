@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="headerhomepage">
+    <header class="uk-position-relative headerhomepage">
       <div class="uk-container">
         <nav class="uk-navbar navbarhomepage" uk-navbar>
           <div class="uk-navbar-left">
@@ -43,7 +43,7 @@
                 </div>
               </li>
               <li>
-                <a :href="$root.url + '/client/signin'">
+                <a href="#">
                   {{ getuser.client_fullname }}
                   <span class="uk-margin-small-left" uk-icon="icon: chevron-down; ratio: 0.7"></span>
                 </a>
@@ -128,7 +128,7 @@
                     <li>
                       <a :href="$root.url + '/consultant/myappointment'">
                         <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
-                        Jadwal Pertemuan
+                        Jadwal Konsultasi
                       </a>
                     </li>
                     <li>

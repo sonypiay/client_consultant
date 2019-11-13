@@ -171,7 +171,7 @@
           </div>
         </div>
         <div class="uk-float-right">
-          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Buat Jadwal Pertemuan</a>
+          <a class="uk-button uk-button-default gl-button-default" @click="onClickModal()">Buat Jadwal Konsultasi</a>
         </div>
       </div>
 
@@ -187,9 +187,9 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            Tidak ada jadwal pertemuan
+            Tidak ada jadwal konsultasi.
           </div>
-          <a @click="onClickModal()" class="uk-button uk-button-primary gl-button-primary">Buat Jadwal Pertemuan</a>
+          <a @click="onClickModal()" class="uk-button uk-button-primary gl-button-primary">Buat Jadwal</a>
         </div>
         <div v-else class="uk-grid-medium uk-grid-match" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">

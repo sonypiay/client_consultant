@@ -119,7 +119,7 @@
     <div id="givereview" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
-        <div class="modal-title">Ulasan Konsultan</div>
+        <div class="modal-title">Ulasan</div>
 
         <div v-show="messages.successMessage" class="uk-margin-top uk-alert-success" uk-alert>
           {{ messages.successMessage }}
@@ -240,7 +240,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            Tidak ada jadwal pertemuan
+            Tidak ada jadwal konsultasi.
           </div>
           <a @click="onClickModal()" class="uk-button uk-button-primary gl-button-primary">Buat Jadwal Konsultasi</a>
         </div>

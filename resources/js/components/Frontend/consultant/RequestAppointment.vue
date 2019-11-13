@@ -26,7 +26,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            Tidak ada jadwal permintaan konsultasi.
+            Tidak ada jadwal konsultasi.
           </div>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>

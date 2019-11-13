@@ -8,7 +8,7 @@ body {
 }
 
 .headerhomepage .navbarhomepage .uk-logo {
-  color: #ffffff;
+  color: #333333;
   font-weight: 700;
   font-size: 26px;
   font-stretch: normal;
@@ -18,7 +18,7 @@ body {
 }
 
 .headerhomepage .navbarhomepage .navhomepage li a {
-  color: #ffffff;
+  color: #333333;
   font-weight: 700;
   font-size: 16px;
   font-stretch: normal;
@@ -317,82 +317,17 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
-.banner-homepage-overlay {
-  background: rgba(37, 196, 242, 0.7);
+.banner-homepage-overlay .banner-text-homepage {
+  background: #25C4F2;
 }
 
-.banner-homepage-overlay .banner-find-consultant {
-  margin-top: 7rem;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-text {
+.banner-homepage-overlay .banner-text-homepage .banner-slider .banner-slider-text {
   color: #ffffff;
   font-weight: 200;
-  font-size: 42px;
+  font-size: 48px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form {
-  margin-top: 1rem;
-  border: 2px solid #ffffff;
-  background: transparent;
-  border-radius: 30px;
-  color: #333333;
-  font-weight: 400;
-  font-size: 14px;
-  font-stretch: normal;
-  letter-spacing: 0.4px;
-  font-family: "Nunito Sans", sans-serif;
-  text-align: center;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:hover,
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:focus {
-  border: 1px solid #cdf2fc;
-  background: #cdf2fc;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:hover::-webkit-input-placeholder, .banner-homepage-overlay .banner-find-consultant .banner-search-form:focus::-webkit-input-placeholder {
-  color: #333333;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:hover::-moz-placeholder, .banner-homepage-overlay .banner-find-consultant .banner-search-form:focus::-moz-placeholder {
-  color: #333333;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:hover:-ms-input-placeholder, .banner-homepage-overlay .banner-find-consultant .banner-search-form:focus:-ms-input-placeholder {
-  color: #333333;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:hover::-ms-input-placeholder, .banner-homepage-overlay .banner-find-consultant .banner-search-form:focus::-ms-input-placeholder {
-  color: #333333;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:hover::placeholder,
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:focus::placeholder {
-  color: #333333;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form::-webkit-input-placeholder {
-  color: #ffffff;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form::-moz-placeholder {
-  color: #ffffff;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form:-ms-input-placeholder {
-  color: #ffffff;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form::-ms-input-placeholder {
-  color: #ffffff;
-}
-
-.banner-homepage-overlay .banner-find-consultant .banner-search-form::placeholder {
-  color: #ffffff;
 }
 
 .banner-index_header {

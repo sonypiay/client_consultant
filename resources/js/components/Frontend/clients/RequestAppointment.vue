@@ -25,7 +25,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            You have no upcoming appointment.
+            Tidak ada jadwal konsultasi.
           </div>
           <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
         </div>
