@@ -249,14 +249,14 @@
             <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
               <div class="uk-clearfix uk-margin-small">
                 <div class="uk-float-left">
-                  <span v-if="req.status_request === 'waiting'" class="request-status-badge upcoming">Menunggu Tanggapan</span>
-                  <span v-else-if="req.status_request === 'accept'" class="request-status-badge accept">Diterima</span>
-                  <span v-else-if="req.status_request === 'decline'" class="request-status-badge decline">Ditolak</span>
-                  <span v-else-if="req.status_request === 'cancel'" class="request-status-badge cancel">Dibatalkan</span>
-                  <span v-else class="request-status-badge done">Selesai</span>
+                  <span v-show="req.status_request === 'waiting' && req.is_solved === 'P'" class="request-status-badge upcoming">Menunggu Tanggapan</span>
+                  <span v-show="req.status_request === 'accept' && req.is_solved === 'P'" class="request-status-badge accept">Diterima</span>
+                  <span v-show="req.status_request === 'decline' && req.is_solved === 'P'" class="request-status-badge decline">Ditolak</span>
+                  <span v-show="req.status_request === 'cancel' && req.is_solved === 'P'" class="request-status-badge cancel">Dibatalkan</span>
+                  <span v-show="req.status_request === 'done' && req.is_solved === 'P'" class="request-status-badge done">Selesai</span>
 
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Berhasil</span>
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Gagal</span>
+                  <span v-show="req.is_solved === 'Y'" class="request-status-badge accept">Terpecahkan</span>
+                  <span v-show="req.is_solved === 'N'" class="request-status-badge decline">Belum terpecahkan</span>
                 </div>
               </div>
               <div class="uk-clearfix uk-margin-small">
@@ -273,7 +273,7 @@
                           Lihat
                         </a>
                       </li>
-                      <li v-show="(req.status_request !== 'done' || req.is_solved === 'N') && (req.status_request !== 'accept' || req.is_solved === 'N')">
+                      <li v-show="(req.status_request === 'waiting') || (req.is_solved === 'N')">
                         <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Ubah Jadwal
@@ -285,22 +285,22 @@
                           Hapus
                         </a>
                       </li>
-                      <li v-show="req.status_request !== 'done' && req.status_request !== 'cancel'">
+                      <li v-show="req.status_request === 'waiting'">
                         <a @click="onUpdateStatus( req.apt_id, 'cancel' )">
                           <span class="uk-margin-small-right" uk-icon="icon: ban; ratio: 0.8"></span>
                           Batalkan
                         </a>
                       </li>
-                      <li v-show="req.status_request === 'done' && req.is_solved !== 'Y'">
+                      <li v-show="req.status_request === 'accept' && req.is_solved !== 'Y'">
                         <a @click="onUpdateStatus( req.apt_id, 'solved' )">
                           <span class="uk-margin-small-right" uk-icon="icon: check; ratio: 0.8"></span>
-                          Tandai sudah selesai
+                          Tandai sudah terpecahkan
                         </a>
                       </li>
-                      <li v-show="req.status_request === 'done' && req.is_solved === 'P'">
-                        <a @click="onUpdateStatus( req.apt_id, 'unfinished' )">
+                      <li v-show="req.status_request === 'accept' && req.is_solved === 'P'">
+                        <a @click="onUpdateStatus( req.apt_id, 'unsolved' )">
                           <span class="uk-margin-small-right" uk-icon="icon: close; ratio: 0.8"></span>
-                          Tandai belum selesai
+                          Tandai belum terpecahkan
                         </a>
                       </li>
                     </ul>
@@ -491,11 +491,11 @@ export default {
           break;
         case 'unsolved':
           confirmation = 'Apakah masalah ini belum menemukan solusi?';
-          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi.';
+          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi namun anda masih bisa atur jadwal kembali';
           break;
         default:
           confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
-          message = 'Permintaan jadwal konsultasi ' + id +' diterima';
+          message = 'Jadwal konsultasi ' + id +' telah selesai';
       }
 
       swal({

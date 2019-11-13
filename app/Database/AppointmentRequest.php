@@ -55,9 +55,11 @@ class AppointmentRequest extends Model
       'client_user.client_fullname',
       'client_user.client_phone_number',
       'client_user.client_email',
+      'client_user.client_address',
       'consultant_user.consultant_fullname',
       'consultant_user.consultant_email',
       'consultant_user.consultant_phone_number',
+      'consultant_user.consultant_address',
       'feedbacks.fd_id',
       'feedbacks.review_description',
       'feedbacks.feedback'
@@ -78,19 +80,19 @@ class AppointmentRequest extends Model
     if( session()->has('isConsultant') )
     {
       $consultant = session()->get('consultantId');
-      $query = $query->where(function( $q ) use ( $consultant ) {
+      $query->where(function( $q ) use ( $consultant ) {
         $q->where('appointment_request.consultant_id', $consultant)
         ->orWhereNull('appointment_request.consultant_id');
       });
     }
 
-    $query = $query->where($whereClauses);
+    $query->where($whereClauses);
 
     if( ! empty( $keywords ) )
     {
       if( session()->has('isClient') )
       {
-        $query = $query->where(function( $q ) use ( $keywords ) {
+        $query->where(function( $q ) use ( $keywords ) {
           $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
           ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%')
           ->orWhere('consultant_user.consultant_id', 'like', '%' . $keywords . '%');
@@ -98,7 +100,7 @@ class AppointmentRequest extends Model
       }
       else if( session()->has('isConsultant') )
       {
-        $query = $query->where(function( $q ) use ( $keywords ) {
+        $query->where(function( $q ) use ( $keywords ) {
           $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%');
@@ -106,7 +108,7 @@ class AppointmentRequest extends Model
       }
       else
       {
-        $query = $query->where(function( $q ) use ( $keywords ) {
+        $query->where(function( $q ) use ( $keywords ) {
           $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%')
@@ -118,6 +120,41 @@ class AppointmentRequest extends Model
 
     $result = $query->orderBy('appointment_request.created_at', 'desc')->paginate( $limit );
     return $result;
+  }
+
+  public function getRequest( $id )
+  {
+    $client = new ClientUser;
+    $consultant = new ConsultantUser;
+    $query = $this->select(
+      'appointment_request.apt_id',
+      'appointment_request.client_id',
+      'appointment_request.consultant_id',
+      'appointment_request.created_by',
+      'appointment_request.request_to',
+      'appointment_request.schedule_date',
+      'appointment_request.location',
+      'appointment_request.service_topic',
+      'appointment_request.status_request',
+      'appointment_request.is_solved',
+      'appointment_request.created_at',
+      'appointment_request.updated_at',
+      'feedbacks.fd_id',
+      'feedbacks.review_description',
+      'feedbacks.feedback'
+    )
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
+    ->where( 'appointment_request.apt_id', $id )
+    ->first();
+
+    $getclient        = $client->getProfile( $query->client_id );
+    $getconsultant    = $consultant->getProfile( $query->consultant_id );
+
+    return [
+      'request' => $query,
+      'consultant' => $getconsultant,
+      'client' => $getclient
+    ];
   }
 
   public function addRequest( $request )
@@ -250,7 +287,7 @@ class AppointmentRequest extends Model
         case 'solved':
           $notif_message = 'Case closed for request ' . $id;
           break;
-        case 'unfinished':
+        case 'unsolved':
           $notif_message = 'Case is not finished yet with request ' . $id;
           break;
         default:
@@ -262,7 +299,7 @@ class AppointmentRequest extends Model
       {
         $update->is_solved = 'Y';
       }
-      else if( $status === 'unfinished' )
+      else if( $status === 'unsolved' )
       {
         $update->is_solved = 'N';
       }
@@ -280,7 +317,6 @@ class AppointmentRequest extends Model
       }
 
       $update->save();
-      //$notification->addNotification( $data_notif );
     }
 
     return $res;

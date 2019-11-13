@@ -3239,12 +3239,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         case 'unsolved':
           confirmation = 'Apakah masalah ini belum menemukan solusi?';
-          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi.';
+          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi namun anda masih bisa atur jadwal kembali';
           break;
 
         default:
           confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
-          message = 'Permintaan jadwal konsultasi ' + id + ' diterima';
+          message = 'Jadwal konsultasi ' + id + ' telah selesai';
       }
 
       swal({
@@ -4388,7 +4388,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      status_request: 'waiting_respond',
+      status_request: 'waiting',
       getrequest: {
         isLoading: false,
         total: 0,
@@ -4530,6 +4530,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5454,7 +5470,11 @@ document.addEventListener("DOMContentLoaded", function () {
           prev_page_url: '',
           next_page_url: ''
         },
-        details: {}
+        details: {
+          request: {},
+          consultant: {},
+          client: {}
+        }
       },
       existingClient: {
         isLoading: false,
@@ -5553,7 +5573,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         default:
           confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
-          message = 'Permintaan jadwal konsultasi ' + id + ' diterima';
+          message = 'Jadwal konsultasi ' + id + ' telah selesai';
       }
 
       swal({
@@ -5603,6 +5623,7 @@ document.addEventListener("DOMContentLoaded", function () {
         iserror: false
       };
       var request = this.forms.request;
+      this.existingClient.isFinding = false;
 
       if (data === undefined) {
         request.selectedDate = new Date();
@@ -5795,7 +5816,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       swal({
         title: 'Konfirmasi',
-        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
+        text: 'Apakah anda yakin ingin menghapus konsultasi ini?',
         icon: 'warning',
         buttons: {
           confirm: {
@@ -5811,7 +5832,7 @@ document.addEventListener("DOMContentLoaded", function () {
             url: _this6.$root.url + '/consultant/delete_request/' + id
           }).then(function (res) {
             swal({
-              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              text: 'Konsultasi ' + id + 'berhasil dihapus',
               icon: 'success',
               timer: 2000
             });
@@ -5828,9 +5849,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    onViewDetail: function onViewDetail(data) {
-      this.getrequest.details = data;
-      UIkit.modal('#modal-view-request').show();
+    onViewDetail: function onViewDetail(id) {
+      var _this7 = this;
+
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/get_request/' + id
+      }).then(function (res) {
+        var result = res.data;
+        _this7.getrequest.details.request = result.request;
+        _this7.getrequest.details.client = result.client;
+        _this7.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
     }
   },
   computed: {
@@ -6511,6 +6544,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63977,74 +64026,140 @@ var render = function() {
                                 { staticClass: "uk-clearfix uk-margin-small" },
                                 [
                                   _c("div", { staticClass: "uk-float-left" }, [
-                                    req.status_request === "waiting"
-                                      ? _c(
-                                          "span",
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
                                           {
-                                            staticClass:
-                                              "request-status-badge upcoming"
-                                          },
-                                          [_vm._v("Menunggu Tanggapan")]
-                                        )
-                                      : req.status_request === "accept"
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge accept"
-                                          },
-                                          [_vm._v("Diterima")]
-                                        )
-                                      : req.status_request === "decline"
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge decline"
-                                          },
-                                          [_vm._v("Ditolak")]
-                                        )
-                                      : req.status_request === "cancel"
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge cancel"
-                                          },
-                                          [_vm._v("Dibatalkan")]
-                                        )
-                                      : _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge done"
-                                          },
-                                          [_vm._v("Selesai")]
-                                        ),
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request ===
+                                                "waiting" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'waiting' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge upcoming"
+                                      },
+                                      [_vm._v("Menunggu Tanggapan")]
+                                    ),
                                     _vm._v(" "),
-                                    req.status_request === "done" &&
-                                    req.is_solved === "Y"
-                                      ? _c(
-                                          "span",
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
                                           {
-                                            staticClass:
-                                              "request-status-badge accept"
-                                          },
-                                          [_vm._v("Berhasil")]
-                                        )
-                                      : _vm._e(),
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request === "accept" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'accept' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge accept"
+                                      },
+                                      [_vm._v("Diterima")]
+                                    ),
                                     _vm._v(" "),
-                                    req.status_request === "done" &&
-                                    req.is_solved === "N"
-                                      ? _c(
-                                          "span",
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
                                           {
-                                            staticClass:
-                                              "request-status-badge decline"
-                                          },
-                                          [_vm._v("Gagal")]
-                                        )
-                                      : _vm._e()
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request ===
+                                                "decline" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'decline' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge decline"
+                                      },
+                                      [_vm._v("Ditolak")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request === "cancel" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'cancel' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge cancel"
+                                      },
+                                      [_vm._v("Dibatalkan")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request === "done" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'done' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass: "request-status-badge done"
+                                      },
+                                      [_vm._v("Selesai")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: req.is_solved === "Y",
+                                            expression: "req.is_solved === 'Y'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge accept"
+                                      },
+                                      [_vm._v("Terpecahkan")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: req.is_solved === "N",
+                                            expression: "req.is_solved === 'N'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge decline"
+                                      },
+                                      [_vm._v("Belum terpecahkan")]
+                                    )
                                   ])
                                 ]
                               ),
@@ -64118,15 +64233,11 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      (req.status_request !==
-                                                        "done" ||
-                                                        req.is_solved ===
-                                                          "N") &&
-                                                      (req.status_request !==
-                                                        "accept" ||
-                                                        req.is_solved === "N"),
+                                                      req.status_request ===
+                                                        "waiting" ||
+                                                      req.is_solved === "N",
                                                     expression:
-                                                      "(req.status_request !== 'done' || req.is_solved === 'N') && (req.status_request !== 'accept' || req.is_solved === 'N')"
+                                                      "(req.status_request === 'waiting') || (req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },
@@ -64211,12 +64322,10 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      req.status_request !==
-                                                        "done" &&
-                                                      req.status_request !==
-                                                        "cancel",
+                                                      req.status_request ===
+                                                      "waiting",
                                                     expression:
-                                                      "req.status_request !== 'done' && req.status_request !== 'cancel'"
+                                                      "req.status_request === 'waiting'"
                                                   }
                                                 ]
                                               },
@@ -64259,10 +64368,10 @@ var render = function() {
                                                     rawName: "v-show",
                                                     value:
                                                       req.status_request ===
-                                                        "done" &&
+                                                        "accept" &&
                                                       req.is_solved !== "Y",
                                                     expression:
-                                                      "req.status_request === 'done' && req.is_solved !== 'Y'"
+                                                      "req.status_request === 'accept' && req.is_solved !== 'Y'"
                                                   }
                                                 ]
                                               },
@@ -64289,7 +64398,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Tandai sudah selesai\n                      "
+                                                      "\n                        Tandai sudah terpecahkan\n                      "
                                                     )
                                                   ]
                                                 )
@@ -64305,10 +64414,10 @@ var render = function() {
                                                     rawName: "v-show",
                                                     value:
                                                       req.status_request ===
-                                                        "done" &&
+                                                        "accept" &&
                                                       req.is_solved === "P",
                                                     expression:
-                                                      "req.status_request === 'done' && req.is_solved === 'P'"
+                                                      "req.status_request === 'accept' && req.is_solved === 'P'"
                                                   }
                                                 ]
                                               },
@@ -64320,7 +64429,7 @@ var render = function() {
                                                       click: function($event) {
                                                         return _vm.onUpdateStatus(
                                                           req.apt_id,
-                                                          "unfinished"
+                                                          "unsolved"
                                                         )
                                                       }
                                                     }
@@ -64335,7 +64444,7 @@ var render = function() {
                                                       }
                                                     }),
                                                     _vm._v(
-                                                      "\n                        Tandai belum selesai\n                      "
+                                                      "\n                        Tandai belum terpecahkan\n                      "
                                                     )
                                                   ]
                                                 )
@@ -66330,7 +66439,7 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Request Created")
+                    _vm._v("Tanggal Permintaan")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
@@ -66351,7 +66460,7 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Request ID")
+                    _vm._v("ID Konsultasi")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
@@ -66378,7 +66487,7 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Client ID")
+                    _vm._v("ID Konsultan")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
@@ -66394,7 +66503,7 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Client Name")
+                    _vm._v("Nama Konsultan")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
@@ -66410,7 +66519,7 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Email Address")
+                    _vm._v("Alamat Email")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
@@ -66426,13 +66535,45 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Contact Number")
+                    _vm._v("No. Telepon")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
                         _vm._s(_vm.detailrequest.consultant_phone_number) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Kota")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.city_name) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Alamat")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant_address) +
                         "\n              "
                     )
                   ])
@@ -66458,7 +66599,7 @@ var render = function() {
               _c("hr"),
               _vm._v(" "),
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                _vm._v("Feedback")
+                _vm._v("Ulasan Saya")
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "uk-margin-remove-top" }, [
@@ -66513,7 +66654,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Excellent")
+                          _vm._v("Hebat")
                         ])
                       ])
                     ]),
@@ -66537,7 +66678,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Good")
+                          _vm._v("Berpengalaman")
                         ])
                       ])
                     ]),
@@ -66561,7 +66702,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Neutral")
+                          _vm._v("Netral")
                         ])
                       ])
                     ]),
@@ -66585,7 +66726,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Poor")
+                          _vm._v("Kurang Berpengalaman")
                         ])
                       ])
                     ]),
@@ -66610,7 +66751,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Disappointed")
+                          _vm._v("Tidak dapat dipercaya")
                         ])
                       ])
                     ])
@@ -68491,74 +68632,140 @@ var render = function() {
                                 { staticClass: "uk-clearfix uk-margin-small" },
                                 [
                                   _c("div", { staticClass: "uk-float-left" }, [
-                                    req.status_request === "waiting"
-                                      ? _c(
-                                          "span",
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
                                           {
-                                            staticClass:
-                                              "request-status-badge upcoming"
-                                          },
-                                          [_vm._v("Menunggu Tanggapan")]
-                                        )
-                                      : req.status_request === "accept"
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge accept"
-                                          },
-                                          [_vm._v("Diterima")]
-                                        )
-                                      : req.status_request === "decline"
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge decline"
-                                          },
-                                          [_vm._v("Ditolak")]
-                                        )
-                                      : req.status_request === "cancel"
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge cancel"
-                                          },
-                                          [_vm._v("Dibatalkan")]
-                                        )
-                                      : _c(
-                                          "span",
-                                          {
-                                            staticClass:
-                                              "request-status-badge done"
-                                          },
-                                          [_vm._v("Selesai")]
-                                        ),
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request ===
+                                                "waiting" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'waiting' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge upcoming"
+                                      },
+                                      [_vm._v("Menunggu Tanggapan")]
+                                    ),
                                     _vm._v(" "),
-                                    req.status_request === "done" &&
-                                    req.is_solved === "Y"
-                                      ? _c(
-                                          "span",
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
                                           {
-                                            staticClass:
-                                              "request-status-badge accept"
-                                          },
-                                          [_vm._v("Berhasil")]
-                                        )
-                                      : _vm._e(),
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request === "accept" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'accept' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge accept"
+                                      },
+                                      [_vm._v("Diterima")]
+                                    ),
                                     _vm._v(" "),
-                                    req.status_request === "done" &&
-                                    req.is_solved === "N"
-                                      ? _c(
-                                          "span",
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
                                           {
-                                            staticClass:
-                                              "request-status-badge decline"
-                                          },
-                                          [_vm._v("Gagal")]
-                                        )
-                                      : _vm._e()
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request ===
+                                                "decline" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'decline' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge decline"
+                                      },
+                                      [_vm._v("Ditolak")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request === "cancel" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'cancel' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge cancel"
+                                      },
+                                      [_vm._v("Dibatalkan")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value:
+                                              req.status_request === "done" &&
+                                              req.is_solved === "P",
+                                            expression:
+                                              "req.status_request === 'done' && req.is_solved === 'P'"
+                                          }
+                                        ],
+                                        staticClass: "request-status-badge done"
+                                      },
+                                      [_vm._v("Selesai")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: req.is_solved === "Y",
+                                            expression: "req.is_solved === 'Y'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge accept"
+                                      },
+                                      [_vm._v("Terpecahkan")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: req.is_solved === "N",
+                                            expression: "req.is_solved === 'N'"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "request-status-badge decline"
+                                      },
+                                      [_vm._v("Belum terpecahkan")]
+                                    )
                                   ])
                                 ]
                               ),
@@ -68632,15 +68839,11 @@ var render = function() {
                                                     name: "show",
                                                     rawName: "v-show",
                                                     value:
-                                                      (req.status_request !==
-                                                        "done" ||
-                                                        req.is_solved ===
-                                                          "N") &&
-                                                      (req.status_request !==
-                                                        "accept" ||
-                                                        req.is_solved === "N"),
+                                                      req.status_request ===
+                                                        "waiting" ||
+                                                      req.is_solved === "N",
                                                     expression:
-                                                      "(req.status_request !== 'done' || req.is_solved === 'N') && (req.status_request !== 'accept' || req.is_solved === 'N')"
+                                                      "(req.status_request === 'waiting') || (req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },
@@ -68802,9 +69005,11 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: req.status_request === "accept",
+                                      value:
+                                        req.status_request === "accept" &&
+                                        req.is_solved === "Y",
                                       expression:
-                                        "req.status_request === 'accept'"
+                                        "req.status_request === 'accept' && req.is_solved === 'Y'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -70248,7 +70453,10 @@ var render = function() {
             _vm._v(
               "\n          " +
                 _vm._s(
-                  _vm.$root.formatDate(_vm.detailrequest.schedule_date, "HH:mm")
+                  _vm.$root.formatDate(
+                    _vm.detailrequest.request.schedule_date,
+                    "HH:mm"
+                  )
                 ) +
                 "\n        "
             )
@@ -70263,7 +70471,7 @@ var render = function() {
               "\n          " +
                 _vm._s(
                   _vm.$root.formatDate(
-                    _vm.detailrequest.schedule_date,
+                    _vm.detailrequest.request.schedule_date,
                     "ddd, DD MMMM YYYY"
                   )
                 ) +
@@ -70283,7 +70491,7 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Request Created")
+                    _vm._v("Tanggal Permintaan")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
@@ -70291,7 +70499,7 @@ var render = function() {
                       "\n                " +
                         _vm._s(
                           _vm.$root.formatDate(
-                            _vm.detailrequest.created_at,
+                            _vm.detailrequest.request.created_at,
                             "DD MMM YYYY"
                           )
                         ) +
@@ -70304,13 +70512,13 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Request ID")
+                    _vm._v("ID Konsultasi")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.apt_id) +
+                        _vm._s(_vm.detailrequest.request.apt_id) +
                         "\n              "
                     )
                   ])
@@ -70331,13 +70539,13 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Client ID")
+                    _vm._v("ID Klien")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.client_id) +
+                        _vm._s(_vm.detailrequest.client.client_id) +
                         "\n              "
                     )
                   ])
@@ -70347,13 +70555,13 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Client Name")
+                    _vm._v("Nama Klien")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.client_fullname) +
+                        _vm._s(_vm.detailrequest.client.client_fullname) +
                         "\n              "
                     )
                   ])
@@ -70363,13 +70571,13 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Email Address")
+                    _vm._v("Alamat Email")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.client_email) +
+                        _vm._s(_vm.detailrequest.client.client_email) +
                         "\n              "
                     )
                   ])
@@ -70379,13 +70587,45 @@ var render = function() {
               _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                    _vm._v("Contact Number")
+                    _vm._v("No. Telepon")
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.client_phone_number) +
+                        _vm._s(_vm.detailrequest.client.client_phone_number) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Kota")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.client.city_name) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Alamat")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.client.client_address) +
                         "\n              "
                     )
                   ])
@@ -70411,13 +70651,13 @@ var render = function() {
               _c("hr"),
               _vm._v(" "),
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                _vm._v("Feedback")
+                _vm._v("Ulasan Klien")
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "uk-margin-remove-top" }, [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.detailrequest.review_description) +
+                    _vm._s(_vm.detailrequest.request.review_description) +
                     "\n          "
                 )
               ])
@@ -70431,8 +70671,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.detailrequest.feedback,
-                  expression: "detailrequest.feedback"
+                  value: _vm.detailrequest.request.feedback,
+                  expression: "detailrequest.request.feedback"
                 }
               ],
               staticClass: "uk-panel uk-margin"
@@ -70459,14 +70699,16 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-smile-beam",
                               class: {
-                                fas: _vm.detailrequest.feedback === "excellent"
+                                fas:
+                                  _vm.detailrequest.request.feedback ===
+                                  "excellent"
                               }
                             })
                           ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Excellent")
+                          _vm._v("Hebat")
                         ])
                       ])
                     ]),
@@ -70483,14 +70725,15 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-smile",
                               class: {
-                                fas: _vm.detailrequest.feedback === "good"
+                                fas:
+                                  _vm.detailrequest.request.feedback === "good"
                               }
                             })
                           ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Good")
+                          _vm._v("Berpengalaman")
                         ])
                       ])
                     ]),
@@ -70507,14 +70750,16 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-meh",
                               class: {
-                                fas: _vm.detailrequest.feedback === "neutral"
+                                fas:
+                                  _vm.detailrequest.request.feedback ===
+                                  "neutral"
                               }
                             })
                           ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Neutral")
+                          _vm._v("Netral")
                         ])
                       ])
                     ]),
@@ -70531,14 +70776,15 @@ var render = function() {
                             _c("i", {
                               staticClass: "far fa-frown",
                               class: {
-                                fas: _vm.detailrequest.feedback === "poor"
+                                fas:
+                                  _vm.detailrequest.request.feedback === "poor"
                               }
                             })
                           ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Poor")
+                          _vm._v("Kurang Berpengalaman")
                         ])
                       ])
                     ]),
@@ -70556,14 +70802,15 @@ var render = function() {
                               staticClass: "far fa-angry",
                               class: {
                                 fas:
-                                  _vm.detailrequest.feedback === "disappointed"
+                                  _vm.detailrequest.request.feedback ===
+                                  "disappointed"
                               }
                             })
                           ]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
-                          _vm._v("Disappointed")
+                          _vm._v("Tidak dapat dipercaya")
                         ])
                       ])
                     ])

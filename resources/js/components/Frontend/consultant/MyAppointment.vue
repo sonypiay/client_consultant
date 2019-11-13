@@ -196,14 +196,14 @@
             <div class="uk-card uk-card-default uk-card-body uk-card-small card-request-list">
               <div class="uk-clearfix uk-margin-small">
                 <div class="uk-float-left">
-                  <span v-if="req.status_request === 'waiting'" class="request-status-badge upcoming">Menunggu Tanggapan</span>
-                  <span v-else-if="req.status_request === 'accept'" class="request-status-badge accept">Diterima</span>
-                  <span v-else-if="req.status_request === 'decline'" class="request-status-badge decline">Ditolak</span>
-                  <span v-else-if="req.status_request === 'cancel'" class="request-status-badge cancel">Dibatalkan</span>
-                  <span v-else class="request-status-badge done">Selesai</span>
+                  <span v-show="req.status_request === 'waiting' && req.is_solved === 'P'" class="request-status-badge upcoming">Menunggu Tanggapan</span>
+                  <span v-show="req.status_request === 'accept' && req.is_solved === 'P'" class="request-status-badge accept">Diterima</span>
+                  <span v-show="req.status_request === 'decline' && req.is_solved === 'P'" class="request-status-badge decline">Ditolak</span>
+                  <span v-show="req.status_request === 'cancel' && req.is_solved === 'P'" class="request-status-badge cancel">Dibatalkan</span>
+                  <span v-show="req.status_request === 'done' && req.is_solved === 'P'" class="request-status-badge done">Selesai</span>
 
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge accept">Berhasil</span>
-                  <span v-if="req.status_request === 'done' && req.is_solved === 'N'" class="request-status-badge decline">Gagal</span>
+                  <span v-show="req.is_solved === 'Y'" class="request-status-badge accept">Terpecahkan</span>
+                  <span v-show="req.is_solved === 'N'" class="request-status-badge decline">Belum terpecahkan</span>
                 </div>
               </div>
               <div class="uk-clearfix uk-margin-small">
@@ -220,7 +220,7 @@
                           Lihat
                         </a>
                       </li>
-                      <li v-show="(req.status_request !== 'done' || req.is_solved === 'N') && (req.status_request !== 'accept' || req.is_solved === 'N')">
+                      <li v-show="(req.status_request === 'waiting') || (req.is_solved === 'N')">
                         <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Ubah Jadwal
@@ -249,7 +249,7 @@
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Terima</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
               </div>
-              <div v-show="req.status_request === 'accept'" class="uk-margin-small">
+              <div v-show="req.status_request === 'accept' && req.is_solved === 'Y'" class="uk-margin-small">
                 <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-default uk-button-small gl-button-default">Tandai sudah selesai</a>
               </div>
             </div>
@@ -317,7 +317,11 @@ export default {
           prev_page_url: '',
           next_page_url: ''
         },
-        details: {}
+        details: {
+          request: {},
+          consultant: {},
+          client: {}
+        }
       },
       existingClient: {
         isLoading: false,
@@ -412,7 +416,7 @@ export default {
           break;
         default:
           confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
-          message = 'Permintaan jadwal konsultasi ' + id +' diterima';
+          message = 'Jadwal konsultasi ' + id +' telah selesai';
       }
 
       swal({
@@ -460,6 +464,7 @@ export default {
         iserror: false
       };
       let request = this.forms.request;
+      this.existingClient.isFinding = false;
 
       if( data === undefined )
       {
@@ -658,7 +663,7 @@ export default {
     {
       swal({
         title: 'Konfirmasi',
-        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
+        text: 'Apakah anda yakin ingin menghapus konsultasi ini?',
         icon: 'warning',
         buttons: {
           confirm: { value: true, text: 'Ya' },
@@ -672,7 +677,7 @@ export default {
             url: this.$root.url + '/consultant/delete_request/' + id
           }).then( res => {
             swal({
-              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
+              text: 'Konsultasi ' + id + 'berhasil dihapus',
               icon: 'success',
               timer: 2000
             });
@@ -689,10 +694,20 @@ export default {
         }
       })
     },
-    onViewDetail( data )
+    onViewDetail( id )
     {
-      this.getrequest.details = data;
-      UIkit.modal('#modal-view-request').show();
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/get_request/' + id
+      }).then( res => {
+        let result =  res.data;
+        this.getrequest.details.request = result.request;
+        this.getrequest.details.client = result.client;
+        this.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      }).catch( err => {
+        console.log( err.response.statusText );
+      });
     }
   },
   computed: {

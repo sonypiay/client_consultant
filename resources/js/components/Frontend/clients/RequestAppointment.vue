@@ -86,7 +86,7 @@ export default {
   },
   data() {
     return {
-      status_request: 'waiting_respond',
+      status_request: 'waiting',
       getrequest: {
         isLoading: false,
         total: 0,

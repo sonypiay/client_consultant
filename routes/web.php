@@ -49,6 +49,7 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/myappointment', 'Frontend\PagesController@consultant_appointment_page')->name('consultant_appointment_page');
   Route::get('/logout', 'Frontend\ConsultantUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ConsultantUserController@request_list');
+  Route::get('/get_request/{id}', 'Frontend\ConsultantUserController@get_request');
   Route::get('/notification', 'Frontend\ConsultantUserController@get_notification');
   Route::get('/existing_client', 'Frontend\ConsultantUserController@existing_client');
   Route::get('/list_feedback/{userid}', 'Frontend\ConsultantUserController@list_feedback');

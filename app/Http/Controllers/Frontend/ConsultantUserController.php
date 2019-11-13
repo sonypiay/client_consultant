@@ -61,6 +61,12 @@ class ConsultantUserController extends Controller
     return response()->json( $res, 200 );
   }
 
+  public function get_request( AppointmentRequest $appointment, $id )
+  {
+    $res = $appointment->getRequest( $id );
+    return response()->json( $res, 200 );
+  }
+
   public function update_status_appointment( AppointmentRequest $appointment, $status, $id )
   {
     $res = $appointment->updateStatus( $id, $status );
