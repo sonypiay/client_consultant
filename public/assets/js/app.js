@@ -5631,8 +5631,8 @@ document.addEventListener("DOMContentLoaded", function () {
         request.timepicker.minute = '';
         request.location = '';
         request.service_topic = '';
-        request.client_id = '';
-        request.client_name = '';
+        request.client.client_id = '';
+        request.client.client_name = '';
         request.id = '';
         request.request_to = '';
         request.created_by = '';
@@ -5653,6 +5653,7 @@ document.addEventListener("DOMContentLoaded", function () {
         request.isedit = true;
       }
 
+      console.log(request);
       UIkit.modal('#modal-request').show();
     },
     onCreateRequest: function onCreateRequest() {
@@ -68810,7 +68811,7 @@ var render = function() {
                                                   on: {
                                                     click: function($event) {
                                                       return _vm.onViewDetail(
-                                                        req
+                                                        req.apt_id
                                                       )
                                                     }
                                                   }

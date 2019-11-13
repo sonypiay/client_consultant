@@ -215,7 +215,7 @@
                   <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
                     <ul class="uk-nav uk-dropdown-nav request-nav">
                       <li>
-                        <a @click="onViewDetail( req )">
+                        <a @click="onViewDetail( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
                           Lihat
                         </a>
@@ -473,8 +473,8 @@ export default {
         request.timepicker.minute = '';
         request.location = '';
         request.service_topic = '';
-        request.client_id = '';
-        request.client_name = '';
+        request.client.client_id = '';
+        request.client.client_name = '';
         request.id = '';
         request.request_to = '';
         request.created_by = '';
@@ -496,6 +496,7 @@ export default {
         request.submit = 'Simpan Perubahan';
         request.isedit = true;
       }
+      console.log( request );
       UIkit.modal('#modal-request').show();
     },
     onCreateRequest()
