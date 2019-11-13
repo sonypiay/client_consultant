@@ -10,14 +10,14 @@
             <div class="uk-margin">
               <label class="uk-form-label gl-label">Alamat Email</label>
               <div class="uk-form-controls">
-                <input type="email" v-model="forms.email" class="uk-input gl-input-default" />
+                <input type="email" v-model="forms.email" placeholder="Masukkan alamat email anda" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.email" class="uk-text-small uk-text-danger">{{ messages.errors.email }}</div>
             </div>
             <div class="uk-margin">
               <label class="uk-form-label gl-label">Kata Sandi</label>
               <div class="uk-form-controls">
-                <input type="password" v-model="forms.password" class="uk-input gl-input-default" />
+                <input type="password" v-model="forms.password" placeholder="Masukkan kata sandi anda" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.password" class="uk-text-small uk-text-danger">{{ messages.errors.password }}</div>
             </div>

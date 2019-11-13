@@ -62870,7 +62870,10 @@ var render = function() {
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: { type: "email" },
+                        attrs: {
+                          type: "email",
+                          placeholder: "Masukkan alamat email anda"
+                        },
                         domProps: { value: _vm.forms.email },
                         on: {
                           input: function($event) {
@@ -62916,7 +62919,10 @@ var render = function() {
                           }
                         ],
                         staticClass: "uk-input gl-input-default",
-                        attrs: { type: "password" },
+                        attrs: {
+                          type: "password",
+                          placeholder: "Masukkan kata sandi anda"
+                        },
                         domProps: { value: _vm.forms.password },
                         on: {
                           input: function($event) {
