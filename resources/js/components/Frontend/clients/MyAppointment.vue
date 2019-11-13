@@ -253,7 +253,7 @@
                   <span v-show="req.status_request === 'accept' && req.is_solved === 'P'" class="request-status-badge accept">Diterima</span>
                   <span v-show="req.status_request === 'decline' && req.is_solved === 'P'" class="request-status-badge decline">Ditolak</span>
                   <span v-show="req.status_request === 'cancel' && req.is_solved === 'P'" class="request-status-badge cancel">Dibatalkan</span>
-                  <span v-show="req.status_request === 'done' && req.is_solved === 'P'" class="request-status-badge done">Selesai</span>
+                  <span v-show="req.status_request === 'done' && req.is_solved === 'Y'" class="request-status-badge done">Selesai</span>
 
                   <span v-show="req.is_solved === 'Y'" class="request-status-badge accept">Terpecahkan</span>
                   <span v-show="req.is_solved === 'N'" class="request-status-badge decline">Belum terpecahkan</span>

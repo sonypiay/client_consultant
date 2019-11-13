@@ -64118,9 +64118,9 @@ var render = function() {
                                             rawName: "v-show",
                                             value:
                                               req.status_request === "done" &&
-                                              req.is_solved === "P",
+                                              req.is_solved === "Y",
                                             expression:
-                                              "req.status_request === 'done' && req.is_solved === 'P'"
+                                              "req.status_request === 'done' && req.is_solved === 'Y'"
                                           }
                                         ],
                                         staticClass: "request-status-badge done"
@@ -68724,9 +68724,9 @@ var render = function() {
                                             rawName: "v-show",
                                             value:
                                               req.status_request === "done" &&
-                                              req.is_solved === "P",
+                                              req.is_solved === "Y",
                                             expression:
-                                              "req.status_request === 'done' && req.is_solved === 'P'"
+                                              "req.status_request === 'done' && req.is_solved === 'Y'"
                                           }
                                         ],
                                         staticClass: "request-status-badge done"
