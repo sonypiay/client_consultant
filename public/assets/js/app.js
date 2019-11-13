@@ -5087,7 +5087,7 @@ __webpack_require__.r(__webpack_exports__);
       forms: {
         email: '',
         password: '',
-        submit: 'Sign in'
+        submit: 'Masuk'
       },
       messages: {
         errors: {},
@@ -67524,7 +67524,7 @@ var render = function() {
             { staticClass: "uk-card uk-card-body uk-card-default card-panel" },
             [
               _c("div", { staticClass: "uk-card-title card-panel-title" }, [
-                _vm._v("Sign in as Consultant")
+                _vm._v("Masuk Konsultan")
               ]),
               _vm._v(" "),
               _c(
@@ -67575,7 +67575,7 @@ var render = function() {
                 [
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Email Account")
+                      _vm._v("Alamat Email")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -67591,7 +67591,7 @@ var render = function() {
                         staticClass: "uk-input gl-input-default",
                         attrs: {
                           type: "email",
-                          placeholder: "Enter your email account"
+                          placeholder: "Masukkan alamat email"
                         },
                         domProps: { value: _vm.forms.email },
                         on: {
@@ -67624,7 +67624,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "uk-margin" }, [
                     _c("label", { staticClass: "uk-form-label gl-label" }, [
-                      _vm._v("Password")
+                      _vm._v("Kata Sandi")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-form-controls" }, [
@@ -67640,7 +67640,7 @@ var render = function() {
                         staticClass: "uk-input gl-input-default",
                         attrs: {
                           type: "password",
-                          placeholder: "Enter your password"
+                          placeholder: "Masukkan kata sandi"
                         },
                         domProps: { value: _vm.forms.password },
                         on: {
@@ -67678,18 +67678,6 @@ var render = function() {
                       domProps: { innerHTML: _vm._s(_vm.forms.submit) }
                     })
                   ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "uk-text-center uk-margin-small-top card-link" },
-                [
-                  _c(
-                    "a",
-                    { attrs: { href: _vm.$root.url + "/consultant/signup" } },
-                    [_vm._v("Don't have account? Sign up now")]
-                  )
                 ]
               )
             ]

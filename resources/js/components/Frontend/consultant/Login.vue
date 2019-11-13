@@ -3,21 +3,21 @@
     <div class="uk-container">
       <div class="uk-width-2-5 uk-align-center uk-margin-large-top uk-margin-bottom">
         <div class="uk-card uk-card-body uk-card-default card-panel">
-          <div class="uk-card-title card-panel-title">Sign in as Consultant</div>
+          <div class="uk-card-title card-panel-title">Masuk Konsultan</div>
           <div v-show="messages.successMessage" class="uk-alert-success" uk-alert>{{ messages.successMessage }}</div>
           <div v-show="messages.errorMessage" class="uk-alert-danger" uk-alert>{{ messages.errorMessage }}</div>
           <form class="uk-form-stacked uk-margin-top" @submit.prevent="doLogin">
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Email Account</label>
+              <label class="uk-form-label gl-label">Alamat Email</label>
               <div class="uk-form-controls">
-                <input type="email" v-model="forms.email" placeholder="Enter your email account" class="uk-input gl-input-default" />
+                <input type="email" v-model="forms.email" placeholder="Masukkan alamat email" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.email" class="uk-text-small uk-text-danger">{{ messages.errors.email }}</div>
             </div>
             <div class="uk-margin">
-              <label class="uk-form-label gl-label">Password</label>
+              <label class="uk-form-label gl-label">Kata Sandi</label>
               <div class="uk-form-controls">
-                <input type="password" v-model="forms.password" placeholder="Enter your password" class="uk-input gl-input-default" />
+                <input type="password" v-model="forms.password" placeholder="Masukkan kata sandi" class="uk-input gl-input-default" />
               </div>
               <div v-show="messages.errors.password" class="uk-text-small uk-text-danger">{{ messages.errors.password }}</div>
             </div>
@@ -25,9 +25,9 @@
               <button class="uk-width-1-1 uk-button uk-button-primary gl-button-default" v-html="forms.submit"></button>
             </div>
           </form>
-          <div class="uk-text-center uk-margin-small-top card-link">
+          <!--<div class="uk-text-center uk-margin-small-top card-link">
             <a :href="$root.url + '/consultant/signup'">Don't have account? Sign up now</a>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@ export default {
       forms: {
         email: '',
         password: '',
-        submit: 'Sign in'
+        submit: 'Masuk'
       },
       messages: {
         errors: {},
