@@ -1856,6 +1856,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -6976,30 +6978,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -61014,50 +60992,7 @@ var render = function() {
               attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
             }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "uk-width-2-3 uk-align-center uk-text-center banner-find-consultant"
-              },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.forms.keywords,
-                      expression: "forms.keywords"
-                    }
-                  ],
-                  staticClass: "uk-width-2-3 uk-input banner-search-form",
-                  attrs: {
-                    type: "search",
-                    placeholder: "Enter your keywords..."
-                  },
-                  domProps: { value: _vm.forms.keywords },
-                  on: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.searchConsultant()
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.forms, "keywords", $event.target.value)
-                    }
-                  }
-                })
-              ]
-            )
+            _vm._m(0)
           ],
           1
         )
@@ -61070,11 +61005,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "banner-text" }, [
-      _vm._v("\n          Find a professional consultant you needs. "),
-      _c("br"),
-      _vm._v("Make your appointment today.\n        ")
-    ])
+    return _c(
+      "div",
+      {
+        staticClass:
+          "uk-width-2-3 uk-align-center uk-text-center banner-find-consultant"
+      },
+      [
+        _c("div", { staticClass: "banner-text" }, [
+          _vm._v("\n          Find a professional consultant you needs. "),
+          _c("br"),
+          _vm._v("Make your appointment today.\n        ")
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -71495,7 +71439,7 @@ var render = function() {
                       _c(
                         "a",
                         { attrs: { href: _vm.$root.url + "/client/signin" } },
-                        [_vm._v("Masuk Client")]
+                        [_vm._v("Masuk Klien")]
                       )
                     ]),
                     _vm._v(" "),
@@ -71548,7 +71492,16 @@ var render = function() {
             attrs: { "uk-navbar": "" }
           },
           [
-            _vm._m(0),
+            _c("div", { staticClass: "uk-navbar-left" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "uk-navbar-item uk-logo",
+                  attrs: { href: _vm.$root.url }
+                },
+                [_vm._v("Solusi Pajakku")]
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "uk-navbar-right" }, [
               _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
@@ -71596,7 +71549,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Mark as read")]
+                                [_vm._v("Tandai sudah dibaca")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -71609,7 +71562,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Refresh")]
+                                [_vm._v("Muat ulang")]
                               )
                             ])
                           ]),
@@ -71630,7 +71583,7 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("br"),
                                         _vm._v(
-                                          "\n                    You have no notification.\n                  "
+                                          "\n                    Belum ada notifikasi\n                  "
                                         )
                                       ]
                                     )
@@ -71645,7 +71598,7 @@ var render = function() {
                                             "ul",
                                             {
                                               staticClass:
-                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-homepage nav-dropdown-notification"
                                             },
                                             _vm._l(
                                               _vm.getnotification.results,
@@ -71746,19 +71699,15 @@ var render = function() {
                                     _c("span", {
                                       staticClass: "uk-margin-small-right",
                                       attrs: {
-                                        "uk-icon": "icon: file-edit; ratio: 0.8"
+                                        "uk-icon": "icon: calendar; ratio: 0.8"
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      My Appointment\n                    "
+                                      "\n                      Jadwal Konsultasi\n                    "
                                     )
                                   ]
                                 )
                               ]),
-                              _vm._v(" "),
-                              _vm._m(1),
-                              _vm._v(" "),
-                              _vm._m(2),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -71777,7 +71726,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Edit Profile & Settings\n                    "
+                                      "\n                      Ubah Profil\n                    "
                                     )
                                   ]
                                 )
@@ -71799,7 +71748,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Logout\n                    "
+                                      "\n                      Keluar\n                    "
                                     )
                                   ]
                                 )
@@ -71856,7 +71805,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Mark as read")]
+                                [_vm._v("Tandai sudah dibaca")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -71869,7 +71818,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Refresh")]
+                                [_vm._v("Muat ulang")]
                               )
                             ])
                           ]),
@@ -71890,7 +71839,7 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("br"),
                                         _vm._v(
-                                          "\n                    You have no notification.\n                  "
+                                          "\n                    Belum ada notifikasi\n                  "
                                         )
                                       ]
                                     )
@@ -72008,15 +71957,11 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      My Appointment\n                    "
+                                      "\n                      Jadwal Pertemuan\n                    "
                                     )
                                   ]
                                 )
                               ]),
-                              _vm._v(" "),
-                              _vm._m(3),
-                              _vm._v(" "),
-                              _vm._m(4),
                               _vm._v(" "),
                               _c("li", [
                                 _c(
@@ -72036,7 +71981,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Edit Profile & Settings\n                    "
+                                      "\n                      Ubah Profil\n                    "
                                     )
                                   ]
                                 )
@@ -72058,7 +72003,7 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(
-                                      "\n                      Logout\n                    "
+                                      "\n                      Keluar\n                    "
                                     )
                                   ]
                                 )
@@ -72074,7 +72019,7 @@ var render = function() {
                       _c(
                         "a",
                         { attrs: { href: _vm.$root.url + "/client/signin" } },
-                        [_vm._v("Log in Client")]
+                        [_vm._v("Masuk Klien")]
                       )
                     ]),
                     _vm._v(" "),
@@ -72084,7 +72029,7 @@ var render = function() {
                         {
                           attrs: { href: _vm.$root.url + "/consultant/signin" }
                         },
-                        [_vm._v("Log in Consultant")]
+                        [_vm._v("Masuk Konsultan")]
                       )
                     ])
                   ])
@@ -72095,72 +72040,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-navbar-left" }, [
-      _c("a", { staticClass: "uk-navbar-item uk-logo" }, [_vm._v("Logo")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: bell; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Notification\n                    ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Messages\n                    ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: bell; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Notification\n                    ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("span", {
-          staticClass: "uk-margin-small-right",
-          attrs: { "uk-icon": "icon: commenting; ratio: 0.8" }
-        }),
-        _vm._v("\n                      Messages\n                    ")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

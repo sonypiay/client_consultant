@@ -148,7 +148,7 @@
               </li>
             </ul>
             <ul v-else class="uk-navbar-nav navdefault">
-              <li><a :href="$root.url + '/client/signin'">Masuk Client</a></li>
+              <li><a :href="$root.url + '/client/signin'">Masuk Klien</a></li>
               <li><a :href="$root.url + '/consultant/signin'">Masuk Konsultan</a></li>
             </ul>
           </div>

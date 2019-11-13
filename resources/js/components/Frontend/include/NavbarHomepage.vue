@@ -4,7 +4,7 @@
       <div class="uk-container">
         <nav class="uk-navbar navbarhomepage" uk-navbar>
           <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo">Logo</a>
+            <a :href="$root.url" class="uk-navbar-item uk-logo">Solusi Pajakku</a>
           </div>
           <div class="uk-navbar-right">
             <ul v-if="haslogin.isLogin === true && haslogin.user === 'client'" class="uk-navbar-nav navhomepage">
@@ -16,8 +16,8 @@
                 <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-homepage" uk-dropdown="mode: click; pos: bottom-center">
                   <div class="uk-clearfix">
                     <div class="uk-float-right">
-                      <a @click="markAsRead('request')" class="markas-read">Mark as read</a>
-                      <a @click="showNotification()" class="markas-read">Refresh</a>
+                      <a @click="markAsRead('request')" class="markas-read">Tandai sudah dibaca</a>
+                      <a @click="showNotification()" class="markas-read">Muat ulang</a>
                     </div>
                   </div>
                   <div v-if="getnotification.isLoading" class="uk-text-center">
@@ -26,11 +26,11 @@
                   <div v-else>
                     <div v-if="getnotification.total === 0" class="uk-text-center">
                       <span uk-icon="info"></span> <br />
-                      You have no notification.
+                      Belum ada notifikasi
                     </div>
                     <div v-else>
                       <div class="dropdown-notification">
-                        <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
+                        <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-homepage nav-dropdown-notification">
                           <li v-for="notif in getnotification.results">
                             <a href="#">
                               {{ notif.notif_message }}
@@ -57,32 +57,20 @@
                     </li>
                     <li>
                       <a :href="$root.url + '/client/myappointment'">
-                        <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
-                        My Appointment
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="uk-margin-small-right" uk-icon="icon: bell; ratio: 0.8"></span>
-                        Notification
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="uk-margin-small-right" uk-icon="icon: commenting; ratio: 0.8"></span>
-                        Messages
+                        <span class="uk-margin-small-right" uk-icon="icon: calendar; ratio: 0.8"></span>
+                        Jadwal Konsultasi
                       </a>
                     </li>
                     <li>
                       <a :href="$root.url + '/client/edit_profile'">
                         <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 0.8"></span>
-                        Edit Profile &amp; Settings
+                        Ubah Profil
                       </a>
                     </li>
                     <li>
                       <a :href="$root.url + '/client/logout'">
                         <span class="uk-margin-small-right" uk-icon="icon: sign-out; ratio: 0.8"></span>
-                        Logout
+                        Keluar
                       </a>
                     </li>
                   </ul>
@@ -98,8 +86,8 @@
                 <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-homepage" uk-dropdown="mode: click; pos: bottom-center">
                   <div class="uk-clearfix">
                     <div class="uk-float-right">
-                      <a @click="markAsRead('request')" class="markas-read">Mark as read</a>
-                      <a @click="showNotification()" class="markas-read">Refresh</a>
+                      <a @click="markAsRead('request')" class="markas-read">Tandai sudah dibaca</a>
+                      <a @click="showNotification()" class="markas-read">Muat ulang</a>
                     </div>
                   </div>
                   <div v-if="getnotification.isLoading" class="uk-text-center">
@@ -108,7 +96,7 @@
                   <div v-else>
                     <div v-if="getnotification.total === 0" class="uk-text-center">
                       <span uk-icon="info"></span> <br />
-                      You have no notification.
+                      Belum ada notifikasi
                     </div>
                     <div v-else>
                       <div class="dropdown-notification">
@@ -140,31 +128,19 @@
                     <li>
                       <a :href="$root.url + '/consultant/myappointment'">
                         <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
-                        My Appointment
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="uk-margin-small-right" uk-icon="icon: bell; ratio: 0.8"></span>
-                        Notification
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="uk-margin-small-right" uk-icon="icon: commenting; ratio: 0.8"></span>
-                        Messages
+                        Jadwal Pertemuan
                       </a>
                     </li>
                     <li>
                       <a :href="$root.url + '/consultant/edit_profile'">
                         <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 0.8"></span>
-                        Edit Profile &amp; Settings
+                        Ubah Profil
                       </a>
                     </li>
                     <li>
                       <a :href="$root.url + '/consultant/logout'">
                         <span class="uk-margin-small-right" uk-icon="icon: sign-out; ratio: 0.8"></span>
-                        Logout
+                        Keluar
                       </a>
                     </li>
                   </ul>
@@ -172,8 +148,8 @@
               </li>
             </ul>
             <ul v-else class="uk-navbar-nav navhomepage">
-              <li><a :href="$root.url + '/client/signin'">Log in Client</a></li>
-              <li><a :href="$root.url + '/consultant/signin'">Log in Consultant</a></li>
+              <li><a :href="$root.url + '/client/signin'">Masuk Klien</a></li>
+              <li><a :href="$root.url + '/consultant/signin'">Masuk Konsultan</a></li>
             </ul>
           </div>
         </nav>

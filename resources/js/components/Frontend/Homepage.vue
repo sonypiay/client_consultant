@@ -9,7 +9,9 @@
           <div class="banner-text">
             Find a professional consultant you needs. <br>Make your appointment today.
           </div>
+          <!--
           <input @keyup.enter="searchConsultant()" v-model="forms.keywords" type="search" class="uk-width-2-3 uk-input banner-search-form" placeholder="Enter your keywords..." />
+          -->
         </div>
       </div>
     </div>

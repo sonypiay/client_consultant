@@ -11,10 +11,7 @@
 |
 */
 
-//Route::get('/', 'Frontend\PagesController@homepage')->name('homepage');
-Route::get('/', function() {
-  return redirect()->route('client_login_page');
-});
+Route::get('/', 'Frontend\PagesController@homepage')->name('homepage');
 //Route::get('/search', 'Frontend\PagesController@search_consultant')->name('search_consultant');
 //Route::get('/search/consultant', 'Frontend\ConsultantUserController@search_consultant');
 
