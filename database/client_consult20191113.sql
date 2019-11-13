@@ -61,11 +61,11 @@ CREATE TABLE `appointment_request` (
   KEY `fk_req_client_idx` (`client_id`),
   CONSTRAINT `fk_req_client_idx` FOREIGN KEY (`client_id`) REFERENCES `client_user` (`client_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_req_consultant_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `appointment_request` */
 
-insert  into `appointment_request`(`apt_id`,`client_id`,`consultant_id`,`created_by`,`request_to`,`schedule_date`,`location`,`service_topic`,`status_request`,`is_solved`,`notes`,`created_at`,`updated_at`,`seqid`) values ('APT1911100004','CL0001','CLT0001','consultant','client','2019-11-15 12:00:00','Mall Senayan City, Jakarta Pusat','TPC003','accept','N',NULL,'2019-11-10 23:38:11','2019-11-13 15:22:47',4),('APT1911110005','CL0001','CLT0001','client','consultant','2019-11-14 10:00:00','Senayan City, Jakarta Pusat','TPC001','accept','Y',NULL,'2019-11-11 00:08:27','2019-11-13 15:22:32',5),('APT1911130006','CL0001',NULL,'client','consultant','2019-11-16 10:00:00','Senayan City, Jakarta','TPC005','cancel','P',NULL,'2019-11-13 15:26:53','2019-11-13 15:27:01',6);
+insert  into `appointment_request`(`apt_id`,`client_id`,`consultant_id`,`created_by`,`request_to`,`schedule_date`,`location`,`service_topic`,`status_request`,`is_solved`,`notes`,`created_at`,`updated_at`,`seqid`) values ('APT1911110005','CL0001','CLT0001','client','consultant','2019-11-14 10:00:00','Senayan City, Jakarta Pusat','TPC001','done','Y',NULL,'2019-11-11 00:08:27','2019-11-13 16:22:27',5),('APT1911130009','CL0001','CLT0001','consultant','client','2019-11-16 10:00:00','Mall Senayan City, Jakarta Pusat','TPC001','accept','P',NULL,'2019-11-13 17:37:12','2019-11-13 17:45:12',9);
 
 /*Table structure for table `city` */
 
@@ -179,9 +179,11 @@ CREATE TABLE `feedbacks` (
   UNIQUE KEY `seqid` (`seqid`),
   KEY `fk_fd_aptidx` (`apt_id`),
   CONSTRAINT `fk_fd_aptidx` FOREIGN KEY (`apt_id`) REFERENCES `appointment_request` (`apt_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `feedbacks` */
+
+insert  into `feedbacks`(`fd_id`,`review_description`,`feedback`,`rateindex`,`apt_id`,`seqid`,`created_at`,`updated_at`) values ('FD0001','Mantapp!!','excellent',5,'APT1911110005',1,'2019-11-13 16:32:24','2019-11-13 16:32:24');
 
 /*Table structure for table `notification` */
 
