@@ -52,6 +52,8 @@ class AppointmentRequest extends Model
       'appointment_request.is_solved',
       'appointment_request.created_at',
       'appointment_request.updated_at',
+      'service_topic.topic_id',
+      'service_topic.topic_name',
       'client_user.client_fullname',
       'client_user.client_phone_number',
       'client_user.client_email',
@@ -64,6 +66,7 @@ class AppointmentRequest extends Model
       'feedbacks.review_description',
       'feedbacks.feedback'
     )
+    ->join('service_topic', 'appointment_request.service_topic', '=', 'service_topic.topic_id')
     ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
     ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
     ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id');
@@ -139,10 +142,13 @@ class AppointmentRequest extends Model
       'appointment_request.is_solved',
       'appointment_request.created_at',
       'appointment_request.updated_at',
+      'service_topic.topic_id',
+      'service_topic.topic_name',
       'feedbacks.fd_id',
       'feedbacks.review_description',
       'feedbacks.feedback'
     )
+    ->join('service_topic', 'appointment_request.service_topic', '=', 'service_topic.topic_id')
     ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
     ->where( 'appointment_request.apt_id', $id )
     ->first();
@@ -178,7 +184,8 @@ class AppointmentRequest extends Model
       else
       {
         $this->request_to     = 'client';
-        $this->consultant_id  = $user_id;
+        $this->client_id      = $user_id;
+        $this->consultant_id  = session()->get('consultantId');
       }
 
       $this->created_by       = $created_by;
@@ -192,8 +199,8 @@ class AppointmentRequest extends Model
       }
       else
       {
-        $check_client = ClientUser::where('client_id', $client_id)->count();
-        if( $check_client === 1 )
+        $check_client = ClientUser::where('client_id', $user_id)->count();
+        if( $check_client == 1 )
         {
           $this->save();
         }

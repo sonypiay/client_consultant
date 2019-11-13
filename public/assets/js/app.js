@@ -2703,7 +2703,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (forms.password === '') {
-        this.messages.errors.password = 'Harap masukkan kata sandi';
+        this.messages.errors.password = 'Harap masukkan kata sandi anda';
         this.messages.iserror = true;
       }
 
@@ -5108,12 +5108,12 @@ __webpack_require__.r(__webpack_exports__);
       var forms = this.forms;
 
       if (forms.email === '') {
-        this.messages.errors.email = 'Please enter your email';
+        this.messages.errors.email = 'Harap masukkan alamat email anda';
         this.messages.iserror = true;
       }
 
       if (forms.password === '') {
-        this.messages.errors.password = 'This field is required.';
+        this.messages.errors.password = 'Harap masukkan kata sandi anda';
         this.messages.iserror = true;
       }
 
@@ -5158,6 +5158,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! v-calendar */ "./node_modules/v-calendar/lib/v-calendar.min.js");
 /* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(v_calendar__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ViewRequest_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewRequest.vue */ "./resources/js/components/Frontend/consultant/ViewRequest.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5656,6 +5662,23 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(request);
       UIkit.modal('#modal-request').show();
     },
+    onCreateNewSchedule: function onCreateNewSchedule(data) {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var request = this.forms.request;
+      this.existingClient.isFinding = false;
+      request.location = data.location;
+      request.service_topic = data.service_topic;
+      request.client.client_id = data.client_id;
+      request.client.client_name = data.client_fullname;
+      request.submit = 'Buat Jadwal';
+      request.isedit = false;
+      UIkit.modal('#modal-request').show();
+    },
     onCreateRequest: function onCreateRequest() {
       var _this3 = this;
 
@@ -5694,7 +5717,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var service_topic = request.service_topic;
       var created_by = 'consultant';
       var location = request.location;
-      var user_id = this.getuser.client_id;
+      var user_id = request.client.client_id;
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
@@ -6545,6 +6568,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -68822,6 +68849,34 @@ var render = function() {
                                               )
                                             ]),
                                             _vm._v(" "),
+                                            _c("li", [
+                                              _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.onCreateNewSchedule(
+                                                        req
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("span", {
+                                                    staticClass:
+                                                      "uk-margin-small-right",
+                                                    attrs: {
+                                                      "uk-icon":
+                                                        "icon: copy; ratio: 0.8"
+                                                    }
+                                                  }),
+                                                  _vm._v(
+                                                    "\n                        Atur Jadwal Baru\n                      "
+                                                  )
+                                                ]
+                                              )
+                                            ]),
+                                            _vm._v(" "),
                                             _c(
                                               "li",
                                               {
@@ -70466,6 +70521,18 @@ var render = function() {
                     "ddd, DD MMMM YYYY"
                   )
                 ) +
+                "\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "request-date" }, [
+            _c("span", {
+              staticClass: "uk-margin-small-right",
+              attrs: { "uk-icon": "icon: info; ratio: 2.5" }
+            }),
+            _vm._v(
+              "\n          " +
+                _vm._s(_vm.detailrequest.request.topic_name) +
                 "\n        "
             )
           ])

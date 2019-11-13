@@ -68,7 +68,7 @@ export default {
       }
       if( forms.password === '' )
       {
-        this.messages.errors.password = 'Harap masukkan kata sandi';
+        this.messages.errors.password = 'Harap masukkan kata sandi anda';
         this.messages.iserror = true;
       }
       if( this.messages.iserror === true ) return false;

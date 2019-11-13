@@ -220,6 +220,12 @@
                           Lihat
                         </a>
                       </li>
+                      <li>
+                        <a @click="onCreateNewSchedule( req )">
+                          <span class="uk-margin-small-right" uk-icon="icon: copy; ratio: 0.8"></span>
+                          Atur Jadwal Baru
+                        </a>
+                      </li>
                       <li v-show="(req.status_request === 'waiting') || (req.is_solved === 'N')">
                         <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
@@ -499,6 +505,26 @@ export default {
       console.log( request );
       UIkit.modal('#modal-request').show();
     },
+    onCreateNewSchedule( data )
+    {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      let request = this.forms.request;
+      this.existingClient.isFinding = false;
+
+      request.location = data.location;
+      request.service_topic = data.service_topic;
+      request.client.client_id = data.client_id;
+      request.client.client_name = data.client_fullname;
+      request.submit = 'Buat Jadwal';
+      request.isedit = false;
+
+      UIkit.modal('#modal-request').show();
+    },
     onCreateRequest()
     {
       this.messages = {
@@ -538,7 +564,7 @@ export default {
       let service_topic = request.service_topic;
       let created_by = 'consultant';
       let location = request.location;
-      let user_id = this.getuser.client_id;
+      let user_id = request.client.client_id;
 
       request.submit = '<span uk-spinner></span>';
       axios({

@@ -63,12 +63,12 @@ export default {
 
       if( forms.email === '' )
       {
-        this.messages.errors.email = 'Please enter your email';
+        this.messages.errors.email = 'Harap masukkan alamat email anda';
         this.messages.iserror = true;
       }
       if( forms.password === '' )
       {
-        this.messages.errors.password = 'This field is required.';
+        this.messages.errors.password = 'Harap masukkan kata sandi anda';
         this.messages.iserror = true;
       }
       if( this.messages.iserror === true ) return false;

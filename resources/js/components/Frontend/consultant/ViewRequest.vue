@@ -11,6 +11,10 @@
             <span uk-icon="icon: calendar; ratio: 2.5" class="uk-margin-small-right"></span>
             {{ $root.formatDate( detailrequest.request.schedule_date, 'ddd, DD MMMM YYYY' ) }}
           </div>
+          <div class="request-date">
+            <span uk-icon="icon: info; ratio: 2.5" class="uk-margin-small-right"></span>
+            {{ detailrequest.request.topic_name }}
+          </div>
         </div>
         <div class="uk-modal-body">
           <div class="uk-grid-small uk-margin" uk-grid>
