@@ -4,6 +4,8 @@
     :haslogin="haslogin"
     :getuser="getuser" />
 
+    <view-private-event :detailevent="getevt.details" />
+
     <div class="uk-padding banner-index_header">
       <div class="uk-container">Acara Pribadi</div>
     </div>
@@ -148,6 +150,9 @@
             <div>
               <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Cari ID Acara" @keyup.enter="showPrivateEvent()" />
             </div>
+            <div>
+              <button class="uk-button uk-button-default gl-button-default" @click="showPrivateEvent()">Filter pencarian</button>
+            </div>
           </div>
         </div>
         <div class="uk-float-right">
@@ -250,6 +255,7 @@
 
 <script>
 import VCalendar from 'v-calendar';
+import ViewPrivateEvent from './ViewPrivateEvent.vue';
 
 document.addEventListener("DOMContentLoaded", function() {
 	OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -261,7 +267,8 @@ export default {
     'getuser'
   ],
   components: {
-    VCalendar
+    VCalendar,
+    ViewPrivateEvent
   },
   data() {
     return {
@@ -342,7 +349,8 @@ export default {
     showPrivateEvent( p )
     {
       this.getevt.isLoading = true;
-      let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
+      let selectedDate = this.datepicker.selectedDate === null ? '' : this.$root.formatDate( this.datepicker.selectedDate, 'YYYY-MM-DD' );
+      let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&select_date=' + selectedDate;
       let url = this.$root.url + '/consultant/event_schedule/?page=' + this.getevt.paginate.current_page + '&' + param;
       if( p !== undefined ) url = p + '&' + param;
 
@@ -570,7 +578,8 @@ export default {
     },
     onViewDetail( data )
     {
-      console.log( data );
+      this.getevt.details = data;
+      UIkit.modal('#modal-view-event').show();
     }
   },
   computed: {

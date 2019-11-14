@@ -3,6 +3,7 @@
 namespace App\Database;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class EventSchedule extends Model
 {
@@ -37,7 +38,7 @@ class EventSchedule extends Model
 
     if( ! empty( $keywords ) )
     {
-      $query->where(function($q) use ($keywords){
+      $query = $query->where(function($q) use ($keywords){
         $q->where('evt_id', 'like', '%' . $keywords . '%')
         ->orWhere('evt_title', 'like', '%' . $keywords . '%');
       });
@@ -45,7 +46,7 @@ class EventSchedule extends Model
 
     if( ! empty( $select_date ) )
     {
-      $query->where(DB::raw("date_format(evt_schedule, '%Y-%m-%d')"), '=', $select_date);
+      $query = $query->where(DB::raw("date_format(evt_schedule, '%Y-%m-%d')"), $select_date);
     }
 
     $result = $query->orderBy('created_at', 'desc')
