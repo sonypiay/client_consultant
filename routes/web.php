@@ -48,6 +48,7 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/privateevent', 'Frontend\PagesController@consultant_event_page')->name('consultant_event_page');
   Route::get('/logout', 'Frontend\ConsultantUserController@logout');
   Route::get('/request_list/{status?}', 'Frontend\ConsultantUserController@request_list');
+  Route::get('/event_schedule', 'Frontend\ConsultantUserController@show_event_schedule');
   Route::get('/get_request/{id}', 'Frontend\ConsultantUserController@get_request');
   Route::get('/notification', 'Frontend\ConsultantUserController@get_notification');
   Route::get('/existing_client', 'Frontend\ConsultantUserController@existing_client');
@@ -55,10 +56,13 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::post('/create_account', 'Frontend\ConsultantUserController@register');
   Route::post('/signin', 'Frontend\ConsultantUserController@login');
   Route::post('/add_request', 'Frontend\ConsultantUserController@add_request');
+  Route::post('/add_event', 'Frontend\ConsultantUserController@add_event');
   Route::put('/save_request/{id}', 'Frontend\ConsultantUserController@save_request');
+  Route::put('/save_event/{id}', 'Frontend\ConsultantUserController@save_event');
   Route::put('/save_profile', 'Frontend\ConsultantUserController@save_profile');
   Route::put('/change_password', 'Frontend\ConsultantUserController@change_password');
   Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ConsultantUserController@mark_as_read');
   Route::delete('/delete_request/{id}', 'Frontend\ConsultantUserController@delete_request');
+  Route::delete('/delete_event/{id}', 'Frontend\ConsultantUserController@delete_event');
 });

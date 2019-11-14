@@ -9,7 +9,7 @@
     </div>
 
     <!-- add / update appointment -->
-    <div id="modal-request" uk-modal>
+    <div id="modal-event" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
         <a class="uk-modal-close uk-modal-close-default" uk-close></a>
         <div class="modal-title">
@@ -134,12 +134,13 @@
               </select>
             </div>
             <div>
-              <v-date-picker v-model="datepicker.rangeDate"
-              mode="range"
+              <!--<button class="uk-button uk-button-primary gl-button-primary">Pilih Tanggal</button>-->
+              <v-date-picker v-model="datepicker.selectedDate"
+              mode="single"
               :formats="datepicker.formats"
               :theme-styles="datepicker.styles"
               :input-props="datepicker.props"
-              show-caps is-double-paned
+              show-caps
               popover-visibility="focus"
               >
               </v-date-picker>
@@ -277,10 +278,7 @@ export default {
         details: {}
       },
       datepicker: {
-        rangeDate: {
-          start: new Date(),
-          end: new Date()
-        },
+        selectedDate: null,
         mindate: new Date(),
         popover: {
           placement: 'bottom',
@@ -419,7 +417,7 @@ export default {
       }
 
       let message_form = 'Harap diisi';
-      let event = this.forms.evt;
+      let evt = this.forms.evt;
 
       if( evt.title === '' )
       {

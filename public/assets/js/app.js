@@ -6230,6 +6230,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 document.addEventListener("DOMContentLoaded", function () {
   OverlayScrollbars(document.querySelectorAll(".dropdown-timepicker-content"), {});
@@ -6254,10 +6255,7 @@ document.addEventListener("DOMContentLoaded", function () {
         details: {}
       },
       datepicker: {
-        rangeDate: {
-          start: new Date(),
-          end: new Date()
-        },
+        selectedDate: null,
         mindate: new Date(),
         popover: {
           placement: 'bottom',
@@ -6395,7 +6393,7 @@ document.addEventListener("DOMContentLoaded", function () {
         iserror: false
       };
       var message_form = 'Harap diisi';
-      var event = this.forms.evt;
+      var evt = this.forms.evt;
 
       if (evt.title === '') {
         this.messages.errors.title = message_form;
@@ -69936,7 +69934,7 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { attrs: { id: "modal-request", "uk-modal": "" } }, [
+      _c("div", { attrs: { id: "modal-event", "uk-modal": "" } }, [
         _c(
           "div",
           { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" },
@@ -70510,20 +70508,19 @@ var render = function() {
                     [
                       _c("v-date-picker", {
                         attrs: {
-                          mode: "range",
+                          mode: "single",
                           formats: _vm.datepicker.formats,
                           "theme-styles": _vm.datepicker.styles,
                           "input-props": _vm.datepicker.props,
                           "show-caps": "",
-                          "is-double-paned": "",
                           "popover-visibility": "focus"
                         },
                         model: {
-                          value: _vm.datepicker.rangeDate,
+                          value: _vm.datepicker.selectedDate,
                           callback: function($$v) {
-                            _vm.$set(_vm.datepicker, "rangeDate", $$v)
+                            _vm.$set(_vm.datepicker, "selectedDate", $$v)
                           },
-                          expression: "datepicker.rangeDate"
+                          expression: "datepicker.selectedDate"
                         }
                       })
                     ],

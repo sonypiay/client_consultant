@@ -9,6 +9,7 @@ use App\Database\ConsultantUser;
 use App\Database\AppointmentRequest;
 use App\Database\Notification;
 use App\Database\Feedbacks;
+use App\Database\EventSchedule;
 use DB;
 use Storage;
 use Hash;
@@ -114,5 +115,35 @@ class ConsultantUserController extends Controller
   {
     $res = $feedback->show_feedback( $request, $userid );
     return response()->json( $res, 200 );
+  }
+
+  public function show_event_schedule( Request $request, EventSchedule $eventschedule )
+  {
+    $res = $eventschedule->showEventSchedule( $request );
+    return response()->json( $res, 200 );
+  }
+
+  public function add_event( Request $request, EventSchedule $eventschedule )
+  {
+    $res = ['responseCode' => 200, 'responseMessage' => 'event created'];
+    $eventschedule->addEvent( $request );
+
+    return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function save_event( Request $request, EventSchedule $eventschedule, $id )
+  {
+    $res = ['responseCode' => 200, 'responseMessage' => 'event updated'];
+    $eventschedule->saveEvent( $request, $id );
+
+    return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function delete_event( EventSchedule $eventschedule, $id )
+  {
+    $res = ['responseCode' => 200, 'responseMessage' => 'event deleted'];
+    $eventschedule->deleteEvent( $id );
+
+    return response()->json( $res, $res['responseCode'] );
   }
 }
