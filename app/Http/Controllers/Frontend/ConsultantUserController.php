@@ -68,9 +68,9 @@ class ConsultantUserController extends Controller
     return response()->json( $res, 200 );
   }
 
-  public function update_status_appointment( AppointmentRequest $appointment, $status, $id )
+  public function update_status_appointment( Request $request, AppointmentRequest $appointment, $status, $id )
   {
-    $res = $appointment->updateStatus( $id, $status );
+    $res = $appointment->updateStatus( $id, $status, $request );
     return response()->json( $res, $res['responseCode'] );
   }
 
