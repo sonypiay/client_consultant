@@ -53,7 +53,7 @@ class City extends Model
     $check_id = $this->where('city_id', $city_id);
     if( $check_id->count() == 1 )
     {
-      $res = [ 'responseCode' => 409, 'responseMessage' => 'Duplicate ID. ID already exists!' ];
+      $res = [ 'responseCode' => 409, 'responseMessage' => 'ID sudah digunakan' ];
     }
     else
     {
@@ -86,7 +86,7 @@ class City extends Model
       $check_id = $this->where('city_id', $city_id);
       if( $check_id->count() == 1 )
       {
-        $res = [ 'responseCode' => 409, 'responseMessage' => 'Duplicate ID. ID already exists!' ];
+        $res = [ 'responseCode' => 409, 'responseMessage' => 'ID sudah digunakan' ];
       }
       else
       {

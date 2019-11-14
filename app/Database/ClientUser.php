@@ -80,7 +80,7 @@ class ClientUser extends Model
     {
       $res = [
         'responseCode' => 409,
-        'responseMessage' => $client_email . ' has already taken!'
+        'responseMessage' => $client_email . ' sudah terdaftar'
       ];
     }
     else
@@ -194,14 +194,14 @@ class ClientUser extends Model
     $validate = $this->where('client_email', $client_email);
     if( $validate->count() == 0 )
     {
-      $res = ['responseCode' => 401, 'responseMessage' => 'Account doesn\'t exists!'];
+      $res = ['responseCode' => 401, 'responseMessage' => 'Akun tidak terdaftar'];
     }
     else
     {
       $result = $validate->first();
       if( ! Hash::check( $client_password, $result->client_password ) )
       {
-        $res = ['responseCode' => 401, 'responseMessage' => 'Password did not match!'];
+        $res = ['responseCode' => 401, 'responseMessage' => 'Kata sandi salah'];
       }
       else
       {

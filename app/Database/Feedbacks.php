@@ -24,7 +24,7 @@ class Feedbacks extends Model
     return $key . $pad;
   }
 
-  public function addFeeback( $request, $id )
+  public function addFeedback( $request, $id )
   {
     $review_description = $request->review_description;
     $feedback = $request->feedback;

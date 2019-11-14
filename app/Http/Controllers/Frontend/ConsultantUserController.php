@@ -127,7 +127,6 @@ class ConsultantUserController extends Controller
   {
     $res = ['responseCode' => 200, 'responseMessage' => 'event created'];
     $eventschedule->addEvent( $request );
-
     return response()->json( $res, $res['responseCode'] );
   }
 

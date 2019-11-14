@@ -50,7 +50,7 @@ class Province extends Model
 
     if( $check_id->count() == 1 )
     {
-      $res = [ 'statusCode' => 409, 'errorMessage' => 'Duplicate ID. ID already exists!' ];
+      $res = [ 'statusCode' => 409, 'errorMessage' => 'ID sudah digunakan' ];
     }
     else
     {
@@ -80,7 +80,7 @@ class Province extends Model
       $check_id = $this->where('province_id', $province_id);
       if( $check_id->count() == 1 )
       {
-        $res = [ 'statusCode' => 409, 'errorMessage' => 'Duplicate ID. ID already exists!' ];
+        $res = [ 'statusCode' => 409, 'errorMessage' => 'ID sudah digunakan' ];
       }
       else
       {

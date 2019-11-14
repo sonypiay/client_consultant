@@ -83,19 +83,19 @@ class AppointmentRequest extends Model
     if( session()->has('isConsultant') )
     {
       $consultant = session()->get('consultantId');
-      $query->where(function( $q ) use ( $consultant ) {
+      $query = $query->where(function( $q ) use ( $consultant ) {
         $q->where('appointment_request.consultant_id', $consultant)
         ->orWhereNull('appointment_request.consultant_id');
       });
     }
 
-    $query->where($whereClauses);
+    $query = $query->where($whereClauses);
 
     if( ! empty( $keywords ) )
     {
       if( session()->has('isClient') )
       {
-        $query->where(function( $q ) use ( $keywords ) {
+        $query = $query->where(function( $q ) use ( $keywords ) {
           $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
           ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%')
           ->orWhere('consultant_user.consultant_id', 'like', '%' . $keywords . '%');
@@ -103,7 +103,7 @@ class AppointmentRequest extends Model
       }
       else if( session()->has('isConsultant') )
       {
-        $query->where(function( $q ) use ( $keywords ) {
+        $query = $query->where(function( $q ) use ( $keywords ) {
           $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%');
@@ -111,7 +111,7 @@ class AppointmentRequest extends Model
       }
       else
       {
-        $query->where(function( $q ) use ( $keywords ) {
+        $query = $query->where(function( $q ) use ( $keywords ) {
           $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
           ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%')
@@ -209,7 +209,7 @@ class AppointmentRequest extends Model
         {
           $res = [
             'responseCode' => 410,
-            'responseMessage' => 'Sorry, client does not exists.'
+            'responseMessage' => 'Klien tidak ada.'
           ];
         }
       }
@@ -218,7 +218,7 @@ class AppointmentRequest extends Model
     {
       $res = [
         'responseCode' => 401,
-        'responseMessage' => 'You have to sign in first.'
+        'responseMessage' => 'Anda harus masuk terlebih dahulu'
       ];
     }
     return $res;

@@ -131,7 +131,7 @@ class ConsultantUser extends Model
       {
         $res = [
           'responseCode' => 409,
-          'responseMessage' => $email . ' has already taken!'
+          'responseMessage' => $email . ' sudah terdaftar'
         ];
       }
       else
@@ -190,14 +190,14 @@ class ConsultantUser extends Model
     $validate = $this->where('consultant_email', $email);
     if( $validate->count() == 0 )
     {
-      $res = ['responseCode' => 401, 'responseMessage' => 'Account doesn\'t exists!'];
+      $res = ['responseCode' => 401, 'responseMessage' => 'Akun tidak terdaftar'];
     }
     else
     {
       $result = $validate->first();
       if( ! Hash::check( $password, $result->consultant_password ) )
       {
-        $res = ['responseCode' => 401, 'responseMessage' => 'Password did not match!'];
+        $res = ['responseCode' => 401, 'responseMessage' => 'Kata sandi salah'];
       }
       else
       {

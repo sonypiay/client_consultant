@@ -98,15 +98,9 @@ class ClientUserController extends Controller
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function status_problem( AppointmentRequest $appointment, $status, $id )
-  {
-    $res = $appointment->setProblem( $id, $status );
-    return response()->json( $res, 200 );
-  }
-
   public function add_feedback( Request $request, Feedbacks $fb, $id )
   {
-    $res = $fb->addFeeback( $request, $id );
+    $res = $fb->addFeedback( $request, $id );
     return response()->json( $res, $res['responseCode'] );
   }
 }
