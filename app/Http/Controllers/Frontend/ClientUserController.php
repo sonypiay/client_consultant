@@ -9,7 +9,6 @@ use App\Database\AppointmentRequest;
 use App\Database\Notification;
 use App\Database\Feedbacks;
 use App\Database\ServiceTopic;
-use App\Database\ServiceRequest;
 use DB;
 use Storage;
 use Hash;
