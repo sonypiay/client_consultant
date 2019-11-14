@@ -138,7 +138,8 @@
               mode="range"
               :min-date="datepicker.mindate"
               :formats="datepicker.formats"
-              :attributes="datepicker.attrs"
+              :select-attribute="datepicker.attrs"
+              :input-props="datepicker.props"
               show-caps is-double-paned
               >
               </v-date-picker>
@@ -285,8 +286,29 @@ export default {
           placement: 'bottom',
           visibility: 'click'
         },
-        formats: {},
-        attrs: []
+        formats: {
+          title: 'MMMM YYYY',
+          weekdays: 'W',
+          navMonths: 'MMM',
+          input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'], // Only for `v-date-picker`
+          dayPopover: 'L', // Only for `v-date-picker`
+          data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'] // For attribute dates
+        },
+        attrs: [],
+        props: {
+          class: 'uk-input gl-input-default',
+          placeholder: 'Masukkan tanggal',
+          readonly: true
+        },
+        styles: {
+          wrapper: {
+            background: '#25C4F2',
+            color: '#ffffff',
+            border: '0',
+            borderRadius: '6px',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.14), 0 6px 20px 0 rgba(0, 0, 0, 0.13)'
+          }
+        },
       },
       forms: {
         keywords: '',
