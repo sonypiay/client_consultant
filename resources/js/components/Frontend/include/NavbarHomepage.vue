@@ -132,6 +132,12 @@
                       </a>
                     </li>
                     <li>
+                      <a :href="$root.url + '/consultant/privateevent'">
+                        <span class="uk-margin-small-right" uk-icon="icon: calendar; ratio: 0.8"></span>
+                        Acara Pribadi
+                      </a>
+                    </li>
+                    <li>
                       <a :href="$root.url + '/consultant/edit_profile'">
                         <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 0.8"></span>
                         Ubah Profil

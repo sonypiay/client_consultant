@@ -136,11 +136,11 @@
             <div>
               <v-date-picker v-model="datepicker.rangeDate"
               mode="range"
-              :min-date="datepicker.mindate"
               :formats="datepicker.formats"
-              :select-attribute="datepicker.attrs"
+              :theme-styles="datepicker.styles"
               :input-props="datepicker.props"
               show-caps is-double-paned
+              popover-visibility="focus"
               >
               </v-date-picker>
             </div>
@@ -294,19 +294,21 @@ export default {
           dayPopover: 'L', // Only for `v-date-picker`
           data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'] // For attribute dates
         },
-        attrs: [],
         props: {
           class: 'uk-input gl-input-default',
           placeholder: 'Masukkan tanggal',
           readonly: true
         },
         styles: {
-          wrapper: {
-            background: '#25C4F2',
-            color: '#ffffff',
-            border: '0',
-            borderRadius: '6px',
-            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.14), 0 6px 20px 0 rgba(0, 0, 0, 0.13)'
+          headerHorizontalDivider: {
+            borderTop: '1px solid #dddddd',
+            width: '80%'
+          },
+          header: {
+            padding: '15px 15px'
+          },
+          weekdays: {
+            padding: '15px 15px 5px 15px'
           }
         },
       },
