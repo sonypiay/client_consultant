@@ -137,6 +137,7 @@ class AppointmentRequest extends Model
       'appointment_request.request_to',
       'appointment_request.schedule_date',
       'appointment_request.location',
+      'appointment_request.notes',
       'appointment_request.service_topic',
       'appointment_request.status_request',
       'appointment_request.is_solved',
