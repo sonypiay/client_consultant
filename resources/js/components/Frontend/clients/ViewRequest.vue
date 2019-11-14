@@ -2,6 +2,7 @@
   <div>
     <div id="modal-view-request" uk-modal>
       <div class="uk-modal-dialog modal-dialog">
+        <a class="uk-modal-close uk-modal-close-outside" uk-close></a>
         <div class="uk-card uk-card-body modal-banner-top">
           <div class="request-time">
             <span uk-icon="icon: clock; ratio: 2.5" class="uk-margin-small-right"></span>

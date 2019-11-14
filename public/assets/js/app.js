@@ -4752,6 +4752,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['detailrequest']
 });
@@ -7339,6 +7340,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -63797,7 +63799,7 @@ var render = function() {
           { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" },
           [
             _c("a", {
-              staticClass: "uk-modal-close uk-modal-close-default",
+              staticClass: "uk-modal-close uk-modal-close-outside",
               attrs: { "uk-close": "" }
             }),
             _vm._v(" "),
@@ -67231,6 +67233,11 @@ var render = function() {
   return _c("div", [
     _c("div", { attrs: { id: "modal-view-request", "uk-modal": "" } }, [
       _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
+        _c("a", {
+          staticClass: "uk-modal-close uk-modal-close-outside",
+          attrs: { "uk-close": "" }
+        }),
+        _vm._v(" "),
         _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
           _c("div", { staticClass: "request-time" }, [
             _c("span", {
@@ -68609,7 +68616,7 @@ var render = function() {
           { staticClass: "uk-modal-dialog uk-modal-body modal-dialog" },
           [
             _c("a", {
-              staticClass: "uk-modal-close uk-modal-close-default",
+              staticClass: "uk-modal-close uk-modal-close-outside",
               attrs: { "uk-close": "" }
             }),
             _vm._v(" "),
@@ -72511,6 +72518,11 @@ var render = function() {
   return _c("div", [
     _c("div", { attrs: { id: "modal-view-request", "uk-modal": "" } }, [
       _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
+        _c("a", {
+          staticClass: "uk-modal-close uk-modal-close-outside",
+          attrs: { "uk-close": "" }
+        }),
+        _vm._v(" "),
         _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
           _c("div", { staticClass: "request-time" }, [
             _c("span", {

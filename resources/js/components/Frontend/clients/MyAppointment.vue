@@ -12,7 +12,7 @@
     <!-- add / update request -->
     <div id="modal-request" uk-modal>
       <div class="uk-modal-dialog uk-modal-body modal-dialog">
-        <a class="uk-modal-close uk-modal-close-default" uk-close></a>
+        <a class="uk-modal-close uk-modal-close-outside" uk-close></a>
         <div class="modal-title">
           <span v-if="forms.request.isedit">Ubah Jadwal</span>
           <span v-else>Buat Jadwal</span>
