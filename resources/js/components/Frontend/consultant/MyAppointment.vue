@@ -436,9 +436,28 @@ export default {
       }).then( val => {
         if( val )
         {
+          let params = {};
+          if( status === 'done' )
+          {
+            swal({
+              content: {
+                element: 'input',
+                attributes: {
+                  placeholder: 'Tinggalkan jika tidak ada.',
+                  type: 'text'
+                }
+              },
+              text: 'Catatan'
+            }).then((input) => {
+              params.note = input;
+            });
+          }
+
+
           axios({
             method: 'put',
-            url: this.$root.url + '/consultant/status_appointment/' + status + '/' + id
+            url: this.$root.url + '/consultant/status_appointment/' + status + '/' + id,
+            params: params
           }).then( res => {
             swal({
               text: message,

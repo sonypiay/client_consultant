@@ -5665,9 +5665,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }).then(function (val) {
         if (val) {
+          var params = {};
+
+          if (status === 'done') {
+            swal({
+              content: {
+                element: 'input',
+                attributes: {
+                  placeholder: 'Tinggalkan jika tidak ada.',
+                  type: 'text'
+                }
+              },
+              text: 'Catatan'
+            }).then(function (input) {
+              params.note = input;
+            });
+          }
+
           axios({
             method: 'put',
-            url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id
+            url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id,
+            params: params
           }).then(function (res) {
             swal({
               text: message,

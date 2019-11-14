@@ -271,13 +271,14 @@ class AppointmentRequest extends Model
     return $res;
   }
 
-  public function updateStatus( $id, $status )
+  public function updateStatus( $id, $status, $request = null )
   {
     $apt = $this->where('apt_id', $id);
     $res = ['responseCode' => 200, 'responseMessage' => ''];
 
     if( $apt->count() == 1 )
     {
+      $note = $request === null ? '' : ( isset( $request->note ) ? $request->note : '' );
       $update = $apt->first();
       $notification = new Notification;
       $data_notif = [];
