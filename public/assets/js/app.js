@@ -6437,10 +6437,10 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
           _this2.showPrivateEvent();
 
-          UIkit.modal('#modal-request').hide();
+          UIkit.modal('#modal-event').hide();
         }, 2000);
       })["catch"](function (err) {
-        evt.submit = 'Buat Jadwal';
+        evt.submit = 'Buat Acara';
         if (err.response.status === 500) _this2.messages.errorMessage = err.response.statusText;else _this2.messages.errorMessage = err.response.data.responseMessage;
       });
     },

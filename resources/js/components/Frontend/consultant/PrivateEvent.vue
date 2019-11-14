@@ -462,10 +462,10 @@ export default {
         });
         setTimeout(() => {
           this.showPrivateEvent();
-          UIkit.modal('#modal-request').hide();
+          UIkit.modal('#modal-event').hide();
         }, 2000);
       }).catch( err => {
-        evt.submit = 'Buat Jadwal';
+        evt.submit = 'Buat Acara';
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });

@@ -58,7 +58,7 @@ class EventSchedule extends Model
   {
     $title      = $request->title;
     $note       = $request->note;
-    $location   = $request->note;
+    $location   = $request->location;
     $schedule   = $request->schedule_date;
     $consultant = session()->get('consultantId');
     $id         = $this->getId();
@@ -76,7 +76,7 @@ class EventSchedule extends Model
   {
     $title      = $request->title;
     $note       = $request->note;
-    $location   = $request->note;
+    $location   = $request->location;
     $schedule   = $request->schedule_date;
     $getevent   = $this->where('evt_id', $id)->first();
 
