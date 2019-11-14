@@ -321,6 +321,8 @@ class AppointmentRequest extends Model
               $update->consultant_id = session()->get('consultantId');
           }
         }
+
+        if( $status === 'done' ) $update->notes = $note;
         $update->status_request = $status;
       }
 

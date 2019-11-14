@@ -5665,8 +5665,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }).then(function (val) {
         if (val) {
-          var params = {};
-
           if (status === 'done') {
             swal({
               content: {
@@ -5678,29 +5676,48 @@ document.addEventListener("DOMContentLoaded", function () {
               },
               text: 'Catatan'
             }).then(function (input) {
-              params.note = input;
+              axios({
+                method: 'put',
+                url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id,
+                params: {
+                  note: input
+                }
+              }).then(function (res) {
+                swal({
+                  text: message,
+                  icon: 'success'
+                });
+                setTimeout(function () {
+                  _this2.showRequest();
+                }, 1000);
+              })["catch"](function (err) {
+                swal({
+                  text: err.response.statusText,
+                  icon: 'error',
+                  dangerMode: true
+                });
+              });
+            });
+          } else {
+            axios({
+              method: 'put',
+              url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id
+            }).then(function (res) {
+              swal({
+                text: message,
+                icon: 'success'
+              });
+              setTimeout(function () {
+                _this2.showRequest();
+              }, 1000);
+            })["catch"](function (err) {
+              swal({
+                text: err.response.statusText,
+                icon: 'error',
+                dangerMode: true
+              });
             });
           }
-
-          axios({
-            method: 'put',
-            url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id,
-            params: params
-          }).then(function (res) {
-            swal({
-              text: message,
-              icon: 'success'
-            });
-            setTimeout(function () {
-              _this2.showRequest();
-            }, 1000);
-          })["catch"](function (err) {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
         }
       });
     },

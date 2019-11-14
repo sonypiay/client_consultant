@@ -436,7 +436,6 @@ export default {
       }).then( val => {
         if( val )
         {
-          let params = {};
           if( status === 'done' )
           {
             swal({
@@ -448,29 +447,47 @@ export default {
                 }
               },
               text: 'Catatan'
-            }).then((input) => {
-              params.note = input;
+            }).then(input => {
+              axios({
+                method: 'put',
+                url: this.$root.url + '/consultant/status_appointment/' + status + '/' + id,
+                params: {
+                  note: input
+                }
+              }).then( res => {
+                swal({
+                  text: message,
+                  icon: 'success'
+                });
+                setTimeout(() => { this.showRequest(); }, 1000);
+              }).catch( err => {
+                swal({
+                  text: err.response.statusText,
+                  icon: 'error',
+                  dangerMode: true
+                });
+              });
             });
           }
-
-
-          axios({
-            method: 'put',
-            url: this.$root.url + '/consultant/status_appointment/' + status + '/' + id,
-            params: params
-          }).then( res => {
-            swal({
-              text: message,
-              icon: 'success'
+          else
+          {
+            axios({
+              method: 'put',
+              url: this.$root.url + '/consultant/status_appointment/' + status + '/' + id
+            }).then( res => {
+              swal({
+                text: message,
+                icon: 'success'
+              });
+              setTimeout(() => { this.showRequest(); }, 1000);
+            }).catch( err => {
+              swal({
+                text: err.response.statusText,
+                icon: 'error',
+                dangerMode: true
+              });
             });
-            setTimeout(() => { this.showRequest(); }, 1000);
-          }).catch( err => {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
+          }
         }
       });
     },
