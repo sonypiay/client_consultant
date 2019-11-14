@@ -5729,7 +5729,6 @@ document.addEventListener("DOMContentLoaded", function () {
         request.isedit = true;
       }
 
-      console.log(request);
       UIkit.modal('#modal-request').show();
     },
     onCreateNewSchedule: function onCreateNewSchedule(data) {
@@ -5776,14 +5775,9 @@ document.addEventListener("DOMContentLoaded", function () {
         this.messages.iserror = true;
       }
 
-      if (request.service_time === '') {
-        this.messages.errors.service_time = message_form;
-        this.messages.iserror = true;
-      }
-
       if (this.messages.iserror === true) return false;
       var datepicker = this.$root.formatDate(request.selectedDate, 'YYYY-MM-DD');
-      var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
+      var schedule_date = datepicker + ' ' + request.timepicker.selected;
       var service_topic = request.service_topic;
       var created_by = 'consultant';
       var location = request.location;
@@ -5844,14 +5838,9 @@ document.addEventListener("DOMContentLoaded", function () {
         this.messages.iserror = true;
       }
 
-      if (request.service_time === '') {
-        this.messages.errors.service_time = message_form;
-        this.messages.iserror = true;
-      }
-
       if (this.messages.iserror === true) return false;
       var datepicker = this.$root.formatDate(request.selectedDate, 'YYYY-MM-DD');
-      var schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
+      var schedule_date = datepicker + ' ' + request.timepicker.selected;
       var service_topic = request.service_topic;
       var location = request.location;
       var created_by = 'consultant';
@@ -6801,6 +6790,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -71498,11 +71493,35 @@ var render = function() {
                                     _c("span", {
                                       staticClass: "uk-margin-small-right",
                                       attrs: {
-                                        "uk-icon": "icon: file-edit; ratio: 0.8"
+                                        "uk-icon": "icon: clock; ratio: 0.8"
                                       }
                                     }),
                                     _vm._v(
                                       "\n                      Jadwal Konsultasi\n                    "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        _vm.$root.url +
+                                        "/consultant/privateevent"
+                                    }
+                                  },
+                                  [
+                                    _c("span", {
+                                      staticClass: "uk-margin-small-right",
+                                      attrs: {
+                                        "uk-icon": "icon: calendar; ratio: 0.8"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                      Acara Pribadi\n                    "
                                     )
                                   ]
                                 )

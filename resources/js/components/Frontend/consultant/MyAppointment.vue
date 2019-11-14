@@ -502,7 +502,6 @@ export default {
         request.submit = 'Simpan Perubahan';
         request.isedit = true;
       }
-      console.log( request );
       UIkit.modal('#modal-request').show();
     },
     onCreateNewSchedule( data )
@@ -552,15 +551,10 @@ export default {
         this.messages.errors.location = message_form;
         this.messages.iserror = true;
       }
-      if( request.service_time === '' )
-      {
-        this.messages.errors.service_time = message_form;
-        this.messages.iserror = true;
-      }
 
       if( this.messages.iserror === true ) return false;
       let datepicker = this.$root.formatDate( request.selectedDate, 'YYYY-MM-DD' );
-      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
+      let schedule_date = datepicker + ' ' + request.timepicker.selected;
       let service_topic = request.service_topic;
       let created_by = 'consultant';
       let location = request.location;
@@ -622,15 +616,10 @@ export default {
         this.messages.errors.location = message_form;
         this.messages.iserror = true;
       }
-      if( request.service_time === '' )
-      {
-        this.messages.errors.service_time = message_form;
-        this.messages.iserror = true;
-      }
 
       if( this.messages.iserror === true ) return false;
       let datepicker = this.$root.formatDate( request.selectedDate, 'YYYY-MM-DD' );
-      let schedule_date = datepicker + ' ' + this.forms.request.timepicker.selected;
+      let schedule_date = datepicker + ' ' + request.timepicker.selected;
       let service_topic = request.service_topic;
       let location = request.location;
       let created_by = 'consultant';

@@ -1,9 +1,8 @@
 @extends('frontend.master')
-@section('title', 'Jadwal Konsultasi')
+@section('title', 'Acara Pribadi')
 @section('content')
-<client-view-appointment
+<consultant-private-event
 :haslogin="{{ json_encode( $hasLogin ) }}"
 :getuser="{{ json_encode( $getuser ) }}"
-:servicetopic="{{ json_encode( $service_topic ) }}"
 />
 @endsection

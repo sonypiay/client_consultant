@@ -127,8 +127,14 @@
                     </li>
                     <li>
                       <a :href="$root.url + '/consultant/myappointment'">
-                        <span class="uk-margin-small-right" uk-icon="icon: file-edit; ratio: 0.8"></span>
+                        <span class="uk-margin-small-right" uk-icon="icon: clock; ratio: 0.8"></span>
                         Jadwal Konsultasi
+                      </a>
+                    </li>
+                    <li>
+                      <a :href="$root.url + '/consultant/privateevent'">
+                        <span class="uk-margin-small-right" uk-icon="icon: calendar; ratio: 0.8"></span>
+                        Acara Pribadi
                       </a>
                     </li>
                     <li>

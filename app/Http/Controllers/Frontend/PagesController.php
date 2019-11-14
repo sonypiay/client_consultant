@@ -130,6 +130,21 @@ class PagesController extends Controller
     return response()->view('frontend.pages.consultant.dashboard', $data);
   }
 
+  public function consultant_event_page( Request $request )
+  {
+    if( ! session()->has('isConsultant') )
+    {
+      return redirect()->route('consultant_login_page');
+    }
+
+    $consultant = new ConsultantUser;
+    $data['request'] = $request;
+    $data['hasLogin']['user'] = 'consultant';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $consultant->getProfile();
+    return response()->view('frontend.pages.consultant.privateevent', $data);
+  }
+
   public function consultant_edit_profile( Request $request )
   {
     if( ! session()->has('isConsultant') )

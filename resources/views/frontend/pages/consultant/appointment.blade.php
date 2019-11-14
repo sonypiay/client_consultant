@@ -1,5 +1,5 @@
 @extends('frontend.master')
-@section('title', 'My Appointment')
+@section('title', 'Jadwal Konsultasi')
 @section('content')
 <consultant-view-appointment
 :haslogin="{{ json_encode( $hasLogin ) }}"
