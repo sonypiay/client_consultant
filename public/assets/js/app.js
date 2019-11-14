@@ -70884,13 +70884,19 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "uk-margin-small" }, [
-                                _c("div", { staticClass: "request-pic" }, [
-                                  _vm._v(
-                                    "\n                " +
-                                      _vm._s(evt.evt_note) +
-                                      "\n              "
-                                  )
-                                ])
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "uk-text-truncate request-pic"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(evt.evt_note) +
+                                        "\n              "
+                                    )
+                                  ]
+                                )
                               ])
                             ]
                           )
@@ -71638,7 +71644,7 @@ var render = function() {
               _vm._v("Catatan")
             ]),
             _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
+            _c("p", { staticClass: "uk-margin-remove-top uk-text-justify" }, [
               _vm._v(
                 "\n            " +
                   _vm._s(_vm.detailevent.evt_note) +

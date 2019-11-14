@@ -33,7 +33,7 @@
           </div>
           <div class="uk-panel uk-margin">
             <h6 class="uk-h6 uk-margin-remove-bottom">Catatan</h6>
-            <p class="uk-margin-remove-top">
+            <p class="uk-margin-remove-top uk-text-justify">
               {{ detailevent.evt_note }}
             </p>
           </div>

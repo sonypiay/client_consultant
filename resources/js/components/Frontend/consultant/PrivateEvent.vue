@@ -214,7 +214,7 @@
                 <div class="request-date">{{ $root.formatDate( evt.evt_schedule, 'DD MMMM YYYY' ) }}</div>
               </div>
               <div class="uk-margin-small">
-                <div class="request-pic">
+                <div class="uk-text-truncate request-pic">
                   {{ evt.evt_note }}
                 </div>
               </div>
