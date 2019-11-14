@@ -27,7 +27,7 @@
             </div>
             Tidak ada jadwal konsultasi.
           </div>
-          <a class="uk-button uk-button-primary gl-button-primary" :href="$root.url + '/search'">Find consultant</a>
+
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
@@ -43,13 +43,13 @@
                       <li>
                         <a @click="onViewDetail( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
-                          View
+                          Lihat
                         </a>
                       </li>
                       <li v-show="req.created_by === 'client'">
                         <a @click="deleteRequest( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
-                          Delete
+                          Hapus
                         </a>
                       </li>
                     </ul>
@@ -65,7 +65,7 @@
                   {{ req.consultant_fullname }}
                 </div>
               </div>
-              <div v-show="req.created_by === 'consultant'" class="uk-margin-small">
+              <div v-show="req.request_to === 'client' && req.status_request === 'waiting'" class="uk-margin-small">
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
                 <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>

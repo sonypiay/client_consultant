@@ -66975,19 +66975,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _vm.getrequest.total === 0
-                  ? _c("div", { staticClass: "no-request-list" }, [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "uk-button uk-button-primary gl-button-primary",
-                          attrs: { href: _vm.$root.url + "/search" }
-                        },
-                        [_vm._v("Find consultant")]
-                      )
-                    ])
+                  ? _c("div", { staticClass: "no-request-list" }, [_vm._m(0)])
                   : _c(
                       "div",
                       {
@@ -67052,7 +67040,7 @@ var render = function() {
                                                   }
                                                 }),
                                                 _vm._v(
-                                                  "\n                        View\n                      "
+                                                  "\n                        Lihat\n                      "
                                                 )
                                               ]
                                             )
@@ -67094,7 +67082,7 @@ var render = function() {
                                                     }
                                                   }),
                                                   _vm._v(
-                                                    "\n                        Delete\n                      "
+                                                    "\n                        Hapus\n                      "
                                                   )
                                                 ]
                                               )
@@ -67148,9 +67136,11 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: req.created_by === "consultant",
+                                      value:
+                                        req.request_to === "client" &&
+                                        req.status_request === "waiting",
                                       expression:
-                                        "req.created_by === 'consultant'"
+                                        "req.request_to === 'client' && req.status_request === 'waiting'"
                                     }
                                   ],
                                   staticClass: "uk-margin-small"
@@ -71544,41 +71534,58 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "uk-margin-small" }, [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.onUpdateStatus(
-                                          req.apt_id,
-                                          "accept"
-                                        )
-                                      }
+                              _c(
+                                "div",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        req.request_to === "consultant" &&
+                                        req.status_request === "waiting",
+                                      expression:
+                                        "req.request_to === 'consultant' && req.status_request === 'waiting'"
                                     }
-                                  },
-                                  [_vm._v("Terima")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.onUpdateStatus(
-                                          req.apt_id,
-                                          "decline"
-                                        )
+                                  ],
+                                  staticClass: "uk-margin-small"
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.onUpdateStatus(
+                                            req.apt_id,
+                                            "accept"
+                                          )
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v("Tolak")]
-                                )
-                              ])
+                                    },
+                                    [_vm._v("Terima")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.onUpdateStatus(
+                                            req.apt_id,
+                                            "decline"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Tolak")]
+                                  )
+                                ]
+                              )
                             ]
                           )
                         ])
