@@ -53,7 +53,7 @@
             </div>
           </div>
           <hr>
-          <div class="uk-grid-small uk-margin" uk-grid>
+          <div v-show="detailrequest.consultant.consultant_id" class="uk-grid-small uk-margin" uk-grid>
             <div class="uk-width-1-2">
               <div class="uk-panel uk-margin">
                 <h6 class="uk-h6 uk-margin-remove-bottom">ID Konsultan</h6>

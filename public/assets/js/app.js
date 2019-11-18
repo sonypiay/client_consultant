@@ -67368,6 +67368,14 @@ var render = function() {
           _c(
             "div",
             {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.detailrequest.consultant.consultant_id,
+                  expression: "detailrequest.consultant.consultant_id"
+                }
+              ],
               staticClass: "uk-grid-small uk-margin",
               attrs: { "uk-grid": "" }
             },
