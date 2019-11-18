@@ -4976,6 +4976,55 @@ __webpack_require__.r(__webpack_exports__);
   props: ['haslogin', 'getuser'],
   components: {
     'request-appointment': _RequestAppointment_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      total_summary: {
+        client: 0,
+        appointment: 0,
+        rating: {
+          feedback: 0,
+          rate: 0,
+          avg: 0
+        }
+      }
+    };
+  },
+  methods: {
+    showDashboardSummary: function showDashboardSummary() {
+      var _this = this;
+
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/dashboard/summary'
+      }).then(function (res) {
+        var result = res.data;
+        _this.total_summary.client = result.client;
+        _this.total_summary.appointment = result.appointment, _this.total_summary.rating = {
+          feedback: result.rating.total_feedback,
+          rate: result.rating.total_rate,
+          avg: result.rating.total_average
+        };
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+    }
+  },
+  computed: {
+    rateIndex: function rateIndex() {
+      var rating = this.total_summary.rating;
+      var result = 0;
+
+      if (rating.feedback !== 0) {
+        result = rating.rate / rating.feedback;
+        if (Number.isInteger(result)) return result;else result.toFixed(1);
+      }
+
+      return result;
+    }
+  },
+  mounted: function mounted() {
+    this.showDashboardSummary();
   }
 });
 
@@ -67973,7 +68022,73 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _vm._m(1),
+      _c(
+        "div",
+        { staticClass: "uk-container uk-margin-large-top uk-margin-bottom" },
+        [
+          _c("h3", [_vm._v("Overview")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-grid-match",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.client))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.rateIndex))
+                    ])
+                  ]
+                )
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("request-appointment")
     ],
@@ -67993,133 +68108,43 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "uk-container uk-margin-large-top uk-margin-bottom" },
-      [
-        _c("h3", [_vm._v("Overview")]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "uk-grid-small uk-grid-match",
-            attrs: { "uk-grid": "" }
-          },
-          [
-            _c("div", { staticClass: "uk-width-1-3" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "uk-tile uk-tile-default uk-padding-remove card-summary"
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "uk-clearfix uk-margin-small-bottom" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "uk-float-left card-summary-text" },
-                        [_vm._v("Pertemuan")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "uk-float-right card-summary-icon" },
-                        [
-                          _c("span", {
-                            attrs: { "uk-icon": "icon: calendar; ratio: 1.5;" }
-                          })
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-summary-value" }, [
-                    _vm._v("10")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-width-1-3" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "uk-tile uk-tile-default uk-padding-remove card-summary"
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "uk-clearfix uk-margin-small-bottom" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "uk-float-left card-summary-text" },
-                        [_vm._v("Klien")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "uk-float-right card-summary-icon" },
-                        [
-                          _c("span", {
-                            attrs: { "uk-icon": "icon: user; ratio: 1.5;" }
-                          })
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-summary-value" }, [
-                    _vm._v("5")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-width-1-3" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "uk-tile uk-tile-default uk-padding-remove card-summary"
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "uk-clearfix uk-margin-small-bottom" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "uk-float-left card-summary-text" },
-                        [_vm._v("Rating")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "uk-float-right card-summary-icon" },
-                        [
-                          _c("span", {
-                            attrs: { "uk-icon": "icon: star; ratio: 1.5;" }
-                          })
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-summary-value" }, [
-                    _vm._v("13")
-                  ])
-                ]
-              )
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Pertemuan")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: calendar; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Klien")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Rating")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: star; ratio: 1.5;" } })
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -72966,7 +72991,7 @@ var render = function() {
                 "a",
                 {
                   staticClass: "uk-navbar-item uk-logo",
-                  attrs: { href: _vm.$root.url }
+                  attrs: { href: _vm.$root.url + "/consultant/dashboard" }
                 },
                 [_vm._v("Solusi Pajakku")]
               )
