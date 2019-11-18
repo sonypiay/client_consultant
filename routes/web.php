@@ -40,6 +40,7 @@ Route::group(['prefix' => 'client'], function() {
 
 Route::group(['prefix' => 'consultant'], function() {
   Route::get('/dashboard', 'Frontend\PagesController@consultant_dashboard_page')->name('consultant_dashboard_page');
+  Route::get('/dashboard/summary', 'Frontend\ConsultantUserController@dashboard_summary');
   Route::get('/signin', 'Frontend\PagesController@consultant_login_page')->name('consultant_login_page');
   Route::get('/signup', 'Frontend\PagesController@consultant_register_page')->name('consultant_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@consultant_edit_profile')->name('consultant_edit_profile');

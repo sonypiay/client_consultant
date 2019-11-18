@@ -16,6 +16,22 @@ use Hash;
 
 class ConsultantUserController extends Controller
 {
+  public function dashboard_summary()
+  {
+    $user_id = session()->get('consultantId');
+    $appointment = AppointmentRequest::select(
+      DB::raw('count(apt_id) as total_appointment'),
+      DB::raw('count(client_id) as total_client')
+    )
+    ->where('consultant_id', $user_id)->first();
+    $consultant = new ConsultantUser;
+    $result = [
+      'appointment' => $appointment->total_appointment,
+      'client' => $appointment->total_client,
+      'rating' => $consultant->getRating()
+    ];
+    return response()->json( $result, 200 );
+  }
   public function register( Request $request, ConsultantUser $consultantUser )
   {
     $res = $consultantUser->signup( $request );

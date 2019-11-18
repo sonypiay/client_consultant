@@ -31,6 +31,21 @@ class ConsultantUser extends Model
     return $this->generateConsultantId();
   }
 
+  public function getRating()
+  {
+    $query = $this->select(
+      DB::raw('count(feedbacks.feedback) as total_feedback'),
+      DB::raw('sum(feedbacks.rateindex) as total_rate'),
+      DB::raw('avg(feedbacks.rateindex) as total_average')
+    )
+    ->leftJoin('appointment_request', 'consultant_user.consultant_id', '=', 'appointment_request.consultant_id')
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
+    ->where('consultant_user.consultant_id', session()->get('consultantId'))
+    ->first();
+    
+    return $query;
+  }
+
   public function getProfile( $id = null )
   {
     $query = $this->select(
