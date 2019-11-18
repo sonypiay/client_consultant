@@ -3150,15 +3150,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -3264,7 +3255,7 @@ document.addEventListener("DOMContentLoaded", function () {
         _this.messages.errorMessage = err.response.statusText;
       });
     },
-    onUpdateStatus: function onUpdateStatus(id, status) {
+    onUpdateStatus: function onUpdateStatus(id, status, data) {
       var _this2 = this;
 
       var confirmation;
@@ -3284,16 +3275,6 @@ document.addEventListener("DOMContentLoaded", function () {
         case 'cancel':
           confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
           message = 'Permintaan jadwal konsultasi ' + id + ' dibatalkan';
-          break;
-
-        case 'solved':
-          confirmation = 'Apakah masalah ini sudah terpecahkan?';
-          message = 'Perihal konsultasi ' + id + ' sudah terpecahkan';
-          break;
-
-        case 'unsolved':
-          confirmation = 'Apakah masalah ini belum menemukan solusi?';
-          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi namun anda masih bisa atur jadwal kembali';
           break;
 
         default:
@@ -3320,11 +3301,14 @@ document.addEventListener("DOMContentLoaded", function () {
           }).then(function (res) {
             swal({
               text: message,
-              icon: 'success'
+              icon: 'success',
+              timer: 1000
             });
             setTimeout(function () {
               _this2.showRequest();
-            }, 1000);
+
+              if (data !== undefined) _this2.onClickModal(data);
+            }, 1500);
           })["catch"](function (err) {
             swal({
               text: err.response.statusText,
@@ -4465,7 +4449,11 @@ __webpack_require__.r(__webpack_exports__);
           prev_page_url: '',
           next_page_url: ''
         },
-        details: {}
+        details: {
+          request: {},
+          client: {},
+          consultant: {}
+        }
       },
       messages: {
         errorMessage: ''
@@ -4575,9 +4563,21 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    onViewDetail: function onViewDetail(data) {
-      this.getrequest.details = data;
-      UIkit.modal('#modal-view-request').show();
+    onViewDetail: function onViewDetail(id) {
+      var _this4 = this;
+
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/request/get_request/' + id
+      }).then(function (res) {
+        var result = res.data;
+        _this4.getrequest.details.request = result.request;
+        _this4.getrequest.details.client = result.client;
+        _this4.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
     }
   },
   mounted: function mounted() {
@@ -5619,6 +5619,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -5721,7 +5733,7 @@ document.addEventListener("DOMContentLoaded", function () {
         _this.messages.errorMessage = err.response.statusText;
       });
     },
-    onUpdateStatus: function onUpdateStatus(id, status) {
+    onUpdateStatus: function onUpdateStatus(id, status, data) {
       var _this2 = this;
 
       var confirmation;
@@ -5741,6 +5753,16 @@ document.addEventListener("DOMContentLoaded", function () {
         case 'cancel':
           confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
           message = 'Permintaan jadwal konsultasi ' + id + ' dibatalkan';
+          break;
+
+        case 'solved':
+          confirmation = 'Apakah masalah ini sudah terpecahkan?';
+          message = 'Perihal konsultasi ' + id + ' sudah terpecahkan';
+          break;
+
+        case 'unsolved':
+          confirmation = 'Apakah masalah ini belum terpecahkan?';
+          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi';
           break;
 
         default:
@@ -5801,11 +5823,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }).then(function (res) {
               swal({
                 text: message,
-                icon: 'success'
+                icon: 'success',
+                timer: 1000
               });
               setTimeout(function () {
                 _this2.showRequest();
-              }, 1000);
+
+                if (data !== undefined) _this2.onClickModal(data);
+              }, 1500);
             })["catch"](function (err) {
               swal({
                 text: err.response.statusText,
@@ -65211,98 +65236,6 @@ var render = function() {
                                                   ]
                                                 )
                                               ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "li",
-                                              {
-                                                directives: [
-                                                  {
-                                                    name: "show",
-                                                    rawName: "v-show",
-                                                    value:
-                                                      req.status_request ===
-                                                        "accept" &&
-                                                      req.is_solved !== "Y",
-                                                    expression:
-                                                      "req.status_request === 'accept' && req.is_solved !== 'Y'"
-                                                  }
-                                                ]
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    on: {
-                                                      click: function($event) {
-                                                        return _vm.onUpdateStatus(
-                                                          req.apt_id,
-                                                          "solved"
-                                                        )
-                                                      }
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("span", {
-                                                      staticClass:
-                                                        "uk-margin-small-right",
-                                                      attrs: {
-                                                        "uk-icon":
-                                                          "icon: check; ratio: 0.8"
-                                                      }
-                                                    }),
-                                                    _vm._v(
-                                                      "\n                        Tandai sudah terpecahkan\n                      "
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "li",
-                                              {
-                                                directives: [
-                                                  {
-                                                    name: "show",
-                                                    rawName: "v-show",
-                                                    value:
-                                                      req.status_request ===
-                                                        "accept" &&
-                                                      req.is_solved === "P",
-                                                    expression:
-                                                      "req.status_request === 'accept' && req.is_solved === 'P'"
-                                                  }
-                                                ]
-                                              },
-                                              [
-                                                _c(
-                                                  "a",
-                                                  {
-                                                    on: {
-                                                      click: function($event) {
-                                                        return _vm.onUpdateStatus(
-                                                          req.apt_id,
-                                                          "unsolved"
-                                                        )
-                                                      }
-                                                    }
-                                                  },
-                                                  [
-                                                    _c("span", {
-                                                      staticClass:
-                                                        "uk-margin-small-right",
-                                                      attrs: {
-                                                        "uk-icon":
-                                                          "icon: close; ratio: 0.8"
-                                                      }
-                                                    }),
-                                                    _vm._v(
-                                                      "\n                        Tandai belum terpecahkan\n                      "
-                                                    )
-                                                  ]
-                                                )
-                                              ]
                                             )
                                           ]
                                         )
@@ -65389,12 +65322,49 @@ var render = function() {
                                         click: function($event) {
                                           return _vm.onUpdateStatus(
                                             req.apt_id,
-                                            "decline"
+                                            "decline",
+                                            req
                                           )
                                         }
                                       }
                                     },
                                     [_vm._v("Tolak")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        req.status_request === "accept" &&
+                                        req.is_solved === "Y",
+                                      expression:
+                                        "req.status_request === 'accept' && req.is_solved === 'Y'"
+                                    }
+                                  ],
+                                  staticClass: "uk-margin-small"
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "uk-button uk-button-default uk-button-small gl-button-default",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.onUpdateStatus(
+                                            req.apt_id,
+                                            "done"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Tandai sudah selesai")]
                                   )
                                 ]
                               ),
@@ -67034,7 +67004,9 @@ var render = function() {
                                               {
                                                 on: {
                                                   click: function($event) {
-                                                    return _vm.onViewDetail(req)
+                                                    return _vm.onViewDetail(
+                                                      req.apt_id
+                                                    )
                                                   }
                                                 }
                                               },
@@ -68114,7 +68086,7 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
-        _c("span", { attrs: { "uk-icon": "icon: calendar; ratio: 1.5;" } })
+        _c("span", { attrs: { "uk-icon": "icon: clock; ratio: 1.5;" } })
       ])
     ])
   },
@@ -69925,7 +69897,100 @@ var render = function() {
                                                   )
                                                 ]
                                               )
-                                            ])
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      req.status_request ===
+                                                        "accept" &&
+                                                      req.is_solved !== "Y",
+                                                    expression:
+                                                      "req.status_request === 'accept' && req.is_solved !== 'Y'"
+                                                  }
+                                                ]
+                                              },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.onUpdateStatus(
+                                                          req.apt_id,
+                                                          "solved"
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "uk-margin-small-right",
+                                                      attrs: {
+                                                        "uk-icon":
+                                                          "icon: check; ratio: 0.8"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      "\n                        Tandai sudah terpecahkan\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "li",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      req.status_request ===
+                                                        "accept" &&
+                                                      req.is_solved === "P",
+                                                    expression:
+                                                      "req.status_request === 'accept' && req.is_solved === 'P'"
+                                                  }
+                                                ]
+                                              },
+                                              [
+                                                _c(
+                                                  "a",
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.onUpdateStatus(
+                                                          req.apt_id,
+                                                          "unsolved",
+                                                          req
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("span", {
+                                                      staticClass:
+                                                        "uk-margin-small-right",
+                                                      attrs: {
+                                                        "uk-icon":
+                                                          "icon: close; ratio: 0.8"
+                                                      }
+                                                    }),
+                                                    _vm._v(
+                                                      "\n                        Tandai belum terpecahkan\n                      "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
                                           ]
                                         )
                                       ]
@@ -70011,48 +70076,13 @@ var render = function() {
                                         click: function($event) {
                                           return _vm.onUpdateStatus(
                                             req.apt_id,
-                                            "decline"
+                                            "decline",
+                                            req
                                           )
                                         }
                                       }
                                     },
                                     [_vm._v("Tolak")]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value:
-                                        req.status_request === "accept" &&
-                                        req.is_solved === "Y",
-                                      expression:
-                                        "req.status_request === 'accept' && req.is_solved === 'Y'"
-                                    }
-                                  ],
-                                  staticClass: "uk-margin-small"
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-default uk-button-small gl-button-default",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onUpdateStatus(
-                                            req.apt_id,
-                                            "done"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Tandai sudah selesai")]
                                   )
                                 ]
                               )

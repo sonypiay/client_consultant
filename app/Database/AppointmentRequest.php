@@ -54,10 +54,12 @@ class AppointmentRequest extends Model
       'appointment_request.created_at',
       'appointment_request.updated_at',
       'client_user.client_fullname',
-      'consultant_user.consultant_fullname'
+      'consultant_user.consultant_fullname',
+      'feedbacks.feedback'
     )
     ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
-    ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id');
+    ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id');
 
     if( $status !== 'all' )
     {
@@ -138,6 +140,7 @@ class AppointmentRequest extends Model
     ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id');
 
     array_push( $whereClauses, ['appointment_request.status_request', 'accept']);
+    array_push( $whereClauses, ['appointment_request.is_solved', 'P']);
 
     if( session()->has('isClient') )
     {
@@ -402,30 +405,27 @@ class AppointmentRequest extends Model
           $notif_message = 'Konsultasi dengan nomor ' . $id . ' belum terpecahkan';
           break;
         default:
-          $notif_message = 'Konsultasi dengan nomor ' . $id . ' sudah selesai dilakukan';
+          $notif_message = 'Konsultasi dengan nomor ' . $id . ' sudah selesai';
           break;
       }
 
-      if( $update->created_by == 'client' )
-      {
-        array_push( $data_notif, [
-          'user_id' => $update->consultant_id,
-          'notif_message' => $notif_message,
-          'parent_id' => $id,
-          'notif_read' => 'N',
-          'notif_date' => date('Y-m-d H:i:s')
-        ]);
-      }
-      else
-      {
-        array_push( $data_notif, [
-          'user_id' => $update->client_id,
-          'notif_message' => $notif_message,
-          'parent_id' => $id,
-          'notif_read' => 'N',
-          'notif_date' => date('Y-m-d H:i:s')
-        ]);
-      }
+      $consultantId = empty( $update->consultant_id ) ? ( session()->has('isConsultant') ? session()->get('consultantId') : null ) : $update->consultant_id;
+
+      array_push( $data_notif, [
+        'user_id' => $consultantId,
+        'notif_message' => $notif_message,
+        'parent_id' => $id,
+        'notif_read' => 'N',
+        'notif_date' => date('Y-m-d H:i:s')
+      ]);
+
+      array_push( $data_notif, [
+        'user_id' => $update->client_id,
+        'notif_message' => $notif_message,
+        'parent_id' => $id,
+        'notif_read' => 'N',
+        'notif_date' => date('Y-m-d H:i:s')
+      ]);
 
       if( $status === 'solved' )
       {

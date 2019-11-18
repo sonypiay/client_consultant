@@ -15,7 +15,7 @@
             <div class="uk-clearfix uk-margin-small-bottom">
               <div class="uk-float-left card-summary-text">Pertemuan</div>
               <div class="uk-float-right card-summary-icon">
-                <span uk-icon="icon: calendar; ratio: 1.5;"></span>
+                <span uk-icon="icon: clock; ratio: 1.5;"></span>
               </div>
             </div>
             <div class="card-summary-value">{{ total_summary.appointment }}</div>
@@ -99,7 +99,7 @@ export default {
     {
       let rating = this.total_summary.rating;
       let result = 0;
-      
+
       if( rating.feedback !== 0 )
       {
         result = rating.rate / rating.feedback;

@@ -41,7 +41,7 @@
                   <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
                     <ul class="uk-nav uk-dropdown-nav request-nav">
                       <li>
-                        <a @click="onViewDetail( req )">
+                        <a @click="onViewDetail( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
                           Lihat
                         </a>
@@ -97,7 +97,11 @@ export default {
           prev_page_url: '',
           next_page_url: ''
         },
-        details: {}
+        details: {
+          request: {},
+          client: {},
+          consultant: {}
+        }
       },
       messages: {
         errorMessage: ''
@@ -199,10 +203,20 @@ export default {
         }
       })
     },
-    onViewDetail( data )
+    onViewDetail( id )
     {
-      this.getrequest.details = data;
-      UIkit.modal('#modal-view-request').show();
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/request/get_request/' + id
+      }).then( res => {
+        let result =  res.data;
+        this.getrequest.details.request = result.request;
+        this.getrequest.details.client = result.client;
+        this.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      }).catch( err => {
+        console.log( err.response.statusText );
+      });
     }
   },
   mounted() {

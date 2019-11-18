@@ -291,18 +291,6 @@
                           Batalkan
                         </a>
                       </li>
-                      <li v-show="req.status_request === 'accept' && req.is_solved !== 'Y'">
-                        <a @click="onUpdateStatus( req.apt_id, 'solved' )">
-                          <span class="uk-margin-small-right" uk-icon="icon: check; ratio: 0.8"></span>
-                          Tandai sudah terpecahkan
-                        </a>
-                      </li>
-                      <li v-show="req.status_request === 'accept' && req.is_solved === 'P'">
-                        <a @click="onUpdateStatus( req.apt_id, 'unsolved' )">
-                          <span class="uk-margin-small-right" uk-icon="icon: close; ratio: 0.8"></span>
-                          Tandai belum terpecahkan
-                        </a>
-                      </li>
                     </ul>
                   </div>
                 </div>
@@ -318,7 +306,10 @@
               </div>
               <div v-show="req.request_to === 'client' && req.status_request === 'waiting'" class="uk-margin-small">
                 <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Terima</a>
-                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
+                <a @click="onUpdateStatus( req.apt_id, 'decline', req )" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
+              </div>
+              <div v-show="req.status_request === 'accept' && req.is_solved === 'Y'" class="uk-margin-small">
+                <a @click="onUpdateStatus( req.apt_id, 'done' )" class="uk-button uk-button-default uk-button-small gl-button-default">Tandai sudah selesai</a>
               </div>
               <div v-show="req.status_request === 'done' && req.feedback === null && req.is_solved === 'Y'" class="uk-margin-small">
                 <a @click="modalReview( req )" class="uk-button uk-button-default uk-button-small gl-button-default">
@@ -471,7 +462,7 @@ export default {
         this.messages.errorMessage = err.response.statusText;
       });
     },
-    onUpdateStatus( id, status )
+    onUpdateStatus( id, status, data )
     {
       let confirmation;
       let message;
@@ -488,14 +479,6 @@ export default {
         case 'cancel':
           confirmation = 'Apakah anda ingin membatalkan permintaan ini?';
           message = 'Permintaan jadwal konsultasi ' + id +' dibatalkan';
-          break;
-        case 'solved':
-          confirmation = 'Apakah masalah ini sudah terpecahkan?';
-          message = 'Perihal konsultasi ' + id + ' sudah terpecahkan';
-          break;
-        case 'unsolved':
-          confirmation = 'Apakah masalah ini belum menemukan solusi?';
-          message = 'Perihal konsultasi ' + id + ' belum menemukan solusi namun anda masih bisa atur jadwal kembali';
           break;
         default:
           confirmation = 'Apakah pertemuan ini sudah selesai dilakukan?';
@@ -519,9 +502,13 @@ export default {
           }).then( res => {
             swal({
               text: message,
-              icon: 'success'
+              icon: 'success',
+              timer: 1000
             });
-            setTimeout(() => { this.showRequest(); }, 1000);
+            setTimeout(() => {
+              this.showRequest();
+              if( data !== undefined ) this.onClickModal( data );
+            }, 1500);
           }).catch( err => {
             swal({
               text: err.response.statusText,
