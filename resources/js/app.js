@@ -37,7 +37,7 @@ Vue.component('consultant-private-event', require('./components/Frontend/consult
 const app = new Vue({
     el: '#app',
     data: {
-      url: document.location.origin,
+      url: BASE_URL,
       formatDate(str, format) {
         var res = moment(str).locale('id').format(format);
         return res;

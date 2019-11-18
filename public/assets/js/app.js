@@ -86320,7 +86320,7 @@ Vue.component('consultant-private-event', __webpack_require__(/*! ./components/F
 var app = new Vue({
   el: '#app',
   data: {
-    url: document.location.origin,
+    url: BASE_URL,
     formatDate: function formatDate(str, format) {
       var res = moment(str).locale('id').format(format);
       return res;

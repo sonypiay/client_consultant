@@ -18,4 +18,7 @@
 <script type="text/javascript" src="{{ asset('assets/vendor/uikit/js/uikit.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/vendor/uikit/js/uikit-icons.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/vendor/overlayscrollbar/js/OverlayScrollbars.min.js') }}"></script>
+<script type="text/javascript">
+  const BASE_URL = '{{ url("/") }}';
+</script>
 <!-- js -->
