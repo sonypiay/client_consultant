@@ -100,14 +100,16 @@ export default {
       let rating = this.total_summary.rating;
       let result = 0;
 
-      if( rating.feedback !== 0 )
+      if( rating.feedback === 0 )
+      {
+        return result;
+      }
+      else
       {
         result = rating.rate / rating.feedback;
         if( Number.isInteger(result) ) return result;
-        else result.toFixed(1);
+        else return result.toFixed(1);
       }
-
-      return result;
     }
   },
   mounted() {

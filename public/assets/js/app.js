@@ -5023,12 +5023,12 @@ __webpack_require__.r(__webpack_exports__);
       var rating = this.total_summary.rating;
       var result = 0;
 
-      if (rating.feedback !== 0) {
+      if (rating.feedback === 0) {
+        return result;
+      } else {
         result = rating.rate / rating.feedback;
-        if (Number.isInteger(result)) return result;else result.toFixed(1);
+        if (Number.isInteger(result)) return result;else return result.toFixed(1);
       }
-
-      return result;
     }
   },
   mounted: function mounted() {
@@ -67368,14 +67368,6 @@ var render = function() {
           _c(
             "div",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.detailrequest.consultant.consultant_id,
-                  expression: "detailrequest.consultant.consultant_id"
-                }
-              ],
               staticClass: "uk-grid-small uk-margin",
               attrs: { "uk-grid": "" }
             },
