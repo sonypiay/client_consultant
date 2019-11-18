@@ -5651,7 +5651,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       this.getrequest.isLoading = true;
       var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
-      var url = this.$root.url + '/consultant/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
+      var url = this.$root.url + '/consultant/request/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
       if (p !== undefined) url = p + '&' + param;
       axios({
         method: 'get',
@@ -5725,7 +5725,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }).then(function (input) {
               axios({
                 method: 'put',
-                url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id,
+                url: _this2.$root.url + '/consultant/request/status_appointment/' + status + '/' + id,
                 params: {
                   note: input
                 }
@@ -5748,7 +5748,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
             axios({
               method: 'put',
-              url: _this2.$root.url + '/consultant/status_appointment/' + status + '/' + id
+              url: _this2.$root.url + '/consultant/request/status_appointment/' + status + '/' + id
             }).then(function (res) {
               swal({
                 text: message,
@@ -5867,7 +5867,7 @@ document.addEventListener("DOMContentLoaded", function () {
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/consultant/add_request',
+        url: this.$root.url + '/consultant/request/add_request',
         params: {
           schedule_date: schedule_date,
           location: location,
@@ -5929,7 +5929,7 @@ document.addEventListener("DOMContentLoaded", function () {
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/consultant/save_request/' + request.id,
+        url: this.$root.url + '/consultant/request/save_request/' + request.id,
         params: {
           schedule_date: schedule_date,
           location: location,
@@ -5994,7 +5994,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (val) {
           axios({
             method: 'delete',
-            url: _this6.$root.url + '/consultant/delete_request/' + id
+            url: _this6.$root.url + '/consultant/request/delete_request/' + id
           }).then(function (res) {
             swal({
               text: 'Konsultasi ' + id + 'berhasil dihapus',
@@ -6019,7 +6019,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       axios({
         method: 'get',
-        url: this.$root.url + '/consultant/get_request/' + id
+        url: this.$root.url + '/consultant/request/get_request/' + id
       }).then(function (res) {
         var result = res.data;
         _this7.getrequest.details.request = result.request;
