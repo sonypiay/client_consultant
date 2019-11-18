@@ -325,7 +325,6 @@ class AppointmentRequest extends Model
     $data_notif     = [];
 
     $getrequest                 = $this->where('apt_id', $id)->first();
-    $getrequest->location       = $location;
     $getrequest->service_topic  = $service_topic;
     $getrequest->created_by     = $created_by;
 
@@ -345,14 +344,15 @@ class AppointmentRequest extends Model
       }
 
       $current_schedule = new DateTime( $getrequest->schedule_date );
-      if( $current_schedule->format('Y-m-d H:i') != $schedule_date )
+      if( $current_schedule->format('Y-m-d H:i') != $schedule_date || $location != $getrequest->location )
       {
         $getrequest->status_request = 'waiting';
         $getrequest->schedule_date  = $schedule_date;
+        $getrequest->location       = $location;
         $getrequest->is_solved      = 'P';
         $getrequest->save();
 
-        $user_id = session()->has('isClient') ? session()->get('clientId') : session()->get('consultantId');
+        $user_id = session()->has('isClient') ? $getrequest->consultant_id : $getrequest->client_id;
         $notification->addNotification([
           'user_id' => $user_id,
           'notif_message' => 'Jadwal konsultasi ' . $id . ' telah diganti.',

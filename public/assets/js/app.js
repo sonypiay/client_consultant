@@ -4753,6 +4753,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['detailrequest']
 });
@@ -7371,6 +7379,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -67309,7 +67325,23 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "uk-width-1-1" }, [
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Lokasi")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.request.location) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
                     _vm._v("Catatan")
@@ -69836,9 +69868,11 @@ var render = function() {
                                                     value:
                                                       req.status_request ===
                                                         "waiting" ||
+                                                      req.status_request ===
+                                                        "decline" ||
                                                       req.is_solved === "N",
                                                     expression:
-                                                      "(req.status_request === 'waiting') || (req.is_solved === 'N')"
+                                                      "(req.status_request === 'waiting' || req.status_request === 'decline') || (req.is_solved === 'N')"
                                                   }
                                                 ]
                                               },
@@ -72665,7 +72699,23 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "uk-width-1-1" }, [
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Lokasi")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.request.location) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
                 _c("div", { staticClass: "uk-panel uk-margin" }, [
                   _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
                     _vm._v("Catatan")

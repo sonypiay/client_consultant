@@ -226,7 +226,7 @@
                           Atur Jadwal Baru
                         </a>
                       </li>
-                      <li v-show="(req.status_request === 'waiting') || (req.is_solved === 'N')">
+                      <li v-show="(req.status_request === 'waiting' || req.status_request === 'decline') || (req.is_solved === 'N')">
                         <a @click="onClickModal( req )">
                           <span class="uk-margin-small-right" uk-icon="icon: pencil; ratio: 0.8"></span>
                           Ubah Jadwal

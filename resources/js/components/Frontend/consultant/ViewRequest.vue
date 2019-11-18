@@ -35,7 +35,15 @@
                 </p>
               </div>
             </div>
-            <div class="uk-width-1-1">
+            <div class="uk-width-1-2">
+              <div class="uk-panel uk-margin">
+                <h6 class="uk-h6 uk-margin-remove-bottom">Lokasi</h6>
+                <p class="uk-margin-remove-top">
+                  {{ detailrequest.request.location }}
+                </p>
+              </div>
+            </div>
+            <div class="uk-width-1-2">
               <div class="uk-panel uk-margin">
                 <h6 class="uk-h6 uk-margin-remove-bottom">Catatan</h6>
                 <p class="uk-margin-remove-top uk-text-justify">
