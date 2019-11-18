@@ -263,3 +263,17 @@ html, body { font-family: $font-base; }
     }
   }
 }
+
+.card-summary {
+  border-radius: 6px;
+  background: $color-base;
+  padding: 20px 20px !important;
+  .card-summary-value {
+    color: #ffffff;
+    @include global_font_style( 200, 54px, normal, 0.4px );
+  }
+  .card-summary-text {
+    @include global_font_style( 200, 18px, normal, 0.4px );
+  }
+  .card-summary-text, .card-summary-icon { color: #ffffff; }
+}

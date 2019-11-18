@@ -3,6 +3,7 @@
 namespace App\Database;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\Database\ClientUser;
 use App\Database\ConsultantUser;
 use App\Database\Notification;
@@ -52,24 +53,11 @@ class AppointmentRequest extends Model
       'appointment_request.is_solved',
       'appointment_request.created_at',
       'appointment_request.updated_at',
-      'service_topic.topic_id',
-      'service_topic.topic_name',
       'client_user.client_fullname',
-      'client_user.client_phone_number',
-      'client_user.client_email',
-      'client_user.client_address',
-      'consultant_user.consultant_fullname',
-      'consultant_user.consultant_email',
-      'consultant_user.consultant_phone_number',
-      'consultant_user.consultant_address',
-      'feedbacks.fd_id',
-      'feedbacks.review_description',
-      'feedbacks.feedback'
+      'consultant_user.consultant_fullname'
     )
-    ->join('service_topic', 'appointment_request.service_topic', '=', 'service_topic.topic_id')
     ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
-    ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id')
-    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id');
+    ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id');
 
     if( $status !== 'all' )
     {
@@ -125,6 +113,81 @@ class AppointmentRequest extends Model
     return $result;
   }
 
+  public function showUpcomingRequest( $request = null )
+  {
+    $whereClauses = [];
+    $keywords = $request !== null ? ( isset( $request->keywords ) ? $request->keywords : '' ) : '';
+    $limit = $request !== null ? ( isset( $request->limit ) ? $request->limit : 6 ) : 6;
+
+    $query = $this->select(
+      'appointment_request.apt_id',
+      'appointment_request.client_id',
+      'appointment_request.consultant_id',
+      'appointment_request.created_by',
+      'appointment_request.request_to',
+      'appointment_request.schedule_date',
+      'appointment_request.location',
+      'appointment_request.status_request',
+      'appointment_request.is_solved',
+      'appointment_request.created_at',
+      'appointment_request.updated_at',
+      'client_user.client_fullname',
+      'consultant_user.consultant_fullname'
+    )
+    ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
+    ->leftJoin('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id');
+
+    array_push( $whereClauses, ['appointment_request.status_request', 'accept']);
+
+    if( session()->has('isClient') )
+    {
+      $client = session()->get('clientId');
+      array_push( $whereClauses, ['appointment_request.client_id', $client]);
+    }
+    if( session()->has('isConsultant') )
+    {
+      $consultant = session()->get('consultantId');
+      array_push( $whereClauses, ['appointment_request.consultant_id', $consultant]);
+    }
+
+    $query = $query->where($whereClauses);
+
+    if( ! empty( $keywords ) )
+    {
+      if( session()->has('isClient') )
+      {
+        $query = $query->where(function( $q ) use ( $keywords ) {
+          $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_id', 'like', '%' . $keywords . '%');
+        });
+      }
+      else if( session()->has('isConsultant') )
+      {
+        $query = $query->where(function( $q ) use ( $keywords ) {
+          $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%');
+        });
+      }
+      else
+      {
+        $query = $query->where(function( $q ) use ( $keywords ) {
+          $q->where('appointment_request.apt_id', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('client_user.client_id', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%')
+          ->orWhere('consultant_user.consultant_id', 'like', '%' . $keywords . '%');
+        });
+      }
+    }
+
+    $query = $query->where(DB::raw("date_format(appointment_request.schedule_date, '%Y-%m-%d')"), '>=', date('Y-m-d'));
+
+    $result = $query->orderBy('appointment_request.created_at', 'desc')->paginate( $limit );
+    return $result;
+  }
+
   public function getRequest( $id )
   {
     $client = new ClientUser;
@@ -173,20 +236,42 @@ class AppointmentRequest extends Model
     $user_id        = $request->user_id;
     $apt_id         = $this->getId();
     $res            = ['responseCode' => 200, 'responseMessage' => ''];
+    $notification   = new Notification;
+    $data_notif     = [];
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
       $this->apt_id = $apt_id;
       if( session()->has('isClient') )
       {
+        $consultant       = new ConsultantUser;
         $this->request_to = 'consultant';
         $this->client_id  = $user_id;
+
+        foreach( $consultant->get() as $c )
+        {
+          array_push($data_notif, [
+            'user_id' => $c->consultant_id,
+            'notif_message' => 'Klien mengajukan permintaan konsultasi dengan nomor ID ' . $apt_id,
+            'parent_id' => $apt_id,
+            'notif_read' => 'N',
+            'notif_date' => date('Y-m-d H:i:s')
+          ]);
+        }
       }
       else
       {
         $this->request_to     = 'client';
         $this->client_id      = $user_id;
         $this->consultant_id  = session()->get('consultantId');
+
+        array_push($data_notif, [
+          'user_id' => $user_id,
+          'notif_message' => 'Anda menerima jadwal undangan konsultasi dengan nomor ID ' . $apt_id,
+          'parent_id' => $apt_id,
+          'notif_read' => 'N',
+          'notif_date' => date('Y-m-d H:i:s')
+        ]);
       }
 
       $this->created_by       = $created_by;
@@ -197,6 +282,7 @@ class AppointmentRequest extends Model
       if( $created_by === 'client' )
       {
         $this->save();
+        if( count( $data_notif ) != 0 ) $notification->addNotification( $data_notif );
       }
       else
       {
@@ -204,6 +290,7 @@ class AppointmentRequest extends Model
         if( $check_client == 1 )
         {
           $this->save();
+          if( count( $data_notif ) != 0 ) $notification->addNotification( $data_notif );
         }
         else
         {
@@ -231,6 +318,8 @@ class AppointmentRequest extends Model
     $service_topic  = $request->topic;
     $created_by     = $request->created_by;
     $res            = ['responseCode' => 200, 'responseMessage' => ''];
+    $notification   = new Notification;
+    $data_notif     = [];
 
     $getrequest                 = $this->where('apt_id', $id)->first();
     $getrequest->location       = $location;
@@ -239,7 +328,10 @@ class AppointmentRequest extends Model
 
     if( session()->has('isClient') || session()->has('isConsultant') )
     {
-      if( session()->has('isClient') ) $getrequest->request_to      = 'consultant';
+      if( session()->has('isClient') )
+      {
+        $getrequest->request_to = 'consultant';
+      }
       if( session()->has('isConsultant') )
       {
         $getrequest->request_to  = 'client';
@@ -256,6 +348,15 @@ class AppointmentRequest extends Model
         $getrequest->schedule_date  = $schedule_date;
         $getrequest->is_solved      = 'P';
         $getrequest->save();
+
+        $user_id = session()->has('isClient') ? session()->get('clientId') : session()->get('consultantId');
+        $notification->addNotification([
+          'user_id' => $user_id,
+          'notif_message' => 'Jadwal konsultasi ' . $id . ' telah diganti.',
+          'parent_id' => $id,
+          'notif_read' => 'N',
+          'notif_date' => date('Y-m-d H:i:s')
+        ]);
       }
       else
       {
@@ -283,25 +384,47 @@ class AppointmentRequest extends Model
       $update = $apt->first();
       $notification = new Notification;
       $data_notif = [];
+
       switch ($status) {
         case 'accept':
-          $notif_message = 'Request appointment ' . $id . ' accepted';
+          $notif_message = 'Konsultasi dengan nomor ' . $id . ' diterima';
           break;
         case 'decline':
-          $notif_message = 'Request appointment ' . $id . ' declined';
+          $notif_message = 'Konsultasi dengan nomor ' . $id . ' ditolak';
           break;
         case 'cancel':
-          $notif_message = 'Request appointment ' . $id . ' canceled';
+          $notif_message = 'Konsultasi dengan nomor ' . $id . ' dibatalkan';
           break;
         case 'solved':
-          $notif_message = 'Case closed for request ' . $id;
+          $notif_message = 'Konsultasi dengan nomor ' . $id . ' sudah terpecahkan';
           break;
         case 'unsolved':
-          $notif_message = 'Case is not finished yet with request ' . $id;
+          $notif_message = 'Konsultasi dengan nomor ' . $id . ' belum terpecahkan';
           break;
         default:
-          $notif_message = 'Request appointment ' . $id . ' completed. Waiting for review.';
+          $notif_message = 'Konsultasi dengan nomor ' . $id . ' sudah selesai dilakukan';
           break;
+      }
+
+      if( $update->created_by == 'client' )
+      {
+        array_push( $data_notif, [
+          'user_id' => $update->consultant_id,
+          'notif_message' => $notif_message,
+          'parent_id' => $id,
+          'notif_read' => 'N',
+          'notif_date' => date('Y-m-d H:i:s')
+        ]);
+      }
+      else
+      {
+        array_push( $data_notif, [
+          'user_id' => $update->client_id,
+          'notif_message' => $notif_message,
+          'parent_id' => $id,
+          'notif_read' => 'N',
+          'notif_date' => date('Y-m-d H:i:s')
+        ]);
       }
 
       if( $status === 'solved' )
@@ -328,6 +451,7 @@ class AppointmentRequest extends Model
       }
 
       $update->save();
+      $notification->addNotification($data_notif);
     }
 
     return $res;

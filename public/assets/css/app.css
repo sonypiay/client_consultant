@@ -767,3 +767,31 @@ body {
   color: #25C4F2;
 }
 
+.card-summary {
+  border-radius: 6px;
+  background: #25C4F2;
+  padding: 20px 20px !important;
+}
+
+.card-summary .card-summary-value {
+  color: #ffffff;
+  font-weight: 200;
+  font-size: 54px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-summary .card-summary-text {
+  font-weight: 200;
+  font-size: 18px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-summary .card-summary-text,
+.card-summary .card-summary-icon {
+  color: #ffffff;
+}
+

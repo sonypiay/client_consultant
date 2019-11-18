@@ -4933,6 +4933,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
@@ -6814,26 +6852,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
@@ -6853,7 +6871,11 @@ __webpack_require__.r(__webpack_exports__);
           prev_page_url: '',
           next_page_url: ''
         },
-        details: {}
+        details: {
+          request: {},
+          client: {},
+          consultant: {}
+        }
       },
       messages: {
         errorMessage: ''
@@ -6865,7 +6887,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/consultant/request_list/waiting?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/consultant/request/upcoming?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -6886,86 +6908,21 @@ __webpack_require__.r(__webpack_exports__);
         _this.messages.errorMessage = err.response.statusText;
       });
     },
-    onUpdateStatus: function onUpdateStatus(id, approval) {
+    onViewDetail: function onViewDetail(id) {
       var _this2 = this;
 
-      var confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
-      swal({
-        title: 'Konfirmasi',
-        text: confirmation,
-        icon: 'warning',
-        buttons: {
-          confirm: {
-            value: true,
-            text: 'Ya'
-          },
-          cancel: 'Batal'
-        }
-      }).then(function (val) {
-        if (val) {
-          axios({
-            method: 'put',
-            url: _this2.$root.url + '/consultant/status_appointment/' + approval + '/' + id
-          }).then(function (res) {
-            var message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id + ' diterima' : 'Permintaan jadwal konsultasi ' + id + ' ditolak';
-            swal({
-              text: message,
-              icon: 'success'
-            });
-            setTimeout(function () {
-              _this2.showUpcomingRequest();
-            }, 1000);
-          })["catch"](function (err) {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/request/get_request/' + id
+      }).then(function (res) {
+        var result = res.data;
+        _this2.getrequest.details.request = result.request;
+        _this2.getrequest.details.client = result.client;
+        _this2.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
       });
-    },
-    deleteRequest: function deleteRequest(id) {
-      var _this3 = this;
-
-      swal({
-        title: 'Konfirmasi',
-        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
-        icon: 'warning',
-        buttons: {
-          confirm: {
-            value: true,
-            text: 'Ya'
-          },
-          cancel: 'Batal'
-        }
-      }).then(function (val) {
-        if (val) {
-          axios({
-            method: 'delete',
-            url: _this3.$root.url + '/consultant/delete_request/' + id
-          }).then(function (res) {
-            swal({
-              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
-              icon: 'success',
-              timer: 2000
-            });
-            setTimeout(function () {
-              _this3.showUpcomingRequest();
-            }, 1000);
-          })["catch"](function (err) {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
-      });
-    },
-    onViewDetail: function onViewDetail(data) {
-      this.getrequest.details = data;
-      UIkit.modal('#modal-view-request').show();
     }
   },
   mounted: function mounted() {
@@ -68016,6 +67973,8 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
       _c("request-appointment")
     ],
     1
@@ -68029,6 +67988,138 @@ var staticRenderFns = [
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
       _c("div", { staticClass: "uk-container" }, [_vm._v("Dashboard")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "uk-container uk-margin-large-top uk-margin-bottom" },
+      [
+        _c("h3", [_vm._v("Overview")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "uk-grid-small uk-grid-match",
+            attrs: { "uk-grid": "" }
+          },
+          [
+            _c("div", { staticClass: "uk-width-1-3" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "uk-tile uk-tile-default uk-padding-remove card-summary"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "uk-clearfix uk-margin-small-bottom" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "uk-float-left card-summary-text" },
+                        [_vm._v("Pertemuan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "uk-float-right card-summary-icon" },
+                        [
+                          _c("span", {
+                            attrs: { "uk-icon": "icon: calendar; ratio: 1.5;" }
+                          })
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-summary-value" }, [
+                    _vm._v("10")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-3" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "uk-tile uk-tile-default uk-padding-remove card-summary"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "uk-clearfix uk-margin-small-bottom" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "uk-float-left card-summary-text" },
+                        [_vm._v("Klien")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "uk-float-right card-summary-icon" },
+                        [
+                          _c("span", {
+                            attrs: { "uk-icon": "icon: user; ratio: 1.5;" }
+                          })
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-summary-value" }, [
+                    _vm._v("5")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-3" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "uk-tile uk-tile-default uk-padding-remove card-summary"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "uk-clearfix uk-margin-small-bottom" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "uk-float-left card-summary-text" },
+                        [_vm._v("Rating")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "uk-float-right card-summary-icon" },
+                        [
+                          _c("span", {
+                            attrs: { "uk-icon": "icon: star; ratio: 1.5;" }
+                          })
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-summary-value" }, [
+                    _vm._v("13")
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -71339,33 +71430,15 @@ var render = function() {
         attrs: { detailrequest: _vm.getrequest.details }
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "navbar-event" }, [
-        _c("div", { staticClass: "uk-container" }, [
-          _c("nav", { staticClass: "uk-navbar" }, [
-            _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
-              _c("li", [
-                _c("a", { class: { active: _vm.navevent === "appointment" } }, [
-                  _vm._v("Jadwal Konsultasi")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("a", { class: { active: _vm.navevent === "meeting" } }, [
-                  _vm._v("Jadwal Acara")
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
       _c(
         "div",
         {
           staticClass:
-            "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
+            "uk-container uk-margin-large-bottom container-request-list"
         },
         [
+          _c("h3", [_vm._v("Jadwal yang akan datang")]),
+          _vm._v(" "),
           _vm.getrequest.isLoading
             ? _c("div", { staticClass: "uk-text-center" }, [
                 _c("span", { attrs: { "uk-spinner": "" } })
@@ -71451,7 +71524,7 @@ var render = function() {
                                                   on: {
                                                     click: function($event) {
                                                       return _vm.onViewDetail(
-                                                        req
+                                                        req.apt_id
                                                       )
                                                     }
                                                   }
@@ -71467,34 +71540,6 @@ var render = function() {
                                                   }),
                                                   _vm._v(
                                                     "\n                        Lihat\n                      "
-                                                  )
-                                                ]
-                                              )
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("li", [
-                                              _c(
-                                                "a",
-                                                {
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.deleteRequest(
-                                                        req.apt_id
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c("span", {
-                                                    staticClass:
-                                                      "uk-margin-small-right",
-                                                    attrs: {
-                                                      "uk-icon":
-                                                        "icon: trash; ratio: 0.8"
-                                                    }
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                        Hapus\n                      "
                                                   )
                                                 ]
                                               )
@@ -71539,60 +71584,7 @@ var render = function() {
                                       "\n              "
                                   )
                                 ])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value:
-                                        req.request_to === "consultant" &&
-                                        req.status_request === "waiting",
-                                      expression:
-                                        "req.request_to === 'consultant' && req.status_request === 'waiting'"
-                                    }
-                                  ],
-                                  staticClass: "uk-margin-small"
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onUpdateStatus(
-                                            req.apt_id,
-                                            "accept"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Terima")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onUpdateStatus(
-                                            req.apt_id,
-                                            "decline"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Tolak")]
-                                  )
-                                ]
-                              )
+                              ])
                             ]
                           )
                         ])
@@ -71615,7 +71607,9 @@ var staticRenderFns = [
       _c("div", { staticClass: "uk-margin-remove" }, [
         _c("span", { staticClass: "far fa-frown" })
       ]),
-      _vm._v("\n          Tidak ada jadwal konsultasi.\n        ")
+      _vm._v(
+        "\n          Tidak ada jadwal konsultasi yang akan datang.\n        "
+      )
     ])
   }
 ]

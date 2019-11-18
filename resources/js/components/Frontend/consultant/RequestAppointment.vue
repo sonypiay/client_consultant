@@ -2,18 +2,8 @@
   <div>
     <view-request-detail :detailrequest="getrequest.details" />
 
-    <div class="navbar-event">
-      <div class="uk-container">
-        <nav class="uk-navbar">
-          <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': navevent === 'appointment'}">Jadwal Konsultasi</a></li>
-            <li><a :class="{'active': navevent === 'meeting'}">Jadwal Acara</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-
-    <div class="uk-container uk-margin-large-top uk-margin-large-bottom container-request-list">
+    <div class="uk-container uk-margin-large-bottom container-request-list">
+      <h3>Jadwal yang akan datang</h3>
       <div v-if="getrequest.isLoading" class="uk-text-center">
         <span uk-spinner></span>
       </div>
@@ -26,7 +16,7 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            Tidak ada jadwal konsultasi.
+            Tidak ada jadwal konsultasi yang akan datang.
           </div>
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
@@ -41,15 +31,9 @@
                   <div class="dropdown-request-nav" uk-dropdown="mode: click; pos: left">
                     <ul class="uk-nav uk-dropdown-nav request-nav">
                       <li>
-                        <a @click="onViewDetail( req )">
+                        <a @click="onViewDetail( req.apt_id )">
                           <span class="uk-margin-small-right" uk-icon="icon: forward; ratio: 0.8"></span>
                           Lihat
-                        </a>
-                      </li>
-                      <li>
-                        <a @click="deleteRequest( req.apt_id )">
-                          <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
-                          Hapus
                         </a>
                       </li>
                     </ul>
@@ -64,10 +48,6 @@
                 <div class="request-pic">
                   {{ req.client_fullname }}
                 </div>
-              </div>
-              <div v-show="req.request_to === 'consultant' && req.status_request === 'waiting'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Terima</a>
-                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Tolak</a>
               </div>
             </div>
           </div>
@@ -98,7 +78,11 @@ export default {
           prev_page_url: '',
           next_page_url: ''
         },
-        details: {}
+        details: {
+          request: {},
+          client: {},
+          consultant: {}
+        }
       },
       messages: {
         errorMessage: ''
@@ -109,7 +93,7 @@ export default {
     showUpcomingRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/consultant/request_list/waiting?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/consultant/request/upcoming?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({
@@ -131,79 +115,20 @@ export default {
         this.messages.errorMessage = err.response.statusText;
       });
     },
-    onUpdateStatus( id, approval )
+    onViewDetail( id )
     {
-      let confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
-      swal({
-        title: 'Konfirmasi',
-        text: confirmation,
-        icon: 'warning',
-        buttons: {
-          confirm: { value: true, text: 'Ya' },
-          cancel: 'Batal'
-        }
-      }).then( val => {
-        if( val )
-        {
-          axios({
-            method: 'put',
-            url: this.$root.url + '/consultant/status_appointment/' + approval + '/' + id
-          }).then( res => {
-            let message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id +' diterima' : 'Permintaan jadwal konsultasi ' + id +' ditolak';
-            swal({
-              text: message,
-              icon: 'success'
-            });
-            setTimeout(() => { this.showUpcomingRequest(); }, 1000);
-          }).catch( err => {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
+      axios({
+        method: 'get',
+        url: this.$root.url + '/consultant/request/get_request/' + id
+      }).then( res => {
+        let result =  res.data;
+        this.getrequest.details.request = result.request;
+        this.getrequest.details.client = result.client;
+        this.getrequest.details.consultant = result.consultant;
+        UIkit.modal('#modal-view-request').show();
+      }).catch( err => {
+        console.log( err.response.statusText );
       });
-    },
-    deleteRequest( id )
-    {
-      swal({
-        title: 'Konfirmasi',
-        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
-        icon: 'warning',
-        buttons: {
-          confirm: { value: true, text: 'Ya' },
-          cancel: 'Batal'
-        }
-      }).then( val => {
-        if( val )
-        {
-          axios({
-            method: 'delete',
-            url: this.$root.url + '/consultant/delete_request/' + id
-          }).then( res => {
-            swal({
-              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
-              icon: 'success',
-              timer: 2000
-            });
-            setTimeout(() => {
-              this.showUpcomingRequest();
-            }, 1000);
-          }).catch( err => {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
-      })
-    },
-    onViewDetail( data )
-    {
-      this.getrequest.details = data;
-      UIkit.modal('#modal-view-request').show();
     }
   },
   mounted() {
