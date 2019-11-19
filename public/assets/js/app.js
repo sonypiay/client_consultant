@@ -4310,6 +4310,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getcity'],
   data: function data() {
@@ -4323,7 +4346,8 @@ __webpack_require__.r(__webpack_exports__);
           last_page: 1,
           prev_page_url: '',
           next_page_url: ''
-        }
+        },
+        details: {}
       },
       forms: {
         keywords: '',
@@ -4357,6 +4381,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err.response.statusText);
       });
+    },
+    onViewClient: function onViewClient(data) {
+      this.getclient.details = data;
+      UIkit.modal('#modal-view-client').show();
     }
   },
   mounted: function mounted() {
@@ -66038,6 +66066,25 @@ var render = function() {
         attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
       }),
       _vm._v(" "),
+      _c("div", { attrs: { id: "modal-view-client", "uk-modal": "" } }, [
+        _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
+          _c("a", {
+            staticClass: "uk-modal-close uk-modal-close-outside",
+            attrs: { "uk-close": "" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
+            _c("div", { staticClass: "banner-heading" }, [
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.getclient.details.client_fullname) +
+                  "\n        "
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
       _c(
@@ -66214,7 +66261,7 @@ var render = function() {
                         staticClass: "uk-alert-warning",
                         attrs: { "uk-alert": "" }
                       },
-                      [_vm._v("\n        Tidak ada klien\n      ")]
+                      [_vm._v("\n        Klien tidak ada\n      ")]
                     )
                   : _c(
                       "div",
@@ -66226,9 +66273,41 @@ var render = function() {
                         return _c("div", { staticClass: "uk-width-1-3" }, [
                           _c(
                             "div",
-                            { staticClass: "uk-card uk-card-default" },
+                            {
+                              staticClass: "uk-card uk-card-default card-panel"
+                            },
                             [
                               _c("div", { staticClass: "uk-card-body" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "uk-panel uk-margin" },
+                                  [
+                                    _c(
+                                      "h4",
+                                      {
+                                        staticClass:
+                                          "uk-h4 uk-margin-remove-bottom"
+                                      },
+                                      [_vm._v("ID Klien")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass:
+                                          "uk-text-muted uk-margin-remove-top"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(client.client_id) +
+                                            "\n                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
                                 _c(
                                   "div",
                                   { staticClass: "uk-panel uk-margin" },
@@ -66317,6 +66396,31 @@ var render = function() {
                                       ]
                                     )
                                   ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "uk-card-footer" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-default uk-button-small gl-button-default",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onViewClient(client)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Lihat Profil")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "uk-button uk-button-default uk-button-small gl-button-default"
+                                  },
+                                  [_vm._v("Riwayat Konsultasi")]
                                 )
                               ])
                             ]

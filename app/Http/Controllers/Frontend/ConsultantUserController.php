@@ -242,4 +242,10 @@ class ConsultantUserController extends Controller
 
     return response()->json( $result, 200 );
   }
+
+  public function client_profile( ClientUser $client, $id )
+  {
+    $getclient = $client->getProfile( $id );
+    return response()->json( $getclient, 200 );
+  }
 }

@@ -4,6 +4,19 @@
     :haslogin="haslogin"
     :getuser="getuser" />
 
+    <!-- client profile -->
+    <div id="modal-view-client" uk-modal>
+      <div class="uk-modal-dialog modal-dialog">
+        <a class="uk-modal-close uk-modal-close-outside" uk-close></a>
+        <div class="uk-card uk-card-body modal-banner-top">
+          <div class="banner-heading">
+            {{ getclient.details.client_fullname }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- client profile -->
+
     <div class="uk-padding banner-index_header">
       <div class="uk-container">Daftar Klien</div>
     </div>
@@ -33,12 +46,18 @@
       </div>
       <div v-else>
         <div v-if="getclient.total === 0" class="uk-alert-warning" uk-alert>
-          Tidak ada klien
+          Klien tidak ada
         </div>
         <div v-else class="uk-grid-match uk-grid-small" uk-grid>
           <div v-for="client in getclient.results" class="uk-width-1-3">
-            <div class="uk-card uk-card-default">
+            <div class="uk-card uk-card-default card-panel">
               <div class="uk-card-body">
+                <div class="uk-panel uk-margin">
+                  <h4 class="uk-h4 uk-margin-remove-bottom">ID Klien</h4>
+                  <p class="uk-text-muted uk-margin-remove-top">
+                    {{ client.client_id }}
+                  </p>
+                </div>
                 <div class="uk-panel uk-margin">
                   <h4 class="uk-h4 uk-margin-remove-bottom">Nama Lengkap</h4>
                   <p class="uk-text-muted uk-margin-remove-top">
@@ -57,6 +76,10 @@
                     {{ client.client_npwp }}
                   </p>
                 </div>
+              </div>
+              <div class="uk-card-footer">
+                <a @click="onViewClient( client )" class="uk-button uk-button-default uk-button-small gl-button-default">Lihat Profil</a>
+                <a class="uk-button uk-button-default uk-button-small gl-button-default">Riwayat Konsultasi</a>
               </div>
             </div>
           </div>
@@ -111,7 +134,8 @@ export default {
           last_page: 1,
           prev_page_url: '',
           next_page_url: ''
-        }
+        },
+        details: {}
       },
       forms: {
         keywords: '',
@@ -145,6 +169,11 @@ export default {
       }).catch( err => {
         console.log( err.response.statusText );
       });
+    },
+    onViewClient( data )
+    {
+      this.getclient.details = data;
+      UIkit.modal('#modal-view-client').show();
     }
   },
   mounted() {

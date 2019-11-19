@@ -147,6 +147,10 @@ html, body { font-family: $font-base; }
     @include color_gradient_base();
     min-height: 100px;
     border-radius: 6px 6px 0 0;
+    .banner-heading {
+      color: #ffffff;
+      @include global_font_style( 200, 36px, normal, 0.4px );
+    }
     .request-time {
       color: #ffffff;
       @include global_font_style( 200, 48px, normal, 0.4px );
