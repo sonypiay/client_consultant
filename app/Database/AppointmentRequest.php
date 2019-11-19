@@ -147,6 +147,7 @@ class AppointmentRequest extends Model
       $client = session()->get('clientId');
       array_push( $whereClauses, ['appointment_request.client_id', $client]);
     }
+    
     if( session()->has('isConsultant') )
     {
       $consultant = session()->get('consultantId');

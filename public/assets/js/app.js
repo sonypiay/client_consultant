@@ -2497,6 +2497,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
@@ -2506,13 +2563,36 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       total_summary: {
-        consultant: 0,
-        appointment: 0
+        appointment: {
+          total: 0,
+          success: 0,
+          waiting: 0,
+          ongoing: 0
+        },
+        feedback: 0
       }
     };
   },
   methods: {
-    showDashboardSummary: function showDashboardSummary() {}
+    showDashboardSummary: function showDashboardSummary() {
+      var _this = this;
+
+      axios({
+        method: 'get',
+        url: this.$root.url + '/client/dashboard/summary'
+      }).then(function (res) {
+        var result = res.data;
+        _this.total_summary.appointment = {
+          total: result.appointment.total,
+          success: result.appointment.success,
+          waiting: result.appointment.waiting,
+          ongoing: result.appointment.ongoing
+        };
+        _this.total_summary.feedback = result.feedback;
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+    }
   },
   computed: {},
   mounted: function mounted() {
@@ -4463,7 +4543,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/client/request/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/client/request/upcoming?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -63158,7 +63238,107 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _vm._m(1),
+      _c(
+        "div",
+        { staticClass: "uk-container uk-margin-large-top uk-margin-bottom" },
+        [
+          _c("h3", [_vm._v("Overview")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-grid-match",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment.total))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment.waiting))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment.success))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment.ongoing))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.feedback))
+                    ])
+                  ]
+                )
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("request-appointment")
     ],
@@ -63178,11 +63358,71 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "uk-container uk-margin-large-top uk-margin-bottom" },
-      [_c("h3", [_vm._v("Overview")])]
-    )
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Total Konsultasi")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: clock; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Konsultasi (Menunggu Tanggapan)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Konsultasi Berhasil")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Konsultasi yang akan datang")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Ulasan diberikan")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: star; ratio: 1.5;" } })
+      ])
+    ])
   }
 ]
 render._withStripped = true

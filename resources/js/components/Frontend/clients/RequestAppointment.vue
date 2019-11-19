@@ -92,7 +92,7 @@ export default {
     showUpcomingRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/client/request/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/client/request/upcoming?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({

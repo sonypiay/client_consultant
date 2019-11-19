@@ -15,6 +15,47 @@ use Hash;
 
 class ClientUserController extends Controller
 {
+  public function dashboard_summary()
+  {
+    $user_id          = session()->get('clientId');
+    $feedback         = new Feedbacks;
+    $appointment      = new AppointmentRequest;
+    $getappointment   = $appointment->where('status_request', '!=', 'waiting')->count();
+    $success          = $appointment->where([
+      ['status_request', 'done'],
+      ['client_id', $user_id]
+    ])->count();
+    $waiting          = $appointment->where([
+      ['status_request', 'waiting'],
+      ['client_id', $user_id]
+    ])->count();
+    $ongoing          = $appointment->where([
+      ['status_request', 'accept'],
+      [ DB::raw("date_format(schedule_date, '%Y-%m-%d')"), '>=', date('Y-m-d') ],
+      ['client_id', $user_id]
+    ])->count();
+
+    $getfeedback      = $feedback->select(
+      DB::raw('count(appointment_request.client_id) as total_feedback')
+    )
+    ->join('appointment_request', 'feedbacks.apt_id', '=', 'appointment_request.apt_id')
+    ->groupBy('appointment_request.client_id')
+    ->where('appointment_request.client_id', $user_id)
+    ->first();
+
+    $result = [
+      'appointment' => [
+        'total' => $getappointment,
+        'success' => $success,
+        'waiting' => $waiting,
+        'ongoing' => $ongoing
+      ],
+      'feedback' => $getfeedback->total_feedback
+    ];
+
+    return response()->json( $result, 200 );
+  }
+
   public function register( Request $request, ClientUser $clientUser )
   {
     $res = $clientUser->signup( $request );
