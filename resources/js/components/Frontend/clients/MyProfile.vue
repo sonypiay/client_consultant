@@ -8,7 +8,7 @@
       <div class="uk-container">Profil Saya</div>
     </div>
     <div class="uk-container uk-margin-large-bottom container-editprofile">
-      <div class="uk-width-2-5 uk-align-center uk-card uk-card-body uk-card-default card-panel">
+      <div class="uk-width-2-5@xl uk-width-2-5@l uk-width-1-2@m uk-width-1-1@s uk-align-center uk-card uk-card-body uk-card-default card-panel">
         <div class="uk-panel uk-margin">
           <h4 class="uk-h4 uk-margin-remove-bottom">Nama Lengkap</h4>
           <p class="uk-text-muted uk-margin-remove-top">

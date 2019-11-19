@@ -147,9 +147,7 @@ export default {
         this.messages.successMessage = msg;
 
         swal({ text: msg, icon: 'success' });
-        setTimeout(() => {
-          document.location = '';
-        }, 2000);
+        setTimeout(() => { document.location = this.$root.url + '/client/myprofile'; }, 2000);
       }).catch( err => {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;

@@ -2242,7 +2242,7 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'success'
         });
         setTimeout(function () {
-          document.location = '';
+          document.location = _this.$root.url + '/client/myprofile';
         }, 2000);
       })["catch"](function (err) {
         if (err.response.status === 500) _this.messages.errorMessage = err.response.statusText;else _this.messages.errorMessage = err.response.data.responseMessage;
@@ -4194,7 +4194,7 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'success'
         });
         setTimeout(function () {
-          document.location = '';
+          document.location = _this.$root.url + '/consultant/myprofile';
         }, 2000);
       })["catch"](function (err) {
         _this.messages.errorMessage = err.response.statusText;
@@ -65256,7 +65256,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "uk-width-2-5 uk-align-center uk-card uk-card-body uk-card-default card-panel"
+                "uk-width-2-5@xl uk-width-2-5@l uk-width-1-2@m uk-width-1-1@s uk-align-center uk-card uk-card-body uk-card-default card-panel"
             },
             [
               _c("div", { staticClass: "uk-panel uk-margin" }, [
@@ -70326,7 +70326,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "uk-width-2-5 uk-align-center uk-card uk-card-body uk-card-default card-panel"
+                "uk-width-2-5@xl uk-width-2-5@l uk-width-1-2@m uk-width-1-1@s uk-align-center uk-card uk-card-body uk-card-default card-panel"
             },
             [
               _c("div", { staticClass: "uk-panel uk-margin" }, [

@@ -130,7 +130,7 @@ export default {
         this.messages.successMessage = msg;
 
         swal({ text: msg, icon: 'success' });
-        setTimeout(() => { document.location = ''; }, 2000);
+        setTimeout(() => { document.location = this.$root.url + '/consultant/myprofile'; }, 2000);
       }).catch( err => {
         this.messages.errorMessage = err.response.statusText;
         f.submit = '<span uk-spinner></span>';
