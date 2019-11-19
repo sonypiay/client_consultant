@@ -59,7 +59,7 @@ class ClientUserController extends Controller
         'ongoing' => $ongoing->count()
       ],
       'consultant' => $total_consultant->count(),
-      'feedback' => $getfeedback->total_feedback === null ? 0 : $getfeedback->total_feedback
+      'feedback' => $getfeedback === null ? 0 : $getfeedback->total_feedback
     ];
 
     return response()->json( $result, 200 );
