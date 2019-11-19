@@ -243,9 +243,41 @@ class ConsultantUserController extends Controller
     return response()->json( $result, 200 );
   }
 
-  public function client_profile( ClientUser $client, $id )
+  public function history_appointment_client( AppointmentRequest $appointment, $id )
   {
-    $getclient = $client->getProfile( $id );
-    return response()->json( $getclient, 200 );
+    $limit = isset( $request->limit ) ? $request->limit : 10;
+
+    $getappointment = $appointment->select(
+      'appointment_request.apt_id',
+      'appointment_request.client_id',
+      'appointment_request.consultant_id',
+      'appointment_request.created_by',
+      'appointment_request.request_to',
+      'appointment_request.schedule_date',
+      'appointment_request.location',
+      'appointment_request.notes',
+      'appointment_request.service_topic',
+      'appointment_request.status_request',
+      'appointment_request.is_solved',
+      'appointment_request.created_at',
+      'appointment_request.updated_at',
+      'service_topic.topic_id',
+      'service_topic.topic_name',
+      'feedbacks.fd_id',
+      'feedbacks.review_description',
+      'feedbacks.feedback'
+    )
+    ->join('service_topic', 'appointment_request.service_topic', '=', 'service_topic.topic_id')
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
+    ->where([
+      ['appointment_request.client_id', $id],
+      ['appointment_request.consultant_id', session()->get('consultantId')],
+      ['appointment_request.status_request', 'done'],
+      ['appointment_request.is_solved', 'Y']
+    ])
+    ->orderBy('appointment_request.created_at', 'desc')
+    ->paginate( $limit );
+
+    return response()->json( $getappointment, 200 );
   }
 }

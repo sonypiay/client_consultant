@@ -4333,6 +4333,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getcity'],
   data: function data() {
@@ -4385,6 +4446,9 @@ __webpack_require__.r(__webpack_exports__);
     onViewClient: function onViewClient(data) {
       this.getclient.details = data;
       UIkit.modal('#modal-view-client').show();
+    },
+    onViewAppointment: function onViewAppointment(id) {
+      UIkit.modal('#modal-view-appointment').show();
     }
   },
   mounted: function mounted() {
@@ -66073,19 +66137,111 @@ var render = function() {
             attrs: { "uk-close": "" }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
-            _c("div", { staticClass: "banner-heading" }, [
-              _vm._v(
-                "\n          " +
-                  _vm._s(_vm.getclient.details.client_fullname) +
-                  "\n        "
-              )
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-modal-body" }, [
+            _c("div", { staticClass: "uk-panel uk-margin" }, [
+              _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                _vm._v("ID Klien")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.getclient.details.client_id) +
+                    "\n          "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-panel uk-margin" }, [
+              _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                _vm._v("Nama Lengkap")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.getclient.details.client_fullname) +
+                    "\n          "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-panel uk-margin" }, [
+              _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                _vm._v("No. Telepon")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.getclient.details.client_phone_number) +
+                    "\n          "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-panel uk-margin" }, [
+              _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                _vm._v("ID NPWP")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.getclient.details.client_npwp) +
+                    "\n          "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-panel uk-margin" }, [
+              _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                _vm._v("Kota")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.getclient.details.city_name) +
+                    "\n          "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-panel uk-margin" }, [
+              _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                _vm._v("Alamat")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.getclient.details.client_address) +
+                    "\n          "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-panel uk-margin" }, [
+              _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                _vm._v("Tipe")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
+                _vm.getclient.details.client_type === "pt"
+                  ? _c("span", [_vm._v("Perusahaan")])
+                  : _c("span", [_vm._v("Perorangan")])
+              ])
             ])
           ])
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
       _vm._v(" "),
       _c(
         "div",
@@ -66418,7 +66574,14 @@ var render = function() {
                                   "a",
                                   {
                                     staticClass:
-                                      "uk-button uk-button-default uk-button-small gl-button-default"
+                                      "uk-button uk-button-default uk-button-small gl-button-default",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onViewAppointment(
+                                          client.client_id
+                                        )
+                                      }
+                                    }
                                   },
                                   [_vm._v("Riwayat Konsultasi")]
                                 )
@@ -66443,9 +66606,9 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._m(1)]
+                        [_vm._m(3)]
                       )
-                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(2)]),
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(4)]),
                   _vm._v(" "),
                   _c("li", { staticClass: "uk-disabled" }, [
                     _c("span", [
@@ -66470,9 +66633,9 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._m(3)]
+                        [_vm._m(5)]
                       )
-                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(4)])
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(6)])
                 ])
               ])
         ]
@@ -66482,6 +66645,44 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
+      _c("div", { staticClass: "modal-banner-heading" }, [
+        _vm._v("\n          Profil Klien\n        ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "uk-modal-full",
+        attrs: { id: "modal-view-appointment", "uk-modal": "" }
+      },
+      [
+        _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
+          _c("a", {
+            staticClass: "uk-modal-close uk-modal-close-outside",
+            attrs: { "uk-close": "" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
+            _c("div", { staticClass: "modal-banner-heading" }, [
+              _vm._v("\n          Riwayat Konsultasi\n        ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-modal-body" })
+        ])
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

@@ -9,13 +9,74 @@
       <div class="uk-modal-dialog modal-dialog">
         <a class="uk-modal-close uk-modal-close-outside" uk-close></a>
         <div class="uk-card uk-card-body modal-banner-top">
-          <div class="banner-heading">
-            {{ getclient.details.client_fullname }}
+          <div class="modal-banner-heading">
+            Profil Klien
+          </div>
+        </div>
+        <div class="uk-modal-body">
+          <div class="uk-panel uk-margin">
+            <h4 class="uk-h4 uk-margin-remove-bottom">ID Klien</h4>
+            <p class="uk-text-muted uk-margin-remove-top">
+              {{ getclient.details.client_id }}
+            </p>
+          </div>
+          <div class="uk-panel uk-margin">
+            <h4 class="uk-h4 uk-margin-remove-bottom">Nama Lengkap</h4>
+            <p class="uk-text-muted uk-margin-remove-top">
+              {{ getclient.details.client_fullname }}
+            </p>
+          </div>
+          <div class="uk-panel uk-margin">
+            <h4 class="uk-h4 uk-margin-remove-bottom">No. Telepon</h4>
+            <p class="uk-text-muted uk-margin-remove-top">
+              {{ getclient.details.client_phone_number }}
+            </p>
+          </div>
+          <div class="uk-panel uk-margin">
+            <h4 class="uk-h4 uk-margin-remove-bottom">ID NPWP</h4>
+            <p class="uk-text-muted uk-margin-remove-top">
+              {{ getclient.details.client_npwp }}
+            </p>
+          </div>
+          <div class="uk-panel uk-margin">
+            <h4 class="uk-h4 uk-margin-remove-bottom">Kota</h4>
+            <p class="uk-text-muted uk-margin-remove-top">
+              {{ getclient.details.city_name }}
+            </p>
+          </div>
+          <div class="uk-panel uk-margin">
+            <h4 class="uk-h4 uk-margin-remove-bottom">Alamat</h4>
+            <p class="uk-text-muted uk-margin-remove-top">
+              {{ getclient.details.client_address }}
+            </p>
+          </div>
+          <div class="uk-panel uk-margin">
+            <h4 class="uk-h4 uk-margin-remove-bottom">Tipe</h4>
+            <p class="uk-text-muted uk-margin-remove-top">
+              <span v-if="getclient.details.client_type === 'pt'">Perusahaan</span>
+              <span v-else>Perorangan</span>
+            </p>
           </div>
         </div>
       </div>
     </div>
     <!-- client profile -->
+
+    <!-- history appointment -->
+    <div id="modal-view-appointment" class="uk-modal-full" uk-modal>
+      <div class="uk-modal-dialog modal-dialog">
+        <a class="uk-modal-close uk-modal-close-outside" uk-close></a>
+        <div class="uk-card uk-card-body modal-banner-top">
+          <div class="modal-banner-heading">
+            Riwayat Konsultasi
+          </div>
+        </div>
+        <div class="uk-modal-body">
+
+        </div>
+      </div>
+    </div>
+    <!-- history appointment -->
 
     <div class="uk-padding banner-index_header">
       <div class="uk-container">Daftar Klien</div>
@@ -79,7 +140,7 @@
               </div>
               <div class="uk-card-footer">
                 <a @click="onViewClient( client )" class="uk-button uk-button-default uk-button-small gl-button-default">Lihat Profil</a>
-                <a class="uk-button uk-button-default uk-button-small gl-button-default">Riwayat Konsultasi</a>
+                <a @click="onViewAppointment( client.client_id )" class="uk-button uk-button-default uk-button-small gl-button-default">Riwayat Konsultasi</a>
               </div>
             </div>
           </div>
@@ -174,6 +235,10 @@ export default {
     {
       this.getclient.details = data;
       UIkit.modal('#modal-view-client').show();
+    },
+    onViewAppointment( id )
+    {
+      UIkit.modal('#modal-view-appointment').show();
     }
   },
   mounted() {

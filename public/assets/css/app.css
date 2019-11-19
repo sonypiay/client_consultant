@@ -562,10 +562,10 @@ body {
   border-radius: 6px 6px 0 0;
 }
 
-.modal-dialog .modal-banner-top .banner-heading {
+.modal-dialog .modal-banner-top .modal-banner-heading {
   color: #ffffff;
   font-weight: 200;
-  font-size: 36px;
+  font-size: 48px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
