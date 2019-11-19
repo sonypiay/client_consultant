@@ -1,5 +1,13 @@
 <template>
   <div>
+    <view-request-consultant
+    :detailrequest="getrequest"
+     />
+
+     <view-request-client
+     :detailrequest="getrequest"
+      />
+
     <header class="uk-box-shadow-small headerdefault">
       <div class="uk-container">
         <nav class="uk-navbar navbardefault" uk-navbar>
@@ -33,7 +41,7 @@
                       <div class="dropdown-notification">
                         <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
                           <li v-for="notif in getnotification.results">
-                            <a href="#">
+                            <a @click="onViewRequest( notif.parent_id, 'client' )">
                               {{ notif.notif_message }}
                             </a>
                           </li>
@@ -109,7 +117,7 @@
                       <div class="dropdown-notification">
                         <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification">
                           <li v-for="notif in getnotification.results">
-                            <a href="#">
+                            <a @click="onViewRequest( notif.parent_id, 'consultant' )">
                               {{ notif.notif_message }}
                             </a>
                           </li>
@@ -184,18 +192,29 @@
 </template>
 
 <script>
+import ViewRequestClient from './ViewRequestClient.vue';
+import ViewRequestConsultant from './ViewRequestConsultant.vue';
 
 export default {
   props: [
     'haslogin',
     'getuser'
   ],
+  components: {
+    'view-request-client': ViewRequestClient,
+    'view-request-consultant': ViewRequestConsultant,
+  },
   data() {
     return {
       getnotification: {
         isLoading: false,
         total: 0,
         results: []
+      },
+      getrequest: {
+        request: {},
+        client: {},
+        consultant: {}
       }
     }
   },
@@ -232,6 +251,29 @@ export default {
           icon: 'error',
           dangerMode: true
         });
+      });
+    },
+    onViewRequest( id, type )
+    {
+      axios({
+        method: 'get',
+        url: this.$root.url + '/' + this.haslogin.user + '/request/get_request/' + id
+      }).then( res => {
+        let result =  res.data;
+        this.getrequest.request = result.request;
+        this.getrequest.client = result.client;
+        this.getrequest.consultant = result.consultant;
+
+        if( type === 'client' )
+        {
+          UIkit.modal('#modal-view-request-client').show();
+        }
+        else
+        {
+          UIkit.modal('#modal-view-request-consultant').show();
+        }
+      }).catch( err => {
+        console.log( err.response.statusText );
       });
     }
   },

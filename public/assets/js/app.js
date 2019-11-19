@@ -7109,6 +7109,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewRequestClient_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewRequestClient.vue */ "./resources/js/components/Frontend/include/ViewRequestClient.vue");
+/* harmony import */ var _ViewRequestConsultant_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewRequestConsultant.vue */ "./resources/js/components/Frontend/include/ViewRequestConsultant.vue");
 //
 //
 //
@@ -7294,14 +7296,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
+  components: {
+    'view-request-client': _ViewRequestClient_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'view-request-consultant': _ViewRequestConsultant_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       getnotification: {
         isLoading: false,
         total: 0,
         results: []
+      },
+      getrequest: {
+        request: {},
+        client: {},
+        consultant: {}
       }
     };
   },
@@ -7340,6 +7361,27 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'error',
           dangerMode: true
         });
+      });
+    },
+    onViewRequest: function onViewRequest(id, type) {
+      var _this3 = this;
+
+      axios({
+        method: 'get',
+        url: this.$root.url + '/' + this.haslogin.user + '/request/get_request/' + id
+      }).then(function (res) {
+        var result = res.data;
+        _this3.getrequest.request = result.request;
+        _this3.getrequest.client = result.client;
+        _this3.getrequest.consultant = result.consultant;
+
+        if (type === 'client') {
+          UIkit.modal('#modal-view-request-client').show();
+        } else {
+          UIkit.modal('#modal-view-request-consultant').show();
+        }
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
       });
     }
   },
@@ -7577,6 +7619,366 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     if (this.haslogin.isLogin) this.showNotification();
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['detailrequest']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['detailrequest', 'haslogin']
 });
 
 /***/ }),
@@ -72085,171 +72487,481 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("header", { staticClass: "uk-box-shadow-small headerdefault" }, [
-      _c("div", { staticClass: "uk-container" }, [
-        _c(
-          "nav",
-          {
-            staticClass: "uk-navbar navbardefault",
-            attrs: { "uk-navbar": "" }
-          },
-          [
-            _c("div", { staticClass: "uk-navbar-left" }, [
-              _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "uk-navbar-item uk-logo",
-                      attrs: { href: _vm.$root.url + "/client/dashboard" }
-                    },
-                    [_vm._v("Solusi Pajakku")]
-                  )
-                : _c(
-                    "a",
-                    {
-                      staticClass: "uk-navbar-item uk-logo",
-                      attrs: { href: _vm.$root.url + "/consultant/dashboard" }
-                    },
-                    [_vm._v("Solusi Pajakku")]
-                  )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "uk-navbar-right" }, [
-              _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
-                ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
-                    _c("li", [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _c("span", { attrs: { "uk-icon": "bell" } }),
+  return _c(
+    "div",
+    [
+      _c("view-request-consultant", {
+        attrs: { detailrequest: _vm.getrequest }
+      }),
+      _vm._v(" "),
+      _c("view-request-client", { attrs: { detailrequest: _vm.getrequest } }),
+      _vm._v(" "),
+      _c("header", { staticClass: "uk-box-shadow-small headerdefault" }, [
+        _c("div", { staticClass: "uk-container" }, [
+          _c(
+            "nav",
+            {
+              staticClass: "uk-navbar navbardefault",
+              attrs: { "uk-navbar": "" }
+            },
+            [
+              _c("div", { staticClass: "uk-navbar-left" }, [
+                _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "uk-navbar-item uk-logo",
+                        attrs: { href: _vm.$root.url + "/client/dashboard" }
+                      },
+                      [_vm._v("Solusi Pajakku")]
+                    )
+                  : _c(
+                      "a",
+                      {
+                        staticClass: "uk-navbar-item uk-logo",
+                        attrs: { href: _vm.$root.url + "/consultant/dashboard" }
+                      },
+                      [_vm._v("Solusi Pajakku")]
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-navbar-right" }, [
+                _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
+                  ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                      _c("li", [
+                        _c("a", { attrs: { href: "#" } }, [
+                          _c("span", { attrs: { "uk-icon": "bell" } }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.getnotification.total !== 0,
+                                  expression: "getnotification.total !== 0"
+                                }
+                              ],
+                              staticClass: "count-notification"
+                            },
+                            [_vm._v(_vm._s(_vm.getnotification.total))]
+                          )
+                        ]),
                         _vm._v(" "),
                         _c(
-                          "span",
+                          "div",
                           {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.getnotification.total !== 0,
-                                expression: "getnotification.total !== 0"
-                              }
-                            ],
-                            staticClass: "count-notification"
+                            staticClass:
+                              "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default",
+                            attrs: {
+                              "uk-dropdown": "mode: click; pos: bottom-center"
+                            }
                           },
-                          [_vm._v(_vm._s(_vm.getnotification.total))]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default",
-                          attrs: {
-                            "uk-dropdown": "mode: click; pos: bottom-center"
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "uk-clearfix" }, [
-                            _c("div", { staticClass: "uk-float-right" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "markas-read",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.markAsRead("request")
+                          [
+                            _c("div", { staticClass: "uk-clearfix" }, [
+                              _c("div", { staticClass: "uk-float-right" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "markas-read",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.markAsRead("request")
+                                      }
                                     }
-                                  }
-                                },
-                                [_vm._v("Tandai sudah dibaca")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "markas-read",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.showNotification()
+                                  },
+                                  [_vm._v("Tandai sudah dibaca")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "markas-read",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showNotification()
+                                      }
                                     }
-                                  }
-                                },
-                                [_vm._v("Muat ulang")]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _vm.getnotification.isLoading
-                            ? _c("div", { staticClass: "uk-text-center" }, [
-                                _c("span", { attrs: { "uk-spinner": "" } })
+                                  },
+                                  [_vm._v("Muat ulang")]
+                                )
                               ])
-                            : _c("div", [
-                                _vm.getnotification.total === 0
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "uk-text-center" },
-                                      [
-                                        _c("span", {
-                                          attrs: { "uk-icon": "info" }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("br"),
-                                        _vm._v(
-                                          "\n                    Belum ada notifikasi\n                  "
-                                        )
-                                      ]
-                                    )
-                                  : _c("div", [
-                                      _c(
+                            ]),
+                            _vm._v(" "),
+                            _vm.getnotification.isLoading
+                              ? _c("div", { staticClass: "uk-text-center" }, [
+                                  _c("span", { attrs: { "uk-spinner": "" } })
+                                ])
+                              : _c("div", [
+                                  _vm.getnotification.total === 0
+                                    ? _c(
                                         "div",
-                                        {
-                                          staticClass: "dropdown-notification"
-                                        },
+                                        { staticClass: "uk-text-center" },
                                         [
-                                          _c(
-                                            "ul",
-                                            {
-                                              staticClass:
-                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
-                                            },
-                                            _vm._l(
-                                              _vm.getnotification.results,
-                                              function(notif) {
-                                                return _c("li", [
-                                                  _c(
-                                                    "a",
-                                                    { attrs: { href: "#" } },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                            " +
-                                                          _vm._s(
-                                                            notif.notif_message
-                                                          ) +
-                                                          "\n                          "
-                                                      )
-                                                    ]
-                                                  )
-                                                ])
-                                              }
-                                            ),
-                                            0
+                                          _c("span", {
+                                            attrs: { "uk-icon": "info" }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("br"),
+                                          _vm._v(
+                                            "\n                    Belum ada notifikasi\n                  "
                                           )
                                         ]
                                       )
-                                    ])
+                                    : _c("div", [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "dropdown-notification"
+                                          },
+                                          [
+                                            _c(
+                                              "ul",
+                                              {
+                                                staticClass:
+                                                  "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                              },
+                                              _vm._l(
+                                                _vm.getnotification.results,
+                                                function(notif) {
+                                                  return _c("li", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.onViewRequest(
+                                                              notif.parent_id,
+                                                              "client"
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                            " +
+                                                            _vm._s(
+                                                              notif.notif_message
+                                                            ) +
+                                                            "\n                          "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ])
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "a",
+                          { attrs: { href: _vm.$root.url + "/client/signin" } },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.getuser.client_fullname) +
+                                "\n                "
+                            ),
+                            _c("span", {
+                              staticClass: "uk-margin-small-left",
+                              attrs: {
+                                "uk-icon": "icon: chevron-down; ratio: 0.7"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
+                            attrs: { "uk-dropdown": "mode: click;" }
+                          },
+                          [
+                            _c(
+                              "ul",
+                              {
+                                staticClass:
+                                  "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
+                              },
+                              [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url + "/client/dashboard"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: home; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Dashboard\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url + "/client/myprofile"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: user; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Profil Saya\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url +
+                                          "/client/myappointment"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon":
+                                            "icon: calendar; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Jadwal Konsultasi\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url + "/client/edit_profile"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: cog; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Ubah Profil & Pengaturan\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: _vm.$root.url + "/client/logout"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon":
+                                            "icon: sign-out; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Keluar\n                    "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  : _vm.haslogin.isLogin === true &&
+                    _vm.haslogin.user === "consultant"
+                  ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                      _c("li", [
+                        _c("a", { attrs: { href: "#" } }, [
+                          _c("span", { attrs: { "uk-icon": "bell" } }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.getnotification.total !== 0,
+                                  expression: "getnotification.total !== 0"
+                                }
+                              ],
+                              staticClass: "count-notification"
+                            },
+                            [_vm._v(_vm._s(_vm.getnotification.total))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default",
+                            attrs: {
+                              "uk-dropdown": "mode: click; pos: bottom-center"
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "uk-clearfix" }, [
+                              _c("div", { staticClass: "uk-float-right" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "markas-read",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.markAsRead("request")
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Tandai sudah dibaca")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "markas-read",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showNotification()
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Muat ulang")]
+                                )
                               ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        { attrs: { href: _vm.$root.url + "/client/signin" } },
-                        [
+                            ]),
+                            _vm._v(" "),
+                            _vm.getnotification.isLoading
+                              ? _c("div", { staticClass: "uk-text-center" }, [
+                                  _c("span", { attrs: { "uk-spinner": "" } })
+                                ])
+                              : _c("div", [
+                                  _vm.getnotification.total === 0
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "uk-text-center" },
+                                        [
+                                          _c("span", {
+                                            attrs: { "uk-icon": "info" }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("br"),
+                                          _vm._v(
+                                            "\n                    Belum ada notifikasi\n                  "
+                                          )
+                                        ]
+                                      )
+                                    : _c("div", [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "dropdown-notification"
+                                          },
+                                          [
+                                            _c(
+                                              "ul",
+                                              {
+                                                staticClass:
+                                                  "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
+                                              },
+                                              _vm._l(
+                                                _vm.getnotification.results,
+                                                function(notif) {
+                                                  return _c("li", [
+                                                    _c(
+                                                      "a",
+                                                      {
+                                                        on: {
+                                                          click: function(
+                                                            $event
+                                                          ) {
+                                                            return _vm.onViewRequest(
+                                                              notif.parent_id,
+                                                              "consultant"
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                            " +
+                                                            _vm._s(
+                                                              notif.notif_message
+                                                            ) +
+                                                            "\n                          "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ])
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c("a", [
                           _vm._v(
                             "\n                " +
-                              _vm._s(_vm.getuser.client_fullname) +
+                              _vm._s(_vm.getuser.consultant_fullname) +
                               "\n                "
                           ),
                           _c("span", {
@@ -72258,491 +72970,227 @@ var render = function() {
                               "uk-icon": "icon: chevron-down; ratio: 0.7"
                             }
                           })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
-                          attrs: { "uk-dropdown": "mode: click;" }
-                        },
-                        [
-                          _c(
-                            "ul",
-                            {
-                              staticClass:
-                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
-                            },
-                            [
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: _vm.$root.url + "/client/dashboard"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: home; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Dashboard\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: _vm.$root.url + "/client/myprofile"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: user; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Profil Saya\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url + "/client/myappointment"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: calendar; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Jadwal Konsultasi\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url + "/client/edit_profile"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: cog; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Ubah Profil & Pengaturan\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: _vm.$root.url + "/client/logout"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: sign-out; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Keluar\n                    "
-                                    )
-                                  ]
-                                )
-                              ])
-                            ]
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                : _vm.haslogin.isLogin === true &&
-                  _vm.haslogin.user === "consultant"
-                ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
-                    _c("li", [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _c("span", { attrs: { "uk-icon": "bell" } }),
+                        ]),
                         _vm._v(" "),
                         _c(
-                          "span",
+                          "div",
                           {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.getnotification.total !== 0,
-                                expression: "getnotification.total !== 0"
-                              }
-                            ],
-                            staticClass: "count-notification"
+                            staticClass:
+                              "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
+                            attrs: {
+                              "uk-dropdown": "mode: click; pos: bottom-center"
+                            }
                           },
-                          [_vm._v(_vm._s(_vm.getnotification.total))]
+                          [
+                            _c(
+                              "ul",
+                              {
+                                staticClass:
+                                  "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
+                              },
+                              [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url +
+                                          "/consultant/dashboard"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: home; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Dashboard\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url +
+                                          "/consultant/myprofile"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: user; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Profil Saya\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url +
+                                          "/consultant/myappointment"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: clock; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Jadwal Konsultasi\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url +
+                                          "/consultant/privateevent"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon":
+                                            "icon: calendar; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Acara Pribadi\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url + "/consultant/myclient"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: users; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Daftar Klien\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url +
+                                          "/consultant/edit_profile"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon": "icon: cog; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Ubah Profil & Pengaturan\n                    "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          _vm.$root.url + "/consultant/logout"
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "uk-margin-small-right",
+                                        attrs: {
+                                          "uk-icon":
+                                            "icon: sign-out; ratio: 0.8"
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                      Keluar\n                    "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  : _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                      _c("li", [
+                        _c(
+                          "a",
+                          { attrs: { href: _vm.$root.url + "/client/signin" } },
+                          [_vm._v("Masuk Klien")]
                         )
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default",
-                          attrs: {
-                            "uk-dropdown": "mode: click; pos: bottom-center"
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "uk-clearfix" }, [
-                            _c("div", { staticClass: "uk-float-right" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "markas-read",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.markAsRead("request")
-                                    }
-                                  }
-                                },
-                                [_vm._v("Tandai sudah dibaca")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "markas-read",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.showNotification()
-                                    }
-                                  }
-                                },
-                                [_vm._v("Muat ulang")]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _vm.getnotification.isLoading
-                            ? _c("div", { staticClass: "uk-text-center" }, [
-                                _c("span", { attrs: { "uk-spinner": "" } })
-                              ])
-                            : _c("div", [
-                                _vm.getnotification.total === 0
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "uk-text-center" },
-                                      [
-                                        _c("span", {
-                                          attrs: { "uk-icon": "info" }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("br"),
-                                        _vm._v(
-                                          "\n                    Belum ada notifikasi\n                  "
-                                        )
-                                      ]
-                                    )
-                                  : _c("div", [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "dropdown-notification"
-                                        },
-                                        [
-                                          _c(
-                                            "ul",
-                                            {
-                                              staticClass:
-                                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default nav-dropdown-notification"
-                                            },
-                                            _vm._l(
-                                              _vm.getnotification.results,
-                                              function(notif) {
-                                                return _c("li", [
-                                                  _c(
-                                                    "a",
-                                                    { attrs: { href: "#" } },
-                                                    [
-                                                      _vm._v(
-                                                        "\n                            " +
-                                                          _vm._s(
-                                                            notif.notif_message
-                                                          ) +
-                                                          "\n                          "
-                                                      )
-                                                    ]
-                                                  )
-                                                ])
-                                              }
-                                            ),
-                                            0
-                                          )
-                                        ]
-                                      )
-                                    ])
-                              ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(_vm.getuser.consultant_fullname) +
-                            "\n                "
-                        ),
-                        _c("span", {
-                          staticClass: "uk-margin-small-left",
-                          attrs: { "uk-icon": "icon: chevron-down; ratio: 0.7" }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "uk-navbar-dropdown uk-width-1-5 navbar-dropdown-default",
-                          attrs: {
-                            "uk-dropdown": "mode: click; pos: bottom-center"
-                          }
-                        },
-                        [
-                          _c(
-                            "ul",
-                            {
-                              staticClass:
-                                "uk-nav uk-navbar-dropdown-nav nav-dropdown-default"
-                            },
-                            [
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url + "/consultant/dashboard"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: home; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Dashboard\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url + "/consultant/myprofile"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: user; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Profil Saya\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url +
-                                        "/consultant/myappointment"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: clock; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Jadwal Konsultasi\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url +
-                                        "/consultant/privateevent"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: calendar; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Acara Pribadi\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url + "/consultant/myclient"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: users; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Daftar Klien\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href:
-                                        _vm.$root.url +
-                                        "/consultant/edit_profile"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: cog; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Ubah Profil & Pengaturan\n                    "
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: _vm.$root.url + "/consultant/logout"
-                                    }
-                                  },
-                                  [
-                                    _c("span", {
-                                      staticClass: "uk-margin-small-right",
-                                      attrs: {
-                                        "uk-icon": "icon: sign-out; ratio: 0.8"
-                                      }
-                                    }),
-                                    _vm._v(
-                                      "\n                      Keluar\n                    "
-                                    )
-                                  ]
-                                )
-                              ])
-                            ]
-                          )
-                        ]
-                      )
+                      _c("li", [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: _vm.$root.url + "/consultant/signin"
+                            }
+                          },
+                          [_vm._v("Masuk Konsultan")]
+                        )
+                      ])
                     ])
-                  ])
-                : _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
-                    _c("li", [
-                      _c(
-                        "a",
-                        { attrs: { href: _vm.$root.url + "/client/signin" } },
-                        [_vm._v("Masuk Klien")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: _vm.$root.url + "/consultant/signin" }
-                        },
-                        [_vm._v("Masuk Konsultan")]
-                      )
-                    ])
-                  ])
-            ])
-          ]
-        )
+              ])
+            ]
+          )
+        ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -73340,6 +73788,859 @@ var render = function() {
         )
       ])
     ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { attrs: { id: "modal-view-request-client", "uk-modal": "" } }, [
+      _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
+        _c("a", {
+          staticClass: "uk-modal-close uk-modal-close-outside",
+          attrs: { "uk-close": "" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
+          _c("div", { staticClass: "request-time" }, [
+            _c("span", {
+              staticClass: "uk-margin-small-right",
+              attrs: { "uk-icon": "icon: clock; ratio: 2.5" }
+            }),
+            _vm._v(
+              "\n          " +
+                _vm._s(
+                  _vm.$root.formatDate(
+                    _vm.detailrequest.request.schedule_date,
+                    "HH:mm"
+                  )
+                ) +
+                "\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "request-date" }, [
+            _c("span", {
+              staticClass: "uk-margin-small-right",
+              attrs: { "uk-icon": "icon: calendar; ratio: 2.5" }
+            }),
+            _vm._v(
+              "\n          " +
+                _vm._s(
+                  _vm.$root.formatDate(
+                    _vm.detailrequest.request.schedule_date,
+                    "ddd, DD MMMM YYYY"
+                  )
+                ) +
+                "\n        "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "request-date" }, [
+            _c("span", {
+              staticClass: "uk-margin-small-right",
+              attrs: { "uk-icon": "icon: info; ratio: 2.5" }
+            }),
+            _vm._v(
+              "\n          " +
+                _vm._s(_vm.detailrequest.request.topic_name) +
+                "\n        "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "uk-modal-body" }, [
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-margin",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Tanggal Permintaan")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          _vm.$root.formatDate(
+                            _vm.detailrequest.request.created_at,
+                            "DD MMM YYYY"
+                          )
+                        ) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("ID Konsultasi")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.request.apt_id) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Lokasi")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.request.location) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Catatan")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    { staticClass: "uk-margin-remove-top uk-text-justify" },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.request.notes) +
+                          "\n              "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-margin",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("ID Konsultan")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant.consultant_id) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Nama Konsultan")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          _vm.detailrequest.consultant.consultant_fullname
+                        ) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Alamat Email")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant.consultant_email) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("No. Telepon")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          _vm.detailrequest.consultant.consultant_phone_number
+                        ) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Kota")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.detailrequest.consultant.city_name) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-2" }, [
+                _c("div", { staticClass: "uk-panel uk-margin" }, [
+                  _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                    _vm._v("Alamat")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "uk-margin-remove-top" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          _vm.detailrequest.consultant.consultant_address
+                        ) +
+                        "\n              "
+                    )
+                  ])
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.detailrequest.request.feedback,
+                  expression: "detailrequest.request.feedback"
+                }
+              ],
+              staticClass: "uk-panel uk-margin"
+            },
+            [
+              _c("hr"),
+              _vm._v(" "),
+              _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                _vm._v("Ulasan Saya")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "uk-margin-remove-top" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.detailrequest.request.review_description) +
+                    "\n          "
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.detailrequest.request.feedback,
+                  expression: "detailrequest.request.feedback"
+                }
+              ],
+              staticClass: "uk-panel uk-margin"
+            },
+            [
+              _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                _vm._v("Penilaian anda")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-margin-remove-top" }, [
+                _c(
+                  "div",
+                  { staticClass: "uk-grid-small", attrs: { "uk-grid": "" } },
+                  [
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-smile-beam",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback ===
+                                "excellent"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Hebat")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-smile",
+                            class: {
+                              fas: _vm.detailrequest.request.feedback === "good"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Berpengalaman")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-meh",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback === "neutral"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Netral")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-frown",
+                            class: {
+                              fas: _vm.detailrequest.request.feedback === "poor"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Kurang Berpengalaman")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "uk-width-1-5" }, [
+                      _c("div", { staticClass: "uk-text-center" }, [
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-angry",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback ===
+                                "disappointed"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "gl-review-text" }, [
+                          _vm._v("Tidak dapat dipercaya")
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { attrs: { id: "modal-view-request-consultant", "uk-modal": "" } },
+      [
+        _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
+          _c("a", {
+            staticClass: "uk-modal-close uk-modal-close-outside",
+            attrs: { "uk-close": "" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
+            _c("div", { staticClass: "request-time" }, [
+              _c("span", {
+                staticClass: "uk-margin-small-right",
+                attrs: { "uk-icon": "icon: clock; ratio: 2.5" }
+              }),
+              _vm._v(
+                "\n          " +
+                  _vm._s(
+                    _vm.$root.formatDate(
+                      _vm.detailrequest.request.schedule_date,
+                      "HH:mm"
+                    )
+                  ) +
+                  "\n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "request-date" }, [
+              _c("span", {
+                staticClass: "uk-margin-small-right",
+                attrs: { "uk-icon": "icon: calendar; ratio: 2.5" }
+              }),
+              _vm._v(
+                "\n          " +
+                  _vm._s(
+                    _vm.$root.formatDate(
+                      _vm.detailrequest.request.schedule_date,
+                      "ddd, DD MMMM YYYY"
+                    )
+                  ) +
+                  "\n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "request-date" }, [
+              _c("span", {
+                staticClass: "uk-margin-small-right",
+                attrs: { "uk-icon": "icon: info; ratio: 2.5" }
+              }),
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.detailrequest.request.topic_name) +
+                  "\n        "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-modal-body" }, [
+            _c(
+              "div",
+              {
+                staticClass: "uk-grid-small uk-margin",
+                attrs: { "uk-grid": "" }
+              },
+              [
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("Tanggal Permintaan")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            _vm.$root.formatDate(
+                              _vm.detailrequest.request.created_at,
+                              "DD MMM YYYY"
+                            )
+                          ) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("ID Konsultasi")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.request.apt_id) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("Lokasi")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.request.location) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("Catatan")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "p",
+                      { staticClass: "uk-margin-remove-top uk-text-justify" },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.detailrequest.request.notes) +
+                            "\n              "
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "uk-grid-small uk-margin",
+                attrs: { "uk-grid": "" }
+              },
+              [
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("ID Klien")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.client.client_id) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("Nama Klien")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.client.client_fullname) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("Alamat Email")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.client.client_email) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("No. Telepon")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.client.client_phone_number) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("Kota")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.client.city_name) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-width-1-2" }, [
+                  _c("div", { staticClass: "uk-panel uk-margin" }, [
+                    _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                      _vm._v("Alamat")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "uk-margin-remove-top" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.detailrequest.client.client_address) +
+                          "\n              "
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.detailrequest.request.feedback,
+                    expression: "detailrequest.request.feedback"
+                  }
+                ],
+                staticClass: "uk-panel uk-margin"
+              },
+              [
+                _c("hr"),
+                _vm._v(" "),
+                _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                  _vm._v("Ulasan Klien")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.detailrequest.request.review_description) +
+                      "\n          "
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.detailrequest.request.feedback,
+                    expression: "detailrequest.request.feedback"
+                  }
+                ],
+                staticClass: "uk-panel uk-margin"
+              },
+              [
+                _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
+                  _vm._v("Penilaian Klien")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "uk-margin-remove-top" }, [
+                  _c(
+                    "div",
+                    { staticClass: "uk-grid-small", attrs: { "uk-grid": "" } },
+                    [
+                      _c("div", { staticClass: "uk-width-1-5" }, [
+                        _c("div", { staticClass: "uk-text-center" }, [
+                          _c("span", { staticClass: "gl-icon-review" }, [
+                            _c("i", {
+                              staticClass: "far fa-smile-beam",
+                              class: {
+                                fas:
+                                  _vm.detailrequest.request.feedback ===
+                                  "excellent"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "gl-review-text" }, [
+                            _vm._v("Hebat")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "uk-width-1-5" }, [
+                        _c("div", { staticClass: "uk-text-center" }, [
+                          _c("span", { staticClass: "gl-icon-review" }, [
+                            _c("i", {
+                              staticClass: "far fa-smile",
+                              class: {
+                                fas:
+                                  _vm.detailrequest.request.feedback === "good"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "gl-review-text" }, [
+                            _vm._v("Berpengalaman")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "uk-width-1-5" }, [
+                        _c("div", { staticClass: "uk-text-center" }, [
+                          _c("span", { staticClass: "gl-icon-review" }, [
+                            _c("i", {
+                              staticClass: "far fa-meh",
+                              class: {
+                                fas:
+                                  _vm.detailrequest.request.feedback ===
+                                  "neutral"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "gl-review-text" }, [
+                            _vm._v("Netral")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "uk-width-1-5" }, [
+                        _c("div", { staticClass: "uk-text-center" }, [
+                          _c("span", { staticClass: "gl-icon-review" }, [
+                            _c("i", {
+                              staticClass: "far fa-frown",
+                              class: {
+                                fas:
+                                  _vm.detailrequest.request.feedback === "poor"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "gl-review-text" }, [
+                            _vm._v("Kurang Berpengalaman")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "uk-width-1-5" }, [
+                        _c("div", { staticClass: "uk-text-center" }, [
+                          _c("span", { staticClass: "gl-icon-review" }, [
+                            _c("i", {
+                              staticClass: "far fa-angry",
+                              class: {
+                                fas:
+                                  _vm.detailrequest.request.feedback ===
+                                  "disappointed"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "gl-review-text" }, [
+                            _vm._v("Tidak dapat dipercaya")
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -87525,6 +88826,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarHomepage_vue_vue_type_template_id_1940b2f2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarHomepage_vue_vue_type_template_id_1940b2f2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/include/ViewRequestClient.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Frontend/include/ViewRequestClient.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewRequestClient_vue_vue_type_template_id_7cf07788_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true& */ "./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true&");
+/* harmony import */ var _ViewRequestClient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewRequestClient.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ViewRequestClient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ViewRequestClient_vue_vue_type_template_id_7cf07788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewRequestClient_vue_vue_type_template_id_7cf07788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7cf07788",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Frontend/include/ViewRequestClient.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestClient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewRequestClient.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestClient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestClient_vue_vue_type_template_id_7cf07788_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestClient.vue?vue&type=template&id=7cf07788&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestClient_vue_vue_type_template_id_7cf07788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestClient_vue_vue_type_template_id_7cf07788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/include/ViewRequestConsultant.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Frontend/include/ViewRequestConsultant.vue ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ViewRequestConsultant_vue_vue_type_template_id_c946eb28_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true& */ "./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true&");
+/* harmony import */ var _ViewRequestConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewRequestConsultant.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ViewRequestConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ViewRequestConsultant_vue_vue_type_template_id_c946eb28_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ViewRequestConsultant_vue_vue_type_template_id_c946eb28_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "c946eb28",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Frontend/include/ViewRequestConsultant.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewRequestConsultant.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestConsultant_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true&":
+/*!***********************************************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true& ***!
+  \***********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestConsultant_vue_vue_type_template_id_c946eb28_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/include/ViewRequestConsultant.vue?vue&type=template&id=c946eb28&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestConsultant_vue_vue_type_template_id_c946eb28_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewRequestConsultant_vue_vue_type_template_id_c946eb28_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
