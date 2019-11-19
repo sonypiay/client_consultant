@@ -158,7 +158,7 @@ class PagesController extends Controller
 
     $consultant = new ConsultantUser;
     $data['request'] = $request;
-    $data['hasLogin']['user'] = 'client';
+    $data['hasLogin']['user'] = 'consultant';
     $data['hasLogin']['isLogin'] = true;
     $data['getuser'] = $consultant->getProfile();
     return response()->view('frontend.pages.consultant.profile', $data);
