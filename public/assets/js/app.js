@@ -4246,6 +4246,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getcity'],
   data: function data() {
@@ -4295,7 +4359,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.showClient();
+  }
 });
 
 /***/ }),
@@ -65976,146 +66042,335 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "uk-grid-small uk-margin-top uk-child-width-auto",
-          attrs: { "uk-grid": "" }
-        },
+        { staticClass: "uk-container uk-margin-top uk-margin-large-bottom" },
         [
-          _c("div", [
-            _c(
-              "select",
-              {
-                directives: [
+          _c(
+            "div",
+            {
+              staticClass: "uk-grid-small uk-margin-bottom uk-child-width-auto",
+              attrs: { "uk-grid": "" }
+            },
+            [
+              _c("div", [
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.forms.limit,
-                    expression: "forms.limit"
-                  }
-                ],
-                staticClass: "uk-select gl-input-default",
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.forms,
-                        "limit",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    },
-                    function($event) {
-                      return _vm.showClient()
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.forms.limit,
+                        expression: "forms.limit"
+                      }
+                    ],
+                    staticClass: "uk-select gl-input-default",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.forms,
+                            "limit",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        function($event) {
+                          return _vm.showClient()
+                        }
+                      ]
                     }
+                  },
+                  [
+                    _c("option", { attrs: { value: "6" } }, [
+                      _vm._v("6 baris")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("12 baris")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "24" } }, [
+                      _vm._v("24 baris")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "36" } }, [
+                      _vm._v("36 baris")
+                    ])
                   ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "6" } }, [_vm._v("6 baris")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "12" } }, [_vm._v("12 baris")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "24" } }, [_vm._v("24 baris")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "36" } }, [_vm._v("36 baris")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c(
-              "select",
-              {
-                directives: [
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.forms.city,
-                    expression: "forms.city"
-                  }
-                ],
-                staticClass: "uk-select gl-input-default",
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.forms,
-                        "city",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    },
-                    function($event) {
-                      return _vm.showClient()
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.forms.city,
+                        expression: "forms.city"
+                      }
+                    ],
+                    staticClass: "uk-select gl-input-default",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.forms,
+                            "city",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        function($event) {
+                          return _vm.showClient()
+                        }
+                      ]
                     }
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "all" } }, [
-                  _vm._v("Semua kota")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.getcity, function(city) {
-                  return _c("option", { domProps: { value: city.city_id } }, [
-                    _vm._v(_vm._s(city.city_name))
-                  ])
+                  },
+                  [
+                    _c("option", { attrs: { value: "all" } }, [
+                      _vm._v("Semua kota")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.getcity, function(city) {
+                      return _c(
+                        "option",
+                        { domProps: { value: city.city_id } },
+                        [_vm._v(_vm._s(city.city_name))]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.keywords,
+                      expression: "forms.keywords"
+                    }
+                  ],
+                  staticClass: "uk-input gl-input-default",
+                  attrs: {
+                    type: "text",
+                    placeholder: "Cari ID atau nama klien"
+                  },
+                  domProps: { value: _vm.forms.keywords },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.showClient()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "keywords", $event.target.value)
+                    }
+                  }
                 })
-              ],
-              2
-            )
-          ]),
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.forms.keywords,
-                  expression: "forms.keywords"
-                }
-              ],
-              staticClass: "uk-input gl-input-default",
-              attrs: { type: "text", placeholder: "Cari ID atau nama klien" },
-              domProps: { value: _vm.forms.keywords },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.showClient()
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.forms, "keywords", $event.target.value)
-                }
-              }
-            })
-          ])
+          _vm.getclient.isLoading
+            ? _c("div", { staticClass: "uk-text-center" }, [
+                _c("span", { attrs: { "uk-spinner": "" } })
+              ])
+            : _c("div", [
+                _vm.getclient.total === 0
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "uk-alert-warning",
+                        attrs: { "uk-alert": "" }
+                      },
+                      [_vm._v("\n        Tidak ada klien\n      ")]
+                    )
+                  : _c(
+                      "div",
+                      {
+                        staticClass: "uk-grid-match uk-grid-small",
+                        attrs: { "uk-grid": "" }
+                      },
+                      _vm._l(_vm.getclient.results, function(client) {
+                        return _c("div", { staticClass: "uk-width-1-3" }, [
+                          _c(
+                            "div",
+                            { staticClass: "uk-card uk-card-default" },
+                            [
+                              _c("div", { staticClass: "uk-card-body" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "uk-panel uk-margin" },
+                                  [
+                                    _c(
+                                      "h4",
+                                      {
+                                        staticClass:
+                                          "uk-h4 uk-margin-remove-bottom"
+                                      },
+                                      [_vm._v("Nama Lengkap")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass:
+                                          "uk-text-muted uk-margin-remove-top"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(client.client_fullname) +
+                                            "\n                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "uk-panel uk-margin" },
+                                  [
+                                    _c(
+                                      "h4",
+                                      {
+                                        staticClass:
+                                          "uk-h4 uk-margin-remove-bottom"
+                                      },
+                                      [_vm._v("No. Telepon")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass:
+                                          "uk-text-muted uk-margin-remove-top"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(client.client_phone_number) +
+                                            "\n                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "uk-panel uk-margin" },
+                                  [
+                                    _c(
+                                      "h4",
+                                      {
+                                        staticClass:
+                                          "uk-h4 uk-margin-remove-bottom"
+                                      },
+                                      [_vm._v("ID NPWP")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass:
+                                          "uk-text-muted uk-margin-remove-top"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                  " +
+                                            _vm._s(client.client_npwp) +
+                                            "\n                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      }),
+                      0
+                    ),
+                _vm._v(" "),
+                _c("ul", { staticClass: "uk-pagination uk-flex-center" }, [
+                  _vm.getclient.paginate.prev_page_url
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.showClient(
+                                _vm.getclient.paginate.prev_page_url
+                              )
+                            }
+                          }
+                        },
+                        [_vm._m(1)]
+                      )
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(2)]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "uk-disabled" }, [
+                    _c("span", [
+                      _vm._v(
+                        "Page " +
+                          _vm._s(_vm.getclient.paginate.current_page) +
+                          " of " +
+                          _vm._s(_vm.getclient.paginate.last_page)
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.getclient.paginate.next_page_url
+                    ? _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.showClient(
+                                _vm.getclient.paginate.next_page_url
+                              )
+                            }
+                          }
+                        },
+                        [_vm._m(3)]
+                      )
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(4)])
+                ])
+              ])
         ]
       )
     ],
@@ -66130,6 +66385,30 @@ var staticRenderFns = [
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
       _c("div", { staticClass: "uk-container" }, [_vm._v("Daftar Klien")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
   }
 ]
 render._withStripped = true
