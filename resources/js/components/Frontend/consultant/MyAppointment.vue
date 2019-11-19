@@ -307,6 +307,7 @@
 
 <script>
 import VCalendar from 'v-calendar';
+import 'v-calendar/lib/v-calendar.min.css';
 import ViewRequest from './ViewRequest.vue';
 
 document.addEventListener("DOMContentLoaded", function() {

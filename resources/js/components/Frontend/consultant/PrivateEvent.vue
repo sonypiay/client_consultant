@@ -255,6 +255,8 @@
 
 <script>
 import VCalendar from 'v-calendar';
+import 'v-calendar/lib/v-calendar.min.css';
+
 import ViewPrivateEvent from './ViewPrivateEvent.vue';
 
 document.addEventListener("DOMContentLoaded", function() {
