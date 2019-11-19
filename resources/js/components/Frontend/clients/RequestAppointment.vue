@@ -2,17 +2,8 @@
   <div>
     <view-request-detail :detailrequest="getrequest.details" />
 
-    <div class="navbar-event">
-      <div class="uk-container">
-        <nav class="uk-navbar">
-          <ul class="uk-navbar-nav nav-event">
-            <li><a :class="{'active': status_request === 'waiting'}" @click="status_request = 'waiting'; showUpcomingRequest()">Jadwal Konsultasi</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-
-    <div class="uk-container uk-margin-large-top uk-margin-large-bottom container-request-list">
+    <div class="uk-container uk-margin-large-bottom container-request-list">
+      <h3>Jadwal yang akan datang</h3>
       <div v-if="getrequest.isLoading" class="uk-text-center">
         <span uk-spinner></span>
       </div>
@@ -25,9 +16,8 @@
             <div class="uk-margin-remove">
               <span class="far fa-frown"></span>
             </div>
-            Tidak ada jadwal konsultasi.
+            Tidak ada jadwal yang akan datang.
           </div>
-
         </div>
         <div v-else class="uk-grid-medium" uk-grid>
           <div v-for="req in getrequest.results" class="uk-width-1-3">
@@ -46,12 +36,6 @@
                           Lihat
                         </a>
                       </li>
-                      <li v-show="req.created_by === 'client'">
-                        <a @click="deleteRequest( req.apt_id )">
-                          <span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 0.8"></span>
-                          Hapus
-                        </a>
-                      </li>
                     </ul>
                   </div>
                 </div>
@@ -64,10 +48,6 @@
                 <div class="request-pic">
                   {{ req.consultant_fullname }}
                 </div>
-              </div>
-              <div v-show="req.request_to === 'client' && req.status_request === 'waiting'" class="uk-margin-small">
-                <a @click="onUpdateStatus( req.apt_id, 'accept')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success">Accept</a>
-                <a @click="onUpdateStatus( req.apt_id, 'decline')" class="uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger">Decline</a>
               </div>
             </div>
           </div>
@@ -112,7 +92,7 @@ export default {
     showUpcomingRequest( p )
     {
       this.getrequest.isLoading = true;
-      let url = this.$root.url + '/client/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
+      let url = this.$root.url + '/client/request/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({
@@ -134,80 +114,11 @@ export default {
         this.messages.errorMessage = err.response.statusText;
       });
     },
-    onUpdateStatus( id, approval )
-    {
-      let confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
-      swal({
-        title: 'Confirmation',
-        text: confirmation,
-        icon: 'warning',
-        buttons: {
-          confirm: { value: true, text: 'Ya' },
-          cancel: 'Batal'
-        }
-      }).then( val => {
-        if( val )
-        {
-          axios({
-            method: 'put',
-            url: this.$root.url + '/client/status_appointment/' + approval + '/' + id
-          }).then( res => {
-            let message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id +' diterima' : 'Permintaan jadwal konsultasi ' + id +' ditolak';
-            swal({
-              text: message,
-              icon: 'success'
-            });
-            setTimeout(() => { this.showUpcomingRequest(); }, 1000);
-          }).catch( err => {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
-      });
-    },
-    deleteRequest( id )
-    {
-      swal({
-        title: 'Konfirmasi',
-        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
-        icon: 'warning',
-        buttons: {
-          confirm: { value: true, text: 'Ya' },
-          cancel: 'Batal'
-        }
-      }).then( val => {
-        if( val )
-        {
-          axios({
-            method: 'delete',
-            url: this.$root.url + '/client/delete_request/' + id
-          }).then( res => {
-            swal({
-              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
-              icon: 'success',
-              timer: 2000
-            });
-            setTimeout(() => {
-              this.showUpcomingRequest();
-            }, 1000);
-          }).catch( err => {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
-      })
-    },
     onViewDetail( id )
     {
       axios({
         method: 'get',
-        url: this.$root.url + '/consultant/request/get_request/' + id
+        url: this.$root.url + '/client/request/get_request/' + id
       }).then( res => {
         let result =  res.data;
         this.getrequest.details.request = result.request;

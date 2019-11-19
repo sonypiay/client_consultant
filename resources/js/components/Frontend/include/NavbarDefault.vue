@@ -4,7 +4,8 @@
       <div class="uk-container">
         <nav class="uk-navbar navbardefault" uk-navbar>
           <div class="uk-navbar-left">
-            <a :href="$root.url + '/consultant/dashboard'" class="uk-navbar-item uk-logo">Solusi Pajakku</a>
+            <a v-if="haslogin.isLogin === true && haslogin.user === 'client'" :href="$root.url + '/client/dashboard'" class="uk-navbar-item uk-logo">Solusi Pajakku</a>
+            <a v-else :href="$root.url + '/consultant/dashboard'" class="uk-navbar-item uk-logo">Solusi Pajakku</a>
           </div>
           <div class="uk-navbar-right">
             <ul v-if="haslogin.isLogin === true && haslogin.user === 'client'" class="uk-navbar-nav navdefault">

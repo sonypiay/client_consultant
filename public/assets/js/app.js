@@ -2494,11 +2494,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   components: {
     'request-appointment': _RequestAppointment_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      total_summary: {
+        consultant: 0,
+        appointment: 0
+      }
+    };
+  },
+  methods: {
+    showDashboardSummary: function showDashboardSummary() {}
+  },
+  computed: {},
+  mounted: function mounted() {
+    this.showDashboardSummary();
   }
 });
 
@@ -3234,7 +3252,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       this.getrequest.isLoading = true;
       var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
-      var url = this.$root.url + '/client/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
+      var url = this.$root.url + '/client/request/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
       if (p !== undefined) url = p + '&' + param;
       axios({
         method: 'get',
@@ -3297,7 +3315,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (val) {
           axios({
             method: 'put',
-            url: _this2.$root.url + '/client/status_appointment/' + status + '/' + id
+            url: _this2.$root.url + '/client/request/status_appointment/' + status + '/' + id
           }).then(function (res) {
             swal({
               text: message,
@@ -3401,7 +3419,7 @@ document.addEventListener("DOMContentLoaded", function () {
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/client/add_request',
+        url: this.$root.url + '/client/request/add_request',
         params: {
           schedule_date: schedule_date,
           location: location,
@@ -3468,7 +3486,7 @@ document.addEventListener("DOMContentLoaded", function () {
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_request/' + request.id,
+        url: this.$root.url + '/client/request/save_request/' + request.id,
         params: {
           schedule_date: schedule_date,
           location: location,
@@ -3563,7 +3581,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (val) {
           axios({
             method: 'delete',
-            url: _this6.$root.url + '/client/delete_request/' + id
+            url: _this6.$root.url + '/client/request/delete_request/' + id
           }).then(function (res) {
             swal({
               text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
@@ -3588,7 +3606,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       axios({
         method: 'get',
-        url: this.$root.url + '/client/get_request/' + id
+        url: this.$root.url + '/client/request/get_request/' + id
       }).then(function (res) {
         var result = res.data;
         _this7.getrequest.details.request = result.request;
@@ -4410,26 +4428,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
@@ -4465,7 +4463,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.getrequest.isLoading = true;
-      var url = this.$root.url + '/client/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
+      var url = this.$root.url + '/client/request/request_list/' + this.status_request + '?page=' + this.getrequest.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -4486,94 +4484,17 @@ __webpack_require__.r(__webpack_exports__);
         _this.messages.errorMessage = err.response.statusText;
       });
     },
-    onUpdateStatus: function onUpdateStatus(id, approval) {
-      var _this2 = this;
-
-      var confirmation = approval === 'accept' ? 'Apakah anda ingin menerima permintaan ini?' : 'Apakah anda ingin menolak permintaan ini?';
-      swal({
-        title: 'Confirmation',
-        text: confirmation,
-        icon: 'warning',
-        buttons: {
-          confirm: {
-            value: true,
-            text: 'Ya'
-          },
-          cancel: 'Batal'
-        }
-      }).then(function (val) {
-        if (val) {
-          axios({
-            method: 'put',
-            url: _this2.$root.url + '/client/status_appointment/' + approval + '/' + id
-          }).then(function (res) {
-            var message = approval === 'accept' ? 'Permintaan jadwal konsultasi ' + id + ' diterima' : 'Permintaan jadwal konsultasi ' + id + ' ditolak';
-            swal({
-              text: message,
-              icon: 'success'
-            });
-            setTimeout(function () {
-              _this2.showUpcomingRequest();
-            }, 1000);
-          })["catch"](function (err) {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
-      });
-    },
-    deleteRequest: function deleteRequest(id) {
-      var _this3 = this;
-
-      swal({
-        title: 'Konfirmasi',
-        text: 'Apakah anda yakin ingin menghapus permintaan ini?',
-        icon: 'warning',
-        buttons: {
-          confirm: {
-            value: true,
-            text: 'Ya'
-          },
-          cancel: 'Batal'
-        }
-      }).then(function (val) {
-        if (val) {
-          axios({
-            method: 'delete',
-            url: _this3.$root.url + '/client/delete_request/' + id
-          }).then(function (res) {
-            swal({
-              text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
-              icon: 'success',
-              timer: 2000
-            });
-            setTimeout(function () {
-              _this3.showUpcomingRequest();
-            }, 1000);
-          })["catch"](function (err) {
-            swal({
-              text: err.response.statusText,
-              icon: 'error',
-              dangerMode: true
-            });
-          });
-        }
-      });
-    },
     onViewDetail: function onViewDetail(id) {
-      var _this4 = this;
+      var _this2 = this;
 
       axios({
         method: 'get',
-        url: this.$root.url + '/consultant/request/get_request/' + id
+        url: this.$root.url + '/client/request/get_request/' + id
       }).then(function (res) {
         var result = res.data;
-        _this4.getrequest.details.request = result.request;
-        _this4.getrequest.details.client = result.client;
-        _this4.getrequest.details.consultant = result.consultant;
+        _this2.getrequest.details.request = result.request;
+        _this2.getrequest.details.client = result.client;
+        _this2.getrequest.details.consultant = result.consultant;
         UIkit.modal('#modal-view-request').show();
       })["catch"](function (err) {
         console.log(err.response.statusText);
@@ -7559,6 +7480,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -63236,6 +63158,8 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
       _c("request-appointment")
     ],
     1
@@ -63249,6 +63173,16 @@ var staticRenderFns = [
     return _c("div", { staticClass: "uk-padding banner-index_header" }, [
       _c("div", { staticClass: "uk-container" }, [_vm._v("Dashboard")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "uk-container uk-margin-large-top uk-margin-bottom" },
+      [_c("h3", [_vm._v("Overview")])]
+    )
   }
 ]
 render._withStripped = true
@@ -66909,37 +66843,15 @@ var render = function() {
         attrs: { detailrequest: _vm.getrequest.details }
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "navbar-event" }, [
-        _c("div", { staticClass: "uk-container" }, [
-          _c("nav", { staticClass: "uk-navbar" }, [
-            _c("ul", { staticClass: "uk-navbar-nav nav-event" }, [
-              _c("li", [
-                _c(
-                  "a",
-                  {
-                    class: { active: _vm.status_request === "waiting" },
-                    on: {
-                      click: function($event) {
-                        _vm.status_request = "waiting"
-                        _vm.showUpcomingRequest()
-                      }
-                    }
-                  },
-                  [_vm._v("Jadwal Konsultasi")]
-                )
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
       _c(
         "div",
         {
           staticClass:
-            "uk-container uk-margin-large-top uk-margin-large-bottom container-request-list"
+            "uk-container uk-margin-large-bottom container-request-list"
         },
         [
+          _c("h3", [_vm._v("Jadwal yang akan datang")]),
+          _vm._v(" "),
           _vm.getrequest.isLoading
             ? _c("div", { staticClass: "uk-text-center" }, [
                 _c("span", { attrs: { "uk-spinner": "" } })
@@ -67040,50 +66952,7 @@ var render = function() {
                                                 )
                                               ]
                                             )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "li",
-                                            {
-                                              directives: [
-                                                {
-                                                  name: "show",
-                                                  rawName: "v-show",
-                                                  value:
-                                                    req.created_by === "client",
-                                                  expression:
-                                                    "req.created_by === 'client'"
-                                                }
-                                              ]
-                                            },
-                                            [
-                                              _c(
-                                                "a",
-                                                {
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.deleteRequest(
-                                                        req.apt_id
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c("span", {
-                                                    staticClass:
-                                                      "uk-margin-small-right",
-                                                    attrs: {
-                                                      "uk-icon":
-                                                        "icon: trash; ratio: 0.8"
-                                                    }
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                        Hapus\n                      "
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
+                                          ])
                                         ]
                                       )
                                     ]
@@ -67123,60 +66992,7 @@ var render = function() {
                                       "\n              "
                                   )
                                 ])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value:
-                                        req.request_to === "client" &&
-                                        req.status_request === "waiting",
-                                      expression:
-                                        "req.request_to === 'client' && req.status_request === 'waiting'"
-                                    }
-                                  ],
-                                  staticClass: "uk-margin-small"
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-success",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onUpdateStatus(
-                                            req.apt_id,
-                                            "accept"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Accept")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "uk-button uk-button-primary uk-button-small gl-button-primary gl-button-danger",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.onUpdateStatus(
-                                            req.apt_id,
-                                            "decline"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Decline")]
-                                  )
-                                ]
-                              )
+                              ])
                             ]
                           )
                         ])
@@ -67199,7 +67015,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "uk-margin-remove" }, [
         _c("span", { staticClass: "far fa-frown" })
       ]),
-      _vm._v("\n          Tidak ada jadwal konsultasi.\n        ")
+      _vm._v("\n          Tidak ada jadwal yang akan datang.\n        ")
     ])
   }
 ]
@@ -73067,14 +72883,23 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "uk-navbar-left" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "uk-navbar-item uk-logo",
-                  attrs: { href: _vm.$root.url + "/consultant/dashboard" }
-                },
-                [_vm._v("Solusi Pajakku")]
-              )
+              _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "uk-navbar-item uk-logo",
+                      attrs: { href: _vm.$root.url + "/client/dashboard" }
+                    },
+                    [_vm._v("Solusi Pajakku")]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass: "uk-navbar-item uk-logo",
+                      attrs: { href: _vm.$root.url + "/consultant/dashboard" }
+                    },
+                    [_vm._v("Solusi Pajakku")]
+                  )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "uk-navbar-right" }, [

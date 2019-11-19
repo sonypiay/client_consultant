@@ -7,6 +7,9 @@
     <div class="uk-padding banner-index_header">
       <div class="uk-container">Dashboard</div>
     </div>
+    <div class="uk-container uk-margin-large-top uk-margin-bottom">
+      <h3>Overview</h3>
+    </div>
     <request-appointment />
   </div>
 </template>
@@ -22,6 +25,26 @@ export default {
   ],
   components: {
     'request-appointment': RequestAppointment
+  },
+  data() {
+    return {
+      total_summary: {
+        consultant: 0,
+        appointment: 0
+      }
+    }
+  },
+  methods: {
+    showDashboardSummary()
+    {
+
+    }
+  },
+  computed: {
+
+  },
+  mounted() {
+    this.showDashboardSummary();
   }
 }
 </script>

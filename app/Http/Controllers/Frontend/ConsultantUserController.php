@@ -32,6 +32,7 @@ class ConsultantUserController extends Controller
     ];
     return response()->json( $result, 200 );
   }
+  
   public function register( Request $request, ConsultantUser $consultantUser )
   {
     $res = $consultantUser->signup( $request );

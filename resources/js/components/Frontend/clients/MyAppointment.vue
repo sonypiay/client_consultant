@@ -440,7 +440,7 @@ export default {
     {
       this.getrequest.isLoading = true;
       let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
-      let url = this.$root.url + '/client/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
+      let url = this.$root.url + '/client/request/request_list/' + this.forms.status_request + '?page=' + this.getrequest.paginate.current_page + '&' + param;
       if( p !== undefined ) url = p + '&' + param;
 
       axios({
@@ -498,7 +498,7 @@ export default {
         {
           axios({
             method: 'put',
-            url: this.$root.url + '/client/status_appointment/' + status + '/' + id
+            url: this.$root.url + '/client/request/status_appointment/' + status + '/' + id
           }).then( res => {
             swal({
               text: message,
@@ -607,7 +607,7 @@ export default {
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'post',
-        url: this.$root.url + '/client/add_request',
+        url: this.$root.url + '/client/request/add_request',
         params: {
           schedule_date: schedule_date,
           location: location,
@@ -676,7 +676,7 @@ export default {
       request.submit = '<span uk-spinner></span>';
       axios({
         method: 'put',
-        url: this.$root.url + '/client/save_request/' + request.id,
+        url: this.$root.url + '/client/request/save_request/' + request.id,
         params: {
           schedule_date: schedule_date,
           location: location,
@@ -770,7 +770,7 @@ export default {
         {
           axios({
             method: 'delete',
-            url: this.$root.url + '/client/delete_request/' + id
+            url: this.$root.url + '/client/request/delete_request/' + id
           }).then( res => {
             swal({
               text: 'Permintaan konsultasi ' + id + 'berhasil dihapus',
@@ -794,7 +794,7 @@ export default {
     {
       axios({
         method: 'get',
-        url: this.$root.url + '/client/get_request/' + id
+        url: this.$root.url + '/client/request/get_request/' + id
       }).then( res => {
         let result =  res.data;
         this.getrequest.details.request = result.request;

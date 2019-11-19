@@ -20,22 +20,27 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/signin', 'Frontend\PagesController@client_login_page')->name('client_login_page');
   Route::get('/signup', 'Frontend\PagesController@client_register_page')->name('client_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
-  Route::get('/myrequest', 'Frontend\PagesController@client_request_page')->name('client_request_page');
+  //Route::get('/myrequest', 'Frontend\PagesController@client_request_page')->name('client_request_page');
   Route::get('/myappointment', 'Frontend\PagesController@client_appointment_page')->name('client_appointment_page');
+
+  Route::group(['prefix' => 'request'], function() {
+    Route::get('/upcoming', 'Frontend\ClientUserController@upcoming_request');
+    Route::get('/request_list/{status?}', 'Frontend\ClientUserController@request_list');
+    Route::get('/get_request/{id}', 'Frontend\ClientUserController@get_request');
+    Route::post('/add_request', 'Frontend\ClientUserController@add_request');
+    Route::put('/save_request/{id}', 'Frontend\ClientUserController@save_request');
+    Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
+    Route::delete('/delete_request/{id}', 'Frontend\ClientUserController@delete_request');
+  });
+
   Route::get('/logout', 'Frontend\ClientUserController@logout');
-  Route::get('/request_list/{status?}', 'Frontend\ClientUserController@request_list');
-  Route::get('/get_request/{id}', 'Frontend\ClientUserController@get_request');
   Route::get('/notification', 'Frontend\ClientUserController@get_notification');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');
-  Route::post('/add_request', 'Frontend\ClientUserController@add_request');
   Route::post('/add_feedback/{id}', 'Frontend\ClientUserController@add_feedback');
-  Route::put('/save_request/{id}', 'Frontend\ClientUserController@save_request');
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
-  Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ClientUserController@mark_as_read');
-  Route::delete('/delete_request/{id}', 'Frontend\ClientUserController@delete_request');
 });
 
 Route::group(['prefix' => 'consultant'], function() {
