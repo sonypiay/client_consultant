@@ -80,7 +80,7 @@
               <div v-if="getappointment.total === 0" class="uk-alert-warning" uk-alert>
                 Tidak ada riwayat konsultasi
               </div>
-              <div v-else class="uk-grid-small uk-grid-divider uk-grid-match" uk-grid>
+              <div v-else class="uk-grid-small uk-grid-divider" uk-grid>
                 <div v-for="apt in getappointment.results" class="uk-width-1-2">
                   <article class="uk-article">
                     <h4 class="uk-h4">

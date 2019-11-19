@@ -66441,8 +66441,7 @@ var render = function() {
                           : _c(
                               "div",
                               {
-                                staticClass:
-                                  "uk-grid-small uk-grid-divider uk-grid-match",
+                                staticClass: "uk-grid-small uk-grid-divider",
                                 attrs: { "uk-grid": "" }
                               },
                               _vm._l(_vm.getappointment.results, function(apt) {
