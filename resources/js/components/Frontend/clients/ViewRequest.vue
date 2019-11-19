@@ -116,41 +116,41 @@
               <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a uk-tooltip="Excellent" class="gl-icon-review">
+                    <span class="gl-icon-review">
                       <i :class="{'fas': detailrequest.request.feedback === 'excellent'}" class="far fa-smile-beam"></i>
-                    </a>
+                    </span>
                     <div class="gl-review-text">Hebat</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a uk-tooltip="Good" class="gl-icon-review">
+                    <span class="gl-icon-review">
                       <i :class="{'fas': detailrequest.request.feedback === 'good'}" class="far fa-smile"></i>
-                    </a>
+                    </span>
                     <div class="gl-review-text">Berpengalaman</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a uk-tooltip="Neutral" class="gl-icon-review">
+                    <span class="gl-icon-review">
                       <i :class="{'fas': detailrequest.request.feedback === 'neutral'}" class="far fa-meh"></i>
-                    </a>
+                    </span>
                     <div class="gl-review-text">Netral</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a uk-tooltip="Poor" class="gl-icon-review">
+                    <span class="gl-icon-review">
                       <i :class="{'fas': detailrequest.request.feedback === 'poor'}" class="far fa-frown"></i>
-                    </a>
+                    </span>
                     <div class="gl-review-text">Kurang Berpengalaman</div>
                   </div>
                 </div>
                 <div class="uk-width-1-5">
                   <div class="uk-text-center">
-                    <a uk-tooltip="Disappointed" class="gl-icon-review">
+                    <span class="gl-icon-review">
                       <i :class="{'fas': detailrequest.request.feedback === 'disappointed'}" class="far fa-angry"></i>
-                    </a>
+                    </span>
                     <div class="gl-review-text">Tidak dapat dipercaya</div>
                   </div>
                 </div>

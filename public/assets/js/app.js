@@ -4527,6 +4527,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getcity'],
   data: function data() {
@@ -65814,23 +65822,16 @@ var render = function() {
                   [
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Excellent" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-smile-beam",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback ===
-                                  "excellent"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-smile-beam",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback ===
+                                "excellent"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Hebat")
@@ -65840,22 +65841,14 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Good" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-smile",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback === "good"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-smile",
+                            class: {
+                              fas: _vm.detailrequest.request.feedback === "good"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Berpengalaman")
@@ -65865,23 +65858,15 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Neutral" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-meh",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback ===
-                                  "neutral"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-meh",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback === "neutral"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Netral")
@@ -65891,22 +65876,14 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Poor" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-frown",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback === "poor"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-frown",
+                            class: {
+                              fas: _vm.detailrequest.request.feedback === "poor"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Kurang Berpengalaman")
@@ -65916,23 +65893,16 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Disappointed" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-angry",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback ===
-                                  "disappointed"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-angry",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback ===
+                                "disappointed"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Tidak dapat dipercaya")
@@ -66471,34 +66441,31 @@ var render = function() {
                           : _c(
                               "div",
                               {
-                                staticClass: "uk-grid-small uk-grid-divider",
+                                staticClass:
+                                  "uk-grid-small uk-grid-divider uk-grid-match",
                                 attrs: { "uk-grid": "" }
                               },
                               _vm._l(_vm.getappointment.results, function(apt) {
                                 return _c(
                                   "div",
-                                  { staticClass: "uk-width-1-1" },
+                                  { staticClass: "uk-width-1-2" },
                                   [
                                     _c(
                                       "article",
                                       { staticClass: "uk-article" },
                                       [
-                                        _c(
-                                          "h4",
-                                          { staticClass: "uk-article-title" },
-                                          [
-                                            _vm._v(
-                                              "\n                    " +
-                                                _vm._s(
-                                                  _vm.$root.formatDate(
-                                                    apt.schedule_date,
-                                                    "dddd, DD MMMM YYYY HH:mm"
-                                                  )
-                                                ) +
-                                                "\n                  "
-                                            )
-                                          ]
-                                        ),
+                                        _c("h4", { staticClass: "uk-h4" }, [
+                                          _vm._v(
+                                            "\n                    " +
+                                              _vm._s(
+                                                _vm.$root.formatDate(
+                                                  apt.schedule_date,
+                                                  "dddd, DD MMMM YYYY HH:mm"
+                                                )
+                                              ) +
+                                              "\n                  "
+                                          )
+                                        ]),
                                         _vm._v(" "),
                                         _c(
                                           "div",
@@ -66510,7 +66477,7 @@ var render = function() {
                                           [
                                             _c(
                                               "div",
-                                              { staticClass: "uk-width-1-3" },
+                                              { staticClass: "uk-width-1-2" },
                                               [
                                                 _c(
                                                   "div",
@@ -66549,7 +66516,7 @@ var render = function() {
                                             _vm._v(" "),
                                             _c(
                                               "div",
-                                              { staticClass: "uk-width-1-3" },
+                                              { staticClass: "uk-width-1-2" },
                                               [
                                                 _c(
                                                   "div",
@@ -66597,7 +66564,52 @@ var render = function() {
                                             _vm._v(" "),
                                             _c(
                                               "div",
-                                              { staticClass: "uk-width-1-3" },
+                                              { staticClass: "uk-width-1-2" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "uk-panel uk-margin"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "h6",
+                                                      {
+                                                        staticClass:
+                                                          "uk-h6 uk-margin-remove-bottom"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "Perihal / Topik"
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "p",
+                                                      {
+                                                        staticClass:
+                                                          "uk-margin-remove-top"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          " +
+                                                            _vm._s(
+                                                              apt.topic_name
+                                                            ) +
+                                                            "\n                        "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "uk-width-1-2" },
                                               [
                                                 _c(
                                                   "div",
@@ -66774,14 +66786,10 @@ var render = function() {
                                                           },
                                                           [
                                                             _c(
-                                                              "a",
+                                                              "span",
                                                               {
                                                                 staticClass:
-                                                                  "gl-icon-review",
-                                                                attrs: {
-                                                                  "uk-tooltip":
-                                                                    "Excellent"
-                                                                }
+                                                                  "gl-icon-review"
                                                               },
                                                               [
                                                                 _c("i", {
@@ -66824,14 +66832,10 @@ var render = function() {
                                                           },
                                                           [
                                                             _c(
-                                                              "a",
+                                                              "span",
                                                               {
                                                                 staticClass:
-                                                                  "gl-icon-review",
-                                                                attrs: {
-                                                                  "uk-tooltip":
-                                                                    "Good"
-                                                                }
+                                                                  "gl-icon-review"
                                                               },
                                                               [
                                                                 _c("i", {
@@ -66878,14 +66882,10 @@ var render = function() {
                                                           },
                                                           [
                                                             _c(
-                                                              "a",
+                                                              "span",
                                                               {
                                                                 staticClass:
-                                                                  "gl-icon-review",
-                                                                attrs: {
-                                                                  "uk-tooltip":
-                                                                    "Neutral"
-                                                                }
+                                                                  "gl-icon-review"
                                                               },
                                                               [
                                                                 _c("i", {
@@ -66928,14 +66928,10 @@ var render = function() {
                                                           },
                                                           [
                                                             _c(
-                                                              "a",
+                                                              "span",
                                                               {
                                                                 staticClass:
-                                                                  "gl-icon-review",
-                                                                attrs: {
-                                                                  "uk-tooltip":
-                                                                    "Poor"
-                                                                }
+                                                                  "gl-icon-review"
                                                               },
                                                               [
                                                                 _c("i", {
@@ -66982,14 +66978,10 @@ var render = function() {
                                                           },
                                                           [
                                                             _c(
-                                                              "a",
+                                                              "span",
                                                               {
                                                                 staticClass:
-                                                                  "gl-icon-review",
-                                                                attrs: {
-                                                                  "uk-tooltip":
-                                                                    "Disappointed"
-                                                                }
+                                                                  "gl-icon-review"
                                                               },
                                                               [
                                                                 _c("i", {
@@ -71975,23 +71967,16 @@ var render = function() {
                   [
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Excellent" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-smile-beam",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback ===
-                                  "excellent"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-smile-beam",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback ===
+                                "excellent"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Hebat")
@@ -72001,22 +71986,14 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Good" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-smile",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback === "good"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-smile",
+                            class: {
+                              fas: _vm.detailrequest.request.feedback === "good"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Berpengalaman")
@@ -72026,23 +72003,15 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Neutral" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-meh",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback ===
-                                  "neutral"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-meh",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback === "neutral"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Netral")
@@ -72052,22 +72021,14 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Poor" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-frown",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback === "poor"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-frown",
+                            class: {
+                              fas: _vm.detailrequest.request.feedback === "poor"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Kurang Berpengalaman")
@@ -72077,23 +72038,16 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "uk-width-1-5" }, [
                       _c("div", { staticClass: "uk-text-center" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "gl-icon-review",
-                            attrs: { "uk-tooltip": "Disappointed" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "far fa-angry",
-                              class: {
-                                fas:
-                                  _vm.detailrequest.request.feedback ===
-                                  "disappointed"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("span", { staticClass: "gl-icon-review" }, [
+                          _c("i", {
+                            staticClass: "far fa-angry",
+                            class: {
+                              fas:
+                                _vm.detailrequest.request.feedback ===
+                                "disappointed"
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "gl-review-text" }, [
                           _vm._v("Tidak dapat dipercaya")

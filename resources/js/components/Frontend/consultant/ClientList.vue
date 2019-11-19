@@ -80,14 +80,14 @@
               <div v-if="getappointment.total === 0" class="uk-alert-warning" uk-alert>
                 Tidak ada riwayat konsultasi
               </div>
-              <div v-else class="uk-grid-small uk-grid-divider" uk-grid>
-                <div v-for="apt in getappointment.results" class="uk-width-1-1">
+              <div v-else class="uk-grid-small uk-grid-divider uk-grid-match" uk-grid>
+                <div v-for="apt in getappointment.results" class="uk-width-1-2">
                   <article class="uk-article">
-                    <h4 class="uk-article-title">
+                    <h4 class="uk-h4">
                       {{ $root.formatDate( apt.schedule_date, 'dddd, DD MMMM YYYY HH:mm' ) }}
                     </h4>
                     <div class="uk-grid-small uk-margin" uk-grid>
-                      <div class="uk-width-1-3">
+                      <div class="uk-width-1-2">
                         <div class="uk-panel uk-margin">
                           <h6 class="uk-h6 uk-margin-remove-bottom">ID Konsultasi</h6>
                           <p class="uk-margin-remove-top">
@@ -95,7 +95,7 @@
                           </p>
                         </div>
                       </div>
-                      <div class="uk-width-1-3">
+                      <div class="uk-width-1-2">
                         <div class="uk-panel uk-margin">
                           <h6 class="uk-h6 uk-margin-remove-bottom">Tanggal Permintaan</h6>
                           <p class="uk-margin-remove-top">
@@ -103,7 +103,15 @@
                           </p>
                         </div>
                       </div>
-                      <div class="uk-width-1-3">
+                      <div class="uk-width-1-2">
+                        <div class="uk-panel uk-margin">
+                          <h6 class="uk-h6 uk-margin-remove-bottom">Perihal / Topik</h6>
+                          <p class="uk-margin-remove-top">
+                            {{ apt.topic_name }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="uk-width-1-2">
                         <div class="uk-panel uk-margin">
                           <h6 class="uk-h6 uk-margin-remove-bottom">Lokasi</h6>
                           <p class="uk-margin-remove-top">
@@ -133,41 +141,41 @@
                         <div class="uk-grid-small" uk-grid>
                           <div class="uk-width-1-5">
                             <div class="uk-text-center">
-                              <a uk-tooltip="Excellent" class="gl-icon-review">
+                              <span class="gl-icon-review">
                                 <i :class="{'fas': apt.feedback === 'excellent'}" class="far fa-smile-beam"></i>
-                              </a>
+                              </span>
                               <div class="gl-review-text">Hebat</div>
                             </div>
                           </div>
                           <div class="uk-width-1-5">
                             <div class="uk-text-center">
-                              <a uk-tooltip="Good" class="gl-icon-review">
+                              <span class="gl-icon-review">
                                 <i :class="{'fas': apt.feedback === 'good'}" class="far fa-smile"></i>
-                              </a>
+                              </span>
                               <div class="gl-review-text">Berpengalaman</div>
                             </div>
                           </div>
                           <div class="uk-width-1-5">
                             <div class="uk-text-center">
-                              <a uk-tooltip="Neutral" class="gl-icon-review">
+                              <span class="gl-icon-review">
                                 <i :class="{'fas': apt.feedback === 'neutral'}" class="far fa-meh"></i>
-                              </a>
+                              </span>
                               <div class="gl-review-text">Netral</div>
                             </div>
                           </div>
                           <div class="uk-width-1-5">
                             <div class="uk-text-center">
-                              <a uk-tooltip="Poor" class="gl-icon-review">
+                              <span class="gl-icon-review">
                                 <i :class="{'fas': apt.feedback === 'poor'}" class="far fa-frown"></i>
-                              </a>
+                              </span>
                               <div class="gl-review-text">Kurang Berpengalaman</div>
                             </div>
                           </div>
                           <div class="uk-width-1-5">
                             <div class="uk-text-center">
-                              <a uk-tooltip="Disappointed" class="gl-icon-review">
+                              <span class="gl-icon-review">
                                 <i :class="{'fas': apt.feedback === 'disappointed'}" class="far fa-angry"></i>
-                              </a>
+                              </span>
                               <div class="gl-review-text">Tidak dapat dipercaya</div>
                             </div>
                           </div>
