@@ -103,6 +103,7 @@ export default {
           waiting: 0,
           ongoing: 0
         },
+        consultant: 0,
         feedback: 0
       }
     }
@@ -123,6 +124,7 @@ export default {
           ongoing: result.appointment.ongoing,
         };
         this.total_summary.feedback = result.feedback;
+        this.total_summary.consultant = result.consultant;
       }).catch( err => {
         console.log( err.response.statusText );
       });
