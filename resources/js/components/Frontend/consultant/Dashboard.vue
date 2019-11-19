@@ -40,7 +40,7 @@
                 <span uk-icon="icon: star; ratio: 1.5;"></span>
               </div>
             </div>
-            <div class="card-summary-value">{{ rateIndex }}</div>
+            <div class="card-summary-value">{{ rateIndex }} / 5</div>
           </div>
         </div>
         <div class="uk-width-1-3">

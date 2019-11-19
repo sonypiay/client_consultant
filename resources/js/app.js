@@ -30,7 +30,7 @@ Vue.component('consultant-register-page', require('./components/Frontend/consult
 Vue.component('consultant-login-page', require('./components/Frontend/consultant/Login.vue').default);
 Vue.component('consultant-dashboard-page', require('./components/Frontend/consultant/Dashboard.vue').default);
 Vue.component('consultant-editprofile-page', require('./components/Frontend/consultant/EditProfile.vue').default);
-Vue.component('consultant-viewprofile-page', require('./components/Frontend/consultant/ViewProfile.vue').default);
+Vue.component('consultant-viewprofile-page', require('./components/Frontend/consultant/MyProfile.vue').default);
 Vue.component('consultant-view-appointment', require('./components/Frontend/consultant/MyAppointment.vue').default);
 Vue.component('consultant-private-event', require('./components/Frontend/consultant/PrivateEvent.vue').default);
 

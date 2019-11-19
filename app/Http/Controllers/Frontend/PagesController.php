@@ -149,6 +149,21 @@ class PagesController extends Controller
     return response()->view('frontend.pages.consultant.privateevent', $data);
   }
 
+  public function consultant_profile_page( Request $request )
+  {
+    if( ! session()->has('isConsultant') )
+    {
+      return redirect()->route('consultant_login_page');
+    }
+
+    $consultant = new ConsultantUser;
+    $data['request'] = $request;
+    $data['hasLogin']['user'] = 'client';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $consultant->getProfile();
+    return response()->view('frontend.pages.consultant.profile', $data);
+  }
+
   public function consultant_edit_profile( Request $request )
   {
     if( ! session()->has('isConsultant') )
@@ -164,11 +179,6 @@ class PagesController extends Controller
     $data['hasLogin']['isLogin'] = true;
     $data['getuser'] = $consultant->getProfile();
     return response()->view('frontend.pages.consultant.editprofile', $data);
-  }
-
-  public function consultant_profile_page( Request $request )
-  {
-
   }
 
   public function consultant_appointment_page( Request $request )

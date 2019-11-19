@@ -1,5 +1,5 @@
 @extends('frontend.master')
-@section('title', 'Edit Profile')
+@section('title', 'Ubah Profil')
 @section('content')
 <consultant-editprofile-page
 :haslogin="{{ json_encode( $hasLogin ) }}"
