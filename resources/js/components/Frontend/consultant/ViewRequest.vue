@@ -111,7 +111,7 @@
             </p>
           </div>
           <div v-show="detailrequest.request.feedback" class="uk-panel uk-margin">
-            <h6 class="uk-h6 uk-margin-remove-bottom">Rate</h6>
+            <h6 class="uk-h6 uk-margin-remove-bottom">Penilaian Klien</h6>
             <div class="uk-margin-remove-top">
               <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-5">

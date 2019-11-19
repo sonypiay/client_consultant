@@ -4394,6 +4394,139 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getcity'],
   data: function data() {
@@ -4409,6 +4542,21 @@ __webpack_require__.r(__webpack_exports__);
           next_page_url: ''
         },
         details: {}
+      },
+      getappointment: {
+        isLoading: false,
+        total: 0,
+        results: [],
+        paginate: {
+          current_page: 1,
+          last_page: 1,
+          prev_page_url: '',
+          next_page_url: ''
+        },
+        client: {
+          id: '',
+          name: ''
+        }
       },
       forms: {
         keywords: '',
@@ -4443,12 +4591,41 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response.statusText);
       });
     },
+    showAppointment: function showAppointment(p) {
+      var _this2 = this;
+
+      var url = this.$root.url + '/consultant/history_appointment_client/' + this.getappointment.client.id + '?page=' + this.getappointment.paginate.current_page;
+      if (p !== undefined) url = p;
+      this.getappointment.isLoading = true;
+      axios({
+        method: 'get',
+        url: url
+      }).then(function (res) {
+        var result = res.data;
+        _this2.getappointment.total = result.total;
+        _this2.getappointment.results = result.data;
+        _this2.getappointment.paginate = {
+          current_page: result.current_page,
+          last_page: result.last_page,
+          prev_page_url: result.prev_page_url,
+          next_page_url: result.next_page_url
+        };
+        _this2.getappointment.isLoading = false;
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+    },
     onViewClient: function onViewClient(data) {
       this.getclient.details = data;
       UIkit.modal('#modal-view-client').show();
     },
-    onViewAppointment: function onViewAppointment(id) {
-      UIkit.modal('#modal-view-appointment').show();
+    onViewAppointment: function onViewAppointment(id, client) {
+      this.getappointment.client.id = id;
+      this.getappointment.client.name = client;
+      this.showAppointment();
+      setTimeout(function () {
+        UIkit.modal('#modal-view-appointment').show();
+      }, 1000);
     }
   },
   mounted: function mounted() {
@@ -66239,9 +66416,691 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1),
+      _c(
+        "div",
+        {
+          staticClass: "uk-modal-container",
+          attrs: { id: "modal-view-appointment", "uk-modal": "" }
+        },
+        [
+          _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
+            _c("a", {
+              staticClass: "uk-modal-close uk-modal-close-outside",
+              attrs: { "uk-close": "" }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-height-viewport" }, [
+              _c(
+                "div",
+                { staticClass: "uk-card uk-card-body modal-banner-top" },
+                [
+                  _c("div", { staticClass: "modal-banner-heading" }, [
+                    _vm._v(
+                      "\n            Riwayat Konsultasi - " +
+                        _vm._s(_vm.getappointment.client.name) +
+                        "\n          "
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "uk-modal-body uk-height-large uk-overflow-auto"
+                },
+                [
+                  _vm.getappointment.isLoading
+                    ? _c("div", { staticClass: "uk-text-center" }, [
+                        _c("span", { attrs: { "uk-spinner": "" } })
+                      ])
+                    : _c("div", [
+                        _vm.getappointment.total === 0
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "uk-alert-warning",
+                                attrs: { "uk-alert": "" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n              Tidak ada riwayat konsultasi\n            "
+                                )
+                              ]
+                            )
+                          : _c(
+                              "div",
+                              {
+                                staticClass: "uk-grid-small uk-grid-divider",
+                                attrs: { "uk-grid": "" }
+                              },
+                              _vm._l(_vm.getappointment.results, function(apt) {
+                                return _c(
+                                  "div",
+                                  { staticClass: "uk-width-1-1" },
+                                  [
+                                    _c(
+                                      "article",
+                                      { staticClass: "uk-article" },
+                                      [
+                                        _c(
+                                          "h4",
+                                          { staticClass: "uk-article-title" },
+                                          [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(
+                                                  _vm.$root.formatDate(
+                                                    apt.schedule_date,
+                                                    "dddd, DD MMMM YYYY HH:mm"
+                                                  )
+                                                ) +
+                                                "\n                  "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "uk-grid-small uk-margin",
+                                            attrs: { "uk-grid": "" }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "uk-width-1-3" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "uk-panel uk-margin"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "h6",
+                                                      {
+                                                        staticClass:
+                                                          "uk-h6 uk-margin-remove-bottom"
+                                                      },
+                                                      [_vm._v("ID Konsultasi")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "p",
+                                                      {
+                                                        staticClass:
+                                                          "uk-margin-remove-top"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          " +
+                                                            _vm._s(apt.apt_id) +
+                                                            "\n                        "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "uk-width-1-3" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "uk-panel uk-margin"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "h6",
+                                                      {
+                                                        staticClass:
+                                                          "uk-h6 uk-margin-remove-bottom"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "Tanggal Permintaan"
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "p",
+                                                      {
+                                                        staticClass:
+                                                          "uk-margin-remove-top"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          " +
+                                                            _vm._s(
+                                                              _vm.$root.formatDate(
+                                                                apt.created_at,
+                                                                "DD MMM YYYY"
+                                                              )
+                                                            ) +
+                                                            "\n                        "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "uk-width-1-3" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "uk-panel uk-margin"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "h6",
+                                                      {
+                                                        staticClass:
+                                                          "uk-h6 uk-margin-remove-bottom"
+                                                      },
+                                                      [_vm._v("Lokasi")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "p",
+                                                      {
+                                                        staticClass:
+                                                          "uk-margin-remove-top"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          " +
+                                                            _vm._s(
+                                                              apt.location
+                                                            ) +
+                                                            "\n                        "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "uk-width-1-1" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "uk-panel uk-margin"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "h6",
+                                                      {
+                                                        staticClass:
+                                                          "uk-h6 uk-margin-remove-bottom"
+                                                      },
+                                                      [_vm._v("Catatan")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "p",
+                                                      {
+                                                        staticClass:
+                                                          "uk-margin-remove-top uk-text-justify"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          " +
+                                                            _vm._s(apt.notes) +
+                                                            "\n                        "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: apt.feedback,
+                                                expression: "apt.feedback"
+                                              }
+                                            ],
+                                            staticClass: "uk-panel uk-margin"
+                                          },
+                                          [
+                                            _c("hr"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "h6",
+                                              {
+                                                staticClass:
+                                                  "uk-h6 uk-margin-remove-bottom"
+                                              },
+                                              [_vm._v("Ulasan Klien")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "p",
+                                              {
+                                                staticClass:
+                                                  "uk-margin-remove-top"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                      " +
+                                                    _vm._s(
+                                                      apt.review_description
+                                                    ) +
+                                                    "\n                    "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "show",
+                                                rawName: "v-show",
+                                                value: apt.feedback,
+                                                expression: "apt.feedback"
+                                              }
+                                            ],
+                                            staticClass: "uk-panel uk-margin"
+                                          },
+                                          [
+                                            _c(
+                                              "h6",
+                                              {
+                                                staticClass:
+                                                  "uk-h6 uk-margin-remove-bottom"
+                                              },
+                                              [_vm._v("Penilaian Klien")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "uk-margin-remove-top"
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "uk-grid-small",
+                                                    attrs: { "uk-grid": "" }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "uk-width-1-5"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "uk-text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "a",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-icon-review",
+                                                                attrs: {
+                                                                  "uk-tooltip":
+                                                                    "Excellent"
+                                                                }
+                                                              },
+                                                              [
+                                                                _c("i", {
+                                                                  staticClass:
+                                                                    "far fa-smile-beam",
+                                                                  class: {
+                                                                    fas:
+                                                                      apt.feedback ===
+                                                                      "excellent"
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-review-text"
+                                                              },
+                                                              [_vm._v("Hebat")]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "uk-width-1-5"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "uk-text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "a",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-icon-review",
+                                                                attrs: {
+                                                                  "uk-tooltip":
+                                                                    "Good"
+                                                                }
+                                                              },
+                                                              [
+                                                                _c("i", {
+                                                                  staticClass:
+                                                                    "far fa-smile",
+                                                                  class: {
+                                                                    fas:
+                                                                      apt.feedback ===
+                                                                      "good"
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-review-text"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "Berpengalaman"
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "uk-width-1-5"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "uk-text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "a",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-icon-review",
+                                                                attrs: {
+                                                                  "uk-tooltip":
+                                                                    "Neutral"
+                                                                }
+                                                              },
+                                                              [
+                                                                _c("i", {
+                                                                  staticClass:
+                                                                    "far fa-meh",
+                                                                  class: {
+                                                                    fas:
+                                                                      apt.feedback ===
+                                                                      "neutral"
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-review-text"
+                                                              },
+                                                              [_vm._v("Netral")]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "uk-width-1-5"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "uk-text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "a",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-icon-review",
+                                                                attrs: {
+                                                                  "uk-tooltip":
+                                                                    "Poor"
+                                                                }
+                                                              },
+                                                              [
+                                                                _c("i", {
+                                                                  staticClass:
+                                                                    "far fa-frown",
+                                                                  class: {
+                                                                    fas:
+                                                                      apt.feedback ===
+                                                                      "poor"
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-review-text"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "Kurang Berpengalaman"
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "uk-width-1-5"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "uk-text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "a",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-icon-review",
+                                                                attrs: {
+                                                                  "uk-tooltip":
+                                                                    "Disappointed"
+                                                                }
+                                                              },
+                                                              [
+                                                                _c("i", {
+                                                                  staticClass:
+                                                                    "far fa-angry",
+                                                                  class: {
+                                                                    fas:
+                                                                      apt.feedback ===
+                                                                      "disappointed"
+                                                                  }
+                                                                })
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "gl-review-text"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "Tidak dapat dipercaya"
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              }),
+                              0
+                            ),
+                        _vm._v(" "),
+                        _c(
+                          "ul",
+                          { staticClass: "uk-pagination uk-flex-center" },
+                          [
+                            _vm.getappointment.paginate.prev_page_url
+                              ? _c(
+                                  "li",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showAppointment(
+                                          _vm.getappointment.paginate
+                                            .prev_page_url
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._m(1)]
+                                )
+                              : _c("li", { staticClass: "uk-disabled" }, [
+                                  _vm._m(2)
+                                ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "uk-disabled" }, [
+                              _c("span", [
+                                _vm._v(
+                                  "Page " +
+                                    _vm._s(
+                                      _vm.getappointment.paginate.current_page
+                                    ) +
+                                    " of " +
+                                    _vm._s(
+                                      _vm.getappointment.paginate.last_page
+                                    )
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _vm.getappointment.paginate.next_page_url
+                              ? _c(
+                                  "li",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showAppointment(
+                                          _vm.getappointment.paginate
+                                            .next_page_url
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._m(3)]
+                                )
+                              : _c("li", { staticClass: "uk-disabled" }, [
+                                  _vm._m(4)
+                                ])
+                          ]
+                        )
+                      ])
+                ]
+              )
+            ])
+          ])
+        ]
+      ),
       _vm._v(" "),
-      _vm._m(2),
+      _vm._m(5),
       _vm._v(" "),
       _c(
         "div",
@@ -66578,7 +67437,8 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         return _vm.onViewAppointment(
-                                          client.client_id
+                                          client.client_id,
+                                          client.client_fullname
                                         )
                                       }
                                     }
@@ -66606,9 +67466,9 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._m(3)]
+                        [_vm._m(6)]
                       )
-                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(4)]),
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(7)]),
                   _vm._v(" "),
                   _c("li", { staticClass: "uk-disabled" }, [
                     _c("span", [
@@ -66633,9 +67493,9 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._m(5)]
+                        [_vm._m(8)]
                       )
-                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(6)])
+                    : _c("li", { staticClass: "uk-disabled" }, [_vm._m(9)])
                 ])
               ])
         ]
@@ -66659,29 +67519,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "uk-modal-full",
-        attrs: { id: "modal-view-appointment", "uk-modal": "" }
-      },
-      [
-        _c("div", { staticClass: "uk-modal-dialog modal-dialog" }, [
-          _c("a", {
-            staticClass: "uk-modal-close uk-modal-close-outside",
-            attrs: { "uk-close": "" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-card uk-card-body modal-banner-top" }, [
-            _c("div", { staticClass: "modal-banner-heading" }, [
-              _vm._v("\n          Riwayat Konsultasi\n        ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "uk-modal-body" })
-        ])
-      ]
-    )
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
   },
   function() {
     var _vm = this
@@ -71109,7 +71965,7 @@ var render = function() {
             },
             [
               _c("h6", { staticClass: "uk-h6 uk-margin-remove-bottom" }, [
-                _vm._v("Rate")
+                _vm._v("Penilaian Klien")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-margin-remove-top" }, [

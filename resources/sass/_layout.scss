@@ -149,7 +149,7 @@ html, body { font-family: $font-base; }
     border-radius: 6px 6px 0 0;
     .modal-banner-heading {
       color: #ffffff;
-      @include global_font_style( 200, 48px, normal, 0.4px );
+      @include global_font_style( 200, 36px, normal, 0.4px );
     }
     .request-time {
       color: #ffffff;
