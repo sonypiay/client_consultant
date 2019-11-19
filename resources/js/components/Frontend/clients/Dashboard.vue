@@ -57,6 +57,17 @@
         <div class="uk-width-1-3">
           <div class="uk-tile uk-tile-default uk-padding-remove card-summary">
             <div class="uk-clearfix uk-margin-small-bottom">
+              <div class="uk-float-left card-summary-text">Konsultan</div>
+              <div class="uk-float-right card-summary-icon">
+                <span uk-icon="icon: user; ratio: 1.5;"></span>
+              </div>
+            </div>
+            <div class="card-summary-value">{{ total_summary.consultant }}</div>
+          </div>
+        </div>
+        <div class="uk-width-1-3">
+          <div class="uk-tile uk-tile-default uk-padding-remove card-summary">
+            <div class="uk-clearfix uk-margin-small-bottom">
               <div class="uk-float-left card-summary-text">Ulasan diberikan</div>
               <div class="uk-float-right card-summary-icon">
                 <span uk-icon="icon: star; ratio: 1.5;"></span>

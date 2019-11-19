@@ -17,24 +17,31 @@ class ClientUserController extends Controller
 {
   public function dashboard_summary()
   {
-    $user_id          = session()->get('clientId');
-    $feedback         = new Feedbacks;
-    $appointment      = new AppointmentRequest;
-    $getappointment   = $appointment->where('client_id', $user_id)->count();
+    $user_id              = session()->get('clientId');
+    $feedback             = new Feedbacks;
+    $appointment          = new AppointmentRequest;
+    $total_appointment    = $appointment->where('client_id', $user_id)->get();
+    $total_consultant     = $appointment->select(
+      'consultant_id'
+    )
+    ->where('client_id', $user_id)
+    ->groupBy('consultant_id')
+    ->get();
+
     $success          = $appointment->where([
       ['status_request', 'done'],
       ['is_solved', 'Y'],
       ['client_id', $user_id]
-    ])->count();
+    ])->get();
     $waiting          = $appointment->where([
       ['status_request', 'waiting'],
       ['client_id', $user_id]
-    ])->count();
+    ])->get();
     $ongoing          = $appointment->where([
       ['status_request', 'accept'],
       [ DB::raw("date_format(schedule_date, '%Y-%m-%d')"), '>=', date('Y-m-d') ],
       ['client_id', $user_id]
-    ])->count();
+    ])->get();
 
     $getfeedback      = $feedback->select(
       DB::raw('count(appointment_request.client_id) as total_feedback')
@@ -46,11 +53,12 @@ class ClientUserController extends Controller
 
     $result = [
       'appointment' => [
-        'total' => $getappointment,
-        'success' => $success,
-        'waiting' => $waiting,
-        'ongoing' => $ongoing
+        'total' => $total_appointment->count(),
+        'success' => $success->count(),
+        'waiting' => $waiting->count(),
+        'ongoing' => $ongoing->count()
       ],
+      'consultant' => $total_consultant->count(),
       'feedback' => $getfeedback->total_feedback
     ];
 
