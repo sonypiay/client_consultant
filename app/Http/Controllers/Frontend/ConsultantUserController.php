@@ -21,36 +21,38 @@ class ConsultantUserController extends Controller
     $user_id          = session()->get('consultantId');
     $appointment      = new AppointmentRequest;
     $consultant       = new ConsultantUser;
-    $getappointment   = $appointment->select(
-      DB::raw('count(apt_id) as total_appointment'),
-      DB::raw('count(client_id) as total_client')
+
+    $total_appointment    = $appointment->where('consultant_id', $user_id)->get();
+    $total_client         = $appointment->select(
+      'client_id'
     )
     ->where('consultant_id', $user_id)
-    ->first();
+    ->groupBy('client_id')
+    ->get();
 
     $success          = $appointment->where([
       ['status_request', 'done'],
       ['is_solved', 'Y'],
       ['consultant_id', $user_id]
-    ])->count();
+    ])->get();
     $waiting          = $appointment->where([
       ['status_request', 'waiting'],
       ['consultant_id', $user_id]
-    ])->count();
+    ])->get();
     $ongoing          = $appointment->where([
       ['status_request', 'accept'],
       [ DB::raw("date_format(schedule_date, '%Y-%m-%d')"), '>=', date('Y-m-d') ],
       ['consultant_id', $user_id]
-    ])->count();
+    ])->get();
 
     $result = [
       'appointment' => [
-        'total' => $getappointment->total_appointment,
-        'success' => $success,
-        'waiting' => $waiting,
-        'ongoing' => $ongoing
+        'total' => $total_appointment->count(),
+        'success' => $success->count(),
+        'waiting' => $waiting->count(),
+        'ongoing' => $ongoing->count()
       ],
-      'client' => $getappointment->total_client,
+      'client' => $total_client->count(),
       'rating' => $consultant->getRating()
     ];
 

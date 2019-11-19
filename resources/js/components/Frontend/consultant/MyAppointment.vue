@@ -456,7 +456,7 @@ export default {
       }).then( val => {
         if( val )
         {
-          if( status === 'done' )
+          if( status === 'solved' )
           {
             swal({
               content: {

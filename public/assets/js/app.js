@@ -5560,7 +5560,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }).then(function (val) {
         if (val) {
-          if (status === 'done') {
+          if (status === 'solved') {
             swal({
               content: {
                 element: 'input',

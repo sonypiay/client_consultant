@@ -147,7 +147,7 @@ class AppointmentRequest extends Model
       $client = session()->get('clientId');
       array_push( $whereClauses, ['appointment_request.client_id', $client]);
     }
-    
+
     if( session()->has('isConsultant') )
     {
       $consultant = session()->get('consultantId');
@@ -430,6 +430,7 @@ class AppointmentRequest extends Model
 
       if( $status === 'solved' )
       {
+        $update->notes = $note;
         $update->is_solved = 'Y';
       }
       else if( $status === 'unsolved' )
@@ -447,7 +448,6 @@ class AppointmentRequest extends Model
           }
         }
 
-        if( $status === 'done' ) $update->notes = $note;
         $update->status_request = $status;
       }
 
