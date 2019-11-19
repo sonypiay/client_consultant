@@ -18,21 +18,45 @@ class ConsultantUserController extends Controller
 {
   public function dashboard_summary()
   {
-    $user_id = session()->get('consultantId');
-    $appointment = AppointmentRequest::select(
+    $user_id          = session()->get('consultantId');
+    $appointment      = new AppointmentRequest;
+    $consultant       = new ConsultantUser;
+    $getappointment   = $appointment->select(
       DB::raw('count(apt_id) as total_appointment'),
       DB::raw('count(client_id) as total_client')
     )
-    ->where('consultant_id', $user_id)->first();
-    $consultant = new ConsultantUser;
+    ->where('consultant_id', $user_id)
+    ->first();
+
+    $success          = $appointment->where([
+      ['status_request', 'done'],
+      ['is_solved', 'Y'],
+      ['consultant_id', $user_id]
+    ])->count();
+    $waiting          = $appointment->where([
+      ['status_request', 'waiting'],
+      ['consultant_id', $user_id]
+    ])->count();
+    $ongoing          = $appointment->where([
+      ['status_request', 'accept'],
+      [ DB::raw("date_format(schedule_date, '%Y-%m-%d')"), '>=', date('Y-m-d') ],
+      ['consultant_id', $user_id]
+    ])->count();
+
     $result = [
-      'appointment' => $appointment->total_appointment,
-      'client' => $appointment->total_client,
+      'appointment' => [
+        'total' => $getappointment->total_appointment,
+        'success' => $success,
+        'waiting' => $waiting,
+        'ongoing' => $ongoing
+      ],
+      'client' => $getappointment->total_client,
       'rating' => $consultant->getRating()
     ];
+
     return response()->json( $result, 200 );
   }
-  
+
   public function register( Request $request, ConsultantUser $consultantUser )
   {
     $res = $consultantUser->signup( $request );

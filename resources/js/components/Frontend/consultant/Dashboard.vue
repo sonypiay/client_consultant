@@ -13,12 +13,12 @@
         <div class="uk-width-1-3">
           <div class="uk-tile uk-tile-default uk-padding-remove card-summary">
             <div class="uk-clearfix uk-margin-small-bottom">
-              <div class="uk-float-left card-summary-text">Pertemuan</div>
+              <div class="uk-float-left card-summary-text">Total Konsultasi</div>
               <div class="uk-float-right card-summary-icon">
                 <span uk-icon="icon: clock; ratio: 1.5;"></span>
               </div>
             </div>
-            <div class="card-summary-value">{{ total_summary.appointment }}</div>
+            <div class="card-summary-value">{{ total_summary.appointment.total }}</div>
           </div>
         </div>
         <div class="uk-width-1-3">
@@ -43,6 +43,39 @@
             <div class="card-summary-value">{{ rateIndex }}</div>
           </div>
         </div>
+        <div class="uk-width-1-3">
+          <div class="uk-tile uk-tile-default uk-padding-remove card-summary">
+            <div class="uk-clearfix uk-margin-small-bottom">
+              <div class="uk-float-left card-summary-text">Konsultasi (Menunggu Tanggapan)</div>
+              <div class="uk-float-right card-summary-icon">
+                <span uk-icon="icon: bell; ratio: 1.5;"></span>
+              </div>
+            </div>
+            <div class="card-summary-value">{{ total_summary.appointment.waiting }}</div>
+          </div>
+        </div>
+        <div class="uk-width-1-3">
+          <div class="uk-tile uk-tile-default uk-padding-remove card-summary">
+            <div class="uk-clearfix uk-margin-small-bottom">
+              <div class="uk-float-left card-summary-text">Konsultasi Berhasil</div>
+              <div class="uk-float-right card-summary-icon">
+                <span uk-icon="icon: check; ratio: 1.5;"></span>
+              </div>
+            </div>
+            <div class="card-summary-value">{{ total_summary.appointment.success }}</div>
+          </div>
+        </div>
+        <div class="uk-width-1-3">
+          <div class="uk-tile uk-tile-default uk-padding-remove card-summary">
+            <div class="uk-clearfix uk-margin-small-bottom">
+              <div class="uk-float-left card-summary-text">Konsultasi yang akan datang</div>
+              <div class="uk-float-right card-summary-icon">
+                <span uk-icon="icon: calendar; ratio: 1.5;"></span>
+              </div>
+            </div>
+            <div class="card-summary-value">{{ total_summary.appointment.ongoing }}</div>
+          </div>
+        </div>
       </div>
     </div>
     <request-appointment />
@@ -65,7 +98,12 @@ export default {
     return {
       total_summary: {
         client: 0,
-        appointment: 0,
+        appointment: {
+          total: 0,
+          success: 0,
+          waiting: 0,
+          ongoing: 0
+        },
         rating: {
           feedback: 0,
           rate: 0,
@@ -83,7 +121,12 @@ export default {
       }).then( res => {
         let result = res.data;
         this.total_summary.client = result.client;
-        this.total_summary.appointment = result.appointment,
+        this.total_summary.appointment = {
+          total: result.appointment.total,
+          success: result.appointment.success,
+          waiting: result.appointment.waiting,
+          ongoing: result.appointment.ongoing,
+        };
         this.total_summary.rating = {
           feedback: result.rating.total_feedback,
           rate: result.rating.total_rate,

@@ -4980,6 +4980,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
@@ -4990,7 +5023,12 @@ __webpack_require__.r(__webpack_exports__);
     return {
       total_summary: {
         client: 0,
-        appointment: 0,
+        appointment: {
+          total: 0,
+          success: 0,
+          waiting: 0,
+          ongoing: 0
+        },
         rating: {
           feedback: 0,
           rate: 0,
@@ -5009,7 +5047,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         var result = res.data;
         _this.total_summary.client = result.client;
-        _this.total_summary.appointment = result.appointment, _this.total_summary.rating = {
+        _this.total_summary.appointment = {
+          total: result.appointment.total,
+          success: result.appointment.success,
+          waiting: result.appointment.waiting,
+          ongoing: result.appointment.ongoing
+        };
+        _this.total_summary.rating = {
           feedback: result.rating.total_feedback,
           rate: result.rating.total_rate,
           avg: result.rating.total_average
@@ -68106,7 +68150,7 @@ var render = function() {
                     _vm._m(1),
                     _vm._v(" "),
                     _c("div", { staticClass: "card-summary-value" }, [
-                      _vm._v(_vm._s(_vm.total_summary.appointment))
+                      _vm._v(_vm._s(_vm.total_summary.appointment.total))
                     ])
                   ]
                 )
@@ -68144,6 +68188,57 @@ var render = function() {
                     ])
                   ]
                 )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment.waiting))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment.success))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.appointment.ongoing))
+                    ])
+                  ]
+                )
               ])
             ]
           )
@@ -68170,7 +68265,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
       _c("div", { staticClass: "uk-float-left card-summary-text" }, [
-        _vm._v("Pertemuan")
+        _vm._v("Total Konsultasi")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
@@ -68203,6 +68298,48 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
         _c("span", { attrs: { "uk-icon": "icon: star; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Konsultasi (Menunggu Tanggapan)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: bell; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Konsultasi Berhasil")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: check; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Konsultasi yang akan datang")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: calendar; ratio: 1.5;" } })
       ])
     ])
   }
