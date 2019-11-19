@@ -26,7 +26,7 @@
             <div class="uk-clearfix uk-margin-small-bottom">
               <div class="uk-float-left card-summary-text">Konsultasi (Menunggu Tanggapan)</div>
               <div class="uk-float-right card-summary-icon">
-                <span uk-icon="icon: user; ratio: 1.5;"></span>
+                <span uk-icon="icon: bell; ratio: 1.5;"></span>
               </div>
             </div>
             <div class="card-summary-value">{{ total_summary.appointment.waiting }}</div>
@@ -37,7 +37,7 @@
             <div class="uk-clearfix uk-margin-small-bottom">
               <div class="uk-float-left card-summary-text">Konsultasi Berhasil</div>
               <div class="uk-float-right card-summary-icon">
-                <span uk-icon="icon: user; ratio: 1.5;"></span>
+                <span uk-icon="icon: check; ratio: 1.5;"></span>
               </div>
             </div>
             <div class="card-summary-value">{{ total_summary.appointment.success }}</div>
@@ -48,7 +48,7 @@
             <div class="uk-clearfix uk-margin-small-bottom">
               <div class="uk-float-left card-summary-text">Konsultasi yang akan datang</div>
               <div class="uk-float-right card-summary-icon">
-                <span uk-icon="icon: user; ratio: 1.5;"></span>
+                <span uk-icon="icon: calendar; ratio: 1.5;"></span>
               </div>
             </div>
             <div class="card-summary-value">{{ total_summary.appointment.ongoing }}</div>

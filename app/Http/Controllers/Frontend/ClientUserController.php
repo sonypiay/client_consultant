@@ -20,9 +20,10 @@ class ClientUserController extends Controller
     $user_id          = session()->get('clientId');
     $feedback         = new Feedbacks;
     $appointment      = new AppointmentRequest;
-    $getappointment   = $appointment->where('status_request', '!=', 'waiting')->count();
+    $getappointment   = $appointment->where('client_id', $user_id)->count();
     $success          = $appointment->where([
       ['status_request', 'done'],
+      ['is_solved', 'Y'],
       ['client_id', $user_id]
     ])->count();
     $waiting          = $appointment->where([

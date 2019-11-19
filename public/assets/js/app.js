@@ -63378,7 +63378,7 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
-        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
+        _c("span", { attrs: { "uk-icon": "icon: bell; ratio: 1.5;" } })
       ])
     ])
   },
@@ -63392,7 +63392,7 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
-        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
+        _c("span", { attrs: { "uk-icon": "icon: check; ratio: 1.5;" } })
       ])
     ])
   },
@@ -63406,7 +63406,7 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
-        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
+        _c("span", { attrs: { "uk-icon": "icon: calendar; ratio: 1.5;" } })
       ])
     ])
   },
