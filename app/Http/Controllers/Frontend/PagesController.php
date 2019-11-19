@@ -76,6 +76,21 @@ class PagesController extends Controller
     return response()->view('frontend.pages.clients.dashboard', $data);
   }
 
+  public function client_profile_page( Request $request )
+  {
+    if( ! session()->has('isClient') )
+    {
+      return redirect()->route('client_login_page');
+    }
+
+    $client = new ClientUser;
+    $data['request'] = $request;
+    $data['hasLogin']['user'] = 'client';
+    $data['hasLogin']['isLogin'] = true;
+    $data['getuser'] = $client->getProfile();
+    return response()->view('frontend.pages.clients.profile', $data);
+  }
+
   public function client_edit_profile( Request $request )
   {
     if( ! session()->has('isClient') )
@@ -91,17 +106,6 @@ class PagesController extends Controller
     $data['hasLogin']['isLogin'] = true;
     $data['getuser'] = $client->getProfile();
     return response()->view('frontend.pages.clients.editprofile', $data);
-  }
-
-  public function consultant_register_page( Request $request )
-  {
-    if( session()->has('isConsultant') )
-    {
-      return redirect()->route('consultant_dashboard_page');
-    }
-
-    $data['request'] = $request;
-    return response()->view('frontend.pages.consultant.register', $data);
   }
 
   public function consultant_login_page( Request $request )
@@ -162,30 +166,9 @@ class PagesController extends Controller
     return response()->view('frontend.pages.consultant.editprofile', $data);
   }
 
-  public function view_profile_consultant( Request $request, $id )
+  public function consultant_profile_page( Request $request )
   {
-    $data['request'] = $request;
-    $data['hasLogin'] = [ 'user' => '', 'isLogin' => false ];
-    $data['getuser'] = [];
-    $consultant = new ConsultantUser;
 
-    if( session()->has('isClient') )
-    {
-      $client = new ClientUser;
-      $data['hasLogin']['user'] = 'client';
-      $data['hasLogin']['isLogin'] = true;
-      $data['getuser'] = $client->getProfile();
-    }
-
-    if( session()->has('isConsultant') )
-    {
-      $data['hasLogin']['user'] = 'consultant';
-      $data['hasLogin']['isLogin'] = true;
-      $data['getuser'] = $consultant->getProfile();
-    }
-
-    $data['getconsultant'] = $consultant->getProfile( $id );
-    return response()->view('frontend.pages.consultant.view_profile', $data);
   }
 
   public function consultant_appointment_page( Request $request )
@@ -220,22 +203,5 @@ class PagesController extends Controller
     $data['getuser']              = $client->getProfile();
     $data['service_topic']        = $topic->getTopic();
     return response()->view('frontend.pages.clients.appointment', $data);
-  }
-
-  public function client_request_page( Request $request )
-  {
-    if( ! session()->has('isClient') )
-    {
-      return redirect()->route('client_login_page');
-    }
-
-    $client = new ClientUser;
-    $topic = new ServiceTopic;
-    $data['request'] = $request;
-    $data['hasLogin']['user'] = 'client';
-    $data['hasLogin']['isLogin'] = true;
-    $data['getuser'] = $client->getProfile();
-    $data['servicetopic'] = $topic->getTopic();
-    return response()->view('frontend.pages.clients.myrequest', $data);
   }
 }

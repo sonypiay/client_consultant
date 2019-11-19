@@ -12,16 +12,14 @@
 */
 
 Route::get('/', 'Frontend\PagesController@homepage')->name('homepage');
-//Route::get('/search', 'Frontend\PagesController@search_consultant')->name('search_consultant');
-//Route::get('/search/consultant', 'Frontend\ConsultantUserController@search_consultant');
 
 Route::group(['prefix' => 'client'], function() {
   Route::get('/dashboard', 'Frontend\PagesController@client_dashboard_page')->name('client_dashboard_page');
   Route::get('/dashboard/summary', 'Frontend\ClientUserController@dashboard_summary');
   Route::get('/signin', 'Frontend\PagesController@client_login_page')->name('client_login_page');
   Route::get('/signup', 'Frontend\PagesController@client_register_page')->name('client_register_page');
+  Route::get('/myprofile', 'Frontend\PagesController@client_profile_page')->name('client_profile_page');
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
-  //Route::get('/myrequest', 'Frontend\PagesController@client_request_page')->name('client_request_page');
   Route::get('/myappointment', 'Frontend\PagesController@client_appointment_page')->name('client_appointment_page');
 
   Route::group(['prefix' => 'request'], function() {
@@ -48,7 +46,6 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/dashboard', 'Frontend\PagesController@consultant_dashboard_page')->name('consultant_dashboard_page');
   Route::get('/dashboard/summary', 'Frontend\ConsultantUserController@dashboard_summary');
   Route::get('/signin', 'Frontend\PagesController@consultant_login_page')->name('consultant_login_page');
-  Route::get('/signup', 'Frontend\PagesController@consultant_register_page')->name('consultant_register_page');
   Route::get('/edit_profile', 'Frontend\PagesController@consultant_edit_profile')->name('consultant_edit_profile');
   Route::get('/profile/{id}', 'Frontend\PagesController@view_profile_consultant')->name('view_profile_consultant');
   Route::get('/myappointment', 'Frontend\PagesController@consultant_appointment_page')->name('consultant_appointment_page');

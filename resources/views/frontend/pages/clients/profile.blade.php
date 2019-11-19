@@ -1,9 +1,8 @@
 @extends('frontend.master')
-@section('title', 'Permintaan Layanan Konsultasi')
+@section('title', 'Profil Saya')
 @section('content')
-<client-view-request
+<client-viewprofile-page
 :haslogin="{{ json_encode( $hasLogin ) }}"
 :getuser="{{ json_encode( $getuser ) }}"
-:servicetopic="{{ json_encode( $servicetopic ) }}"
 />
 @endsection
