@@ -35,10 +35,7 @@ class ConsultantUserController extends Controller
       ['is_solved', 'Y'],
       ['consultant_id', $user_id]
     ])->get();
-    $waiting          = $appointment->where([
-      ['status_request', 'waiting'],
-      ['consultant_id', $user_id]
-    ])->get();
+    $waiting          = $appointment->where('status_request', 'waiting')->get();
     $ongoing          = $appointment->where([
       ['status_request', 'accept'],
       [ DB::raw("date_format(schedule_date, '%Y-%m-%d')"), '>=', date('Y-m-d') ],
