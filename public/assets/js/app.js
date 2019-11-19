@@ -2554,6 +2554,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
@@ -2569,6 +2580,7 @@ __webpack_require__.r(__webpack_exports__);
           waiting: 0,
           ongoing: 0
         },
+        consultant: 0,
         feedback: 0
       }
     };
@@ -2589,6 +2601,7 @@ __webpack_require__.r(__webpack_exports__);
           ongoing: result.appointment.ongoing
         };
         _this.total_summary.feedback = result.feedback;
+        _this.total_summary.consultant = result.consultant;
       })["catch"](function (err) {
         console.log(err.response.statusText);
       });
@@ -63374,6 +63387,23 @@ var render = function() {
                     _vm._m(5),
                     _vm._v(" "),
                     _c("div", { staticClass: "card-summary-value" }, [
+                      _vm._v(_vm._s(_vm.total_summary.consultant))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-width-1-3" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "uk-tile uk-tile-default uk-padding-remove card-summary"
+                  },
+                  [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-summary-value" }, [
                       _vm._v(_vm._s(_vm.total_summary.feedback))
                     ])
                   ]
@@ -63451,6 +63481,20 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
         _c("span", { attrs: { "uk-icon": "icon: calendar; ratio: 1.5;" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin-small-bottom" }, [
+      _c("div", { staticClass: "uk-float-left card-summary-text" }, [
+        _vm._v("Konsultan")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-float-right card-summary-icon" }, [
+        _c("span", { attrs: { "uk-icon": "icon: user; ratio: 1.5;" } })
       ])
     ])
   },
