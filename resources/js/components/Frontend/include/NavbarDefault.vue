@@ -151,6 +151,12 @@
                       </a>
                     </li>
                     <li>
+                      <a :href="$root.url + '/consultant/myclient'">
+                        <span class="uk-margin-small-right" uk-icon="icon: users; ratio: 0.8"></span>
+                        Daftar Klien
+                      </a>
+                    </li>
+                    <li>
                       <a :href="$root.url + '/consultant/edit_profile'">
                         <span class="uk-margin-small-right" uk-icon="icon: cog; ratio: 0.8"></span>
                         Ubah Profil &amp; Pengaturan

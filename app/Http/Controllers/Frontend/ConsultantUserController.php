@@ -192,4 +192,54 @@ class ConsultantUserController extends Controller
 
     return response()->json( $res, $res['responseCode'] );
   }
+
+  public function client_list( Request $request, ClientUser $client )
+  {
+    $keywords = isset( $request->keywords ) ? $request->keywords : '';
+    $limit    = isset( $request->limit ) ? $request->limit : 6;
+    $city     = isset( $request->city ) ? $request->city : 'all';
+    $user_id  = session()->get('consultantId');
+
+    $getclient  = $client->select(
+      'client_user.client_id',
+      'client_user.client_fullname',
+      'client_user.client_email',
+      'client_user.client_phone_number',
+      'client_user.client_type',
+      'client_user.client_address',
+      'client_user.client_npwp',
+      'client_user.created_at',
+      'client_user.updated_at',
+      'city.city_id',
+      'city.city_name',
+      'province.province_id',
+      'province.province_name',
+      'appointment_request.client_id'
+    )
+    ->leftJoin('city', 'client_user.city_id', '=', 'city.city_id')
+    ->leftJoin('province', 'city.province_id', '=', 'province.province_id')
+    ->join('appointment_request', 'client_user.client_id', '=', 'appointment_request.client_id')
+    ->where('appointment_request.consultant_id', $user_id)
+    ->groupBy('appointment_request.client_id');
+
+    if( $city != 'all' )
+    {
+      $getclient = $getclient->where('client_user.city_id', $city);
+    }
+
+    if( ! empty( $keywords ) )
+    {
+      $getclient = $getclient->where(function( $query ) use ($keywords) {
+        $query->where('client_user.client_id', 'like', '%' . $keywords . '%')
+        ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
+        ->orWhere('client_user.client_email', 'like', '%' . $keywords . '%')
+        ->orWhere('client_user.client_phone_number', 'like', '%' . $keywords . '%');
+      });
+    }
+
+    $result = $getclient->orderBy('client_user.client_fullname', 'asc')
+    ->paginate( $limit );
+
+    return response()->json( $result, 200 );
+  }
 }

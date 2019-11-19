@@ -50,6 +50,8 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/myprofile', 'Frontend\PagesController@consultant_profile_page')->name('consultant_profile_page');
   Route::get('/myappointment', 'Frontend\PagesController@consultant_appointment_page')->name('consultant_appointment_page');
   Route::get('/privateevent', 'Frontend\PagesController@consultant_event_page')->name('consultant_event_page');
+  Route::get('/myclient', 'Frontend\PagesController@consultant_view_client_page')->name('consultant_view_client_page');
+  Route::get('/client_list', 'Frontend\ConsultantUserController@client_list');
   Route::get('/logout', 'Frontend\ConsultantUserController@logout');
 
   Route::group(['prefix' => 'request'], function() {

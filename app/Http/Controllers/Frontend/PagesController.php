@@ -214,4 +214,23 @@ class PagesController extends Controller
     $data['service_topic']        = $topic->getTopic();
     return response()->view('frontend.pages.clients.appointment', $data);
   }
+
+  public function consultant_view_client_page( Request $request )
+  {
+    if( ! session()->has('isConsultant') )
+    {
+      return redirect()->route('consultant_login_page');
+    }
+
+    $consultant = new ConsultantUser;
+    $city       = new City;
+
+    $data['request']              = $request;
+    $data['hasLogin']['user']     = 'consultant';
+    $data['hasLogin']['isLogin']  = true;
+    $data['getuser']              = $consultant->getProfile();
+    $data['getcity']              = $city->getAllCity();
+
+    return response()->view('frontend.pages.consultant.client_list', $data);
+  }
 }

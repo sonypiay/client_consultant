@@ -33,6 +33,7 @@ Vue.component('consultant-editprofile-page', require('./components/Frontend/cons
 Vue.component('consultant-viewprofile-page', require('./components/Frontend/consultant/MyProfile.vue').default);
 Vue.component('consultant-view-appointment', require('./components/Frontend/consultant/MyAppointment.vue').default);
 Vue.component('consultant-private-event', require('./components/Frontend/consultant/PrivateEvent.vue').default);
+Vue.component('consultant-view-clientlist', require('./components/Frontend/consultant/ClientList.vue').default);
 
 const app = new Vue({
     el: '#app',
