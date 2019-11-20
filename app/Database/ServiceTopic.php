@@ -25,6 +25,7 @@ class ServiceTopic extends Model
   public function getTopic( $request = null )
   {
     $keywords = $request === null ? '' : ( isset( $request->keywords ) ? $request->keywords : '' );
+
     $query    = $this;
     if( ! empty( $keywords ) )
     {
@@ -51,11 +52,9 @@ class ServiceTopic extends Model
   public function saveTopic( $request, $id )
   {
     $topic_name   = $request->topic_name;
-    $topic_id     = $this->getId();
 
     $gettopic = $this->where('topic_id', $id)->first();
     $gettopic->topic_name   = $topic_name;
-    $gettopic->topic_id     = $topic_id;
     return $gettopic->save();
   }
 

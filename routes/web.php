@@ -92,9 +92,19 @@ Route::group(['prefix' => 'cp'], function() {
   Route::get('/auth/logout', 'ControlPanel\AuthController@logout');
   Route::post('/auth/login', 'ControlPanel\AuthController@login');
 
-  Route::get('/admin', 'ControlPanel\AdminController@index');
-  Route::get('/admin/show/{id?}', 'ControlPanel\AdminController@show');
-  Route::post('/admin/create', 'ControlPanel\AdminController@store');
-  Route::put('/admin/update/{id}', 'ControlPanel\AdminController@update');
-  Route::delete('/admin/delete/{id}', 'ControlPanel\AdminController@destroy');
+  Route::group(['prefix' => 'admin'], function() {
+    Route::get('/', 'ControlPanel\AdminController@index');
+    Route::get('/show/{id?}', 'ControlPanel\AdminController@show');
+    Route::post('/create', 'ControlPanel\AdminController@store');
+    Route::put('/update/{id}', 'ControlPanel\AdminController@update');
+    Route::delete('/delete/{id}', 'ControlPanel\AdminController@destroy');
+  });
+
+  Route::group(['prefix' => 'service_topic'], function() {
+    Route::get('/', 'ControlPanel\ServiceTopicController@index');
+    Route::get('/show/{id?}', 'ControlPanel\ServiceTopicController@show');
+    Route::post('/create', 'ControlPanel\ServiceTopicController@store');
+    Route::put('/update/{id}', 'ControlPanel\ServiceTopicController@update');
+    Route::delete('/delete/{id}', 'ControlPanel\ServiceTopicController@destroy');
+  });
 });
