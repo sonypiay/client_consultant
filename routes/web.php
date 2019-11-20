@@ -85,4 +85,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
   Route::get('auth/login', 'ControlPanel\AuthController@index')->name('cp_login_page');
   Route::post('auth/login', 'ControlPanel\AuthController@login');
+
+  Route::get('/admin', 'ControlPanel\AdminController@index');
+  Route::post('/admin/create', 'ControlPanel\AdminController@store');
 });

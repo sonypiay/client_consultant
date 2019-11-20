@@ -120,17 +120,18 @@ class AdminUser extends Model
       'responseMessage' => 'success'
     ];
 
+    $getadmin->admin_fullname = $fullname;
+    if( ! empty( $password ) ) $getadmin->admin_password = $hash;
+
     if( $getadmin->admin_email == $email )
     {
-
+      $getadmin->save();
     }
     else
     {
       if( $checkemail->count() == 0 )
       {
         $getadmin->admin_email    = $email;
-        $getadmin->admin_fullname = $fullname;
-        $getadmin->admin_password = $hash;
         $getadmin->save();
       }
       else
