@@ -46,17 +46,17 @@ class Province extends Model
     $province_name = $request->province_name;
     $province_id = $request->province_id;
     $check_id = $this->where('province_id', $province_id);
-    $res = [ 'statusCode' => 200, 'errorMessage' => '' ];
+    $res = [ 'responseCode' => 200, 'responseMessage' => 'province added' ];
 
-    if( $check_id->count() == 1 )
-    {
-      $res = [ 'statusCode' => 409, 'errorMessage' => 'ID sudah digunakan' ];
-    }
-    else
+    if( $check_id->count() == 0 )
     {
       $this->province_id = $province_id;
       $this->province_name = $province_name;
       $this->save();
+    }
+    else
+    {
+      $res = [ 'responseCode' => 409, 'responseMessage' => 'ID sudah digunakan' ];
     }
 
     return $res;
@@ -66,12 +66,12 @@ class Province extends Model
   {
     $province_name = $request->province_name;
     $province_id = $request->province_id;
-    $res = [ 'statusCode' => 200, 'errorMessage' => '' ];
+    $res = [ 'responseCode' => 200, 'responseMessage' => 'province updated' ];
 
     $getprovince = $this->getProvince( $id );
     $getprovince->province_name = $province_name;
 
-    if( $getprovince->province_id == $province_id )
+    if( $id == $province_id )
     {
       $getprovince->save();
     }
@@ -80,7 +80,7 @@ class Province extends Model
       $check_id = $this->where('province_id', $province_id);
       if( $check_id->count() == 1 )
       {
-        $res = [ 'statusCode' => 409, 'errorMessage' => 'ID sudah digunakan' ];
+        $res = [ 'responseCode' => 409, 'responseMessage' => 'ID sudah digunakan' ];
       }
       else
       {
@@ -94,7 +94,8 @@ class Province extends Model
 
   public function deleteProvince( $id )
   {
-    if( $id === null || empty( $id ) ) return false;
-    return $this->where('province_id', $id)->delete();
+    $this->where('province_id', $id)->delete();
+    $res = [ 'responseCode' => 200, 'responseMessage' => 'province deleted' ];
+    return $res;
   }
 }

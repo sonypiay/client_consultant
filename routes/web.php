@@ -107,4 +107,13 @@ Route::group(['prefix' => 'cp'], function() {
     Route::put('/update/{id}', 'ControlPanel\ServiceTopicController@update');
     Route::delete('/delete/{id}', 'ControlPanel\ServiceTopicController@destroy');
   });
+
+  Route::group(['prefix' => 'area'], function() {
+    Route::group(['prefix' => 'province'], function() {
+      Route::get('/show', 'ControlPanel\ProvinceController@show');
+      Route::post('/create', 'ControlPanel\ProvinceController@store');
+      Route::put('/update/{id}', 'ControlPanel\ProvinceController@update');
+      Route::delete('/delete/{id}', 'ControlPanel\ProvinceController@destroy');
+    });
+  });
 });

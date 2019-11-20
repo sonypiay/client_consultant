@@ -42,7 +42,7 @@ class ConsultantUser extends Model
     ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
     ->where('consultant_user.consultant_id', session()->get('consultantId'))
     ->first();
-    
+
     return $query;
   }
 
@@ -84,21 +84,21 @@ class ConsultantUser extends Model
     }
   }
 
-  public function signup( $request )
+  public function addConsultant( $request )
   {
     $consult_id     = $this->getConsultantId();
     $fullname       = $request->fullname;
     $email          = $request->email;
     $password       = $request->password;
     $hash_password  = Hash::make( $password );
-    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
+    $res = ['responseCode' => 200, 'responseMessage' => 'consultant added'];
 
     $check_email = $this->where('consultant_email', $email);
     if( $check_email->count() == 1 )
     {
       $res = [
         'responseCode' => 409,
-        'responseMessage' => $email . ' has already taken!'
+        'responseMessage' => $email . ' sudah terdaftar'
       ];
     }
     else
@@ -108,26 +108,62 @@ class ConsultantUser extends Model
       $this->consultant_email = $email;
       $this->consultant_password = $hash_password;
       $this->save();
-
-      $getconsult = $this->where('consultant_email', $email)->first();
-
-      session()->put('isConsultant', true);
-      session()->put('consultantId', $getconsult->consultant_id);
-      session()->put('consultantLogin', date('Y-m-d H:i:s'));
-      session()->put('consultantIp', $request->server('REMOTE_ADDR'));
     }
 
     return $res;
   }
 
+  public function updateConsultant( $request, $id )
+  {
+    $fullname       = $request->fullname;
+    $email          = $request->email;
+    $address        = $request->address;
+    $phone_number   = $request->phone_number;
+    $city           = $request->city;
+    $password       = isset( $request->password ) ? $request->password : '';
+    $hash_password  = ! empty( $password ) ? Hash::make( $password ) : '';
+    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
+
+    $getconsult                           = $this->where('consultant_id', $id)->first();
+    $getconsult->consultant_fullname      = $fullname;
+    $getconsult->consultant_phone_number  = $phone_number;
+    $getconsult->consultant_address       = $address;
+    $getconsult->city_id                  = $city;
+
+    if( ! empty( $password ) ) $getconsult->consultant_password = $hash_password;
+
+    if( $getconsult->consultant_email == $email )
+    {
+      $getconsult->save();
+    }
+    else
+    {
+      $check_email = $this->where('consultant_email', $email);
+      if( $check_email->count() == 1 )
+      {
+        $res = [
+          'responseCode' => 409,
+          'responseMessage' => $email . ' sudah terdaftar'
+        ];
+      }
+      else
+      {
+        $getconsult->consultant_email = $email;
+        $getconsult->save();
+      }
+    }
+    
+    return $res;
+  }
+
   public function saveProfile( $request )
   {
-    $fullname = $request->fullname;
-    $email = $request->email;
-    $address = $request->address;
+    $fullname     = $request->fullname;
+    $email        = $request->email;
+    $address      = $request->address;
     $phone_number = $request->phone_number;
-    $city = $request->city;
-    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
+    $city         = $request->city;
+    $res          = ['responseCode' => 200, 'responseMessage' => 'success'];
 
     $getconsult = $this->getProfile();
     $getconsult->consultant_fullname = $fullname;
