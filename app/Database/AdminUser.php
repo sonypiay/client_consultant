@@ -35,7 +35,7 @@ class AdminUser extends Model
     $checklogin     = $this->where('admin_email', $email);
     $res = [
       'responseCode' => 200,
-      'responseMessage' => 'success'
+      'responseMessage' => 'login success'
     ];
 
     if( $checklogin->count() == 1 )
@@ -93,7 +93,7 @@ class AdminUser extends Model
 
       $res = [
         'responseCode' => 200,
-        'responseMessage' => 'success'
+        'responseMessage' => 'add success'
       ];
     }
     else
@@ -117,7 +117,7 @@ class AdminUser extends Model
     $checkemail = $this->where('admin_email', $email);
     $res        = [
       'responseCode' => 200,
-      'responseMessage' => 'success'
+      'responseMessage' => 'update success'
     ];
 
     $getadmin->admin_fullname = $fullname;

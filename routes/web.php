@@ -95,4 +95,6 @@ Route::group(['prefix' => 'cp'], function() {
   Route::get('/admin', 'ControlPanel\AdminController@index');
   Route::get('/admin/show/{id?}', 'ControlPanel\AdminController@show');
   Route::post('/admin/create', 'ControlPanel\AdminController@store');
+  Route::put('/admin/update/{id}', 'ControlPanel\AdminController@update');
+  Route::delete('/admin/delete/{id}', 'ControlPanel\AdminController@destroy');
 });
