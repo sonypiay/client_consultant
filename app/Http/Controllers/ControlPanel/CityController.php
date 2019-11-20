@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ControlPanel;
 
 use Illuminate\Http\Request;
+use  App\Database\City;
 use App\Http\Controllers\Controller;
 
 class CityController extends Controller
@@ -17,69 +18,29 @@ class CityController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $request, City $city)
     {
-        //
+      $res = $city->addCity( $request );
+      return response()->json( $res, $res['responseCode'] );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(Request $request, City $city)
     {
-        //
+      $res = $city->getAllCity( null, $request );
+      return response()->json( $res, 200 );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $request, City $city, $id)
     {
-        //
+      $res = $city->updateCity( $request, $id );
+      return response()->json( $res, $res['responseCode'] );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroy(City $city, $id)
     {
-        //
-    }
+      $city->deleteCity( $id );
+      $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+      return response()->json( $res, $res['responseCode'] );
     }
 }

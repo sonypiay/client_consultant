@@ -13,11 +13,6 @@ class ProvinceController extends Controller
     {
     }
 
-    public function create()
-    {
-
-    }
-
     public function store( Request $request, Province $province )
     {
       $res = $province->addProvince( $request );

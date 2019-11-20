@@ -115,5 +115,12 @@ Route::group(['prefix' => 'cp'], function() {
       Route::put('/update/{id}', 'ControlPanel\ProvinceController@update');
       Route::delete('/delete/{id}', 'ControlPanel\ProvinceController@destroy');
     });
+
+    Route::group(['prefix' => 'city'], function() {
+      Route::get('/show', 'ControlPanel\CityController@show');
+      Route::post('/create', 'ControlPanel\CityController@store');
+      Route::put('/update/{id}', 'ControlPanel\CityController@update');
+      Route::delete('/delete/{id}', 'ControlPanel\CityController@destroy');
+    });
   });
 });

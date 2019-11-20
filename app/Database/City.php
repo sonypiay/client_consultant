@@ -73,11 +73,11 @@ class City extends Model
     $province = $request->province;
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
 
-    $getcity = $this->getCity( $id );
+    $getcity = $this->where( 'city_id', $id )->first();
     $getcity->city_name = $city_name;
     $getcity->province_id = $province;
 
-    if( $getcity->city_id === $city_id )
+    if( $id === $city_id )
     {
       $getcity->save();
     }
@@ -94,11 +94,12 @@ class City extends Model
         $getcity->save();
       }
     }
+
+    return $res;
   }
 
   public function deleteCity( $id )
   {
-    if( $id === null || empty( $id ) ) return false;
     return $this->where('city_id', $id)->delete();
   }
 }
