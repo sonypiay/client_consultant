@@ -78,3 +78,11 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ConsultantUserController@mark_as_read');
   Route::delete('/delete_event/{id}', 'Frontend\ConsultantUserController@delete_event');
 });
+
+Route::group(['prefix' => 'cp'], function() {
+  Route::get('/', function() {
+    return redirect()->route('cp_login_page');
+  });
+  Route::get('auth/login', 'ControlPanel\AuthController@index')->name('cp_login_page');
+  Route::post('auth/login', 'ControlPanel\AuthController@login');
+});

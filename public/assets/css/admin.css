@@ -1,0 +1,135 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700&display=swap);html,
+body {
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.gl-label {
+  color: #333333;
+  font-weight: 400;
+  font-size: 13px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.gl-input-default {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  color: #333333;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.gl-input-default:hover,
+.gl-input-default:focus {
+  border: 1px solid #3dcbf3;
+  background: #eaf9fe;
+}
+
+.gl-button-default {
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #25C4F2;
+  color: #25C4F2;
+  text-transform: capitalize;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.gl-button-default:hover,
+.gl-button-default:focus {
+  border: 1px solid #25C4F2;
+  background: #25C4F2;
+  color: #ffffff;
+}
+
+.gl-button-primary {
+  border-radius: 6px;
+  background: #25C4F2;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-transform: capitalize;
+}
+
+.gl-button-primary:hover,
+.gl-button-primary:focus {
+  background: #55d1f5;
+  color: #ffffff;
+}
+
+.gl-button-success {
+  background: #38c172;
+}
+
+.gl-button-success:hover,
+.gl-button-success:active {
+  background: #5cd08d;
+}
+
+.gl-button-danger {
+  background: #e3342f;
+}
+
+.gl-button-danger:hover,
+.gl-button-danger:active {
+  background: #e9605c;
+}
+
+.gl-icon-review {
+  color: #25C4F2;
+  font-size: 40px;
+}
+
+.gl-icon-review:hover,
+.gl-icon-review:active {
+  color: #55d1f5;
+}
+
+.gl-review-text {
+  color: #666666;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-panel {
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.card-panel .card-panel-title {
+  font-weight: 200;
+  font-size: 28px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: center;
+}
+
+.card-panel .card-link a {
+  color: #333333;
+  font-weight: 400;
+  font-size: 13px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: center;
+}
+

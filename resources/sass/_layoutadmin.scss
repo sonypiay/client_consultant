@@ -1,0 +1,19 @@
+html, body { font-family: $font-base; }
+
+@include global_input_style();
+
+.card-panel {
+  border-radius: 10px;
+  @include global_font_style( 400, 14px, normal, 0.4px );
+  .card-panel-title {
+    @include global_font_style( 200, 28px, normal, 0.4px );
+    text-align: center;
+  }
+  .card-link {
+    a {
+      color: #333333;
+      @include global_font_style( 400, 13px, normal, 0.4px );
+      text-align: center;
+    }
+  }
+}
