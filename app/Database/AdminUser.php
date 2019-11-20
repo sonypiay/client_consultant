@@ -145,4 +145,9 @@ class AdminUser extends Model
 
     return $res;
   }
+
+  public function deleteAdmin( $id )
+  {
+    return $this->where('admin_id', $id)->delete();
+  }
 }

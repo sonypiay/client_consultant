@@ -12,27 +12,23 @@ class AuthController extends Controller
 {
     public function index( Request $request )
     {
-        if( session()->has('isAdmin') )
-        {
-          return;
-        }
-
-        return response()->view('controlpanel.pages.login');
+      if( session()->has('isAdmin') )
+      {
+        return;
+      }
+      return response()->view('controlpanel.pages.login');
     }
 
     public function login( Request $request, AdminUser $adminuser )
     {
       $res = $adminuser->doLogin( $request );
-      return response()->json( $res, $res['responseCode'] );
+      return response()->json( $res );
     }
 
-    public function logout()
+    public function logout( AdminUser $adminuser )
     {
       $adminuser->doLogout();
-      $res = [
-        'responseCode' => 200,
-        'responseMessage' => 'success'
-      ];
+      $res = [ 'responseCode' => 200, 'responseMessage' => 'success' ];
       return response()->json( $res, $res['responseCode'] );
     }
 }

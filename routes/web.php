@@ -79,13 +79,20 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::delete('/delete_event/{id}', 'Frontend\ConsultantUserController@delete_event');
 });
 
+Route::get('/token', function() {
+  return csrf_token();
+});
+
 Route::group(['prefix' => 'cp'], function() {
   Route::get('/', function() {
     return redirect()->route('cp_login_page');
   });
-  Route::get('auth/login', 'ControlPanel\AuthController@index')->name('cp_login_page');
-  Route::post('auth/login', 'ControlPanel\AuthController@login');
+
+  Route::get('/auth/login', 'ControlPanel\AuthController@index')->name('cp_login_page');
+  Route::get('/auth/logout', 'ControlPanel\AuthController@logout');
+  Route::post('/auth/login', 'ControlPanel\AuthController@login');
 
   Route::get('/admin', 'ControlPanel\AdminController@index');
+  Route::get('/admin/show/{id?}', 'ControlPanel\AdminController@show');
   Route::post('/admin/create', 'ControlPanel\AdminController@store');
 });

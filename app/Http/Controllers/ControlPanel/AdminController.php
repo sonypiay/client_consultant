@@ -18,22 +18,6 @@ class AdminController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
       $adminuser = new AdminUser;
@@ -41,35 +25,35 @@ class AdminController extends Controller
       return response()->json( $res, $res['responseCode'] );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show( Request $request, $id = null )
     {
-        //
+      $keywords = isset( $request->keywords ) ? $request->keywords : '';
+      $limit = isset( $request->limit ) ? $request->limit : 10;
+
+      $adminuser = new AdminUser;
+
+      if( $id === null )
+      {
+        $query = $adminuser->orderBy('created_at', 'desc');
+
+        if( ! empty( $keywords ) )
+        {
+          $query = $query->where(function($q) use ($keywords) {
+            $q->where('admin_fullname', 'like', '%' . $keywords . '%')
+            ->orWhere('admin_email', 'like', '%' . $keywords . '%');
+          });
+        }
+
+        $result = $query->paginate( $limit );
+      }
+      else
+      {
+        $result = $adminuser->where('admin_id', $id)->first();
+      }
+
+      return response()->json( $result, 200 );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
       $adminuser = new AdminUser;
@@ -77,14 +61,11 @@ class AdminController extends Controller
       return response()->json( $res, $res['responseCode'] );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy( $id )
     {
-        //
+      $adminuser = new AdminUser;
+      $adminuser->deleteAdmin( $id );
+      $res = ['responseCode' => 200, 'responseMessage' => 'deleted'];
+      return response()->json( $res, $res['responseCode'] );
     }
 }
