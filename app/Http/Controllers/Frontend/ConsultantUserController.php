@@ -90,12 +90,6 @@ class ConsultantUserController extends Controller
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function search_consultant( Request $request, ConsultantUser $consultantUser )
-  {
-    $res = $consultantUser->search_consultant( $request );
-    return response()->json( $res, 200 );
-  }
-
   public function request_list( Request $request, AppointmentRequest $appointment, $status = null )
   {
     $res = $appointment->showRequest( $status, $request );

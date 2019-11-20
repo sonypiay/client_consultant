@@ -3,83 +3,38 @@
 namespace App\Http\Controllers\ControlPanel;
 
 use Illuminate\Http\Request;
+use App\Database\ConsultantUser;
 use App\Http\Controllers\Controller;
 
 class ConsultantUserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $request, ConsultantUser $consultant)
     {
-        //
+      $res = $consultant->addConsultant( $request );
+      return response()->json( $res, $res['responseCode'] );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(Request $request, ConsultantUser $consultant)
     {
-        //
+      $res = $consultant->getConsultant( $request );
+      return response()->json( $res, 200 );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $request, ConsultantUser $consultant, $id)
     {
-        //
+      $res = $consultant->updateConsultant( $request, $id );
+      return response()->json( $res, $res['responseCode'] );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroy( ConsultantUser $consultant, $id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+      $res = $consultant->deleteConsultant( $id );
+      return response()->json( $res, $res['responseCode'] );
     }
 }

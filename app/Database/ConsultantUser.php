@@ -89,9 +89,10 @@ class ConsultantUser extends Model
     $consult_id     = $this->getConsultantId();
     $fullname       = $request->fullname;
     $email          = $request->email;
+    $phone_number   = $request->phone_number;
     $password       = $request->password;
     $hash_password  = Hash::make( $password );
-    $res = ['responseCode' => 200, 'responseMessage' => 'consultant added'];
+    $res            = ['responseCode' => 200, 'responseMessage' => 'consultant added'];
 
     $check_email = $this->where('consultant_email', $email);
     if( $check_email->count() == 1 )
@@ -103,10 +104,11 @@ class ConsultantUser extends Model
     }
     else
     {
-      $this->consultant_id = $consult_id;
-      $this->consultant_fullname = $fullname;
-      $this->consultant_email = $email;
-      $this->consultant_password = $hash_password;
+      $this->consultant_id            = $consult_id;
+      $this->consultant_fullname      = $fullname;
+      $this->consultant_email         = $email;
+      $this->consultant_password      = $hash_password;
+      $this->consultant_phone_number  = $phone_number;
       $this->save();
     }
 
@@ -117,9 +119,7 @@ class ConsultantUser extends Model
   {
     $fullname       = $request->fullname;
     $email          = $request->email;
-    $address        = $request->address;
     $phone_number   = $request->phone_number;
-    $city           = $request->city;
     $password       = isset( $request->password ) ? $request->password : '';
     $hash_password  = ! empty( $password ) ? Hash::make( $password ) : '';
     $res = ['responseCode' => 200, 'responseMessage' => 'success'];
@@ -127,8 +127,6 @@ class ConsultantUser extends Model
     $getconsult                           = $this->where('consultant_id', $id)->first();
     $getconsult->consultant_fullname      = $fullname;
     $getconsult->consultant_phone_number  = $phone_number;
-    $getconsult->consultant_address       = $address;
-    $getconsult->city_id                  = $city;
 
     if( ! empty( $password ) ) $getconsult->consultant_password = $hash_password;
 
@@ -152,7 +150,7 @@ class ConsultantUser extends Model
         $getconsult->save();
       }
     }
-    
+
     return $res;
   }
 
@@ -272,11 +270,11 @@ class ConsultantUser extends Model
     return session()->flush();
   }
 
-  public function search_consultant( $request )
+  public function getConsultant( $request )
   {
-    $keywords = $request->keywords;
-    $limit = $request->limit;
-    $sorting = $request->sorting;
+    $keywords = isset( $request->keywords ) ? $request->keywords : '';
+    $limit = isset( $request->limit ) ? $request->limit : 10;
+    $sorting = isset( $request->sorting ) ? $request->sorting : 'latest';
     $whereClauses = [];
 
     $query = $this->select(
@@ -284,10 +282,8 @@ class ConsultantUser extends Model
       'consultant_user.consultant_fullname',
       'consultant_user.consultant_email',
       'consultant_user.consultant_phone_number',
-      'consultant_user.consultant_gender',
-      'consultant_user.consultant_photo',
-      'consultant_user.consultant_type',
       'consultant_user.consultant_address',
+      'consultant_user.consultant_password',
       'consultant_user.created_at',
       'consultant_user.updated_at',
       'city.city_id',
@@ -310,23 +306,31 @@ class ConsultantUser extends Model
 
     if( $sorting == 'latest' )
     {
-      $query = $query->orderBy('consultant_user.created_at', 'desc');
+      $query = $query->orderBy('consultant_user.consultant_id', 'desc');
     }
     else if( $sorting == 'asc' )
     {
       $query = $query->orderBy('consultant_user.consultant_fullname', 'asc');
     }
-    else if( $sorting == 'recommended' )
+    else if( $sorting == 'desc' )
     {
-      $query = $query->orderBy(DB::raw('avg(feedbacks.rateindex)'), 'desc');
+      $query = $query->orderBy('consultant_user.consultant_fullname', 'desc');
     }
     else
     {
-      $query = $query->orderBy('consultant_user.consultant_fullname', 'desc');
+      $query = $query->orderBy(DB::raw('avg(feedbacks.rateindex)'), 'desc');
     }
 
     $result = $query->groupBy('consultant_user.consultant_id')
     ->paginate( $limit );
     return $result;
+  }
+
+  public function deleteConsultant( $id )
+  {
+    $res = ['responseCode' => 200, 'responseMessage' => 'consultant deleted'];
+    $this->where('consultant_id', $id)->delete();
+    
+    return $res;
   }
 }

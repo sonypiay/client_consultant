@@ -123,4 +123,11 @@ Route::group(['prefix' => 'cp'], function() {
       Route::delete('/delete/{id}', 'ControlPanel\CityController@destroy');
     });
   });
+
+  Route::group(['prefix' => 'consultant'], function() {
+    Route::get('/show', 'ControlPanel\ConsultantUserController@show');
+    Route::post('/create', 'ControlPanel\ConsultantUserController@store');
+    Route::put('/update/{id}', 'ControlPanel\ConsultantUserController@update');
+    Route::delete('/delete/{id}', 'ControlPanel\ConsultantUserController@destroy');
+  });
 });
