@@ -36,7 +36,9 @@ html, body { font-family: $font-base; }
         color: #ffffff;
         @include global_font_style( 400, 14px, normal, 0.4px );
         padding: 8px 18px;
+        @include global_transition();
         &:hover {
+          color: #ffffff;
           background: lighten($color-base, 10%);
         }
       }
@@ -51,6 +53,7 @@ html, body { font-family: $font-base; }
         a {
           color: #333333;
           @include global_font_style( 400, 14px, normal, 0.4px );
+          @include global_transition();
           &:hover {
             color: $color-base;
           }
@@ -60,6 +63,7 @@ html, body { font-family: $font-base; }
             a {
               color: #333333;
               @include global_font_style( 400, 14px, normal, 0.4px );
+              @include global_transition();
               &:hover {
                 color: $color-base;
               }

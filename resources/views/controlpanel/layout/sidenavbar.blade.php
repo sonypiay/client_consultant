@@ -2,7 +2,7 @@
   <div class="uk-text-center">
     <a href="{{ route('cp_dashboard_page') }}" class="sidenav-logo">Solusi Pajakku</a>
   </div>
-  <ul class="uk-nav uk-nav-default sidenav">
+  <ul class="uk-nav uk-nav-default sidenav" uk-nav>
     <li class="uk-nav-header sidenav-header">Menu Utama</li>
     <li>
       <a href="{{ route('cp_dashboard_page') }}">
@@ -10,23 +10,27 @@
         Dashboard
       </a>
     </li>
-    <li>
-      <a href="{{ route('cp_consultant_page') }}">
+    <li class="uk-parent">
+      <a href="#">
         <span class="uk-margin-small-right" uk-icon="icon: users; ratio: 0.8"></span>
         Konsultan
+        <span class="uk-float-right" uk-icon="icon: chevron-down; ratio: 0.8"></span>
       </a>
+      <ul class="uk-nav-sub nav-sub">
+        <li><a href="{{ route('cp_consultant_page') }}">Daftar Konsultan</a></li>
+        <li><a href="{{ route('cp_event_schedule_page')}}">Jadwal Acara</a></li>
+      </ul>
     </li>
-    <li>
-      <a href="{{ route('cp_client_page') }}">
+    <li class="uk-parent">
+      <a href="#">
         <span class="uk-margin-small-right" uk-icon="icon: user; ratio: 0.8"></span>
         Klien
+        <span class="uk-float-right" uk-icon="icon: chevron-down; ratio: 0.8"></span>
       </a>
-    </li>
-    <li>
-      <a href="#">
-        <span class="uk-margin-small-right" uk-icon="icon: bell; ratio: 0.8"></span>
-        Permintaan Konsultasi
-      </a>
+      <ul class="uk-nav-sub nav-sub">
+        <li><a href="{{ route('cp_client_page') }}">Daftar Konsultan</a></li>
+        <li><a href="#">Permintaan Konsultasi</a></li>
+      </ul>
     </li>
     <li>
       <a href="#">

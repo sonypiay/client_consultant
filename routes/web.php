@@ -145,6 +145,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
 
   Route::group(['prefix' => 'event'], function() {
+    Route::get('/', 'ControlPanel\EventScheduleController@index')->name('cp_event_schedule_page');
     Route::get('/show', 'ControlPanel\EventScheduleController@show');
   });
 

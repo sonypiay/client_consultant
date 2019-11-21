@@ -16,6 +16,15 @@ $cyan: #6cb2eb;
 $color-base: #25C4F2;
 $color-rating: #ffed4a;
 
+@mixin global_transition()
+{
+  transition: all 0.15s ease-in 0s;
+  -moz-transition: all 0.15s ease-in 0s;
+  -webkit-transition: all 0.15s ease-in 0s;
+  -ms-transition: all 0.15s ease-in 0s;
+  -o-transition: all 0.15s ease-in 0s;
+}
+
 @mixin color_background_base( $opacity )
 {
   background: rgba( 37, 196, 242, $opacity );

@@ -15,6 +15,8 @@ Vue.component('dashboard-page', require('./components/ControlPanel/Dashboard.vue
 Vue.component('admin-page', require('./components/ControlPanel/Admin.vue').default);
 Vue.component('consultant-page', require('./components/ControlPanel/Consultant.vue').default);
 Vue.component('client-page', require('./components/ControlPanel/Client.vue').default);
+Vue.component('event-schedule-page', require('./components/ControlPanel/EventSchedule.vue').default);
+Vue.component('appointment-page', require('./components/ControlPanel/Appointment.vue').default);
 
 const app = new Vue({
     el: '#app',
