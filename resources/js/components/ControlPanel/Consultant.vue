@@ -52,6 +52,66 @@
     </div>
     <!-- tambah / update konsultan -->
 
+    <!-- detail konsultan -->
+    <div id="modal-detail" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <a class="uk-modal-close uk-modal-close-outside" uk-close></a>
+        <h3>Detail Konsultan</h3>
+
+        <div class="uk-grid-small uk-grid-match" uk-grid>
+          <div class="uk-width-1-2">
+            <div class="uk-panel">
+              <h4 class="uk-h4 uk-margin-remove-bottom">Nama Konsultan</h4>
+              <p class="uk-text-meta uk-margin-remove-top">
+                {{ getconsultant.details.consultant_fullname }}
+              </p>
+            </div>
+          </div>
+          <div class="uk-width-1-2">
+            <div class="uk-panel">
+              <h4 class="uk-h4 uk-margin-remove-bottom">Email</h4>
+              <p class="uk-text-meta uk-margin-remove-top">
+                {{ getconsultant.details.consultant_email }}
+              </p>
+            </div>
+          </div>
+          <div class="uk-width-1-2">
+            <div class="uk-panel">
+              <h4 class="uk-h4 uk-margin-remove-bottom">No. Telepon</h4>
+              <p class="uk-text-meta uk-margin-remove-top">
+                {{ getconsultant.details.consultant_phone_number }}
+              </p>
+            </div>
+          </div>
+          <div class="uk-width-1-2">
+            <div class="uk-panel">
+              <h4 class="uk-h4 uk-margin-remove-bottom">Alamat</h4>
+              <p class="uk-text-meta uk-margin-remove-top">
+                {{ getconsultant.details.consultant_address }}
+              </p>
+            </div>
+          </div>
+          <div class="uk-width-1-2">
+            <div class="uk-panel">
+              <h4 class="uk-h4 uk-margin-remove-bottom">Kota</h4>
+              <p class="uk-text-meta uk-margin-remove-top">
+                {{ getconsultant.details.city_name }}
+              </p>
+            </div>
+          </div>
+          <div class="uk-width-1-2">
+            <div class="uk-panel">
+              <h4 class="uk-h4 uk-margin-remove-bottom">Rata - rata rating</h4>
+              <p class="uk-text-meta uk-margin-remove-top">
+                {{ rateIndex( getconsultant.details.total_rate, getconsultant.details.total_feedback ) }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- detail konsultan -->
+
     <div class="container-panel">
       <div class="content-heading">
         Konsultan
@@ -106,6 +166,7 @@
                 <tbody>
                   <tr v-for="c in getconsultant.results">
                     <td>
+                      <a @click="onViewDetail( c )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a>
                       <a @click="onClickModal( c )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: pencil; ratio: 0.8"></a>
                       <a @click="onDeleteConsultant( c.consultant_id )" uk-tooltip="Hapus" class="uk-link-text" uk-icon="icon: trash; ratio: 0.8"></a>
                     </td>
@@ -178,7 +239,8 @@ export default {
           last_page: 1,
           prev_page_url: '',
           next_page_url: ''
-        }
+        },
+        details: {}
       },
       messages: {
         errors: {},
@@ -382,6 +444,11 @@ export default {
           });
         }
       });
+    },
+    onViewDetail( d )
+    {
+      this.getconsultant.details = d;
+      UIkit.modal('#modal-detail').show();
     },
     rateIndex( r, f )
     {

@@ -2360,6 +2360,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2386,7 +2447,8 @@ __webpack_require__.r(__webpack_exports__);
           last_page: 1,
           prev_page_url: '',
           next_page_url: ''
-        }
+        },
+        details: {}
       },
       messages: {
         errors: {},
@@ -2591,6 +2653,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    onViewDetail: function onViewDetail(d) {
+      this.getconsultant.details = d;
+      UIkit.modal('#modal-detail').show();
     },
     rateIndex: function rateIndex(r, f) {
       if (r === null || f === null) {
@@ -57357,6 +57423,129 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
+    _c("div", { attrs: { id: "modal-detail", "uk-modal": "" } }, [
+      _c("div", { staticClass: "uk-modal-dialog uk-modal-body" }, [
+        _c("a", {
+          staticClass: "uk-modal-close uk-modal-close-outside",
+          attrs: { "uk-close": "" }
+        }),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Detail Konsultan")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "uk-grid-small uk-grid-match",
+            attrs: { "uk-grid": "" }
+          },
+          [
+            _c("div", { staticClass: "uk-width-1-2" }, [
+              _c("div", { staticClass: "uk-panel" }, [
+                _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                  _vm._v("Nama Konsultan")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.getconsultant.details.consultant_fullname) +
+                      "\n            "
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-2" }, [
+              _c("div", { staticClass: "uk-panel" }, [
+                _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                  _vm._v("Email")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.getconsultant.details.consultant_email) +
+                      "\n            "
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-2" }, [
+              _c("div", { staticClass: "uk-panel" }, [
+                _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                  _vm._v("No. Telepon")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(
+                        _vm.getconsultant.details.consultant_phone_number
+                      ) +
+                      "\n            "
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-2" }, [
+              _c("div", { staticClass: "uk-panel" }, [
+                _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                  _vm._v("Alamat")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.getconsultant.details.consultant_address) +
+                      "\n            "
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-2" }, [
+              _c("div", { staticClass: "uk-panel" }, [
+                _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                  _vm._v("Kota")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.getconsultant.details.city_name) +
+                      "\n            "
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-2" }, [
+              _c("div", { staticClass: "uk-panel" }, [
+                _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                  _vm._v("Rata - rata rating")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(
+                        _vm.rateIndex(
+                          _vm.getconsultant.details.total_rate,
+                          _vm.getconsultant.details.total_feedback
+                        )
+                      ) +
+                      "\n            "
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "container-panel" }, [
       _c("div", { staticClass: "content-heading" }, [
         _vm._v("\n      Konsultan\n      "),
@@ -57564,6 +57753,19 @@ var render = function() {
                             _vm._l(_vm.getconsultant.results, function(c) {
                               return _c("tr", [
                                 _c("td", [
+                                  _c("a", {
+                                    staticClass: "uk-link-text",
+                                    attrs: {
+                                      "uk-tooltip": "Ubah",
+                                      "uk-icon": "icon: forward; ratio: 0.8"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onViewDetail(c)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
                                   _c("a", {
                                     staticClass: "uk-link-text",
                                     attrs: {
