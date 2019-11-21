@@ -137,7 +137,7 @@
         <div class="uk-panel uk-margin">
           <h4 class="uk-h4 uk-margin-remove-bottom">Kota</h4>
           <p class="uk-text-muted uk-margin-remove-top">
-            {{ getuser.city_name }}
+            {{ getuser.city }}
           </p>
         </div>
         <div class="uk-panel uk-margin">

@@ -25,7 +25,7 @@
                 <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
                   <div class="uk-clearfix">
                     <div class="uk-float-right">
-                      <a @click="markAsRead('request')" class="markas-read">Tandai sudah dibaca</a>
+                      <a @click="markAsRead('request')" class="markas-read">Tandai sudah dibaca</a> |
                       <a @click="showNotification()" class="markas-read">Muat ulang</a>
                     </div>
                   </div>
@@ -101,7 +101,7 @@
                 <div class="uk-navbar-dropdown uk-width-1-4 navbar-dropdown-default" uk-dropdown="mode: click; pos: bottom-center">
                   <div class="uk-clearfix">
                     <div class="uk-float-right">
-                      <a @click="markAsRead('request')" class="markas-read">Tandai sudah dibaca</a>
+                      <a @click="markAsRead('request')" class="markas-read">Tandai sudah dibaca</a> | 
                       <a @click="showNotification()" class="markas-read">Muat ulang</a>
                     </div>
                   </div>

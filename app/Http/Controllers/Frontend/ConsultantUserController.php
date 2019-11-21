@@ -191,7 +191,6 @@ class ConsultantUserController extends Controller
   {
     $keywords = isset( $request->keywords ) ? $request->keywords : '';
     $limit    = isset( $request->limit ) ? $request->limit : 6;
-    $city     = isset( $request->city ) ? $request->city : 'all';
     $user_id  = session()->get('consultantId');
 
     $getclient  = $client->select(
@@ -204,22 +203,12 @@ class ConsultantUserController extends Controller
       'client_user.client_npwp',
       'client_user.created_at',
       'client_user.updated_at',
-      'city.city_id',
-      'city.city_name',
-      'province.province_id',
-      'province.province_name',
+      'client_user.city',
       'appointment_request.client_id'
     )
-    ->leftJoin('city', 'client_user.city_id', '=', 'city.city_id')
-    ->leftJoin('province', 'city.province_id', '=', 'province.province_id')
     ->join('appointment_request', 'client_user.client_id', '=', 'appointment_request.client_id')
     ->where('appointment_request.consultant_id', $user_id)
     ->groupBy('appointment_request.client_id');
-
-    if( $city != 'all' )
-    {
-      $getclient = $getclient->where('client_user.city_id', $city);
-    }
 
     if( ! empty( $keywords ) )
     {

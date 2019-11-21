@@ -65491,9 +65491,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
                   _vm._v(
-                    "\n          " +
-                      _vm._s(_vm.getuser.city_name) +
-                      "\n        "
+                    "\n          " + _vm._s(_vm.getuser.city) + "\n        "
                   )
                 ])
               ]),
@@ -70834,9 +70832,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
                   _vm._v(
-                    "\n          " +
-                      _vm._s(_vm.getuser.city_name) +
-                      "\n        "
+                    "\n          " + _vm._s(_vm.getuser.city) + "\n        "
                   )
                 ])
               ]),
@@ -73072,7 +73068,7 @@ var render = function() {
                                   },
                                   [_vm._v("Tandai sudah dibaca")]
                                 ),
-                                _vm._v(" "),
+                                _vm._v(" |\n                    "),
                                 _c(
                                   "a",
                                   {
@@ -73366,7 +73362,7 @@ var render = function() {
                                   },
                                   [_vm._v("Tandai sudah dibaca")]
                                 ),
-                                _vm._v(" "),
+                                _vm._v(" | \n                    "),
                                 _c(
                                   "a",
                                   {
