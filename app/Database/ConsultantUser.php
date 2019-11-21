@@ -193,30 +193,6 @@ class ConsultantUser extends Model
     return $res;
   }
 
-  public function upload_photo( $request )
-  {
-    $photo = $request->photo;
-    $path_image = 'avatar/consultant';
-    $storage = Storage::disk('assets');
-    $getconsult = $this->getProfile();
-    $filename = $photo->hashName();
-
-    if( ! empty( $getconsult->consultant_photo ) )
-    {
-      if( $storage->exists( $path_image . '/' . $getconsult->consultant_photo ) )
-        $storage->delete( $path_image . '/' . $getconsult->consultant_photo );
-    }
-
-    $getconsult->consultant_photo = $filename;
-    if( ! $getconsult->save() )
-      $res = ['responseCode' => 500, 'responseMessage' => 'Whoops, something when wrong.'];
-
-    $storage->putFileAs( $path_image, $photo, $filename );
-
-    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
-    return $res;
-  }
-
   public function changePassword( $request )
   {
     $password = $request->password;
@@ -330,7 +306,7 @@ class ConsultantUser extends Model
   {
     $res = ['responseCode' => 200, 'responseMessage' => 'consultant deleted'];
     $this->where('consultant_id', $id)->delete();
-    
+
     return $res;
   }
 }
