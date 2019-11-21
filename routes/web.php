@@ -92,6 +92,12 @@ Route::group(['prefix' => 'cp'], function() {
   Route::get('/auth/logout', 'ControlPanel\AuthController@logout');
   Route::post('/auth/login', 'ControlPanel\AuthController@login');
 
+  Route::group(['prefix' => 'dashboard'], function() {
+    Route::get('/user_summary', 'ControlPanel\DashboardController@user_summary');
+    Route::get('/request_summary', 'ControlPanel\DashboardController@request_summary');
+    Route::get('/feedback_summary', 'ControlPanel\DashboardController@feedback_summary');
+  });
+
   Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'ControlPanel\AdminController@index');
     Route::get('/show/{id?}', 'ControlPanel\AdminController@show');
