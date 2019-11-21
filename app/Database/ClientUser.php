@@ -148,30 +148,6 @@ class ClientUser extends Model
     return $res;
   }
 
-  public function upload_photo( $request )
-  {
-    $photo = $request->photo;
-    $path_image = 'avatar/client';
-    $storage = Storage::disk('assets');
-    $getclient = $this->getProfile();
-    $filename = $photo->hashName();
-
-    if( ! empty( $getclient->client_photo ) )
-    {
-      if( $storage->exists( $path_image . '/' . $getclient->client_photo ) )
-        $storage->delete( $path_image . '/' . $getclient->client_photo );
-    }
-
-    $getclient->client_photo = $filename;
-    if( ! $getclient->save() )
-      $res = ['responseCode' => 500, 'responseMessage' => 'Whoops, something when wrong.'];
-
-    $storage->putFileAs( $path_image, $photo, $filename );
-
-    $res = ['responseCode' => 200, 'responseMessage' => 'success'];
-    return $res;
-  }
-
   public function changePassword( $request )
   {
     $password = $request->password;
@@ -253,5 +229,58 @@ class ClientUser extends Model
       'total' => $query->count(),
       'data' => $query
     ];
+  }
+
+  public function getClient( $request )
+  {
+    $keywords = isset( $request->keywords ) ? $request->keywords : '';
+    $limit    = isset( $request->limit ) ? $request->limit : 10;
+    $type     = isset( $request->type ) ? $request->type : 'all';
+
+    $query = $this->select(
+      'client_user.client_id',
+      'client_user.client_fullname',
+      'client_user.client_email',
+      'client_user.client_phone_number',
+      'client_user.client_type',
+      'client_user.client_address',
+      'client_user.client_npwp',
+      'client_user.created_at',
+      'client_user.updated_at',
+      'city.city_id',
+      'city.city_name',
+      'province.province_id',
+      'province.province_name'
+    )
+    ->leftJoin('city', 'client_user.city_id', '=', 'city.city_id')
+    ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
+
+    if( ! empty( $keywords ) )
+    {
+      $query = $query->where(function($q) use ($keywords) {
+        $q->where('client_user.client_id', 'like', '%' . $keywords . '%')
+        ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
+        ->orWhere('client_user.client_phone_number', 'like', '%' . $keywords . '%')
+        ->orWhere('client_user.client_email', 'like', '%' . $keywords . '%');
+      });
+    }
+
+    if( $type != 'all' )
+    {
+      $query = $query->where('client_user.client_type', $type);
+    }
+
+    $result = $query->orderBy('client_user.client_id', 'desc')
+    ->paginate( $limit );
+
+    return $result;
+  }
+
+  public function deleteClient( $id )
+  {
+    $this->where('client_id', $id)->delete();
+    $res = ['responseCode' => 200, 'responseMessage' => 'deleted'];
+
+    return $res;
   }
 }

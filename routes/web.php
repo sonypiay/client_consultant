@@ -130,4 +130,14 @@ Route::group(['prefix' => 'cp'], function() {
     Route::put('/update/{id}', 'ControlPanel\ConsultantUserController@update');
     Route::delete('/delete/{id}', 'ControlPanel\ConsultantUserController@destroy');
   });
+
+  Route::group(['prefix' => 'client'], function() {
+    Route::get('/show', 'ControlPanel\ClientUserController@show');
+    Route::post('/create', 'ControlPanel\ClientUserController@create');
+    Route::delete('/delete/{id}', 'ControlPanel\ClientUserController@destroy');
+  });
+
+  Route::group(['prefix' => 'event'], function() {
+    Route::get('/show', 'ControlPanel\EventScheduleController@show');
+  });
 });

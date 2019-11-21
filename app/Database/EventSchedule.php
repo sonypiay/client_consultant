@@ -30,26 +30,43 @@ class EventSchedule extends Model
 
   public function showEventSchedule( $request )
   {
-    $keywords     = $request->keywords;
-    $limit        = $request->limit;
-    $select_date  = $request->select_date;
+    $keywords     = isset( $request->keywords ) ? $request->keywords : '';
+    $limit        = isset( $request->limit ) ? $request->limit : 10;
+    $select_date  = isset( $request->select_date ) ? $request->select_date : '';
 
-    $query = $this;
+    $query = $this->select(
+      'event_schedule.evt_id',
+      'event_schedule.evt_title',
+      'event_schedule.evt_schedule',
+      'event_schedule.evt_location',
+      'event_schedule.evt_note',
+      'event_schedule.created_at',
+      'event_schedule.updated_at',
+      'consultant_user.consultant_id',
+      'consultant_user.consultant_fullname'
+    )
+    ->join('consultant_user', 'event_schedule.consultant_id', '=', 'consultant_user.consultant_id');
 
     if( ! empty( $keywords ) )
     {
       $query = $query->where(function($q) use ($keywords){
-        $q->where('evt_id', 'like', '%' . $keywords . '%')
-        ->orWhere('evt_title', 'like', '%' . $keywords . '%');
+        $q->where('event_schedule.evt_id', 'like', '%' . $keywords . '%')
+        ->orWhere('event_schedule.evt_title', 'like', '%' . $keywords . '%')
+        ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%');
       });
     }
 
     if( ! empty( $select_date ) )
     {
-      $query = $query->where(DB::raw("date_format(evt_schedule, '%Y-%m-%d')"), $select_date);
+      $query = $query->where(DB::raw("date_format(event_schedule.evt_schedule, '%Y-%m-%d')"), $select_date);
     }
 
-    $result = $query->orderBy('created_at', 'desc')
+    if( session()->has('isConsultant') )
+    {
+      $query = $query->where('event_schedule.consultant_id', session()->get('consultantId'));
+    }
+
+    $result = $query->orderBy('event_schedule.created_at', 'desc')
     ->paginate( $limit );
 
     return $result;
