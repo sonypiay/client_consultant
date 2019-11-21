@@ -121,7 +121,7 @@
           <div>
             <select class="uk-select gl-input-default" v-model="forms.topic" @change="showAppointmentRequest()">
               <option value="all">Semua topik</option>
-              <option v-for="tpc in gettopic.data" :value="tpc.topic_id">{{ tpc.topic_name }}</option>
+              <option v-for="tpc in gettopic" :value="tpc.topic_id">{{ tpc.topic_name }}</option>
             </select>
           </div>
           <div>
@@ -160,7 +160,7 @@
                     <th>Klien</th>
                     <th>Konsultan</th>
                     <th>Waktu</th>
-                    <th>Topik</th>
+                    <th>Lokasi</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -173,7 +173,7 @@
                     <td>{{ apt.client_fullname }}</td>
                     <td>{{ apt.consultant_fullname }}</td>
                     <td>{{ $root.formatDate( apt.schedule_date, 'DD/MM/YYYY / HH:mm' ) }}</td>
-                    <td>{{ apt.topic_name }}</td>
+                    <td>{{ apt.location }}</td>
                     <td>
                       <span v-if="apt.status_request === 'waiting'" class="gl-badge gl-badge-upcoming">Menunggu Tanggapan</span>
                       <span v-else-if="apt.status_request === 'accept'" class="gl-badge gl-badge-accept">Diterima</span>
@@ -221,7 +221,6 @@
 
 <script>
 export default {
-  props: ['gettopic'],
   data() {
     return {
       forms: {
