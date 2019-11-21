@@ -17,3 +17,56 @@ html, body { font-family: $font-base; }
     }
   }
 }
+
+// navbar
+.sidenavbar {
+  background: $color-base;
+  .sidenav-logo {
+    color: #ffffff;
+    @include global_font_style( 200, 28px, normal, 0.4px );
+    text-decoration: none;
+  }
+  .sidenav {
+    .sidenav-header {
+      color: #ffffff;
+      @include global_font_style( 200, 16px, normal, 0.4px );
+    }
+    li {
+      a {
+        color: #ffffff;
+        @include global_font_style( 400, 14px, normal, 0.4px );
+        padding: 8px 18px;
+        &:hover {
+          background: lighten($color-base, 10%);
+        }
+      }
+    }
+  }
+}
+.header {
+  background: #ffffff;
+  .navbar {
+    .nav {
+      li {
+        a {
+          color: #333333;
+          @include global_font_style( 400, 14px, normal, 0.4px );
+          &:hover {
+            color: $color-base;
+          }
+        }
+        .nav-dropdown {
+          li {
+            a {
+              color: #333333;
+              @include global_font_style( 400, 14px, normal, 0.4px );
+              &:hover {
+                color: $color-base;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

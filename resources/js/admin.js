@@ -10,8 +10,8 @@ window.Vue = require('vue');
 window.swal = require('sweetalert');
 window.moment = require('moment');
 
-// navbar component
 Vue.component('admin-login-page', require('./components/ControlPanel/Login.vue').default);
+Vue.component('dashboard-page', require('./components/ControlPanel/Dashboard.vue').default);
 
 const app = new Vue({
     el: '#app',

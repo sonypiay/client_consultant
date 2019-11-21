@@ -133,3 +133,70 @@ body {
   text-align: center;
 }
 
+.sidenavbar {
+  background: #25C4F2;
+}
+
+.sidenavbar .sidenav-logo {
+  color: #ffffff;
+  font-weight: 200;
+  font-size: 28px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  text-decoration: none;
+}
+
+.sidenavbar .sidenav .sidenav-header {
+  color: #ffffff;
+  font-weight: 200;
+  font-size: 16px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.sidenavbar .sidenav li a {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  padding: 8px 18px;
+}
+
+.sidenavbar .sidenav li a:hover {
+  background: #55d1f5;
+}
+
+.header {
+  background: #ffffff;
+}
+
+.header .navbar .nav li a {
+  color: #333333;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.header .navbar .nav li a:hover {
+  color: #25C4F2;
+}
+
+.header .navbar .nav li .nav-dropdown li a {
+  color: #333333;
+  font-weight: 400;
+  font-size: 14px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.header .navbar .nav li .nav-dropdown li a:hover {
+  color: #25C4F2;
+}
+

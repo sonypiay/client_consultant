@@ -1,6 +1,8 @@
 <template>
   <div>
-    Dashboard
+    <div class="card-summary-dashboard">
+      Dashboard
+    </div>
   </div>
 </template>
 

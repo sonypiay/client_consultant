@@ -84,15 +84,14 @@ Route::get('/token', function() {
 });
 
 Route::group(['prefix' => 'cp'], function() {
-  Route::get('/', function() {
-    return redirect()->route('cp_login_page');
-  });
+  Route::get('/', function() { return redirect()->route('cp_login_page'); });
 
   Route::get('/auth/login', 'ControlPanel\AuthController@index')->name('cp_login_page');
-  Route::get('/auth/logout', 'ControlPanel\AuthController@logout');
+  Route::get('/auth/logout', 'ControlPanel\AuthController@logout')->name('cp_logout');
   Route::post('/auth/login', 'ControlPanel\AuthController@login');
 
   Route::group(['prefix' => 'dashboard'], function() {
+    Route::get('/', 'ControlPanel\DashboardController@index')->name('cp_dashboard_page');
     Route::get('/user_summary', 'ControlPanel\DashboardController@user_summary');
     Route::get('/request_summary', 'ControlPanel\DashboardController@request_summary');
     Route::get('/feedback_summary', 'ControlPanel\DashboardController@feedback_summary');
