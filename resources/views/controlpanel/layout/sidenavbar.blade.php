@@ -46,15 +46,9 @@
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="{{ route('cp_service_topic_page') }}">
         <span class="uk-margin-small-right" uk-icon="icon: tag; ratio: 0.8"></span>
         Layanan Konsultasi
-      </a>
-    </li>
-    <li>
-      <a href="#">
-        <span class="uk-margin-small-right" uk-icon="icon: location; ratio: 0.8"></span>
-        Wilayah
       </a>
     </li>
   </ul>

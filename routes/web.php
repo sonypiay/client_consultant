@@ -106,7 +106,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
 
   Route::group(['prefix' => 'service_topic'], function() {
-    Route::get('/', 'ControlPanel\ServiceTopicController@index');
+    Route::get('/', 'ControlPanel\ServiceTopicController@index')->name('cp_service_topic_page');
     Route::get('/show/{id?}', 'ControlPanel\ServiceTopicController@show');
     Route::post('/create', 'ControlPanel\ServiceTopicController@store');
     Route::put('/update/{id}', 'ControlPanel\ServiceTopicController@update');

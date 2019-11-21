@@ -4,19 +4,19 @@ namespace App\Http\Controllers\ControlPanel;
 
 use Illuminate\Http\Request;
 use App\Database\ServiceTopic;
+use App\Database\AdminUser;
 use App\Http\Controllers\Controller;
 
 class ServiceTopicController extends Controller
 {
-    public function index()
-    {
-        //
-    }
+  public function index( Request $request, AdminUser $adminuser )
+  {
+    if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
 
-    public function create()
-    {
-        //
-    }
+    $data             = [];
+    $data['getuser']  = $adminuser->getprofile();
+    return response()->view('controlpanel.pages.service_topic', $data);
+  }
 
     public function store( Request $request, ServiceTopic $servicetopic )
     {
