@@ -2051,6 +2051,7 @@ __webpack_require__.r(__webpack_exports__);
           text: message,
           icon: 'success'
         });
+        console.log(res);
         setTimeout(function () {
           document.location = _this.$root.url + '/cp/dashboard';
         }, 2000);

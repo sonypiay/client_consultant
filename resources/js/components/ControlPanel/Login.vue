@@ -81,7 +81,7 @@ export default {
         let message = 'Login berhasil';
         this.messages.successMessage = message;
         swal({ text: message, icon: 'success' });
-
+        console.log( res );
         setTimeout(() => {
           document.location = this.$root.url + '/cp/dashboard';
         }, 2000);

@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function login( Request $request, AdminUser $adminuser )
     {
       $res = $adminuser->doLogin( $request );
-      return response()->json( $res );
+      return response()->json( $res, $res['responseCode'] );
     }
 
     public function logout( AdminUser $adminuser )
