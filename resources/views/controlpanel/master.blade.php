@@ -11,8 +11,10 @@
     </div>
     <div class="uk-width-expand">
       @include('controlpanel.layout.navbar')
-      <div id="app">
-        @yield('content')
+      <div class="container uk-overflow-auto">
+        <div id="app">
+          @yield('content')
+        </div>
       </div>
       <script type="text/javascript" src="{{ asset('assets/js/admin.js') }}"></script>
     </div>

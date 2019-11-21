@@ -200,6 +200,10 @@ body {
   color: #25C4F2;
 }
 
+.container {
+  height: 530px;
+}
+
 .card-summary-dashboard {
   margin-top: 1.5rem;
 }
@@ -224,12 +228,11 @@ body {
 
 .card-summary-dashboard .card-summary-body .card-summary-text {
   font-weight: 200;
-  font-size: 36px;
+  font-size: 24px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
   color: #ffffff;
-  text-align: center;
 }
 
 .card-summary-dashboard .card-summary-body .card-summary-value {
@@ -239,6 +242,5 @@ body {
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
   color: #ffffff;
-  text-align: center;
 }
 

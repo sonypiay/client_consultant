@@ -50,6 +50,7 @@ class DashboardController extends Controller
       ['status_request', 'done'],
       ['is_solved', 'Y']
     ])->get();
+    $total    = $waiting->count() + $accept->count() + $cancel->count() + $decline->count() + $done->count();
 
     $result = [
       'responseCode' => 200,
@@ -59,7 +60,8 @@ class DashboardController extends Controller
         'accept' => $accept->count(),
         'cancel' => $cancel->count(),
         'decline' => $decline->count(),
-        'done' => $done->count()
+        'done' => $done->count(),
+        'total' => $total
       ]
     ];
 

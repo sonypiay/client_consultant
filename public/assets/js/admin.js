@@ -1872,6 +1872,110 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['getuser'],
   data: function data() {
@@ -1886,14 +1990,16 @@ __webpack_require__.r(__webpack_exports__);
         accept: 0,
         cancel: 0,
         decline: 0,
-        done: 0
+        done: 0,
+        total: 0
       },
       feedbacksummary: {
         excellent: 0,
         good: 0,
         neutral: 0,
         poor: 0,
-        disappointed: 0
+        disappointed: 0,
+        total: 0
       }
     };
   },
@@ -1926,7 +2032,8 @@ __webpack_require__.r(__webpack_exports__);
           accept: result.data.accept,
           cancel: result.data.cancel,
           decline: result.data.decline,
-          done: result.data.done
+          done: result.data.done,
+          total: result.data.total
         };
       })["catch"](function (err) {});
     },
@@ -1943,7 +2050,8 @@ __webpack_require__.r(__webpack_exports__);
           good: result.data.good,
           neutral: result.data.neutral,
           poor: result.data.poor,
-          disappointed: result.data.disappointed
+          disappointed: result.data.disappointed,
+          total: result.data.total
         };
       })["catch"](function (err) {});
     }
@@ -55649,7 +55757,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "uk-card uk-card-default uk-card-body card-summary-body"
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
               },
               [
                 _c("div", { staticClass: "card-summary-value" }, [
@@ -55672,7 +55780,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "uk-card uk-card-default uk-card-body card-summary-body"
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
               },
               [
                 _c("div", { staticClass: "card-summary-value" }, [
@@ -55695,7 +55803,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "uk-card uk-card-default uk-card-body card-summary-body"
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
               },
               [
                 _c("div", { staticClass: "card-summary-value" }, [
@@ -55708,6 +55816,310 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "card-summary-text" }, [
                   _vm._v("Admin")
+                ])
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-summary-heading" }, [
+        _vm._v("Konsultasi")
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "uk-grid-small uk-margin-small-top uk-grid-match",
+          attrs: { "uk-grid": "" }
+        },
+        [
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.requestsummary.total) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Total Konsultasi")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.requestsummary.waiting) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Menunggu Tanggapan")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.requestsummary.accept) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Diterima")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.requestsummary.decline) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Ditolak")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.requestsummary.cancel) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Dibatalkan")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.requestsummary.done) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Selesai")
+                ])
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-summary-heading" }, [_vm._v("Ulasan")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "uk-grid-small uk-margin-small-top uk-grid-match",
+          attrs: { "uk-grid": "" }
+        },
+        [
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.feedbacksummary.total) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Total Ulasan")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.feedbacksummary.excellent) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Luar Biasa")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.feedbacksummary.good) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Berpengalaman")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.feedbacksummary.neutral) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Netral")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.feedbacksummary.poor) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Kurang berpengalaman")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body uk-card-small card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.feedbacksummary.disappointed) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Tidak dapat dipercaya")
                 ])
               ]
             )

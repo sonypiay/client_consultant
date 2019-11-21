@@ -71,6 +71,9 @@ html, body { font-family: $font-base; }
   }
 }
 
+.container {
+  height: 530px;
+}
 
 .card-summary-dashboard {
   margin-top: 1.5rem;
@@ -82,14 +85,12 @@ html, body { font-family: $font-base; }
     @include global_font_style( 400, 14px, normal, 0.4px );
     background: $color-base;
     .card-summary-text {
-      @include global_font_style( 200, 36px, normal, 0.4px );
+      @include global_font_style( 200, 24px, normal, 0.4px );
       color: #ffffff;
-      text-align: center;
     }
     .card-summary-value {
       @include global_font_style( 200, 48px, normal, 0.4px );
       color: #ffffff;
-      text-align: center;
     }
   }
 }
