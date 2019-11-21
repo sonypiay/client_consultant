@@ -140,4 +140,9 @@ Route::group(['prefix' => 'cp'], function() {
   Route::group(['prefix' => 'event'], function() {
     Route::get('/show', 'ControlPanel\EventScheduleController@show');
   });
+
+  Route::group(['prefix' => 'appointment'], function() {
+    Route::get('/show', 'ControlPanel\AppointmentController@show');
+    Route::delete('/delete/{id}', 'ControlPanel\AppointmentController@destroy');
+  });
 });

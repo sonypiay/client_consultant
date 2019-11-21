@@ -439,7 +439,7 @@ class AppointmentRequest extends Model
       }
       else
       {
-        if( $status === 'accept' || $status === 'decline' )
+        if( $status === 'accept' )
         {
           if( session()->has('isConsultant') )
           {
@@ -464,7 +464,7 @@ class AppointmentRequest extends Model
     if( $appointment->count() == 1 )
       $appointment->delete();
 
-    $res = ['responseCode' => 200, 'responseMessage' => ''];
+    $res = ['responseCode' => 200, 'responseMessage' => 'deleted'];
     return $res;
   }
 }
