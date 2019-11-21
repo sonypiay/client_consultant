@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Database\ClientUser;
 use App\Database\ConsultantUser;
-use App\Database\City;
-use App\Database\Province;
 use App\Database\AppointmentRequest;
 use App\Database\EventSchedule;
 use App\Database\ServiceTopic;
@@ -98,10 +96,8 @@ class PagesController extends Controller
       return redirect()->route('client_login_page');
     }
 
-    $city = new City;
     $client = new ClientUser;
     $data['request'] = $request;
-    $data['getcity'] = $city->getAllCity();
     $data['hasLogin']['user'] = 'client';
     $data['hasLogin']['isLogin'] = true;
     $data['getuser'] = $client->getProfile();
@@ -171,10 +167,8 @@ class PagesController extends Controller
       return redirect()->route('consultant_login_page');
     }
 
-    $city = new City;
     $consultant = new ConsultantUser;
     $data['request'] = $request;
-    $data['getcity'] = $city->getAllCity();
     $data['hasLogin']['user'] = 'consultant';
     $data['hasLogin']['isLogin'] = true;
     $data['getuser'] = $consultant->getProfile();
@@ -223,13 +217,10 @@ class PagesController extends Controller
     }
 
     $consultant = new ConsultantUser;
-    $city       = new City;
-
     $data['request']              = $request;
     $data['hasLogin']['user']     = 'consultant';
     $data['hasLogin']['isLogin']  = true;
     $data['getuser']              = $consultant->getProfile();
-    $data['getcity']              = $city->getAllCity();
 
     return response()->view('frontend.pages.consultant.client_list', $data);
   }

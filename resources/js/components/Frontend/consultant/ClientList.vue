@@ -41,7 +41,7 @@
           <div class="uk-panel uk-margin">
             <h4 class="uk-h4 uk-margin-remove-bottom">Kota</h4>
             <p class="uk-text-muted uk-margin-remove-top">
-              {{ getclient.details.city_name }}
+              {{ getclient.details.city }}
             </p>
           </div>
           <div class="uk-panel uk-margin">
@@ -233,12 +233,6 @@
           </select>
         </div>
         <div>
-          <select class="uk-select gl-input-default" v-model="forms.city" @change="showClient()">
-            <option value="all">Semua kota</option>
-            <option v-for="city in getcity" :value="city.city_id">{{ city.city_name }}</option>
-          </select>
-        </div>
-        <div>
           <input type="text" v-model="forms.keywords" class="uk-input gl-input-default" placeholder="Cari ID atau nama klien" @keyup.enter="showClient()" />
         </div>
       </div>
@@ -322,8 +316,7 @@
 export default {
   props: [
     'haslogin',
-    'getuser',
-    'getcity'
+    'getuser'
   ],
   data() {
     return {
@@ -356,15 +349,14 @@ export default {
       },
       forms: {
         keywords: '',
-        limit: 6,
-        city: 'all'
+        limit: 6
       }
     }
   },
   methods: {
     showClient( p )
     {
-      let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&city=' + this.forms.city;
+      let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
       let url = this.$root.url + '/consultant/client_list?page=' + this.getclient.paginate.current_page + '&' + param;
       if( p !== undefined ) url = p + '&' + param;
 

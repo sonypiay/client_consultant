@@ -39,12 +39,9 @@
           </div>
         </div>
         <div class="uk-margin">
-          <label class="uk-form-label gl-label">Kota</label>
+          <label class="uk-form-label gl-label">Domisili</label>
           <div class="uk-form-controls">
-            <select class="uk-select gl-input-default" v-model="forms.city">
-              <option value="">- Pilih kota -</option>
-              <option v-for="city in getcity" :value="city.city_id">{{ city.city_name }}</option>
-            </select>
+            <input type="text" v-model="forms.city" class="uk-input gl-input-default" />
           </div>
           <div v-show="messages.errors.city" class="uk-text-danger uk-text-small">{{ messages.errors.city }}</div>
         </div>
@@ -66,8 +63,7 @@
 <script>
 export default {
   props: [
-    'getuser',
-    'getcity'
+    'getuser'
   ],
   data() {
     return {

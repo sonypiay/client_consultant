@@ -56,18 +56,13 @@ class ConsultantUser extends Model
       'consultant_user.consultant_address',
       'consultant_user.created_at',
       'consultant_user.updated_at',
-      'city.city_id',
-      'city.city_name',
-      'province.province_id',
-      'province.province_name',
+      'consultant_user.city',
       DB::raw('count(feedbacks.feedback) as total_feedback'),
       DB::raw('sum(feedbacks.rateindex) as total_rate'),
       DB::raw('avg(feedbacks.rateindex) as total_average')
     )
     ->leftJoin('appointment_request', 'consultant_user.consultant_id', '=', 'appointment_request.consultant_id')
-    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
-    ->leftJoin('city', 'consultant_user.city_id', '=', 'city.city_id')
-    ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id');
 
     if( $id === null )
     {
@@ -167,7 +162,7 @@ class ConsultantUser extends Model
     $getconsult->consultant_fullname = $fullname;
     $getconsult->consultant_phone_number = $phone_number;
     $getconsult->consultant_address = $address;
-    $getconsult->city_id = $city;
+    $getconsult->city = $city;
 
     if( $getconsult->consultant_email === $email )
     {
@@ -262,18 +257,13 @@ class ConsultantUser extends Model
       'consultant_user.consultant_password',
       'consultant_user.created_at',
       'consultant_user.updated_at',
-      'city.city_id',
-      'city.city_name',
-      'province.province_id',
-      'province.province_name',
+      'consultant_user.city',
       DB::raw('count(feedbacks.feedback) as total_feedback'),
       DB::raw('sum(feedbacks.rateindex) as total_rate'),
       DB::raw('avg(feedbacks.rateindex) as total_average')
     )
     ->leftJoin('appointment_request', 'consultant_user.consultant_id', '=', 'appointment_request.consultant_id')
-    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id')
-    ->leftJoin('city', 'consultant_user.city_id', '=', 'city.city_id')
-    ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
+    ->leftJoin('feedbacks', 'appointment_request.apt_id', '=', 'feedbacks.apt_id');
 
     if( ! empty( $keywords ) )
     {

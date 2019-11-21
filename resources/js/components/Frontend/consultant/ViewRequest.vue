@@ -90,7 +90,7 @@
               <div class="uk-panel uk-margin">
                 <h6 class="uk-h6 uk-margin-remove-bottom">Kota</h6>
                 <p class="uk-margin-remove-top">
-                  {{ detailrequest.client.city_name }}
+                  {{ detailrequest.client.city }}
                 </p>
               </div>
             </div>

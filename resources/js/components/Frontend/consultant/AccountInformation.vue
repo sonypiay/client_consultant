@@ -26,12 +26,9 @@
           <div v-show="messages.errors.phone_number" class="uk-text-danger uk-text-small">{{ messages.errors.phone_number }}</div>
         </div>
         <div class="uk-margin">
-          <label class="uk-form-label gl-label">Kota</label>
+          <label class="uk-form-label gl-label">Domisili</label>
           <div class="uk-form-controls">
-            <select class="uk-select gl-input-default" v-model="forms.city">
-              <option value="">- Pilih kota -</option>
-              <option v-for="city in getcity" :value="city.city_id">{{ city.city_name }}</option>
-            </select>
+            <input type="text" v-model="forms.city" class="uk-input gl-input-default" />
           </div>
           <div v-show="messages.errors.city" class="uk-text-danger uk-text-small">{{ messages.errors.city }}</div>
         </div>
@@ -53,8 +50,7 @@
 <script>
 export default {
   props: [
-    'getuser',
-    'getcity'
+    'getuser'
   ],
   data() {
     return {
@@ -63,7 +59,7 @@ export default {
         email: this.getuser.consultant_email,
         phone_number: this.getuser.consultant_phone_number === null ? '' : this.getuser.consultant_phone_number,
         address: this.getuser.consultant_address === null ? '' : this.getuser.consultant_address,
-        city: this.getuser.city_id === null ? '' : this.getuser.city_id,
+        city: this.getuser.city === null ? '' : this.getuser.city,
         submit: 'Simpan Perubahan'
       },
       messages: {

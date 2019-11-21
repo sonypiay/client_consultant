@@ -42,13 +42,8 @@ class ClientUser extends Model
       'client_user.client_npwp',
       'client_user.created_at',
       'client_user.updated_at',
-      'city.city_id',
-      'city.city_name',
-      'province.province_id',
-      'province.province_name'
-    )
-    ->leftJoin('city', 'client_user.city_id', '=', 'city.city_id')
-    ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
+      'client_user.city'
+    );
 
     if( $id === null )
     {
@@ -120,7 +115,7 @@ class ClientUser extends Model
     $getclient->client_phone_number = $phone_number;
     $getclient->client_address = $address;
     $getclient->client_npwp = $npwp;
-    $getclient->city_id = $city;
+    $getclient->city = $city;
 
     if( $getclient->client_email === $email )
     {
@@ -247,13 +242,8 @@ class ClientUser extends Model
       'client_user.client_npwp',
       'client_user.created_at',
       'client_user.updated_at',
-      'city.city_id',
-      'city.city_name',
-      'province.province_id',
-      'province.province_name'
-    )
-    ->leftJoin('city', 'client_user.city_id', '=', 'city.city_id')
-    ->leftJoin('province', 'city.province_id', '=', 'province.province_id');
+      'client_user.city'
+    );
 
     if( ! empty( $keywords ) )
     {

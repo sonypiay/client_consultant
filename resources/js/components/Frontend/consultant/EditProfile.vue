@@ -34,7 +34,6 @@
           <div class="uk-width-expand">
             <account-information v-show="navpage === 'account_information'"
             :getuser="getuser"
-            :getcity="getcity"
             />
             <edit-password v-show="navpage === 'edit_password'" />
           </div>
@@ -51,8 +50,7 @@ import EditPassword from './EditPassword.vue';
 export default {
   props: [
     'haslogin',
-    'getuser',
-    'getcity'
+    'getuser'
   ],
   components: {
     'account-information': AccountInformation,

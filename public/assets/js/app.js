@@ -2157,11 +2157,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['getuser', 'getcity'],
+  props: ['getuser'],
   data: function data() {
     return {
       forms: {
@@ -2551,11 +2548,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser', 'getcity'],
+  props: ['haslogin', 'getuser'],
   components: {
     'account-information': _AccountInformation_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'edit-password': _EditPassword_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -4116,11 +4112,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['getuser', 'getcity'],
+  props: ['getuser'],
   data: function data() {
     return {
       forms: {
@@ -4128,7 +4121,7 @@ __webpack_require__.r(__webpack_exports__);
         email: this.getuser.consultant_email,
         phone_number: this.getuser.consultant_phone_number === null ? '' : this.getuser.consultant_phone_number,
         address: this.getuser.consultant_address === null ? '' : this.getuser.consultant_address,
-        city: this.getuser.city_id === null ? '' : this.getuser.city_id,
+        city: this.getuser.city === null ? '' : this.getuser.city,
         submit: 'Simpan Perubahan'
       },
       messages: {
@@ -4532,14 +4525,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser', 'getcity'],
+  props: ['haslogin', 'getuser'],
   data: function data() {
     return {
       getclient: {
@@ -4571,8 +4558,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       forms: {
         keywords: '',
-        limit: 6,
-        city: 'all'
+        limit: 6
       }
     };
   },
@@ -4580,7 +4566,7 @@ __webpack_require__.r(__webpack_exports__);
     showClient: function showClient(p) {
       var _this = this;
 
-      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&city=' + this.forms.city;
+      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit;
       var url = this.$root.url + '/consultant/client_list?page=' + this.getclient.paginate.current_page + '&' + param;
       if (p !== undefined) url = p + '&' + param;
       this.getclient.isLoading = true;
@@ -4963,11 +4949,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser', 'getcity'],
+  props: ['haslogin', 'getuser'],
   components: {
     'account-information': _AccountInformation_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'edit-password': _EditPassword_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -62775,57 +62760,31 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Kota")
+                _vm._v("Domisili")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.forms.city,
-                        expression: "forms.city"
-                      }
-                    ],
-                    staticClass: "uk-select gl-input-default",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.forms,
-                          "city",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.city,
+                      expression: "forms.city"
                     }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("- Pilih kota -")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.getcity, function(city) {
-                      return _c(
-                        "option",
-                        { domProps: { value: city.city_id } },
-                        [_vm._v(_vm._s(city.city_name))]
-                      )
-                    })
                   ],
-                  2
-                )
+                  staticClass: "uk-input gl-input-default",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.forms.city },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "city", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
               _c(
@@ -63472,7 +63431,7 @@ var render = function() {
                         expression: "navpage === 'account_information'"
                       }
                     ],
-                    attrs: { getuser: _vm.getuser, getcity: _vm.getcity }
+                    attrs: { getuser: _vm.getuser }
                   }),
                   _vm._v(" "),
                   _c("edit-password", {
@@ -66352,7 +66311,7 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.consultant.city_name) +
+                        _vm._s(_vm.detailrequest.consultant.city) +
                         "\n              "
                     )
                   ])
@@ -66733,57 +66692,31 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "uk-margin" }, [
               _c("label", { staticClass: "uk-form-label gl-label" }, [
-                _vm._v("Kota")
+                _vm._v("Domisili")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "uk-form-controls" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.forms.city,
-                        expression: "forms.city"
-                      }
-                    ],
-                    staticClass: "uk-select gl-input-default",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.forms,
-                          "city",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.city,
+                      expression: "forms.city"
                     }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("- Pilih kota -")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.getcity, function(city) {
-                      return _c(
-                        "option",
-                        { domProps: { value: city.city_id } },
-                        [_vm._v(_vm._s(city.city_name))]
-                      )
-                    })
                   ],
-                  2
-                )
+                  staticClass: "uk-input gl-input-default",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.forms.city },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "city", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
               _c(
@@ -66963,7 +66896,7 @@ var render = function() {
               _c("p", { staticClass: "uk-text-muted uk-margin-remove-top" }, [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm.getclient.details.city_name) +
+                    _vm._s(_vm.getclient.details.city) +
                     "\n          "
                 )
               ])
@@ -67771,61 +67704,6 @@ var render = function() {
                       _vm._v("36 baris")
                     ])
                   ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.forms.city,
-                        expression: "forms.city"
-                      }
-                    ],
-                    staticClass: "uk-select gl-input-default",
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.forms,
-                            "city",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        },
-                        function($event) {
-                          return _vm.showClient()
-                        }
-                      ]
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "all" } }, [
-                      _vm._v("Semua kota")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.getcity, function(city) {
-                      return _c(
-                        "option",
-                        { domProps: { value: city.city_id } },
-                        [_vm._v(_vm._s(city.city_name))]
-                      )
-                    })
-                  ],
-                  2
                 )
               ]),
               _vm._v(" "),
@@ -68744,7 +68622,7 @@ var render = function() {
                         expression: "navpage === 'account_information'"
                       }
                     ],
-                    attrs: { getuser: _vm.getuser, getcity: _vm.getcity }
+                    attrs: { getuser: _vm.getuser }
                   }),
                   _vm._v(" "),
                   _c("edit-password", {
@@ -72909,7 +72787,7 @@ var render = function() {
                   _c("p", { staticClass: "uk-margin-remove-top" }, [
                     _vm._v(
                       "\n                " +
-                        _vm._s(_vm.detailrequest.client.city_name) +
+                        _vm._s(_vm.detailrequest.client.city) +
                         "\n              "
                     )
                   ])
