@@ -11,7 +11,7 @@
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="{{ route('cp_consultant_page') }}">
         <span class="uk-margin-small-right" uk-icon="icon: users; ratio: 0.8"></span>
         Konsultan
       </a>

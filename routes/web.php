@@ -130,6 +130,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
 
   Route::group(['prefix' => 'consultant'], function() {
+    Route::get('/', 'ControlPanel\ConsultantUserController@index')->name('cp_consultant_page');
     Route::get('/show', 'ControlPanel\ConsultantUserController@show');
     Route::post('/create', 'ControlPanel\ConsultantUserController@store');
     Route::put('/update/{id}', 'ControlPanel\ConsultantUserController@update');
