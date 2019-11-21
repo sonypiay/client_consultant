@@ -121,7 +121,7 @@
                 <tbody>
                   <tr v-for="c in getclient.results">
                     <td>
-                      <a @click="onViewDetail( c )" uk-tooltip="Lihat Detail" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a>
+                      <a @click="onViewDetail( c )" uk-tooltip="Lihat Detail" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a> | 
                       <a @click="onDeleteClient( c.client_id )" uk-tooltip="Hapus" class="uk-link-text" uk-icon="icon: trash; ratio: 0.8"></a>
                     </td>
                     <td>{{ c.client_fullname }}</td>

@@ -166,8 +166,8 @@
                 <tbody>
                   <tr v-for="c in getconsultant.results">
                     <td>
-                      <a @click="onViewDetail( c )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a>
-                      <a @click="onClickModal( c )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: pencil; ratio: 0.8"></a>
+                      <a @click="onViewDetail( c )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a> |
+                      <a @click="onClickModal( c )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: pencil; ratio: 0.8"></a> | 
                       <a @click="onDeleteConsultant( c.consultant_id )" uk-tooltip="Hapus" class="uk-link-text" uk-icon="icon: trash; ratio: 0.8"></a>
                     </td>
                     <td>{{ c.consultant_fullname }}</td>

@@ -89,7 +89,7 @@
                 <tbody>
                   <tr v-for="adm in getadmin.results">
                     <td>
-                      <a @click="onClickModal( adm )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: pencil; ratio: 0.8"></a>
+                      <a @click="onClickModal( adm )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: pencil; ratio: 0.8"></a> | 
                       <a @click="onDeleteAdmin( adm.admin_id )" uk-tooltip="Hapus" class="uk-link-text" uk-icon="icon: trash; ratio: 0.8"></a>
                     </td>
                     <td>{{ adm.admin_fullname }}</td>
