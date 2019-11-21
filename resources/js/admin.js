@@ -18,6 +18,7 @@ Vue.component('client-page', require('./components/ControlPanel/Client.vue').def
 Vue.component('event-schedule-page', require('./components/ControlPanel/EventSchedule.vue').default);
 Vue.component('appointment-page', require('./components/ControlPanel/Appointment.vue').default);
 Vue.component('feedback-page', require('./components/ControlPanel/Feedback.vue').default);
+Vue.component('service-topic-page', require('./components/ControlPanel/ServiceTopic.vue').default);
 
 const app = new Vue({
     el: '#app',

@@ -3971,6 +3971,284 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      forms: {
+        keywords: '',
+        service: {
+          id: null,
+          topic_name: '',
+          isedit: false,
+          submit: 'Tambah'
+        }
+      },
+      getservice: {
+        isLoading: false,
+        total: 0,
+        results: []
+      },
+      messages: {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      }
+    };
+  },
+  methods: {
+    showServiceTopic: function showServiceTopic(p) {
+      var _this = this;
+
+      var param = 'keywords=' + this.forms.keywords;
+      var url = this.$root.url + '/cp/service_topic/show?page=' + this.getservice.paginate.current_page + '&' + param;
+      if (p !== undefined) url = p + '&' + param;
+      this.getservice.isLoading = true;
+      axios({
+        method: 'get',
+        url: url
+      }).then(function (res) {
+        var result = res.data;
+        _this.getservice.total = result.total;
+        _this.getservice.results = result.data;
+        _this.getservice.isLoading = false;
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+    },
+    onClickModal: function onClickModal(d) {
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var service = this.forms.service;
+
+      if (d === undefined) {
+        service.topic_name = '';
+        service.id = null;
+        service.isedit = false;
+        service.submit = 'Tambah';
+      } else {
+        service.topic_name = d.topic_name;
+        service.id = d.topic_id;
+        service.isedit = true;
+        service.submit = 'Simpan';
+      }
+
+      UIkit.modal('#modal').show();
+    },
+    onCreateService: function onCreateService() {
+      var _this2 = this;
+
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var service = this.forms.service;
+      var errors = this.messages.errors;
+      var errormessage = 'Harap diisi';
+      var iserror = this.messages.iserror;
+
+      if (service.topic_name === '' || service.topic_name === null) {
+        errors.topic_name = errormessage;
+        iserror = true;
+      }
+
+      if (iserror === true) return false;
+      service.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/cp/service_topic/create',
+        params: {
+          topic_name: service.topic_name
+        }
+      }).then(function (res) {
+        _this2.messages.successMessage = 'Layanan baru berhasil ditambah';
+        setTimeout(function () {
+          _this2.showServiceTopic();
+
+          UIkit.modal('#modal').hide();
+        }, 2000);
+      })["catch"](function (err) {
+        if (err.response.status === 500) _this2.messages.errorMessage = err.response.statusText;else _this2.messages.errorMessage = err.response.data.responseMessage;
+        service.submit = 'Tambah';
+      });
+    },
+    onUpdateService: function onUpdateService() {
+      var _this3 = this;
+
+      this.messages = {
+        errors: {},
+        errorMessage: '',
+        successMessage: '',
+        iserror: false
+      };
+      var service = this.forms.service;
+      var errors = this.messages.errors;
+      var errormessage = 'Harap diisi';
+      var iserror = this.messages.iserror;
+
+      if (service.topic_name === '' || service.topic_name === null) {
+        errors.topic_name = errormessage;
+        iserror = true;
+      }
+
+      if (iserror === true) return false;
+      service.submit = '<span uk-spinner></span>';
+      axios({
+        method: 'post',
+        url: this.$root.url + '/cp/service_topic/update/' + service.id,
+        params: {
+          topic_name: service.topic_name
+        }
+      }).then(function (res) {
+        _this3.messages.successMessage = 'Berhasil menyimpan data';
+        setTimeout(function () {
+          _this3.showServiceTopic();
+
+          UIkit.modal('#modal').hide();
+        }, 2000);
+      })["catch"](function (err) {
+        if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
+        service.submit = 'Tambah';
+      });
+    },
+    onDeleteService: function onDeleteService(id) {
+      var _this4 = this;
+
+      swal({
+        title: 'Konfirmasi',
+        text: 'Apakah anda ingin menghapus layanan ini?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            value: true,
+            text: 'Ya'
+          },
+          cancel: 'Batal'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'delete',
+            url: _this4.$root.url + '/cp/service_topic/delete/' + id
+          }).then(function (res) {
+            swal({
+              text: 'Layanan berhasil dihapus',
+              icon: 'success',
+              timer: 2000
+            });
+            setTimeout(function () {
+              _this4.showServiceTopic();
+            }, 2000);
+          });
+        }
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.showServiceTopic();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /*!*****************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
@@ -61604,6 +61882,320 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { attrs: { id: "modal", "uk-modal": "" } }, [
+      _c("div", { staticClass: "uk-modal-dialog uk-modal-body" }, [
+        _c("a", {
+          staticClass: "uk-modal-close uk-modal-close-outside",
+          attrs: { "uk-close": "" }
+        }),
+        _vm._v(" "),
+        _c("h3", [
+          _vm.forms.admin.isedit
+            ? _c("span", [_vm._v("Ubah Layanan")])
+            : _c("span", [_vm._v("Tambah Layanan")])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.errorMessage,
+                expression: "messages.errorMessage"
+              }
+            ],
+            staticClass: "uk-alert-danger uk-margin",
+            attrs: { "uk-alert": "" }
+          },
+          [
+            _vm._v(
+              "\n        " + _vm._s(_vm.messages.errorMessage) + "\n      "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.messages.successMessage,
+                expression: "messages.successMessage"
+              }
+            ],
+            staticClass: "uk-alert-success uk-margin",
+            attrs: { "uk-alert": "" }
+          },
+          [
+            _vm._v(
+              "\n        " + _vm._s(_vm.messages.successMessage) + "\n      "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "uk-form-stacked",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.forms.admin.isedit === false
+                  ? _vm.onCreateService()
+                  : _vm.onUpdateService()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("label", { staticClass: "uk-form-label gl-label" }, [
+                _vm._v("Nama Layanan")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "uk-form-controls" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.service.topic_name,
+                      expression: "forms.service.topic_name"
+                    }
+                  ],
+                  staticClass: "uk-input gl-input-default",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.forms.service.topic_name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.forms.service,
+                        "topic_name",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.messages.errors.topic_name,
+                      expression: "messages.errors.topic_name"
+                    }
+                  ],
+                  staticClass: "uk-text-small uk-text-danger"
+                },
+                [_vm._v(_vm._s(_vm.messages.errors.topic_name))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-margin" }, [
+              _c("button", {
+                staticClass: "uk-button uk-button-primary gl-button-primary",
+                domProps: { innerHTML: _vm._s(_vm.forms.service.submit) }
+              })
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "container-panel" }, [
+      _c("div", { staticClass: "content-heading" }, [
+        _vm._v("\n      Daftar Layanan Konsultasi\n      "),
+        _c("a", {
+          staticClass: "uk-icon-button uk-float-right",
+          attrs: {
+            "uk-tooltip": "Tambah Layanan",
+            "uk-icon": "icon: plus; ratio: 0.8"
+          },
+          on: {
+            click: function($event) {
+              return _vm.onClickModal()
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uk-card uk-card-body uk-card-default" }, [
+        _c(
+          "div",
+          {
+            staticClass: "uk-grid-small uk-child-width-auto",
+            attrs: { "uk-grid": "" }
+          },
+          [
+            _c("div", [
+              _c("div", { staticClass: "uk-inline" }, [
+                _c("span", {
+                  staticClass: "uk-form-icon",
+                  attrs: { "uk-icon": "search" }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.keywords,
+                      expression: "forms.keywords"
+                    }
+                  ],
+                  staticClass: "uk-input gl-input-default",
+                  attrs: { type: "search", placeholder: "Masukkan kata kunci" },
+                  domProps: { value: _vm.forms.keywords },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.showServiceTopic()
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.forms, "keywords", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "uk-margin-top" }, [
+          _vm.getservice.isLoading
+            ? _c("div", { staticClass: "uk-text-center" }, [
+                _c("span", { attrs: { "uk-spinner": "" } })
+              ])
+            : _c("div", [
+                _vm.getservice.total === 0
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "uk-alert-warning",
+                        attrs: { "uk-alert": "" }
+                      },
+                      [
+                        _vm._v(
+                          "\n            Tidak ada layanan konsultasi\n          "
+                        )
+                      ]
+                    )
+                  : _c("div", [
+                      _c(
+                        "table",
+                        {
+                          staticClass:
+                            "uk-table uk-table-small uk-table-middle uk-table-divider uk-table-striped uk-table-responsive uk-text-small"
+                        },
+                        [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.getservice.results, function(service) {
+                              return _c("tr", [
+                                _c("td", [
+                                  _c("a", {
+                                    staticClass: "uk-link-text",
+                                    attrs: {
+                                      "uk-tooltip": "Ubah",
+                                      "uk-icon": "icon: pencil; ratio: 0.8"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onClickModal(service)
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" |\n                    "),
+                                  _c("a", {
+                                    staticClass: "uk-link-text",
+                                    attrs: {
+                                      "uk-tooltip": "Hapus",
+                                      "uk-icon": "icon: trash; ratio: 0.8"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onDeleteService(
+                                          service.topic_id
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(service.topic_id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(service.topic_name))])
+                              ])
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ])
+              ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Aksi")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Layanan")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -73765,6 +74357,7 @@ Vue.component('client-page', __webpack_require__(/*! ./components/ControlPanel/C
 Vue.component('event-schedule-page', __webpack_require__(/*! ./components/ControlPanel/EventSchedule.vue */ "./resources/js/components/ControlPanel/EventSchedule.vue")["default"]);
 Vue.component('appointment-page', __webpack_require__(/*! ./components/ControlPanel/Appointment.vue */ "./resources/js/components/ControlPanel/Appointment.vue")["default"]);
 Vue.component('feedback-page', __webpack_require__(/*! ./components/ControlPanel/Feedback.vue */ "./resources/js/components/ControlPanel/Feedback.vue")["default"]);
+Vue.component('service-topic-page', __webpack_require__(/*! ./components/ControlPanel/ServiceTopic.vue */ "./resources/js/components/ControlPanel/ServiceTopic.vue")["default"]);
 var app = new Vue({
   el: '#app',
   data: {
@@ -74402,6 +74995,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Login_vue_vue_type_template_id_59f8830c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Login_vue_vue_type_template_id_59f8830c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ControlPanel/ServiceTopic.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/ControlPanel/ServiceTopic.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ServiceTopic_vue_vue_type_template_id_56df35b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true& */ "./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true&");
+/* harmony import */ var _ServiceTopic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ServiceTopic.vue?vue&type=script&lang=js& */ "./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ServiceTopic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ServiceTopic_vue_vue_type_template_id_56df35b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ServiceTopic_vue_vue_type_template_id_56df35b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "56df35b2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ControlPanel/ServiceTopic.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ServiceTopic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ServiceTopic.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ServiceTopic_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServiceTopic_vue_vue_type_template_id_56df35b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ControlPanel/ServiceTopic.vue?vue&type=template&id=56df35b2&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServiceTopic_vue_vue_type_template_id_56df35b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServiceTopic_vue_vue_type_template_id_56df35b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
