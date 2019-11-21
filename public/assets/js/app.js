@@ -5971,8 +5971,160 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
+  data: function data() {
+    return {
+      filter_feedback: 'all',
+      getfeedbacks: {
+        isLoading: false,
+        total: 0,
+        results: [],
+        paginate: {
+          current_page: 1,
+          last_page: 1,
+          prev_page_url: null,
+          next_page_url: null
+        }
+      }
+    };
+  },
+  methods: {
+    showFeedback: function showFeedback(p) {
+      var _this = this;
+
+      var param = 'feedback=' + this.filter_feedback;
+      var url = this.$root.url + '/consultant/list_feedback?page=' + this.getfeedbacks.paginate.current_page + '&' + param;
+      if (p !== undefined) url = p + '&' + param;
+      this.getfeedbacks.isLoading = true;
+      axios({
+        method: 'get',
+        url: url
+      }).then(function (res) {
+        var result = res.data;
+        _this.getfeedbacks.isLoading = false;
+        _this.getfeedbacks.total = result.total;
+        _this.getfeedbacks.results = result.data;
+        _this.getfeedbacks.paginate = {
+          current_page: result.current_page,
+          last_page: result.last_page,
+          prev_page_url: result.prev_page_url,
+          next_page_url: result.next_page_url
+        };
+        UIkit.modal('#modal-review').show();
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+    }
+  },
   computed: {
     rateIndex: function rateIndex() {
       var rate = this.getuser.total_rate;
@@ -70371,7 +70523,375 @@ var render = function() {
         attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
       }),
       _vm._v(" "),
-      _vm._m(0),
+      _c(
+        "div",
+        {
+          staticClass: "uk-modal-container",
+          attrs: { id: "modal-review", "uk-modal": "" }
+        },
+        [
+          _c("a", { staticClass: "uk-modal-close uk-modal-close-outside" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-modal-dialog" }, [
+            _c(
+              "div",
+              {
+                staticClass: "uk-modal-body uk-height-large",
+                attrs: { "uk-overflow-auto": "" }
+              },
+              [
+                _c("div", { staticClass: "card-panel-feedbacks" }, [
+                  _c("div", { staticClass: "uk-card-title feedbacks-title" }, [
+                    _vm._v("Ulasan")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-margin feedbacks-filter" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "uk-grid-small uk-child-width-auto",
+                        attrs: { "uk-grid": "" }
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-button-default gl-button-default",
+                              class: {
+                                "gl-button-primary":
+                                  _vm.filter_feedback === "all"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.filter_feedback = "all"
+                                  _vm.showFeedback()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                  Semua\n                "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-button-default gl-button-default",
+                              class: {
+                                "gl-button-primary":
+                                  _vm.filter_feedback === "disappointed"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.filter_feedback = "disappointed"
+                                  _vm.showFeedback()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-angry" }),
+                              _vm._v(" Tidak dapat dipercaya\n                ")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-button-default gl-button-default",
+                              class: {
+                                "gl-button-primary":
+                                  _vm.filter_feedback === "poor"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.filter_feedback = "poor"
+                                  _vm.showFeedback()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-frown" }),
+                              _vm._v(" Kurang berpengalaman\n                ")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-button-default gl-button-default",
+                              class: {
+                                "gl-button-primary":
+                                  _vm.filter_feedback === "neutral"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.filter_feedback = "neutral"
+                                  _vm.showFeedback()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-meh" }),
+                              _vm._v(" Netral\n                ")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-button-default gl-button-default",
+                              class: {
+                                "gl-button-primary":
+                                  _vm.filter_feedback === "good"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.filter_feedback = "good"
+                                  _vm.showFeedback()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-smile" }),
+                              _vm._v(" Berpengalaman\n                ")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "uk-button uk-button-small uk-button-default gl-button-default",
+                              class: {
+                                "gl-button-primary":
+                                  _vm.filter_feedback === "excellent"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.filter_feedback = "excellent"
+                                  _vm.showFeedback()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-smile-beam" }),
+                              _vm._v(" Luar Biasa\n                ")
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "uk-margin" }, [
+                    _vm.getfeedbacks.isLoading
+                      ? _c("div", { staticClass: "uk-text-center" }, [
+                          _c("span", { attrs: { "uk-spinner": "" } })
+                        ])
+                      : _c("div", [
+                          _vm.getfeedbacks.total === 0
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass: "uk-alert-warning",
+                                  attrs: { "uk-alert": "" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                Tidak ada ulasan dari klien\n              "
+                                  )
+                                ]
+                              )
+                            : _c(
+                                "div",
+                                {
+                                  staticClass: "uk-grid-divider uk-grid-small",
+                                  attrs: { "uk-grid": "" }
+                                },
+                                _vm._l(_vm.getfeedbacks.results, function(fd) {
+                                  return _c(
+                                    "div",
+                                    { staticClass: "uk-width-1-1" },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "uk-button uk-button-default uk-button-small gl-button-default"
+                                        },
+                                        [
+                                          fd.feedback === "disappointed"
+                                            ? _c("label", [
+                                                _c("i", {
+                                                  staticClass: "fas fa-angry"
+                                                }),
+                                                _vm._v(
+                                                  " Tidak dapat dipercaya\n                    "
+                                                )
+                                              ])
+                                            : fd.feedback === "poor"
+                                            ? _c("label", [
+                                                _c("i", {
+                                                  staticClass: "fas fa-frown"
+                                                }),
+                                                _vm._v(
+                                                  " Kurang berpengalaman\n                    "
+                                                )
+                                              ])
+                                            : fd.feedback === "neutral"
+                                            ? _c("label", [
+                                                _c("i", {
+                                                  staticClass: "fas fa-meh"
+                                                }),
+                                                _vm._v(
+                                                  " Netral\n                    "
+                                                )
+                                              ])
+                                            : fd.feedback === "good"
+                                            ? _c("label", [
+                                                _c("i", {
+                                                  staticClass: "fas fa-smile"
+                                                }),
+                                                _vm._v(
+                                                  " Berpengalaman\n                    "
+                                                )
+                                              ])
+                                            : _c("label", [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fas fa-smile-beam"
+                                                }),
+                                                _vm._v(
+                                                  " Luar biasa\n                    "
+                                                )
+                                              ])
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "article",
+                                        {
+                                          staticClass:
+                                            "uk-margin-small-top uk-article"
+                                        },
+                                        [
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass:
+                                                "uk-article-meta uk-margin-remove-bottom"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "dari " +
+                                                  _vm._s(fd.client_fullname) +
+                                                  " tanggal " +
+                                                  _vm._s(
+                                                    _vm.$root.formatDate(
+                                                      fd.created_at,
+                                                      "DD MMMM YYYY"
+                                                    )
+                                                  ) +
+                                                  "."
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass:
+                                                "uk-margin-remove-top"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                      " +
+                                                  _vm._s(
+                                                    fd.review_description
+                                                  ) +
+                                                  "\n                    "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                }),
+                                0
+                              ),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            { staticClass: "uk-pagination uk-flex-center" },
+                            [
+                              _vm.getfeedbacks.paginate.prev_page_url
+                                ? _c(
+                                    "li",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.showFeedback(
+                                            _vm.getfeedbacks.paginate
+                                              .prev_page_url
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._m(0)]
+                                  )
+                                : _c("li", { staticClass: "uk-disabled" }, [
+                                    _vm._m(1)
+                                  ]),
+                              _vm._v(" "),
+                              _vm.getfeedbacks.paginate.next_page_url
+                                ? _c(
+                                    "li",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.showFeedback(
+                                            _vm.getfeedbacks.paginate
+                                              .next_page_url
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._m(2)]
+                                  )
+                                : _c("li", { staticClass: "uk-disabled" }, [
+                                    _vm._m(3)
+                                  ])
+                            ]
+                          )
+                        ])
+                  ])
+                ])
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _vm._m(4),
       _vm._v(" "),
       _c(
         "div",
@@ -70482,6 +71002,25 @@ var render = function() {
                   }),
                   _vm._v(" Ubah Profil")
                 ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "uk-width-1-1 uk-button uk-button-default uk-margin-small gl-button-default",
+                  on: {
+                    click: function($event) {
+                      return _vm.showFeedback()
+                    }
+                  }
+                },
+                [
+                  _c("span", {
+                    attrs: { "uk-icon": "icon: star; ratio: 0.7" }
+                  }),
+                  _vm._v(" Lihat Ulasan")
+                ]
               )
             ]
           )
@@ -70492,6 +71031,30 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-previous": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [_c("span", { attrs: { "uk-pagination-next": "" } })])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

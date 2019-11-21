@@ -101,6 +101,11 @@ class Feedbacks extends Model
       $query->where( 'feedbacks.feedback', $feedback );
     }
 
+    if( $userid !== null )
+    {
+      $query->where('consultant_user.consultant_id', $userid);
+    }
+
     if( ! empty( $keywords ) )
     {
       $query->where(function($q) use ($keywords) {

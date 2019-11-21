@@ -67,7 +67,7 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/event_schedule', 'Frontend\ConsultantUserController@show_event_schedule');
   Route::get('/notification', 'Frontend\ConsultantUserController@get_notification');
   Route::get('/existing_client', 'Frontend\ConsultantUserController@existing_client');
-  Route::get('/list_feedback/{userid}', 'Frontend\ConsultantUserController@list_feedback');
+  Route::get('/list_feedback', 'Frontend\ConsultantUserController@list_feedback');
   Route::get('/history_appointment_client/{id}', 'Frontend\ConsultantUserController@history_appointment_client');
   Route::post('/create_account', 'Frontend\ConsultantUserController@register');
   Route::post('/signin', 'Frontend\ConsultantUserController@login');
