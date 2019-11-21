@@ -12,7 +12,14 @@ use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-  public function index() {}
+  public function index( Request $request, AdminUser $adminuser )
+  {
+    if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
+
+    $data             = [];
+    $data['getuser']  = $adminuser->getprofile();
+    return response()->view('controlpanel.pages.dashboard', $data);
+  }
 
   public function user_summary( ClientUser $client, ConsultantUser $consultant, AdminUser $adminuser )
   {

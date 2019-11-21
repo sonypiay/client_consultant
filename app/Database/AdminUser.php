@@ -150,4 +150,10 @@ class AdminUser extends Model
   {
     return $this->where('admin_id', $id)->delete();
   }
+
+  public function getprofile()
+  {
+    $userid = session()->get('adminId');
+    return $this->where('admin_id', $userid)->first();
+  }
 }
