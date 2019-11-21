@@ -5,12 +5,18 @@
     @include global_font_style( 400, 13px, normal, 0.4px );
   }
   .gl-badge {
-    padding: 4px 10px;
-    background: $color-base;
+    padding: 4px 8px;
     color: #ffffff;
-    @include global_font_style( 200, 12px, normal, 0.4px );
+    @include global_font_style( 300, 12px, normal, 0.4px );
+    background: $color-base;
     border-radius: 6px;
   }
+  .gl-badge-upcoming { background: $color-base; }
+  .gl-badge-accept { background: $green; }
+  .gl-badge-decline { background: $red; }
+  .gl-badge-cancel { background: $orange; }
+  .gl-badge-done { background: $green; }
+
   .gl-input-default {
     background: #ffffff;
     border: 1px solid #cccccc;

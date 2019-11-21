@@ -26,7 +26,6 @@ class AppointmentController extends Controller
       $limit    = isset( $request->limit ) ? $request->limit : 10;
       $topic    = isset( $request->topic ) ? $request->topic : 'all';
       $status   = isset( $request->status ) ? $request->status : 'all';
-      $isSolved = isset( $request->isSolved ) ? $request->isSolved : 'all';
 
       $getappointment = $appointment->select(
         'appointment_request.apt_id',
@@ -64,13 +63,6 @@ class AppointmentController extends Controller
       {
         $getappointment = $getappointment->where(function($q) use ($topic){
           $q->where('appointment_request.service_topic', $topic);
-        });
-      }
-
-      if( $isSolved != 'all' )
-      {
-        $getappointment = $getappointment->where(function($q) use ($isSolved){
-          $q->where('appointment_request.is_solved', $isSolved);
         });
       }
 

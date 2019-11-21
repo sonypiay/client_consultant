@@ -36,12 +36,12 @@
             <div class="uk-panel">
               <h4 class="uk-h4 uk-margin-remove-bottom">Status</h4>
               <p class="uk-text-meta uk-margin-remove-top">
-                <span v-if="getapt.details.status_request === 'waiting'">Menunggu Tanggapan</span>
-                <span v-else-if="getapt.details.status_request === 'accept'">Diterima</span>
-                <span v-else-if="getapt.details.status_request === 'decline'">Ditolak</span>
-                <span v-else-if="getapt.details.status_request === 'cancel'">Dibatalkan</span>
-                <span v-else-if="getapt.details.status_request === 'done' && getapt.details.is_solved === 'N'">Belum selesai / terpecahkan</span>
-                <span v-else>Sudah selesai / terpecahkan</span>
+                <span v-if="getapt.details.status_request === 'waiting'" class="gl-badge gl-badge-upcoming">Menunggu Tanggapan</span>
+                <span v-else-if="getapt.details.status_request === 'accept'" class="gl-badge gl-badge-accept">Diterima</span>
+                <span v-else-if="getapt.details.status_request === 'decline'" class="gl-badge gl-badge-decline">Ditolak</span>
+                <span v-else-if="getapt.details.status_request === 'cancel'" class="gl-badge gl-badge-cancel">Dibatalkan</span>
+                <span v-else-if="getapt.details.status_request === 'done' && getapt.details.is_solved === 'N'" class="gl-badge gl-badge-cancel">Belum selesai / terpecahkan</span>
+                <span v-else class="gl-badge gl-badge-done">Sudah selesai / terpecahkan</span>
               </p>
             </div>
           </div>
@@ -135,13 +135,6 @@
             </select>
           </div>
           <div>
-            <select class="uk-select gl-input-default" v-model="forms.is_solved" @change="showAppointmentRequest()">
-              <option value="all">Semua status</option>
-              <option value="N">Belum terpecahkan</option>
-              <option value="Y">Sudah terpecahkan</option>
-            </select>
-          </div>
-          <div>
             <div class="uk-inline">
               <span class="uk-form-icon" uk-icon="search"></span>
               <input type="search" class="uk-input gl-input-default" placeholder="Masukkan kata kunci" v-model="forms.keywords" @keyup.enter="showAppointmentRequest()" />
@@ -168,6 +161,7 @@
                     <th>Konsultan</th>
                     <th>Waktu</th>
                     <th>Lokasi</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -178,8 +172,16 @@
                     <td>{{ apt.apt_id }}</td>
                     <td>{{ apt.client_fullname }}</td>
                     <td>{{ apt.consultant_fullname }}</td>
-                    <td>{{ $root.formatDate( apt.schedule_date, 'DD MMMM YYYY / HH:mm' ) }}</td>
-                    <td>{{ apt.evt_location }}</td>
+                    <td>{{ $root.formatDate( apt.schedule_date, 'DD/MM/YYYY / HH:mm' ) }}</td>
+                    <td>{{ apt.location }}</td>
+                    <td>
+                      <span v-if="apt.status_request === 'waiting'" class="gl-badge gl-badge-upcoming">Menunggu Tanggapan</span>
+                      <span v-else-if="apt.status_request === 'accept'" class="gl-badge gl-badge-accept">Diterima</span>
+                      <span v-else-if="apt.status_request === 'decline'" class="gl-badge gl-badge-decline">Ditolak</span>
+                      <span v-else-if="apt.status_request === 'cancel'" class="gl-badge gl-badge-cancel">Dibatalkan</span>
+                      <span v-else-if="apt.status_request === 'done' && apt.is_solved === 'N'" class="gl-badge gl-badge-cancel">Belum selesai</span>
+                      <span v-else class="gl-badge gl-badge-done">Selesai</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -225,8 +227,7 @@ export default {
         keywords: '',
         limit: 10,
         topic: 'all',
-        status: 'all',
-        isSolved: 'all'
+        status: 'all'
       },
       getapt: {
         isLoading: false,
@@ -249,8 +250,7 @@ export default {
       let param = 'keywords=' + this.forms.keywords
       + '&limit=' + this.forms.limit
       + '&topic=' + this.forms.topic
-      + '&status=' + this.forms.status
-      + '&isSolved=' + this.forms.isSolved;
+      + '&status=' + this.forms.status;
 
       let url = this.$root.url + '/cp/appointment/show?page=' + this.getapt.paginate.current_page + '&' + param;
       if( p !== undefined ) url = p + '&' + param;

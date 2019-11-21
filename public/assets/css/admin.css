@@ -13,15 +13,35 @@ body {
 }
 
 .gl-badge {
-  padding: 4px 10px;
-  background: #25C4F2;
+  padding: 4px 8px;
   color: #ffffff;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 12px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
+  background: #25C4F2;
   border-radius: 6px;
+}
+
+.gl-badge-upcoming {
+  background: #25C4F2;
+}
+
+.gl-badge-accept {
+  background: #38c172;
+}
+
+.gl-badge-decline {
+  background: #e3342f;
+}
+
+.gl-badge-cancel {
+  background: #f6993f;
+}
+
+.gl-badge-done {
+  background: #38c172;
 }
 
 .gl-input-default {

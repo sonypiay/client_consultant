@@ -2426,6 +2426,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2433,8 +2435,7 @@ __webpack_require__.r(__webpack_exports__);
         keywords: '',
         limit: 10,
         topic: 'all',
-        status: 'all',
-        isSolved: 'all'
+        status: 'all'
       },
       getapt: {
         isLoading: false,
@@ -2455,7 +2456,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.forms.select_date === null) this.forms.select_date = '';
-      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&topic=' + this.forms.topic + '&status=' + this.forms.status + '&isSolved=' + this.forms.isSolved;
+      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&topic=' + this.forms.topic + '&status=' + this.forms.status;
       var url = this.$root.url + '/cp/appointment/show?page=' + this.getapt.paginate.current_page + '&' + param;
       if (p !== undefined) url = p + '&' + param;
       this.getapt.isLoading = true;
@@ -57996,17 +57997,31 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
                   _vm.getapt.details.status_request === "waiting"
-                    ? _c("span", [_vm._v("Menunggu Tanggapan")])
+                    ? _c(
+                        "span",
+                        { staticClass: "gl-badge gl-badge-upcoming" },
+                        [_vm._v("Menunggu Tanggapan")]
+                      )
                     : _vm.getapt.details.status_request === "accept"
-                    ? _c("span", [_vm._v("Diterima")])
+                    ? _c("span", { staticClass: "gl-badge gl-badge-accept" }, [
+                        _vm._v("Diterima")
+                      ])
                     : _vm.getapt.details.status_request === "decline"
-                    ? _c("span", [_vm._v("Ditolak")])
+                    ? _c("span", { staticClass: "gl-badge gl-badge-decline" }, [
+                        _vm._v("Ditolak")
+                      ])
                     : _vm.getapt.details.status_request === "cancel"
-                    ? _c("span", [_vm._v("Dibatalkan")])
+                    ? _c("span", { staticClass: "gl-badge gl-badge-cancel" }, [
+                        _vm._v("Dibatalkan")
+                      ])
                     : _vm.getapt.details.status_request === "done" &&
                       _vm.getapt.details.is_solved === "N"
-                    ? _c("span", [_vm._v("Belum selesai / terpecahkan")])
-                    : _c("span", [_vm._v("Sudah selesai / terpecahkan")])
+                    ? _c("span", { staticClass: "gl-badge gl-badge-cancel" }, [
+                        _vm._v("Belum selesai / terpecahkan")
+                      ])
+                    : _c("span", { staticClass: "gl-badge gl-badge-done" }, [
+                        _vm._v("Sudah selesai / terpecahkan")
+                      ])
                 ])
               ])
             ]),
@@ -58348,60 +58363,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.forms.is_solved,
-                      expression: "forms.is_solved"
-                    }
-                  ],
-                  staticClass: "uk-select gl-input-default",
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.forms,
-                          "is_solved",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                      function($event) {
-                        return _vm.showAppointmentRequest()
-                      }
-                    ]
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "all" } }, [
-                    _vm._v("Semua status")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "N" } }, [
-                    _vm._v("Belum terpecahkan")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "Y" } }, [
-                    _vm._v("Sudah terpecahkan")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", [
               _c("div", { staticClass: "uk-inline" }, [
                 _c("span", {
                   staticClass: "uk-form-icon",
@@ -58508,13 +58469,69 @@ var render = function() {
                                     _vm._s(
                                       _vm.$root.formatDate(
                                         apt.schedule_date,
-                                        "DD MMMM YYYY / HH:mm"
+                                        "DD/MM/YYYY / HH:mm"
                                       )
                                     )
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(apt.evt_location))])
+                                _c("td", [_vm._v(_vm._s(apt.location))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  apt.status_request === "waiting"
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "gl-badge gl-badge-upcoming"
+                                        },
+                                        [_vm._v("Menunggu Tanggapan")]
+                                      )
+                                    : apt.status_request === "accept"
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "gl-badge gl-badge-accept"
+                                        },
+                                        [_vm._v("Diterima")]
+                                      )
+                                    : apt.status_request === "decline"
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "gl-badge gl-badge-decline"
+                                        },
+                                        [_vm._v("Ditolak")]
+                                      )
+                                    : apt.status_request === "cancel"
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "gl-badge gl-badge-cancel"
+                                        },
+                                        [_vm._v("Dibatalkan")]
+                                      )
+                                    : apt.status_request === "done" &&
+                                      apt.is_solved === "N"
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "gl-badge gl-badge-cancel"
+                                        },
+                                        [_vm._v("Belum selesai")]
+                                      )
+                                    : _c(
+                                        "span",
+                                        {
+                                          staticClass: "gl-badge gl-badge-done"
+                                        },
+                                        [_vm._v("Selesai")]
+                                      )
+                                ])
                               ])
                             }),
                             0
@@ -58598,7 +58615,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Waktu")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Lokasi")])
+        _c("th", [_vm._v("Lokasi")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Status")])
       ])
     ])
   },
