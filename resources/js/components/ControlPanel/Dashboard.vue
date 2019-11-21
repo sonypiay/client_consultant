@@ -1,7 +1,33 @@
 <template>
   <div>
     <div class="card-summary-dashboard">
-      Dashboard
+      <div class="card-summary-heading">User</div>
+      <div class="uk-grid-small uk-margin-small-top uk-grid-match" uk-grid>
+        <div class="uk-width-1-3">
+          <div class="uk-card uk-card-default uk-card-body card-summary-body">
+            <div class="card-summary-value">
+              {{ usersummary.client }}
+            </div>
+            <div class="card-summary-text">Klien</div>
+          </div>
+        </div>
+        <div class="uk-width-1-3">
+          <div class="uk-card uk-card-default uk-card-body card-summary-body">
+            <div class="card-summary-value">
+              {{ usersummary.consultant }}
+            </div>
+            <div class="card-summary-text">Konsultan</div>
+          </div>
+        </div>
+        <div class="uk-width-1-3">
+          <div class="uk-card uk-card-default uk-card-body card-summary-body">
+            <div class="card-summary-value">
+              {{ usersummary.admin }}
+            </div>
+            <div class="card-summary-text">Admin</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,9 +69,9 @@ export default {
       }).then( res => {
         let result = res.data;
         this.usersummary = {
-          client: result.client,
-          consultant: result.consultant,
-          admin: result.admin
+          client: result.data.client,
+          consultant: result.data.consultant,
+          admin: result.data.admin
         };
       }).catch( err => {});
     },
@@ -57,11 +83,11 @@ export default {
       }).then( res => {
         let result = res.data;
         this.requestsummary = {
-          waiting: result.waiting,
-          accept: result.accept,
-          cancel: result.cancel,
-          decline: result.decline,
-          done: result.done
+          waiting: result.data.waiting,
+          accept: result.data.accept,
+          cancel: result.data.cancel,
+          decline: result.data.decline,
+          done: result.data.done
         };
       }).catch( err => {});
     },
@@ -73,11 +99,11 @@ export default {
       }).then( res => {
         let result = res.data;
         this.feedbacksummary = {
-          excellent: result.excellent,
-          good: result.good,
-          neutral: result.neutral,
-          poor: result.poor,
-          disappointed: result.disappointed
+          excellent: result.data.excellent,
+          good: result.data.good,
+          neutral: result.data.neutral,
+          poor: result.data.poor,
+          disappointed: result.data.disappointed
         };
       }).catch( err => {});
     }

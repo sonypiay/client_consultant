@@ -1846,6 +1846,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['getuser'],
   data: function data() {
@@ -1881,9 +1907,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         var result = res.data;
         _this.usersummary = {
-          client: result.client,
-          consultant: result.consultant,
-          admin: result.admin
+          client: result.data.client,
+          consultant: result.data.consultant,
+          admin: result.data.admin
         };
       })["catch"](function (err) {});
     },
@@ -1896,11 +1922,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         var result = res.data;
         _this2.requestsummary = {
-          waiting: result.waiting,
-          accept: result.accept,
-          cancel: result.cancel,
-          decline: result.decline,
-          done: result.done
+          waiting: result.data.waiting,
+          accept: result.data.accept,
+          cancel: result.data.cancel,
+          decline: result.data.decline,
+          done: result.data.done
         };
       })["catch"](function (err) {});
     },
@@ -1913,11 +1939,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         var result = res.data;
         _this3.feedbacksummary = {
-          excellent: result.excellent,
-          good: result.good,
-          neutral: result.neutral,
-          poor: result.poor,
-          disappointed: result.disappointed
+          excellent: result.data.excellent,
+          good: result.data.good,
+          neutral: result.data.neutral,
+          poor: result.data.poor,
+          disappointed: result.data.disappointed
         };
       })["catch"](function (err) {});
     }
@@ -55606,20 +55632,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "card-summary-dashboard" }, [
-        _vm._v("\n    Dashboard\n  ")
-      ])
+  return _c("div", [
+    _c("div", { staticClass: "card-summary-dashboard" }, [
+      _c("div", { staticClass: "card-summary-heading" }, [_vm._v("User")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "uk-grid-small uk-margin-small-top uk-grid-match",
+          attrs: { "uk-grid": "" }
+        },
+        [
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.usersummary.client) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Klien")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.usersummary.consultant) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Konsultan")
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "uk-width-1-3" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "uk-card uk-card-default uk-card-body card-summary-body"
+              },
+              [
+                _c("div", { staticClass: "card-summary-value" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.usersummary.admin) +
+                      "\n          "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-summary-text" }, [
+                  _vm._v("Admin")
+                ])
+              ]
+            )
+          ])
+        ]
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

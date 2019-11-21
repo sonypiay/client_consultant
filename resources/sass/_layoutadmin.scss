@@ -70,3 +70,26 @@ html, body { font-family: $font-base; }
     }
   }
 }
+
+
+.card-summary-dashboard {
+  margin-top: 1.5rem;
+  .card-summary-heading {
+    @include global_font_style( 200, 28px, normal, 0.4px );
+  }
+  .card-summary-body {
+    border-radius: 10px;
+    @include global_font_style( 400, 14px, normal, 0.4px );
+    background: $color-base;
+    .card-summary-text {
+      @include global_font_style( 200, 36px, normal, 0.4px );
+      color: #ffffff;
+      text-align: center;
+    }
+    .card-summary-value {
+      @include global_font_style( 200, 48px, normal, 0.4px );
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+}
