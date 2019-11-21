@@ -8,11 +8,6 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index( Request $request, AdminUser $adminuser )
     {
       if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
@@ -70,6 +65,22 @@ class AdminController extends Controller
       $adminuser = new AdminUser;
       $adminuser->deleteAdmin( $id );
       $res = ['responseCode' => 200, 'responseMessage' => 'deleted'];
+      return response()->json( $res, $res['responseCode'] );
+    }
+
+    public function profile( Request $request, AdminUser $adminuser )
+    {
+      if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
+
+      $data             = [];
+      $data['getuser']  = $adminuser->getprofile();
+      return response()->view('controlpanel.pages.profile', $data);
+    }
+
+    public function save_profile( Request $request, AdminUser $adminuser )
+    {
+      $id = session()->get('adminId');
+      $res = $adminuser->updateAdmin( $id, $request );
       return response()->json( $res, $res['responseCode'] );
     }
 }

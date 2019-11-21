@@ -99,9 +99,11 @@ Route::group(['prefix' => 'cp'], function() {
 
   Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'ControlPanel\AdminController@index')->name('cp_admin_page');
+    Route::get('/profile', 'ControlPanel\AdminController@profile')->name('cp_profile_page');
     Route::get('/show/{id?}', 'ControlPanel\AdminController@show');
     Route::post('/create', 'ControlPanel\AdminController@store');
     Route::put('/update/{id}', 'ControlPanel\AdminController@update');
+    Route::put('/save_profile', 'ControlPanel\AdminController@save_profile');
     Route::delete('/delete/{id}', 'ControlPanel\AdminController@destroy');
   });
 

@@ -11,6 +11,7 @@ window.swal = require('sweetalert');
 window.moment = require('moment');
 
 Vue.component('admin-login-page', require('./components/ControlPanel/Login.vue').default);
+Vue.component('admin-profile-page', require('./components/ControlPanel/Profile.vue').default);
 Vue.component('dashboard-page', require('./components/ControlPanel/Dashboard.vue').default);
 Vue.component('admin-page', require('./components/ControlPanel/Admin.vue').default);
 Vue.component('consultant-page', require('./components/ControlPanel/Consultant.vue').default);

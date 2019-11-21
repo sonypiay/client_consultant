@@ -11,7 +11,7 @@
             <div class="uk-navbar-dropdown">
               <ul class="uk-nav uk-navbar-dropdown-nav nav-dropdown">
                 <li>
-                  <a href="#">
+                  <a href="{{ route('cp_profile_page') }}">
                     <span uk-icon="pencil"></span>
                     Ubah Profil
                   </a>
