@@ -59423,7 +59423,7 @@ var render = function() {
                 _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
                   _vm._v(
                     "\n              " +
-                      _vm._s(_vm.getclient.details.city_name) +
+                      _vm._s(_vm.getclient.details.city) +
                       "\n            "
                   )
                 ])
@@ -59643,7 +59643,7 @@ var render = function() {
                                       }
                                     }
                                   }),
-                                  _vm._v(" | \n                    "),
+                                  _vm._v(" |\n                    "),
                                   _c("a", {
                                     staticClass: "uk-link-text",
                                     attrs: {
@@ -60183,7 +60183,7 @@ var render = function() {
                 _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
                   _vm._v(
                     "\n              " +
-                      _vm._s(_vm.getconsultant.details.city_name) +
+                      _vm._s(_vm.getconsultant.details.city) +
                       "\n            "
                   )
                 ])
@@ -60447,7 +60447,7 @@ var render = function() {
                                       }
                                     }
                                   }),
-                                  _vm._v(" | \n                    "),
+                                  _vm._v(" |\n                    "),
                                   _c("a", {
                                     staticClass: "uk-link-text",
                                     attrs: {

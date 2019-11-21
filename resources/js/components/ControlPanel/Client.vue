@@ -61,7 +61,7 @@
             <div class="uk-panel">
               <h4 class="uk-h4 uk-margin-remove-bottom">Kota</h4>
               <p class="uk-text-meta uk-margin-remove-top">
-                {{ getclient.details.city_name }}
+                {{ getclient.details.city }}
               </p>
             </div>
           </div>
@@ -121,7 +121,7 @@
                 <tbody>
                   <tr v-for="c in getclient.results">
                     <td>
-                      <a @click="onViewDetail( c )" uk-tooltip="Lihat Detail" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a> | 
+                      <a @click="onViewDetail( c )" uk-tooltip="Lihat Detail" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a> |
                       <a @click="onDeleteClient( c.client_id )" uk-tooltip="Hapus" class="uk-link-text" uk-icon="icon: trash; ratio: 0.8"></a>
                     </td>
                     <td>{{ c.client_fullname }}</td>
