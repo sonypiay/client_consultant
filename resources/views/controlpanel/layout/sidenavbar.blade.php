@@ -33,7 +33,7 @@
       </ul>
     </li>
     <li>
-      <a href="#">
+      <a href="{{ route('cp_feedback_page') }}">
         <span class="uk-margin-small-right" uk-icon="icon: star; ratio: 0.8"></span>
         Ulasan
       </a>

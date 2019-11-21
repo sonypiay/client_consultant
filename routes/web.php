@@ -156,7 +156,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
 
   Route::group(['prefix' => 'feedback'], function() {
-    Route::get('/', 'ControlPanel\FeedbackController@index');
+    Route::get('/', 'ControlPanel\FeedbackController@index')->name('cp_feedback_page');
     Route::get('/show', 'ControlPanel\FeedbackController@show');
   });
 });

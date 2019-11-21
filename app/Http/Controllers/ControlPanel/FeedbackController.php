@@ -15,7 +15,7 @@ class FeedbackController extends Controller
 
     $data             = [];
     $data['getuser']  = $adminuser->getprofile();
-    return response()->view('controlpanel.pages.appointment', $data);
+    return response()->view('controlpanel.pages.feedback', $data);
   }
 
   public function show( Request $request, Feedbacks $feedback )
