@@ -29,7 +29,8 @@ class ServiceTopic extends Model
     $query    = $this;
     if( ! empty( $keywords ) )
     {
-      $query = $query->where('topic_name', 'like', '%' . $keywords . '%');
+      $query = $query->where('topic_name', 'like', '%' . $keywords . '%')
+      ->orWhere('topic_id', 'like', '%' . $keywords . '%');
     }
 
     $result = $query->orderBy('topic_name', 'asc')->get();

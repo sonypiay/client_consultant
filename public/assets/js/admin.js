@@ -4063,6 +4063,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4093,7 +4094,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var param = 'keywords=' + this.forms.keywords;
-      var url = this.$root.url + '/cp/service_topic/show?page=' + this.getservice.paginate.current_page + '&' + param;
+      var url = this.$root.url + '/cp/service_topic/show?' + param;
       if (p !== undefined) url = p + '&' + param;
       this.getservice.isLoading = true;
       axios({
@@ -61906,7 +61907,7 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("h3", [
-          _vm.forms.admin.isedit
+          _vm.forms.service.isedit
             ? _c("span", [_vm._v("Ubah Layanan")])
             : _c("span", [_vm._v("Tambah Layanan")])
         ]),
@@ -61960,7 +61961,7 @@ var render = function() {
             on: {
               submit: function($event) {
                 $event.preventDefault()
-                _vm.forms.admin.isedit === false
+                _vm.forms.service.isedit === false
                   ? _vm.onCreateService()
                   : _vm.onUpdateService()
               }
@@ -62133,7 +62134,7 @@ var render = function() {
                                     staticClass: "uk-link-text",
                                     attrs: {
                                       "uk-tooltip": "Ubah",
-                                      "uk-icon": "icon: pencil; ratio: 0.8"
+                                      "uk-icon": "icon: pencil; ratio: 1"
                                     },
                                     on: {
                                       click: function($event) {
@@ -62146,7 +62147,7 @@ var render = function() {
                                     staticClass: "uk-link-text",
                                     attrs: {
                                       "uk-tooltip": "Hapus",
-                                      "uk-icon": "icon: trash; ratio: 0.8"
+                                      "uk-icon": "icon: trash; ratio: 1"
                                     },
                                     on: {
                                       click: function($event) {

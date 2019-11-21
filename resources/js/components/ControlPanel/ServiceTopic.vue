@@ -1,11 +1,11 @@
 <template>
   <div>
-    <!-- tambah / update admin -->
+    <!-- tambah / update service -->
     <div id="modal" uk-modal>
       <div class="uk-modal-dialog uk-modal-body">
         <a class="uk-modal-close uk-modal-close-outside" uk-close></a>
         <h3>
-          <span v-if="forms.admin.isedit">Ubah Layanan</span>
+          <span v-if="forms.service.isedit">Ubah Layanan</span>
           <span v-else>Tambah Layanan</span>
         </h3>
 
@@ -15,7 +15,7 @@
         <div v-show="messages.successMessage" class="uk-alert-success uk-margin" uk-alert>
           {{ messages.successMessage }}
         </div>
-        <form class="uk-form-stacked" @submit.prevent="forms.admin.isedit === false ? onCreateService() : onUpdateService()">
+        <form class="uk-form-stacked" @submit.prevent="forms.service.isedit === false ? onCreateService() : onUpdateService()">
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Nama Layanan</label>
             <div class="uk-form-controls">
@@ -29,7 +29,8 @@
         </form>
       </div>
     </div>
-    <!-- tambah / update admin -->
+    <!-- tambah / update service -->
+
     <div class="container-panel">
       <div class="content-heading">
         Daftar Layanan Konsultasi
@@ -65,8 +66,8 @@
                 <tbody>
                   <tr v-for="service in getservice.results">
                     <td>
-                      <a @click="onClickModal( service )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: pencil; ratio: 0.8"></a> |
-                      <a @click="onDeleteService( service.topic_id )" uk-tooltip="Hapus" class="uk-link-text" uk-icon="icon: trash; ratio: 0.8"></a>
+                      <a @click="onClickModal( service )" uk-tooltip="Ubah" class="uk-link-text" uk-icon="icon: pencil; ratio: 1"></a> |
+                      <a @click="onDeleteService( service.topic_id )" uk-tooltip="Hapus" class="uk-link-text" uk-icon="icon: trash; ratio: 1"></a>
                     </td>
                     <td>{{ service.topic_id }}</td>
                     <td>{{ service.topic_name }}</td>
@@ -111,7 +112,7 @@ export default {
     showServiceTopic( p )
     {
       let param = 'keywords=' + this.forms.keywords;
-      let url = this.$root.url + '/cp/service_topic/show?page=' + this.getservice.paginate.current_page + '&' + param;
+      let url = this.$root.url + '/cp/service_topic/show?' + param;
       if( p !== undefined ) url = p + '&' + param;
       this.getservice.isLoading = true;
       axios({
