@@ -138,9 +138,6 @@
 
 <script>
 export default {
-  props: [
-    'getuser'
-  ],
   data() {
     return {
       usersummary: {

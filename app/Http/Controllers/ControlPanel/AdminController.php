@@ -13,9 +13,13 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request, AdminUser $adminuser )
     {
-        //
+      if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
+
+      $data             = [];
+      $data['getuser']  = $adminuser->getprofile();
+      return response()->view('controlpanel.pages.admin', $data);
     }
 
     public function store(Request $request)

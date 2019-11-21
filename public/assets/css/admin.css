@@ -244,3 +244,17 @@ body {
   color: #ffffff;
 }
 
+.container-panel {
+  margin-top: 2rem;
+}
+
+.container-panel .content-heading {
+  font-weight: 200;
+  font-size: 24px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  color: #333333;
+  margin-bottom: 1rem;
+}
+

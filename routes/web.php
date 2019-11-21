@@ -98,7 +98,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
 
   Route::group(['prefix' => 'admin'], function() {
-    Route::get('/', 'ControlPanel\AdminController@index');
+    Route::get('/', 'ControlPanel\AdminController@index')->name('cp_admin_page');
     Route::get('/show/{id?}', 'ControlPanel\AdminController@show');
     Route::post('/create', 'ControlPanel\AdminController@store');
     Route::put('/update/{id}', 'ControlPanel\AdminController@update');

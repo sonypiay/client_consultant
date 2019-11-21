@@ -94,3 +94,12 @@ html, body { font-family: $font-base; }
     }
   }
 }
+
+.container-panel {
+  margin-top: 2rem;
+  .content-heading {
+    @include global_font_style( 200, 24px, normal, 0.4px );
+    color: #333333;
+    margin-bottom: 1rem;
+  }
+}

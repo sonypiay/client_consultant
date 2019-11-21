@@ -36,7 +36,7 @@
     </li>
     <li class="uk-nav-header sidenav-header">Manajemen</li>
     <li>
-      <a href="#">
+      <a href="{{ route('cp_admin_page') }}">
         <span class="uk-margin-small-right" uk-icon="icon: lock; ratio: 0.8"></span>
         Admin
       </a>
