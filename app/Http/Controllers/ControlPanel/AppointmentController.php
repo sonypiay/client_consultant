@@ -4,48 +4,20 @@ namespace App\Http\Controllers\ControlPanel;
 
 use Illuminate\Http\Request;
 use App\Database\AppointmentRequest;
-use App\Database\Notification;
+use App\Database\AdminUser;
 use App\Http\Controllers\Controller;
 
 class AppointmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  public function index( Request $request, AdminUser $adminuser )
+  {
+    if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    $data             = [];
+    $data['getuser']  = $adminuser->getprofile();
+    return response()->view('controlpanel.pages.appointment', $data);
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request, AppointmentRequest $appointment, $id = null)
     {
       $keywords = isset( $request->keywords ) ? $request->keywords : '';
@@ -120,12 +92,6 @@ class AppointmentController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(AppointmentRequest $appointment, $id)
     {
       $res = $appointment->deleteRequest( $id );

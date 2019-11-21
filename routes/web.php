@@ -150,6 +150,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
 
   Route::group(['prefix' => 'appointment'], function() {
+    Route::get('/', 'ControlPanel\AppointmentController@index')->name('cp_appointment_page');
     Route::get('/show', 'ControlPanel\AppointmentController@show');
     Route::delete('/delete/{id}', 'ControlPanel\AppointmentController@destroy');
   });

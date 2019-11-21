@@ -28,8 +28,8 @@
         <span class="uk-float-right" uk-icon="icon: chevron-down; ratio: 0.8"></span>
       </a>
       <ul class="uk-nav-sub nav-sub">
-        <li><a href="{{ route('cp_client_page') }}">Daftar Konsultan</a></li>
-        <li><a href="#">Permintaan Konsultasi</a></li>
+        <li><a href="{{ route('cp_client_page') }}">Daftar Klien</a></li>
+        <li><a href="{{ route('cp_appointment_page') }}">Permintaan Konsultasi</a></li>
       </ul>
     </li>
     <li>
