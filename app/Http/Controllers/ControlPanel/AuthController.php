@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
       if( session()->has('isAdmin') )
       {
-        return;
+        return redirect()->route('cp_dashboard_page');
       }
       return response()->view('controlpanel.pages.login');
     }
@@ -28,7 +28,7 @@ class AuthController extends Controller
     public function logout( AdminUser $adminuser )
     {
       $adminuser->doLogout();
-      $res = [ 'responseCode' => 200, 'responseMessage' => 'success' ];
-      return response()->json( $res, $res['responseCode'] );
+
+      return redirect()->route('cp_login_page');
     }
 }
