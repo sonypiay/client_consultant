@@ -261,7 +261,8 @@ class ClientUser extends Model
         $q->where('client_user.client_id', 'like', '%' . $keywords . '%')
         ->orWhere('client_user.client_fullname', 'like', '%' . $keywords . '%')
         ->orWhere('client_user.client_phone_number', 'like', '%' . $keywords . '%')
-        ->orWhere('client_user.client_email', 'like', '%' . $keywords . '%');
+        ->orWhere('client_user.client_email', 'like', '%' . $keywords . '%')
+        ->orWhere('client_user.client_npwp', 'like', '%' . $keywords . '%');
       });
     }
 

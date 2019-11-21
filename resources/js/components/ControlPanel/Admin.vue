@@ -62,7 +62,7 @@
           <div>
             <div class="uk-inline">
               <span class="uk-form-icon" uk-icon="search"></span>
-              <input type="search" class="uk-input gl-input-default" v-model="forms.keywords" @keyup.enter="showAdmin()" />
+              <input type="search" class="uk-input gl-input-default" placeholder="Masukkan kata kunci" v-model="forms.keywords" @keyup.enter="showAdmin()" />
             </div>
           </div>
         </div>

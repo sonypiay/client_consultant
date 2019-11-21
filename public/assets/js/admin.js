@@ -57171,7 +57171,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "uk-input gl-input-default",
-                  attrs: { type: "search" },
+                  attrs: { type: "search", placeholder: "Masukkan kata kunci" },
                   domProps: { value: _vm.forms.keywords },
                   on: {
                     keyup: function($event) {
@@ -57680,7 +57680,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "uk-input gl-input-default",
-                  attrs: { type: "search" },
+                  attrs: { type: "search", placeholder: "Masukkan kata kunci" },
                   domProps: { value: _vm.forms.keywords },
                   on: {
                     keyup: function($event) {
@@ -58475,7 +58475,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "uk-input gl-input-default",
-                  attrs: { type: "search" },
+                  attrs: { type: "search", placeholder: "Masukkan kata kunci" },
                   domProps: { value: _vm.forms.keywords },
                   on: {
                     keyup: function($event) {
