@@ -2395,15 +2395,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       forms: {
         keywords: '',
         limit: 10,
-        select_date: null
+        topic: 'all',
+        status: 'all',
+        isSolved: 'all'
       },
-      getevt: {
+      getapt: {
         isLoading: false,
         total: 0,
         results: [],
@@ -2418,39 +2451,39 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    showEventSchedule: function showEventSchedule(p) {
+    showAppointmentRequest: function showAppointmentRequest(p) {
       var _this = this;
 
       if (this.forms.select_date === null) this.forms.select_date = '';
-      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&select_date=' + this.forms.select_date;
-      var url = this.$root.url + '/cp/event/show?page=' + this.getevt.paginate.current_page + '&' + param;
+      var param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&topic=' + this.forms.topic + '&status=' + this.forms.status + '&isSolved=' + this.forms.isSolved;
+      var url = this.$root.url + '/cp/appointment/show?page=' + this.getapt.paginate.current_page + '&' + param;
       if (p !== undefined) url = p + '&' + param;
-      this.getevt.isLoading = true;
+      this.getapt.isLoading = true;
       axios({
         method: 'get',
         url: url
       }).then(function (res) {
         var result = res.data;
-        _this.getevt.total = result.total;
-        _this.getevt.results = result.data;
-        _this.getevt.paginate = {
+        _this.getapt.total = result.total;
+        _this.getapt.results = result.data;
+        _this.getapt.paginate = {
           current_page: result.current_page,
           last_page: result.last_page,
           prev_page_url: result.prev_page_url,
           next_page_url: result.next_page_url
         };
-        _this.getevt.isLoading = false;
+        _this.getapt.isLoading = false;
       })["catch"](function (err) {
         console.log(err.response.statusText);
       });
     },
     onViewDetail: function onViewDetail(d) {
-      this.getevt.details = d;
+      this.getapt.details = d;
       UIkit.modal('#modal-detail').show();
     }
   },
   mounted: function mounted() {
-    this.showEventSchedule();
+    this.showAppointmentRequest();
   }
 });
 
@@ -57969,7 +58002,7 @@ var render = function() {
                     : _vm.getapt.details.status_request === "decline"
                     ? _c("span", [_vm._v("Ditolak")])
                     : _vm.getapt.details.status_request === "cancel"
-                    ? _c("span", [_vm._v("Ditolak")])
+                    ? _c("span", [_vm._v("Dibatalkan")])
                     : _vm.getapt.details.status_request === "done" &&
                       _vm.getapt.details.is_solved === "N"
                     ? _c("span", [_vm._v("Belum selesai / terpecahkan")])
@@ -58104,6 +58137,22 @@ var render = function() {
                     : _c("span", [_vm._v("Tidak dapat dipercaya")])
                 ])
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "uk-width-1-2" }, [
+              _c("div", { staticClass: "uk-panel" }, [
+                _c("h4", { staticClass: "uk-h4 uk-margin-remove-bottom" }, [
+                  _vm._v("Ulasan")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "uk-text-meta uk-margin-remove-top" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.getapt.details.review_description) +
+                      "\n            "
+                  )
+                ])
+              ])
             ])
           ]
         )
@@ -58112,7 +58161,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "container-panel" }, [
       _c("div", { staticClass: "content-heading" }, [
-        _vm._v("Daftar Jadwal Acara Konsultan")
+        _vm._v("Daftar Permintaan Konsultasi")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "uk-card uk-card-body uk-card-default" }, [
@@ -58156,7 +58205,7 @@ var render = function() {
                         )
                       },
                       function($event) {
-                        return _vm.showEventSchedule()
+                        return _vm.showAppointmentRequest()
                       }
                     ]
                   }
@@ -58175,6 +58224,179 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "40" } }, [_vm._v("40 baris")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.topic,
+                      expression: "forms.topic"
+                    }
+                  ],
+                  staticClass: "uk-select gl-input-default",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.forms,
+                          "topic",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      function($event) {
+                        return _vm.showAppointmentRequest()
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "all" } }, [
+                    _vm._v("Semua topik")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.gettopic, function(tpc) {
+                    return _c("option", { domProps: { value: tpc.topic_id } }, [
+                      _vm._v(_vm._s(tpc.topic_name))
+                    ])
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.status,
+                      expression: "forms.status"
+                    }
+                  ],
+                  staticClass: "uk-select gl-input-default",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.forms,
+                          "status",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      function($event) {
+                        return _vm.showAppointmentRequest()
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "all" } }, [
+                    _vm._v("Semua status")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "waiting" } }, [
+                    _vm._v("Menunggu Tanggapan")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "accept" } }, [
+                    _vm._v("Diterima")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "decline" } }, [
+                    _vm._v("Ditolak")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "cancel" } }, [
+                    _vm._v("Dibatalkan")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "done" } }, [
+                    _vm._v("Selesai")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.forms.is_solved,
+                      expression: "forms.is_solved"
+                    }
+                  ],
+                  staticClass: "uk-select gl-input-default",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.forms,
+                          "is_solved",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      function($event) {
+                        return _vm.showAppointmentRequest()
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "all" } }, [
+                    _vm._v("Semua status")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "N" } }, [
+                    _vm._v("Belum terpecahkan")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "Y" } }, [
+                    _vm._v("Sudah terpecahkan")
+                  ])
                 ]
               )
             ]),
@@ -58206,7 +58428,7 @@ var render = function() {
                       ) {
                         return null
                       }
-                      return _vm.showEventSchedule()
+                      return _vm.showAppointmentRequest()
                     },
                     input: function($event) {
                       if ($event.target.composing) {
@@ -58222,12 +58444,12 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "uk-margin-top" }, [
-          _vm.getevt.isLoading
+          _vm.getapt.isLoading
             ? _c("div", { staticClass: "uk-text-center" }, [
                 _c("span", { attrs: { "uk-spinner": "" } })
               ])
             : _c("div", [
-                _vm.getevt.total === 0
+                _vm.getapt.total === 0
                   ? _c(
                       "div",
                       {
@@ -58236,13 +58458,13 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n            Tidak ada jadwal acara\n          "
+                          "\n            Tidak ada permintaan konsultasi\n          "
                         )
                       ]
                     )
                   : _c("div", [
                       _c("span", { staticClass: "gl-badge" }, [
-                        _vm._v(_vm._s(_vm.getevt.total) + " acara")
+                        _vm._v(_vm._s(_vm.getapt.total) + " permintaan")
                       ]),
                       _vm._v(" "),
                       _c(
@@ -58256,7 +58478,7 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "tbody",
-                            _vm._l(_vm.getevt.results, function(evt) {
+                            _vm._l(_vm.getapt.results, function(apt) {
                               return _c("tr", [
                                 _c("td", [
                                   _c("a", {
@@ -58267,32 +58489,32 @@ var render = function() {
                                     },
                                     on: {
                                       click: function($event) {
-                                        return _vm.onViewDetail(evt)
+                                        return _vm.onViewDetail(apt)
                                       }
                                     }
                                   })
                                 ]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(evt.evt_id))]),
+                                _c("td", [_vm._v(_vm._s(apt.apt_id))]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(evt.evt_title))]),
+                                _c("td", [_vm._v(_vm._s(apt.client_fullname))]),
                                 _vm._v(" "),
                                 _c("td", [
-                                  _vm._v(_vm._s(evt.consultant_fullname))
+                                  _vm._v(_vm._s(apt.consultant_fullname))
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
                                   _vm._v(
                                     _vm._s(
                                       _vm.$root.formatDate(
-                                        evt.evt_schedule,
+                                        apt.schedule_date,
                                         "DD MMMM YYYY / HH:mm"
                                       )
                                     )
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(evt.evt_location))])
+                                _c("td", [_vm._v(_vm._s(apt.evt_location))])
                               ])
                             }),
                             0
@@ -58304,14 +58526,14 @@ var render = function() {
                         "ul",
                         { staticClass: "uk-pagination uk-flex-center" },
                         [
-                          _vm.getevt.paginate.prev_page_url
+                          _vm.getapt.paginate.prev_page_url
                             ? _c(
                                 "li",
                                 {
                                   on: {
                                     click: function($event) {
-                                      return _vm.showEventSchedule(
-                                        _vm.getevt.paginate.prev_page_url
+                                      return _vm.showAppointmentRequest(
+                                        _vm.getapt.paginate.prev_page_url
                                       )
                                     }
                                   }
@@ -58326,21 +58548,21 @@ var render = function() {
                             _c("span", [
                               _vm._v(
                                 "Page " +
-                                  _vm._s(_vm.getevt.paginate.current_page) +
+                                  _vm._s(_vm.getapt.paginate.current_page) +
                                   " of " +
-                                  _vm._s(_vm.getevt.paginate.last_page)
+                                  _vm._s(_vm.getapt.paginate.last_page)
                               )
                             ])
                           ]),
                           _vm._v(" "),
-                          _vm.getevt.paginate.next_page_url
+                          _vm.getapt.paginate.next_page_url
                             ? _c(
                                 "li",
                                 {
                                   on: {
                                     click: function($event) {
-                                      return _vm.showEventSchedule(
-                                        _vm.getevt.paginate.next_page_url
+                                      return _vm.showAppointmentRequest(
+                                        _vm.getapt.paginate.next_page_url
                                       )
                                     }
                                   }
@@ -58370,7 +58592,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Nama Acara")]),
+        _c("th", [_vm._v("Klien")]),
         _vm._v(" "),
         _c("th", [_vm._v("Konsultan")]),
         _vm._v(" "),

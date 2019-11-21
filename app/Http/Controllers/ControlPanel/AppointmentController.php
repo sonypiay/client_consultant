@@ -5,16 +5,18 @@ namespace App\Http\Controllers\ControlPanel;
 use Illuminate\Http\Request;
 use App\Database\AppointmentRequest;
 use App\Database\AdminUser;
+use App\Database\ServiceTopic;
 use App\Http\Controllers\Controller;
 
 class AppointmentController extends Controller
 {
-  public function index( Request $request, AdminUser $adminuser )
+  public function index( Request $request, AdminUser $adminuser, ServiceTopic $servicetopic )
   {
     if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
 
     $data             = [];
     $data['getuser']  = $adminuser->getprofile();
+    $data['gettopic'] = $servicetopic->getTopic();
     return response()->view('controlpanel.pages.appointment', $data);
   }
 

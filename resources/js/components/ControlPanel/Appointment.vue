@@ -39,7 +39,7 @@
                 <span v-if="getapt.details.status_request === 'waiting'">Menunggu Tanggapan</span>
                 <span v-else-if="getapt.details.status_request === 'accept'">Diterima</span>
                 <span v-else-if="getapt.details.status_request === 'decline'">Ditolak</span>
-                <span v-else-if="getapt.details.status_request === 'cancel'">Ditolak</span>
+                <span v-else-if="getapt.details.status_request === 'cancel'">Dibatalkan</span>
                 <span v-else-if="getapt.details.status_request === 'done' && getapt.details.is_solved === 'N'">Belum selesai / terpecahkan</span>
                 <span v-else>Sudah selesai / terpecahkan</span>
               </p>
@@ -93,17 +93,25 @@
               </p>
             </div>
           </div>
+          <div class="uk-width-1-2">
+            <div class="uk-panel">
+              <h4 class="uk-h4 uk-margin-remove-bottom">Ulasan</h4>
+              <p class="uk-text-meta uk-margin-remove-top">
+                {{ getapt.details.review_description }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <!-- detail klien -->
 
     <div class="container-panel">
-      <div class="content-heading">Daftar Jadwal Acara Konsultan</div>
+      <div class="content-heading">Daftar Permintaan Konsultasi</div>
       <div class="uk-card uk-card-body uk-card-default">
         <div class="uk-grid-small uk-child-width-auto" uk-grid>
           <div>
-            <select class="uk-select gl-input-default" v-model="forms.limit" @change="showEventSchedule()">
+            <select class="uk-select gl-input-default" v-model="forms.limit" @change="showAppointmentRequest()">
               <option value="10">10 baris</option>
               <option value="20">20 baris</option>
               <option value="30">30 baris</option>
@@ -111,51 +119,74 @@
             </select>
           </div>
           <div>
+            <select class="uk-select gl-input-default" v-model="forms.topic" @change="showAppointmentRequest()">
+              <option value="all">Semua topik</option>
+              <option v-for="tpc in gettopic" :value="tpc.topic_id">{{ tpc.topic_name }}</option>
+            </select>
+          </div>
+          <div>
+            <select class="uk-select gl-input-default" v-model="forms.status" @change="showAppointmentRequest()">
+              <option value="all">Semua status</option>
+              <option value="waiting">Menunggu Tanggapan</option>
+              <option value="accept">Diterima</option>
+              <option value="decline">Ditolak</option>
+              <option value="cancel">Dibatalkan</option>
+              <option value="done">Selesai</option>
+            </select>
+          </div>
+          <div>
+            <select class="uk-select gl-input-default" v-model="forms.is_solved" @change="showAppointmentRequest()">
+              <option value="all">Semua status</option>
+              <option value="N">Belum terpecahkan</option>
+              <option value="Y">Sudah terpecahkan</option>
+            </select>
+          </div>
+          <div>
             <div class="uk-inline">
               <span class="uk-form-icon" uk-icon="search"></span>
-              <input type="search" class="uk-input gl-input-default" placeholder="Masukkan kata kunci" v-model="forms.keywords" @keyup.enter="showEventSchedule()" />
+              <input type="search" class="uk-input gl-input-default" placeholder="Masukkan kata kunci" v-model="forms.keywords" @keyup.enter="showAppointmentRequest()" />
             </div>
           </div>
         </div>
 
         <div class="uk-margin-top">
-          <div v-if="getevt.isLoading" class="uk-text-center">
+          <div v-if="getapt.isLoading" class="uk-text-center">
             <span uk-spinner></span>
           </div>
           <div v-else>
-            <div v-if="getevt.total === 0" class="uk-alert-warning" uk-alert>
-              Tidak ada jadwal acara
+            <div v-if="getapt.total === 0" class="uk-alert-warning" uk-alert>
+              Tidak ada permintaan konsultasi
             </div>
             <div v-else>
-              <span class="gl-badge">{{ getevt.total }} acara</span>
+              <span class="gl-badge">{{ getapt.total }} permintaan</span>
               <table class="uk-table uk-table-small uk-table-middle uk-table-divider uk-table-striped uk-table-responsive uk-text-small">
                 <thead>
                   <tr>
                     <th>Aksi</th>
                     <th>ID</th>
-                    <th>Nama Acara</th>
+                    <th>Klien</th>
                     <th>Konsultan</th>
                     <th>Waktu</th>
                     <th>Lokasi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="evt in getevt.results">
+                  <tr v-for="apt in getapt.results">
                     <td>
-                      <a @click="onViewDetail( evt )" uk-tooltip="Lihat Detail" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a>
+                      <a @click="onViewDetail( apt )" uk-tooltip="Lihat Detail" class="uk-link-text" uk-icon="icon: forward; ratio: 0.8"></a>
                     </td>
-                    <td>{{ evt.evt_id }}</td>
-                    <td>{{ evt.evt_title }}</td>
-                    <td>{{ evt.consultant_fullname }}</td>
-                    <td>{{ $root.formatDate( evt.evt_schedule, 'DD MMMM YYYY / HH:mm' ) }}</td>
-                    <td>{{ evt.evt_location }}</td>
+                    <td>{{ apt.apt_id }}</td>
+                    <td>{{ apt.client_fullname }}</td>
+                    <td>{{ apt.consultant_fullname }}</td>
+                    <td>{{ $root.formatDate( apt.schedule_date, 'DD MMMM YYYY / HH:mm' ) }}</td>
+                    <td>{{ apt.evt_location }}</td>
                   </tr>
                 </tbody>
               </table>
 
               <!-- pagination -->
               <ul class="uk-pagination uk-flex-center">
-                <li v-if="getevt.paginate.prev_page_url" @click="showEventSchedule( getevt.paginate.prev_page_url )">
+                <li v-if="getapt.paginate.prev_page_url" @click="showAppointmentRequest( getapt.paginate.prev_page_url )">
                   <a>
                     <span uk-pagination-previous></span>
                   </a>
@@ -165,8 +196,8 @@
                     <span uk-pagination-previous></span>
                   </a>
                 </li>
-                <li class="uk-disabled"><span>Page {{ getevt.paginate.current_page }} of {{ getevt.paginate.last_page }}</span></li>
-                <li v-if="getevt.paginate.next_page_url" @click="showEventSchedule( getevt.paginate.next_page_url )">
+                <li class="uk-disabled"><span>Page {{ getapt.paginate.current_page }} of {{ getapt.paginate.last_page }}</span></li>
+                <li v-if="getapt.paginate.next_page_url" @click="showAppointmentRequest( getapt.paginate.next_page_url )">
                   <a>
                     <span uk-pagination-next></span>
                   </a>
@@ -193,9 +224,11 @@ export default {
       forms: {
         keywords: '',
         limit: 10,
-        select_date: null
+        topic: 'all',
+        status: 'all',
+        isSolved: 'all'
       },
-      getevt: {
+      getapt: {
         isLoading: false,
         total: 0,
         results: [],
@@ -210,40 +243,45 @@ export default {
     }
   },
   methods: {
-    showEventSchedule( p )
+    showAppointmentRequest( p )
     {
       if( this.forms.select_date === null ) this.forms.select_date = '';
-      let param = 'keywords=' + this.forms.keywords + '&limit=' + this.forms.limit + '&select_date=' + this.forms.select_date;
-      let url = this.$root.url + '/cp/event/show?page=' + this.getevt.paginate.current_page + '&' + param;
+      let param = 'keywords=' + this.forms.keywords
+      + '&limit=' + this.forms.limit
+      + '&topic=' + this.forms.topic
+      + '&status=' + this.forms.status
+      + '&isSolved=' + this.forms.isSolved;
+
+      let url = this.$root.url + '/cp/appointment/show?page=' + this.getapt.paginate.current_page + '&' + param;
       if( p !== undefined ) url = p + '&' + param;
-      this.getevt.isLoading = true;
+      this.getapt.isLoading = true;
 
       axios({
         method: 'get',
         url: url
       }).then( res => {
         let result = res.data;
-        this.getevt.total = result.total;
-        this.getevt.results = result.data;
-        this.getevt.paginate = {
+        this.getapt.total = result.total;
+        this.getapt.results = result.data;
+        this.getapt.paginate = {
           current_page: result.current_page,
           last_page: result.last_page,
           prev_page_url: result.prev_page_url,
           next_page_url: result.next_page_url
         };
-        this.getevt.isLoading = false;
+        this.getapt.isLoading = false;
       }).catch( err => {
         console.log( err.response.statusText );
       });
     },
     onViewDetail( d )
     {
-      this.getevt.details = d;
+      this.getapt.details = d;
       UIkit.modal('#modal-detail').show();
     }
   },
   mounted() {
-    this.showEventSchedule();
+    this.showAppointmentRequest();
   }
 }
 </script>
