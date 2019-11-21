@@ -145,4 +145,8 @@ Route::group(['prefix' => 'cp'], function() {
     Route::get('/show', 'ControlPanel\AppointmentController@show');
     Route::delete('/delete/{id}', 'ControlPanel\AppointmentController@destroy');
   });
+
+  Route::group(['prefix' => 'feedback'], function() {
+    Route::get('/show', 'ControlPanel\FeedbackController@show');
+  });
 });

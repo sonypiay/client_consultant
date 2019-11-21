@@ -78,7 +78,7 @@ class Feedbacks extends Model
     return $res;
   }
 
-  public function show_feedback( $request, $userid = null )
+  public function showFeedback( $request, $userid = null )
   {
     $keywords = isset( $request->keywords ) ? $request->keywords : '';
     $limit = isset( $request->limit ) ? $request->limit : 10;
@@ -88,24 +88,26 @@ class Feedbacks extends Model
       'feedbacks.review_description',
       'feedbacks.feedback',
       'feedbacks.created_at',
-      'client_user.client_fullname'
+      'client_user.client_fullname',
+      'consultant_user.consultant_fullname',
+      'appointment_request.apt_id'
     )
     ->join('appointment_request', 'feedbacks.apt_id', '=', 'appointment_request.apt_id')
-    ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id');
+    ->join('client_user', 'appointment_request.client_id', '=', 'client_user.client_id')
+    ->join('consultant_user', 'appointment_request.consultant_id', '=', 'consultant_user.consultant_id');
 
     if( $feedback != 'all' )
     {
       $query->where( 'feedbacks.feedback', $feedback );
     }
 
-    if( $userid !== null )
-    {
-      $query->where( 'appointment_request.consultant_id', $userid );
-    }
-
     if( ! empty( $keywords ) )
     {
-      $query->where('client_user.client_fullname', 'like', '%' . $keywords . '%');
+      $query->where(function($q) use ($keywords) {
+        $q->where('client_user.client_fullname', 'like', '%' . $keywords . '%')
+        ->orWhere('consultant_user.consultant_fullname', 'like', '%' . $keywords . '%')
+        ->orWhere('appointment_request.apt_id', 'like', '%' . $keywords . '%');
+      });
     }
 
     $result = $query->orderBy('feedbacks.created_at', 'desc')
