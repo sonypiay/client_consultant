@@ -114,7 +114,7 @@
 
     <div class="container-panel">
       <div class="content-heading">
-        Konsultan
+        Daftar Konsultan
         <a @click="onClickModal()" uk-tooltip="Tambah" class="uk-icon-button uk-float-right" uk-icon="icon: plus; ratio: 0.8"></a>
       </div>
       <div class="uk-card uk-card-body uk-card-default">

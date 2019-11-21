@@ -12,6 +12,18 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
+.gl-badge {
+  padding: 4px 10px;
+  background: #25C4F2;
+  color: #ffffff;
+  font-weight: 200;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  border-radius: 6px;
+}
+
 .gl-input-default {
   background: #ffffff;
   border: 1px solid #cccccc;

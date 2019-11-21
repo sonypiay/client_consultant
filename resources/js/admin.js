@@ -14,6 +14,7 @@ Vue.component('admin-login-page', require('./components/ControlPanel/Login.vue')
 Vue.component('dashboard-page', require('./components/ControlPanel/Dashboard.vue').default);
 Vue.component('admin-page', require('./components/ControlPanel/Admin.vue').default);
 Vue.component('consultant-page', require('./components/ControlPanel/Consultant.vue').default);
+Vue.component('client-page', require('./components/ControlPanel/Client.vue').default);
 
 const app = new Vue({
     el: '#app',

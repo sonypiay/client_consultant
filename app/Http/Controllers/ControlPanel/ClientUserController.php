@@ -4,14 +4,19 @@ namespace App\Http\Controllers\ControlPanel;
 
 use Illuminate\Http\Request;
 use App\Database\ClientUser;
+use App\Database\AdminUser;
 use App\Http\Controllers\Controller;
 
 class ClientUserController extends Controller
 {
-    public function index()
-    {
-        //
-    }
+  public function index( Request $request, AdminUser $adminuser )
+  {
+    if( ! session()->has('isAdmin') ) return redirect()->route('cp_login_page');
+
+    $data             = [];
+    $data['getuser']  = $adminuser->getprofile();
+    return response()->view('controlpanel.pages.client', $data);
+  }
 
     public function create( Request $request, ClientUser $client )
     {

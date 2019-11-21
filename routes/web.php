@@ -138,6 +138,7 @@ Route::group(['prefix' => 'cp'], function() {
   });
 
   Route::group(['prefix' => 'client'], function() {
+    Route::get('/', 'ControlPanel\ClientUserController@index')->name('cp_client_page');
     Route::get('/show', 'ControlPanel\ClientUserController@show');
     Route::post('/create', 'ControlPanel\ClientUserController@create');
     Route::delete('/delete/{id}', 'ControlPanel\ClientUserController@destroy');
