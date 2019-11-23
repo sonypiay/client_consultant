@@ -120,6 +120,12 @@ class ConsultantUserController extends Controller
     return response()->json( $notification->get_notification( $userid ) );
   }
 
+  public function read_notification( Notification $notification, $id )
+  {
+    $res = $notification->readNotif( $id );
+    return response()->json( $res, $res['responseCode'] );
+  }
+
   public function mark_as_read( Notification $notification, $type )
   {
     $userid = session()->has('isConsultant') ? session()->get('consultantId') : '';

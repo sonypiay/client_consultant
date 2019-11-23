@@ -52,6 +52,10 @@
                 color: #333333;
                 @include global_font_style( 600, 12px, normal, 0.4px );
                 text-transform: none !important;
+                &:hover {
+                  background: $color-base;
+                  color: #ffffff;
+                }
               }
             }
           }
@@ -113,8 +117,18 @@
             li {
               a {
                 color: #333333;
-                @include global_font_style( 600, 12px, normal, 0.4px );
+                @include global_font_style( 400, 11px, normal, 0.4px );
                 text-transform: none !important;
+                border-radius: 6px;
+                padding: 6px 12px;
+                &:hover {
+                  background: #f2f2f2;
+                }
+                .notif-time {
+                  color: #888888;
+                  @include global_font_style( 600, 10px, normal, 0.4px );
+                }
+                .notif-readed { color: $color-base; }
               }
             }
           }

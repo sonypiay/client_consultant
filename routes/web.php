@@ -34,6 +34,7 @@ Route::group(['prefix' => 'client'], function() {
 
   Route::get('/logout', 'Frontend\ClientUserController@logout');
   Route::get('/notification', 'Frontend\ClientUserController@get_notification');
+  Route::post('/read_notification/{id}', 'Frontend\ClientUserController@read_notification');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');
   Route::post('/add_feedback/{id}', 'Frontend\ClientUserController@add_feedback');
@@ -69,6 +70,7 @@ Route::group(['prefix' => 'consultant'], function() {
   Route::get('/existing_client', 'Frontend\ConsultantUserController@existing_client');
   Route::get('/list_feedback', 'Frontend\ConsultantUserController@list_feedback');
   Route::get('/history_appointment_client/{id}', 'Frontend\ConsultantUserController@history_appointment_client');
+  Route::post('/read_notification/{id}', 'Frontend\ClientUserController@read_notification');
   Route::post('/create_account', 'Frontend\ConsultantUserController@register');
   Route::post('/signin', 'Frontend\ConsultantUserController@login');
   Route::post('/add_event', 'Frontend\ConsultantUserController@add_event');

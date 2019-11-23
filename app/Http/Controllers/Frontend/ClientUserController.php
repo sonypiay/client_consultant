@@ -129,6 +129,12 @@ class ClientUserController extends Controller
     return response()->json( $notification->get_notification( $userid ) );
   }
 
+  public function read_notification( Notification $notification, $id )
+  {
+    $res = $notification->readNotif( $id );
+    return response()->json( $res, $res['responseCode'] );
+  }
+
   public function add_request( Request $request, AppointmentRequest $appointment )
   {
     $res = $appointment->addRequest( $request );

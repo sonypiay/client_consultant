@@ -194,8 +194,9 @@ class AppointmentRequest extends Model
 
   public function getRequest( $id )
   {
-    $client = new ClientUser;
-    $consultant = new ConsultantUser;
+    $client       = new ClientUser;
+    $consultant   = new ConsultantUser;
+    $notification = Notification::where('parent_id', $id);
     $query = $this->select(
       'appointment_request.apt_id',
       'appointment_request.client_id',
@@ -221,8 +222,8 @@ class AppointmentRequest extends Model
     ->where( 'appointment_request.apt_id', $id )
     ->first();
 
-    $getclient        = $client->getProfile( $query->client_id );
-    $getconsultant    = $consultant->getProfile( $query->consultant_id );
+    $getclient        = $query !== null ? $client->getProfile( $query->client_id ) : null;
+    $getconsultant    = $query !== null ? $consultant->getProfile( $query->consultant_id ) : null;
 
     return [
       'request' => $query,

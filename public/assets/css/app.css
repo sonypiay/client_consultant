@@ -89,6 +89,11 @@ body {
   text-transform: none !important;
 }
 
+.headerhomepage .navbarhomepage .navhomepage li .navbar-dropdown-homepage .nav-dropdown-notification li a:hover {
+  background: #25C4F2;
+  color: #ffffff;
+}
+
 .headerdefault {
   background: #ffffff;
 }
@@ -167,12 +172,31 @@ body {
 
 .headerdefault .navbardefault .navdefault li .navbar-dropdown-default .nav-dropdown-notification li a {
   color: #333333;
-  font-weight: 600;
-  font-size: 12px;
+  font-weight: 400;
+  font-size: 11px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
   text-transform: none !important;
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .nav-dropdown-notification li a:hover {
+  background: #f2f2f2;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .nav-dropdown-notification li a .notif-time {
+  color: #888888;
+  font-weight: 600;
+  font-size: 10px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.headerdefault .navbardefault .navdefault li .navbar-dropdown-default .nav-dropdown-notification li a .notif-readed {
+  color: #25C4F2;
 }
 
 .navbar-event {

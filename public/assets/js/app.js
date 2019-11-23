@@ -7450,6 +7450,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7462,8 +7510,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       getnotification: {
         isLoading: false,
-        total: 0,
-        results: []
+        total: {
+          unread: 0,
+          data: 0
+        },
+        results: [],
+        paginate: {
+          current_page: 1,
+          last_page: 1,
+          prev_page_url: null,
+          next_page_url: null
+        }
       },
       getrequest: {
         request: {},
@@ -7473,19 +7530,27 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    showNotification: function showNotification() {
+    showNotification: function showNotification(p) {
       var _this = this;
 
       this.getnotification.isLoading = true;
       var url = this.$root.url + '/' + this.haslogin.user + '/notification';
+      if (p !== undefined) url = p;
       axios({
         method: 'get',
         url: url
       }).then(function (res) {
         var result = res.data;
-        _this.getnotification.total = result.total;
-        _this.getnotification.results = result.data;
+        _this.getnotification.total.unread = result.unread;
+        _this.getnotification.total.data = result.result.total;
+        _this.getnotification.results = result.result.data;
         _this.getnotification.isLoading = false;
+        _this.getnotification.paginate = {
+          current_page: result.result.current_page,
+          last_page: result.result.last_page,
+          prev_page_url: result.result.prev_page_url,
+          next_page_url: result.result.next_page_url
+        };
       })["catch"](function (err) {
         _this.getnotification.isLoading = false;
         console.log(err.response.statusText);
@@ -7509,22 +7574,33 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
-    onViewRequest: function onViewRequest(id, type) {
+    onViewRequest: function onViewRequest(id, request) {
       var _this3 = this;
 
       axios({
+        method: 'post',
+        url: this.$root.url + '/' + this.haslogin.user + '/read_notification/' + id
+      }).then(function (res) {
+        //this.showNotification();
+        console.log(res.data);
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
+      axios({
         method: 'get',
-        url: this.$root.url + '/' + this.haslogin.user + '/request/get_request/' + id
+        url: this.$root.url + '/' + this.haslogin.user + '/request/get_request/' + request
       }).then(function (res) {
         var result = res.data;
         _this3.getrequest.request = result.request;
         _this3.getrequest.client = result.client;
         _this3.getrequest.consultant = result.consultant;
 
-        if (type === 'client') {
-          UIkit.modal('#modal-view-request-client').show();
-        } else {
-          UIkit.modal('#modal-view-request-consultant').show();
+        if (result.request !== null) {
+          if (_this3.haslogin.user === 'client') {
+            UIkit.modal('#modal-view-request-client').show();
+          } else {
+            UIkit.modal('#modal-view-request-consultant').show();
+          }
         }
       })["catch"](function (err) {
         console.log(err.response.statusText);
@@ -73034,13 +73110,14 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: _vm.getnotification.total !== 0,
-                                  expression: "getnotification.total !== 0"
+                                  value: _vm.getnotification.total.unread !== 0,
+                                  expression:
+                                    "getnotification.total.unread !== 0"
                                 }
                               ],
                               staticClass: "count-notification"
                             },
-                            [_vm._v(_vm._s(_vm.getnotification.total))]
+                            [_vm._v(_vm._s(_vm.getnotification.total.unread))]
                           )
                         ]),
                         _vm._v(" "),
@@ -73055,6 +73132,60 @@ var render = function() {
                           },
                           [
                             _c("div", { staticClass: "uk-clearfix" }, [
+                              _c("div", { staticClass: "uk-float-left" }, [
+                                _vm.getnotification.paginate.prev_page_url
+                                  ? _c(
+                                      "a",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showNotification(
+                                              _vm.getnotification.paginate
+                                                .prev_page_url
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("span", {
+                                          attrs: {
+                                            "uk-pagination-previous": ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _c("a", [
+                                      _c("span", {
+                                        attrs: { "uk-pagination-previous": "" }
+                                      })
+                                    ]),
+                                _vm._v(" "),
+                                _vm.getnotification.paginate.next_page_url
+                                  ? _c(
+                                      "a",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showNotification(
+                                              _vm.getnotification.paginate
+                                                .next_page_url
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("span", {
+                                          attrs: { "uk-pagination-next": "" }
+                                        })
+                                      ]
+                                    )
+                                  : _c("a", [
+                                      _c("span", {
+                                        attrs: { "uk-pagination-next": "" }
+                                      })
+                                    ])
+                              ]),
+                              _vm._v(" "),
                               _c("div", { staticClass: "uk-float-right" }, [
                                 _c(
                                   "a",
@@ -73089,7 +73220,7 @@ var render = function() {
                                   _c("span", { attrs: { "uk-spinner": "" } })
                                 ])
                               : _c("div", [
-                                  _vm.getnotification.total === 0
+                                  _vm.getnotification.total.data === 0
                                     ? _c(
                                         "div",
                                         { staticClass: "uk-text-center" },
@@ -73129,13 +73260,71 @@ var render = function() {
                                                             $event
                                                           ) {
                                                             return _vm.onViewRequest(
-                                                              notif.parent_id,
-                                                              "client"
+                                                              notif.id,
+                                                              notif.parent_id
                                                             )
                                                           }
                                                         }
                                                       },
                                                       [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "uk-clearfix"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "uk-float-right"
+                                                              },
+                                                              [
+                                                                notif.notif_read ===
+                                                                "R"
+                                                                  ? _c("span", {
+                                                                      staticClass:
+                                                                        "notif-readed",
+                                                                      attrs: {
+                                                                        "uk-tooltip":
+                                                                          "Sudah dibaca",
+                                                                        "uk-icon":
+                                                                          "icon: check; ratio: 0.5"
+                                                                      }
+                                                                    })
+                                                                  : _c("span", {
+                                                                      attrs: {
+                                                                        "uk-tooltip":
+                                                                          "Belum dibaca",
+                                                                        "uk-icon":
+                                                                          "icon: check; ratio: 0.5"
+                                                                      }
+                                                                    }),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "span",
+                                                                  {
+                                                                    staticClass:
+                                                                      "notif-time"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                                  " +
+                                                                        _vm._s(
+                                                                          _vm.$root.formatDate(
+                                                                            notif.notif_date,
+                                                                            "DD/MM/YYYY"
+                                                                          )
+                                                                        ) +
+                                                                        "\n                                "
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        ),
                                                         _vm._v(
                                                           "\n                            " +
                                                             _vm._s(
@@ -73328,13 +73517,14 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: _vm.getnotification.total !== 0,
-                                  expression: "getnotification.total !== 0"
+                                  value: _vm.getnotification.total.unread !== 0,
+                                  expression:
+                                    "getnotification.total.unread !== 0"
                                 }
                               ],
                               staticClass: "count-notification"
                             },
-                            [_vm._v(_vm._s(_vm.getnotification.total))]
+                            [_vm._v(_vm._s(_vm.getnotification.total.unread))]
                           )
                         ]),
                         _vm._v(" "),
@@ -73349,6 +73539,60 @@ var render = function() {
                           },
                           [
                             _c("div", { staticClass: "uk-clearfix" }, [
+                              _c("div", { staticClass: "uk-float-left" }, [
+                                _vm.getnotification.paginate.prev_page_url
+                                  ? _c(
+                                      "a",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showNotification(
+                                              _vm.getnotification.paginate
+                                                .prev_page_url
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("span", {
+                                          attrs: {
+                                            "uk-pagination-previous": ""
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  : _c("a", [
+                                      _c("span", {
+                                        attrs: { "uk-pagination-previous": "" }
+                                      })
+                                    ]),
+                                _vm._v(" "),
+                                _vm.getnotification.paginate.next_page_url
+                                  ? _c(
+                                      "a",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showNotification(
+                                              _vm.getnotification.paginate
+                                                .next_page_url
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("span", {
+                                          attrs: { "uk-pagination-next": "" }
+                                        })
+                                      ]
+                                    )
+                                  : _c("a", [
+                                      _c("span", {
+                                        attrs: { "uk-pagination-next": "" }
+                                      })
+                                    ])
+                              ]),
+                              _vm._v(" "),
                               _c("div", { staticClass: "uk-float-right" }, [
                                 _c(
                                   "a",
@@ -73362,7 +73606,7 @@ var render = function() {
                                   },
                                   [_vm._v("Tandai sudah dibaca")]
                                 ),
-                                _vm._v(" | \n                    "),
+                                _vm._v(" |\n                    "),
                                 _c(
                                   "a",
                                   {
@@ -73383,7 +73627,7 @@ var render = function() {
                                   _c("span", { attrs: { "uk-spinner": "" } })
                                 ])
                               : _c("div", [
-                                  _vm.getnotification.total === 0
+                                  _vm.getnotification.total.data === 0
                                     ? _c(
                                         "div",
                                         { staticClass: "uk-text-center" },
@@ -73423,13 +73667,71 @@ var render = function() {
                                                             $event
                                                           ) {
                                                             return _vm.onViewRequest(
-                                                              notif.parent_id,
-                                                              "consultant"
+                                                              notif.id,
+                                                              notif.parent_id
                                                             )
                                                           }
                                                         }
                                                       },
                                                       [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "uk-clearfix"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "uk-float-right"
+                                                              },
+                                                              [
+                                                                notif.notif_read ===
+                                                                "R"
+                                                                  ? _c("span", {
+                                                                      staticClass:
+                                                                        "notif-readed",
+                                                                      attrs: {
+                                                                        "uk-tooltip":
+                                                                          "Sudah dibaca",
+                                                                        "uk-icon":
+                                                                          "icon: check; ratio: 0.5"
+                                                                      }
+                                                                    })
+                                                                  : _c("span", {
+                                                                      attrs: {
+                                                                        "uk-tooltip":
+                                                                          "Belum dibaca",
+                                                                        "uk-icon":
+                                                                          "icon: check; ratio: 0.5"
+                                                                      }
+                                                                    }),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "span",
+                                                                  {
+                                                                    staticClass:
+                                                                      "notif-time"
+                                                                  },
+                                                                  [
+                                                                    _vm._v(
+                                                                      "\n                                  " +
+                                                                        _vm._s(
+                                                                          _vm.$root.formatDate(
+                                                                            notif.notif_date,
+                                                                            "DD/MM/YYYY"
+                                                                          )
+                                                                        ) +
+                                                                        "\n                                "
+                                                                    )
+                                                                  ]
+                                                                )
+                                                              ]
+                                                            )
+                                                          ]
+                                                        ),
                                                         _vm._v(
                                                           "\n                            " +
                                                             _vm._s(
