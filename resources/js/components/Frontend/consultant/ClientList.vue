@@ -21,25 +21,9 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Klien</label>
             <div class="uk-form-controls">
-              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Cari nama klien" @keypress="findExistingClient" @keydown.enter.prevent="findExistingClient" :disabled="forms.request.isedit" />
+              <input type="text" class="uk-input gl-input-default" v-model="forms.request.client.client_name" placeholder="Cari nama klien" readonly />
             </div>
             <div v-show="messages.errors.client_name" class="uk-text-small uk-text-danger">{{ messages.errors.client_name }}</div>
-            <div v-if="existingClient.isLoading" class="uk-text-center uk-margin-top">
-              <span uk-spinner></span>
-            </div>
-            <div v-else>
-              <div v-show="existingClient.isFinding" class="uk-card uk-card-default uk-margin-top uk-margin-bottom uk-width-large dropdown-timepicker">
-                <div class="dropdown-timepicker-content">
-                  <ul class="uk-nav uk-nav-default nav-timepicker">
-                    <li v-for="client in existingClient.results">
-                      <a @click="onChooseExistingClient( client.client_id, client.client_fullname )">
-                        {{ client.client_fullname }}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div class="uk-margin">

@@ -4645,22 +4645,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -67254,27 +67238,10 @@ var render = function() {
                       attrs: {
                         type: "text",
                         placeholder: "Cari nama klien",
-                        disabled: _vm.forms.request.isedit
+                        readonly: ""
                       },
                       domProps: { value: _vm.forms.request.client.client_name },
                       on: {
-                        keypress: _vm.findExistingClient,
-                        keydown: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          $event.preventDefault()
-                          return _vm.findExistingClient($event)
-                        },
                         input: function($event) {
                           if ($event.target.composing) {
                             return
@@ -67303,73 +67270,7 @@ var render = function() {
                       staticClass: "uk-text-small uk-text-danger"
                     },
                     [_vm._v(_vm._s(_vm.messages.errors.client_name))]
-                  ),
-                  _vm._v(" "),
-                  _vm.existingClient.isLoading
-                    ? _c(
-                        "div",
-                        { staticClass: "uk-text-center uk-margin-top" },
-                        [_c("span", { attrs: { "uk-spinner": "" } })]
-                      )
-                    : _c("div", [
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.existingClient.isFinding,
-                                expression: "existingClient.isFinding"
-                              }
-                            ],
-                            staticClass:
-                              "uk-card uk-card-default uk-margin-top uk-margin-bottom uk-width-large dropdown-timepicker"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "dropdown-timepicker-content" },
-                              [
-                                _c(
-                                  "ul",
-                                  {
-                                    staticClass:
-                                      "uk-nav uk-nav-default nav-timepicker"
-                                  },
-                                  _vm._l(_vm.existingClient.results, function(
-                                    client
-                                  ) {
-                                    return _c("li", [
-                                      _c(
-                                        "a",
-                                        {
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.onChooseExistingClient(
-                                                client.client_id,
-                                                client.client_fullname
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                      " +
-                                              _vm._s(client.client_fullname) +
-                                              "\n                    "
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-margin" }, [
