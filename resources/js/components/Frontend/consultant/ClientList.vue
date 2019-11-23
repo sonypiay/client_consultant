@@ -364,6 +364,9 @@
           <div v-for="client in getclient.results" class="uk-width-1-3">
             <div class="uk-card uk-card-default card-panel">
               <div class="uk-card-body">
+                <div class="uk-clearfix">
+                  <a uk-tooltip="Buat Jadwal" class="uk-float-right" @click="onCreateNewSchedule( client )" uk-icon="icon: plus"></a>
+                </div>
                 <div class="uk-panel uk-margin">
                   <h4 class="uk-h4 uk-margin-remove-bottom">ID Klien</h4>
                   <p class="uk-text-muted uk-margin-remove-top">
@@ -585,9 +588,8 @@ export default {
         successMessage: '',
         iserror: false
       };
+      
       let request = this.forms.request;
-      request.location = data.location;
-      request.service_topic = data.service_topic;
       request.client.client_id = data.client_id;
       request.client.client_name = data.client_fullname;
       request.submit = 'Buat Jadwal';

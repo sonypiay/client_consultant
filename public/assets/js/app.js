@@ -4645,6 +4645,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -4793,8 +4796,6 @@ document.addEventListener("DOMContentLoaded", function () {
         iserror: false
       };
       var request = this.forms.request;
-      request.location = data.location;
-      request.service_topic = data.service_topic;
       request.client.client_id = data.client_id;
       request.client.client_name = data.client_fullname;
       request.submit = 'Buat Jadwal';
@@ -68648,6 +68649,21 @@ var render = function() {
                             },
                             [
                               _c("div", { staticClass: "uk-card-body" }, [
+                                _c("div", { staticClass: "uk-clearfix" }, [
+                                  _c("a", {
+                                    staticClass: "uk-float-right",
+                                    attrs: {
+                                      "uk-tooltip": "Buat Jadwal",
+                                      "uk-icon": "icon: plus"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.onCreateNewSchedule(client)
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "div",
                                   { staticClass: "uk-panel uk-margin" },
