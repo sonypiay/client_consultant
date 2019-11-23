@@ -4855,14 +4855,18 @@ document.addEventListener("DOMContentLoaded", function () {
           timer: 2000
         });
         setTimeout(function () {
-          _this3.showRequest();
-
+          document.location = _this3.$root.url + '/consultant/myappointment';
           UIkit.modal('#modal-request').hide();
         }, 2000);
       })["catch"](function (err) {
         request.submit = 'Buat Jadwal';
         if (err.response.status === 500) _this3.messages.errorMessage = err.response.statusText;else _this3.messages.errorMessage = err.response.data.responseMessage;
       });
+    },
+    onSelectedTime: function onSelectedTime(val, time) {
+      var str = this.$root.padNumber(val, 2);
+      if (time === 'hours') this.forms.request.timepicker.hours = str;
+      if (time === 'minute') this.forms.request.timepicker.minute = str;
     }
   },
   computed: {

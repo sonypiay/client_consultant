@@ -588,7 +588,7 @@ export default {
         successMessage: '',
         iserror: false
       };
-      
+
       let request = this.forms.request;
       request.client.client_id = data.client_id;
       request.client.client_name = data.client_fullname;
@@ -651,7 +651,7 @@ export default {
           timer: 2000
         });
         setTimeout(() => {
-          this.showRequest();
+          document.location = this.$root.url + '/consultant/myappointment';
           UIkit.modal('#modal-request').hide();
         }, 2000);
       }).catch( err => {
@@ -659,6 +659,12 @@ export default {
         if( err.response.status === 500 ) this.messages.errorMessage = err.response.statusText;
         else this.messages.errorMessage = err.response.data.responseMessage;
       });
+    },
+    onSelectedTime( val, time )
+    {
+      let str = this.$root.padNumber( val, 2 );
+      if( time === 'hours' ) this.forms.request.timepicker.hours = str;
+      if( time === 'minute' ) this.forms.request.timepicker.minute = str;
     }
   },
   computed: {
