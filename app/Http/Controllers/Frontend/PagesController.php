@@ -217,10 +217,12 @@ class PagesController extends Controller
     }
 
     $consultant = new ConsultantUser;
+    $servicetopic = new ServiceTopic;
     $data['request']              = $request;
     $data['hasLogin']['user']     = 'consultant';
     $data['hasLogin']['isLogin']  = true;
     $data['getuser']              = $consultant->getProfile();
+    $data['servicetopic']         = $servicetopic->getTopic();
 
     return response()->view('frontend.pages.consultant.client_list', $data);
   }
