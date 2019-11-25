@@ -291,26 +291,6 @@ class ConsultantUserController extends Controller
 
   public function get_recipient( Request $request, Messages $messages )
   {
-    $user_id = $request->id;
-    //$user_id = session()->get('consultantId');
-    $recipient = $messages->select(
-      'messages.sender',
-      'messages.recipient',
-      'client_user.client_fullname',
-      'client_user.client_id'
-    )
-    ->leftJoin('client_user', 'messages.sender', '=', 'client_user.client_id')
-    ->where(function( $q ) use ( $user_id ) {
-      $q->where('messages.sender', $user_id)
-      ->orWhere('messages.recipient', $user_id);
-    })
-    ->groupBy('messages.sender')
-    ->get();
-
-    $result = [
-      'total' => $recipient->count(),
-      'data' => $recipient
-    ];
-    return response()->json( $result );
+    
   }
 }

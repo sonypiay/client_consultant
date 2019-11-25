@@ -10,17 +10,14 @@ class Messages extends Model
   protected $table = 'messages';
   protected $primaryKey = 'id';
 
-  public function sendMessage( $request )
+  public function sendMessage( $sender, $rcpt, $msg, $id )
   {
-    $sender     = $request->sender;
-    $recipient  = $request->recipient;
-    $message    = $request->message;
-
     $this->sender     = $sender;
-    $this->recipient  = $recipient;
-    $this->msg        = $message;
+    $this->rcpt       = $rcpt;
+    $this->msg        = $msg;
     $this->msg_date   = date('Y-m-d H:i:s');
     $this->is_read    = 'N';
+    $this->chat_id    = $id;
     return $this->save();
   }
 

@@ -77,6 +77,7 @@ Route::group(['prefix' => 'consultant'], function() {
     Route::get('/get_message', 'Frontend\ConsultantUserController@get_message');
     Route::get('/get_recipient', 'Frontend\ConsultantUserController@get_recipient');
     Route::post('/send_message', 'Frontend\ConsultantUserController@send_message');
+    Route::post('/reply_message/{id}', 'Frontend\ConsultantUserController@reply_message');
   });
 
   Route::get('/event_schedule', 'Frontend\ConsultantUserController@show_event_schedule');

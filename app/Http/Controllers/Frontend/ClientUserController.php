@@ -9,6 +9,7 @@ use App\Database\AppointmentRequest;
 use App\Database\Notification;
 use App\Database\Feedbacks;
 use App\Database\ServiceTopic;
+use App\Database\ConversationChat;
 use App\Database\Messages;
 use DB;
 use Storage;
@@ -167,46 +168,73 @@ class ClientUserController extends Controller
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function send_message( Request $request, Messages $messages )
+  public function send_message( Request $request, ConversationChat $conversation, Messages $messages )
   {
-    $res = [
-      'responseCode' => 200,
-      'responseMessage' => 'send message success'
-    ];
-    $messages->sendMessage( $request );
+    $res = $conversation->createChat( $request );
+    return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function reply_message( Request $request, Messages $messages, $id )
+  {
+    $sender = $request->sender;
+    $rcpt   = $request->rcpt;
+    $msg    = $request->msg;
+    $res = $conversation->sendMessage( $sender, $rcpt, $msg, $id );
     return response()->json( $res, $res['responseCode'] );
   }
 
   public function get_message( Request $request, Messages $messages )
   {
-    $sender     = $request->sender;
-    $recipient  = $request->recipient;
-    $res = $messages->getMessage( $sender, $recipient );
-    return response()->json( $res );
-  }
-
-  public function get_recipient( Request $request, Messages $messages )
-  {
-    $user_id = $request->id;
-    //$user_id = session()->get('clientId');
-    $recipient = $messages->select(
-      'messages.sender',
-      'messages.recipient',
-      'consultant_user.consultant_fullname',
-      'consultant_user.consultant_id'
+    $client       = $request->client;
+    $consultant   = $request->consultant;
+    $getmessages  = $messages->select(
+      'messages.msg',
+      'messages.msg_date',
+      'messages.is_read',
+      'conversation_chat.chat_id',
+      'conversation_chat.client_id',
+      'conversation_chat.consultant_id'
     )
-    ->join('consultant_user', 'messages.recipient', '=', 'consultant_user.consultant_id')
-    ->where(function( $q ) use ( $user_id ) {
-      $q->where('messages.sender', $user_id)
-      ->orWhere('messages.recipient', $user_id);
-    })
-    ->groupBy('messages.recipient')
+    ->join('conversation_chat', 'messages.chat_id', '=', 'conversation_chat.chat_id')
+    ->where([
+      ['conversation_chat.client_id', $client],
+      ['conversation_chat.consultant_id', $consultant]
+    ])
+    ->orderBy('messages.msg_date', 'asc')
     ->get();
 
     $result = [
-      'total' => $recipient->count(),
-      'data' => $recipient
+      'total' => $getmessages->count(),
+      'data' => $getmessages
     ];
-    return response()->json( $result );
+    return response()->json( $result, 200 );
+  }
+
+  public function get_recipient( Request $request, ConversationChat $conversation )
+  {
+    $client     = $request->client;
+    $consultant = $request->consultant;
+    $getrcpt    = $conversation->select(
+      'conversation_chat.chat_id',
+      'client_user.client_id',
+      'client_user.client_fullname',
+      'consultant_user.consultant_id',
+      'consultant_user.consultant_fullname'
+    )
+    ->join('client_user', 'conversation_chat.client_id', '=', 'client_user.client_id')
+    ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id')
+    ->where([
+      ['conversation_chat.client_id', $client],
+      ['conversation_chat.consultant_id', $consultant]
+    ])
+    ->orderBy('consultant_user.consultant_fullname', 'asc')
+    ->get();
+
+    $result = [
+      'total' => $getrcpt->count(),
+      'data' => $getrcpt
+    ];
+
+    return response()->json( $result, 200 );
   }
 }
