@@ -34,9 +34,10 @@ Route::group(['prefix' => 'client'], function() {
 
   Route::group(['prefix' => 'messages'], function() {
     Route::get('/', 'Frontend\PagesController@client_messages')->name('client_messages');
-    Route::get('/get_message', 'Frontend\ClientUserController@get_message');
-    Route::get('/get_recipient', 'Frontend\ClientUserController@get_recipient');
-    Route::post('/send_message', 'Frontend\ClientUserController@send_message');
+    Route::get('/get_message', 'Frontend\MessagesController@get_message');
+    Route::get('/get_recipient', 'Frontend\MessagesController@get_recipient');
+    Route::post('/send_message', 'Frontend\MessagesController@send_message');
+    Route::post('/reply_message/{id}', 'Frontend\MessagesController@reply_message');
   });
 
   Route::get('/logout', 'Frontend\ClientUserController@logout');
@@ -74,10 +75,10 @@ Route::group(['prefix' => 'consultant'], function() {
 
   Route::group(['prefix' => 'messages'], function() {
     Route::get('/', 'Frontend\PagesController@client_messages')->name('client_messages');
-    Route::get('/get_message', 'Frontend\ConsultantUserController@get_message');
-    Route::get('/get_recipient', 'Frontend\ConsultantUserController@get_recipient');
-    Route::post('/send_message', 'Frontend\ConsultantUserController@send_message');
-    Route::post('/reply_message/{id}', 'Frontend\ConsultantUserController@reply_message');
+    Route::get('/get_message', 'Frontend\MessagesController@get_message');
+    Route::get('/get_recipient', 'Frontend\MessagesController@get_recipient');
+    Route::post('/send_message', 'Frontend\MessagesController@send_message');
+    Route::post('/reply_message/{id}', 'Frontend\MessagesController@reply_message');
   });
 
   Route::get('/event_schedule', 'Frontend\ConsultantUserController@show_event_schedule');
