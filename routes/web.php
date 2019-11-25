@@ -36,6 +36,7 @@ Route::group(['prefix' => 'client'], function() {
     Route::get('/', 'Frontend\PagesController@client_messages')->name('client_messages');
     Route::get('/get_message', 'Frontend\ClientUserController@get_message');
     Route::get('/get_recipient', 'Frontend\ClientUserController@get_recipient');
+    Route::post('/send_message', 'Frontend\ClientUserController@send_message');
   });
 
   Route::get('/logout', 'Frontend\ClientUserController@logout');
@@ -44,7 +45,6 @@ Route::group(['prefix' => 'client'], function() {
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');
   Route::post('/add_feedback/{id}', 'Frontend\ClientUserController@add_feedback');
-  Route::post('/send_message', 'Frontend\ClientUserController@send_message');
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ClientUserController@mark_as_read');
@@ -70,6 +70,13 @@ Route::group(['prefix' => 'consultant'], function() {
     Route::put('/save_request/{id}', 'Frontend\ConsultantUserController@save_request');
     Route::put('/status_appointment/{status}/{id}', 'Frontend\ConsultantUserController@update_status_appointment');
     Route::delete('/delete_request/{id}', 'Frontend\ConsultantUserController@delete_request');
+  });
+
+  Route::group(['prefix' => 'messages'], function() {
+    Route::get('/', 'Frontend\PagesController@client_messages')->name('client_messages');
+    Route::get('/get_message', 'Frontend\ConsultantUserController@get_message');
+    Route::get('/get_recipient', 'Frontend\ConsultantUserController@get_recipient');
+    Route::post('/send_message', 'Frontend\ConsultantUserController@send_message');
   });
 
   Route::get('/event_schedule', 'Frontend\ConsultantUserController@show_event_schedule');
