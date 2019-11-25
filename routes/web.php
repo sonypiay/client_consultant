@@ -21,6 +21,7 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/myprofile', 'Frontend\PagesController@client_profile_page')->name('client_profile_page');
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
   Route::get('/myappointment', 'Frontend\PagesController@client_appointment_page')->name('client_appointment_page');
+  Route::get('/messsages', 'Frontend\PagesController@client_messages')->name('client_messages');
 
   Route::group(['prefix' => 'request'], function() {
     Route::get('/upcoming', 'Frontend\ClientUserController@upcoming_request');
@@ -34,10 +35,12 @@ Route::group(['prefix' => 'client'], function() {
 
   Route::get('/logout', 'Frontend\ClientUserController@logout');
   Route::get('/notification', 'Frontend\ClientUserController@get_notification');
+  Route::get('/get_message', 'Frontend\ClientUserController@get_message');
   Route::post('/read_notification/{id}', 'Frontend\ClientUserController@read_notification');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');
   Route::post('/add_feedback/{id}', 'Frontend\ClientUserController@add_feedback');
+  Route::post('/send_message', 'Frontend\ClientUserController@send_message');
   Route::put('/save_profile', 'Frontend\ClientUserController@save_profile');
   Route::put('/change_password', 'Frontend\ClientUserController@change_password');
   Route::put('/notification/{type}/mark_as_read', 'Frontend\ClientUserController@mark_as_read');

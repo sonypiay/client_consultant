@@ -9,6 +9,7 @@ use App\Database\AppointmentRequest;
 use App\Database\Notification;
 use App\Database\Feedbacks;
 use App\Database\ServiceTopic;
+use App\Database\Messages;
 use DB;
 use Storage;
 use Hash;
@@ -164,5 +165,23 @@ class ClientUserController extends Controller
   {
     $res = $fb->addFeedback( $request, $id );
     return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function send_message( Request $request, Messages $messages )
+  {
+    $res = [
+      'responseCode' => 200,
+      'responseMessage' => 'send message success'
+    ];
+    $messages->sendMessage( $request );
+    return response()->json( $res, $res['responseCode'] );
+  }
+
+  public function get_message( Request $request, Messages $messages )
+  {
+    $sender     = $request->sender;
+    $recipient  = $request->recipient;
+    $res = $messages->getMessage( $sender, $recipient );
+    return response()->json( $res );
   }
 }
