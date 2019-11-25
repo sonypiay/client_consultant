@@ -860,3 +860,17 @@ body {
   color: #ffffff;
 }
 
+.messages-container {
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+}
+
+.messages-container .nav-message-sender li a {
+  color: #333333;
+  font-weight: 400;
+  font-size: 18px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+

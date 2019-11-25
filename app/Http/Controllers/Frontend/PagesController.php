@@ -240,6 +240,6 @@ class PagesController extends Controller
     $data['getuser']              = $consultant->getProfile();
     $data['getconsultant']        = $getconsultant;
 
-    return response()->view('frontend.pages.client.messages', $data);
+    return response()->view('frontend.pages.clients.messages', $data);
   }
 }

@@ -24,6 +24,48 @@ class Messages extends Model
     return $this->save();
   }
 
+  public function getRecipient( $id, $type )
+  {
+    if( $type == 'client' )
+    {
+      $query = $this->select(
+        'messages.id',
+        'messages.sender',
+        'messages.recipient',
+        'messages.msg',
+        'messages.msg_date',
+        'messages.is_read',
+        'consultant_user.consultant_fullname',
+        'consultant_user.consultant_id'
+      )
+      ->join('consultant_user', 'messages.recipient', '=', 'consultant_user.consultant_id');
+    }
+    else
+    {
+      $query = $this->select(
+        'messages.id',
+        'messages.sender',
+        'messages.recipient',
+        'messages.msg_date',
+        'messages.is_read',
+        'client_user.client_fullname',
+        'client_user.client_id'
+      )
+      ->join('client_user', 'messages.recipient', '=', 'client_user.client_id');
+    }
+
+    $query = $query->where('messages.recipient', $id)
+    ->orWhere('messages.sender', $id)
+    ->groupBy('messages.recipient')
+    ->orderBy('messages.id', 'asc')
+    ->get();
+
+    return [
+      'total' => $query->count(),
+      'data' => $query
+    ];
+  }
+
   public function getMessage( $sender, $recipient )
   {
     $query = $this->where(function( $q ) use ($sender, $recipient) {

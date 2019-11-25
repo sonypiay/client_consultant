@@ -184,4 +184,31 @@ class ClientUserController extends Controller
     $res = $messages->getMessage( $sender, $recipient );
     return response()->json( $res );
   }
+
+  public function get_recipient( Request $request, Messages $messages )
+  {
+    $id = $request->id;
+    $recipient = $messages->select(
+      'messages.id',
+      'messages.sender',
+      'messages.recipient',
+      'messages.msg',
+      'messages.msg_date',
+      'messages.is_read',
+      'consultant_user.consultant_fullname',
+      'consultant_user.consultant_id'
+    )
+    ->join('consultant_user', 'messages.recipient', '=', 'consultant_user.consultant_id')
+    ->where(function( $q ) use ( $id ) {
+      $q->where('messages.sender', $id)
+      ->orWhere('messages.recipient', $id);
+    })
+    ->groupBy('messages.recipient')
+    ->get();
+    $result = [
+      'total' => $recipient->count(),
+      'data' => $recipient
+    ];
+    return response()->json( $result );
+  }
 }

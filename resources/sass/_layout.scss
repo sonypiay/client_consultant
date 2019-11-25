@@ -281,3 +281,16 @@ html, body { font-family: $font-base; }
   }
   .card-summary-text, .card-summary-icon { color: #ffffff; }
 }
+
+.messages-container {
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  .nav-message-sender {
+    li {
+      a {
+        color: #333333;
+        @include global_font_style( 400, 18px, normal, 0.4px );
+      }
+    }
+  }
+}

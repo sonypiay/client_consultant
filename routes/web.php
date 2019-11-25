@@ -21,7 +21,6 @@ Route::group(['prefix' => 'client'], function() {
   Route::get('/myprofile', 'Frontend\PagesController@client_profile_page')->name('client_profile_page');
   Route::get('/edit_profile', 'Frontend\PagesController@client_edit_profile')->name('client_edit_profile');
   Route::get('/myappointment', 'Frontend\PagesController@client_appointment_page')->name('client_appointment_page');
-  Route::get('/messsages', 'Frontend\PagesController@client_messages')->name('client_messages');
 
   Route::group(['prefix' => 'request'], function() {
     Route::get('/upcoming', 'Frontend\ClientUserController@upcoming_request');
@@ -33,9 +32,14 @@ Route::group(['prefix' => 'client'], function() {
     Route::delete('/delete_request/{id}', 'Frontend\ClientUserController@delete_request');
   });
 
+  Route::group(['prefix' => 'messages'], function() {
+    Route::get('/', 'Frontend\PagesController@client_messages')->name('client_messages');
+    Route::get('/get_message', 'Frontend\ClientUserController@get_message');
+    Route::get('/get_recipient', 'Frontend\ClientUserController@get_recipient');
+  });
+
   Route::get('/logout', 'Frontend\ClientUserController@logout');
   Route::get('/notification', 'Frontend\ClientUserController@get_notification');
-  Route::get('/get_message', 'Frontend\ClientUserController@get_message');
   Route::post('/read_notification/{id}', 'Frontend\ClientUserController@read_notification');
   Route::post('/create_account', 'Frontend\ClientUserController@register');
   Route::post('/signin', 'Frontend\ClientUserController@login');

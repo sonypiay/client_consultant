@@ -2676,6 +2676,64 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['haslogin', 'getuser', 'getconsultant'],
+  data: function data() {
+    return {
+      getmessages: {
+        total: 0,
+        results: []
+      }
+    };
+  },
+  methods: {},
+  mounted: function mounted() {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/clients/MyAppointment.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/clients/MyAppointment.vue?vue&type=script&lang=js& ***!
@@ -7515,6 +7573,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ViewRequestClient_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewRequestClient.vue */ "./resources/js/components/Frontend/include/ViewRequestClient.vue");
 /* harmony import */ var _ViewRequestConsultant_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewRequestConsultant.vue */ "./resources/js/components/Frontend/include/ViewRequestConsultant.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64007,6 +64071,91 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/clients/Messages.vue?vue&type=template&id=6059dc15&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/clients/Messages.vue?vue&type=template&id=6059dc15& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("navbar-default", {
+        attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
+      }),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "uk-container uk-margin-large-top uk-margin-large-bottom"
+        },
+        [
+          _c("div", { staticClass: "uk-box-shadow-small messages-container" }, [
+            _c(
+              "div",
+              {
+                staticClass: "uk-grid-collapse uk-grid-match",
+                attrs: { "uk-grid": "" }
+              },
+              [
+                _c("div", { staticClass: "uk-width-1-5" }, [
+                  _c("nav", [
+                    _c(
+                      "ul",
+                      {
+                        staticClass: "uk-nav uk-nav-default nav-message-sender"
+                      },
+                      _vm._l(10, function(n) {
+                        return _c("li", [_c("a", [_vm._v("John doe")])])
+                      }),
+                      0
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            )
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-padding banner-index_header" }, [
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Pesan")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-width-expand" }, [_c("div")])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/clients/MyAppointment.vue?vue&type=template&id=5ad1cbda&scoped=true&":
 /*!*********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Frontend/clients/MyAppointment.vue?vue&type=template&id=5ad1cbda&scoped=true& ***!
@@ -73919,6 +74068,22 @@ var render = function() {
               _c("div", { staticClass: "uk-navbar-right" }, [
                 _vm.haslogin.isLogin === true && _vm.haslogin.user === "client"
                   ? _c("ul", { staticClass: "uk-navbar-nav navdefault" }, [
+                      _c("li", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: _vm.$root.url + "/client/messages" }
+                          },
+                          [
+                            _c("span", { attrs: { "uk-icon": "comment" } }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "count-notification" }, [
+                              _vm._v("1")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c("li", [
                         _c("a", { attrs: { href: "#" } }, [
                           _c("span", { attrs: { "uk-icon": "bell" } }),
@@ -88431,7 +88596,8 @@ Vue.component('client-login-page', __webpack_require__(/*! ./components/Frontend
 Vue.component('client-dashboard-page', __webpack_require__(/*! ./components/Frontend/clients/Dashboard.vue */ "./resources/js/components/Frontend/clients/Dashboard.vue")["default"]);
 Vue.component('client-editprofile-page', __webpack_require__(/*! ./components/Frontend/clients/EditProfile.vue */ "./resources/js/components/Frontend/clients/EditProfile.vue")["default"]);
 Vue.component('client-viewprofile-page', __webpack_require__(/*! ./components/Frontend/clients/MyProfile.vue */ "./resources/js/components/Frontend/clients/MyProfile.vue")["default"]);
-Vue.component('client-view-appointment', __webpack_require__(/*! ./components/Frontend/clients/MyAppointment.vue */ "./resources/js/components/Frontend/clients/MyAppointment.vue")["default"]); // consultant user
+Vue.component('client-view-appointment', __webpack_require__(/*! ./components/Frontend/clients/MyAppointment.vue */ "./resources/js/components/Frontend/clients/MyAppointment.vue")["default"]);
+Vue.component('client-view-messages', __webpack_require__(/*! ./components/Frontend/clients/Messages.vue */ "./resources/js/components/Frontend/clients/Messages.vue")["default"]); // consultant user
 
 Vue.component('consultant-register-page', __webpack_require__(/*! ./components/Frontend/consultant/Register.vue */ "./resources/js/components/Frontend/consultant/Register.vue")["default"]);
 Vue.component('consultant-login-page', __webpack_require__(/*! ./components/Frontend/consultant/Login.vue */ "./resources/js/components/Frontend/consultant/Login.vue")["default"]);
@@ -89009,6 +89175,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Login_vue_vue_type_template_id_195ba620_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Login_vue_vue_type_template_id_195ba620_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/clients/Messages.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/Frontend/clients/Messages.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Messages_vue_vue_type_template_id_6059dc15___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Messages.vue?vue&type=template&id=6059dc15& */ "./resources/js/components/Frontend/clients/Messages.vue?vue&type=template&id=6059dc15&");
+/* harmony import */ var _Messages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Messages.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Messages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Messages_vue_vue_type_template_id_6059dc15___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Messages_vue_vue_type_template_id_6059dc15___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Frontend/clients/Messages.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Messages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Messages.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Messages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Frontend/clients/Messages.vue?vue&type=template&id=6059dc15&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Frontend/clients/Messages.vue?vue&type=template&id=6059dc15& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Messages_vue_vue_type_template_id_6059dc15___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Messages.vue?vue&type=template&id=6059dc15& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Frontend/clients/Messages.vue?vue&type=template&id=6059dc15&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Messages_vue_vue_type_template_id_6059dc15___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Messages_vue_vue_type_template_id_6059dc15___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
