@@ -2756,6 +2756,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -64235,12 +64238,20 @@ var render = function() {
         attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
       }),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "uk-container uk-margin-large-top uk-margin-large-bottom"
         },
         [
+          _c("div", { staticClass: "uk-clearfix" }, [
+            _c("a", { on: { click: function($event) {} } }, [
+              _vm._v("Kirim Pesan")
+            ])
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "uk-box-shadow-small messages-container" }, [
             _c(
               "div",
@@ -64293,7 +64304,7 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _vm._m(0)
+                              _vm._m(1)
                             ]
                           )
                         ]),
@@ -64409,7 +64420,7 @@ var render = function() {
                         )
                       ])
                     : _c("div", { staticClass: "uk-tile uk-tile-default" }, [
-                        _vm._m(1)
+                        _vm._m(2)
                       ])
                 ])
               ]
@@ -64422,6 +64433,14 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-padding banner-index_header" }, [
+      _c("div", { staticClass: "uk-container" }, [_vm._v("Pesan")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
