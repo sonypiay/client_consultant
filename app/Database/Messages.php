@@ -88,26 +88,28 @@ class Messages extends Model
 
   public function readMessage( $id )
   {
-    $res = [];
+    $res = null;
+
     if( session()->has('isConsultant') )
     {
       $res = $this->where([
         ['chat_id', $id],
-        ['sender', '!=', session()->get('consultantId')]
+        ['sender', '!=', session()->get('consultantId')],
+        ['is_read', '=', 'N']
       ])
-      ->orderBy('msg_date', 'asc')
-      ->get();
+      ->update([ 'is_read' => 'Y' ]);
     }
 
     if( session()->has('isClient') )
     {
       $res = $this->where([
         ['chat_id', $id],
-        ['sender', '!=', session()->get('clientId')]
+        ['sender', '!=', session()->get('clientId')],
+        ['is_read', '=', 'N']
       ])
-      ->orderBy('msg_date', 'asc')
-      ->get();
+      ->update([ 'is_read' => 'Y' ]);
     }
+
     return $res;
   }
 
@@ -125,7 +127,7 @@ class Messages extends Model
     }
 
     $count = $this->where([
-      ['recipient', $user_id],
+      ['rcpt', $user_id],
       ['is_read', 'N']
     ])
     ->get();

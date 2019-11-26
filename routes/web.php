@@ -34,8 +34,9 @@ Route::group(['prefix' => 'client'], function() {
 
   Route::group(['prefix' => 'messages'], function() {
     Route::get('/', 'Frontend\PagesController@client_messages')->name('client_messages');
-    Route::get('/get_message', 'Frontend\MessagesController@get_message');
+    Route::get('/get_message/{id}', 'Frontend\MessagesController@get_message');
     Route::get('/get_recipient', 'Frontend\MessagesController@get_recipient');
+    Route::get('/count_messages', 'Frontend\MessagesController@count_messages');
     Route::post('/send_message', 'Frontend\MessagesController@send_message');
     Route::post('/reply_message/{id}', 'Frontend\MessagesController@reply_message');
   });
@@ -77,6 +78,7 @@ Route::group(['prefix' => 'consultant'], function() {
     Route::get('/', 'Frontend\PagesController@consultant_message')->name('consultant_message');
     Route::get('/get_message/{id}', 'Frontend\MessagesController@get_message');
     Route::get('/get_recipient', 'Frontend\MessagesController@get_recipient');
+    Route::get('/count_messages', 'Frontend\MessagesController@count_messages');
     Route::post('/send_message', 'Frontend\MessagesController@send_message');
     Route::post('/reply_message/{id}', 'Frontend\MessagesController@reply_message');
   });

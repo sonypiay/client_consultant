@@ -67,8 +67,8 @@ class MessagesController extends Controller
 
     if( isset( $request->client ) )
     {
-      $client     = $request->client;
-      $getrcpt = $getrcpt->where('conversation_chat.client_id', $client);
+      $client   = $request->client;
+      $getrcpt  = $getrcpt->where('conversation_chat.client_id', $client);
     }
 
     if( isset( $request->consultant ) )
@@ -86,5 +86,11 @@ class MessagesController extends Controller
     ];
 
     return response()->json( $result, 200 );
+  }
+
+  public function count_messages( Messages $messages )
+  {
+    $res = $messages->countNewMessage();
+    return response()->json( $res, 200 );
   }
 }
