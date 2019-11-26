@@ -326,6 +326,23 @@ html, body { font-family: $font-base; }
     .chat {
       height: 100%;
     }
+
+    .message-card-left {
+      background: #ffffff;
+      border-radius: 6px;
+    }
+    .message-card-right {
+      background: $color-base;
+      border-radius: 6px;
+      p {
+        @include global_font_style( 400, 13px, normal, 0.4px );
+        color: #ffffff;
+      }
+      .message-date {
+        color: #ffffff;
+        @include global_font_style( 400, 10px, normal, 0.4px );
+      }
+    }
   }
   .messages-container-footer {
     background: #ffffff;

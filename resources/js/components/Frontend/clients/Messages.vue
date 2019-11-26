@@ -69,17 +69,19 @@
                 <div v-for="message in getmessages.results">
                   <div v-if="message.sender !== getuser.client_id" class="uk-clearfix uk-margin-bottom">
                     <div class="uk-float-left uk-width-1-2">
-                      <div class="uk-card uk-card-body uk-card-default uk-card-small">
+                      <div class="uk-card uk-card-body uk-card-default uk-card-small message-card-left">
+                        <p class="uk-margin-remove-bottom">{{ message.msg }}</p>
                         <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
-                        <p class="uk-margin-remove-top">{{ message.msg }}</p>
                       </div>
                     </div>
                   </div>
                   <div v-if="message.sender === getuser.client_id" class="uk-clearfix uk-margin">
                     <div class="uk-float-right uk-width-1-2">
-                      <div class="uk-card uk-card-body uk-card-default uk-card-small">
-                        <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
-                        <p class="uk-margin-remove-top">{{ message.msg }}</p>
+                      <div class="uk-card uk-card-body uk-card-default uk-card-small message-card-right">
+                        <p class="uk-margin-remove-bottom">{{ message.msg }}</p>
+                        <div class="uk-clearfix">
+                          <div class="uk-float-right message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
+                        </div>
                       </div>
                     </div>
                   </div>
