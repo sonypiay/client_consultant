@@ -64247,9 +64247,14 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "uk-clearfix" }, [
-            _c("a", { on: { click: function($event) {} } }, [
-              _vm._v("Kirim Pesan")
-            ])
+            _c("a", {
+              staticClass: "uk-float-right uk-icon-button",
+              attrs: {
+                "uk-icon": "icon: plus; ratio: 2",
+                "uk-tooltip": "Kirim Pesan"
+              },
+              on: { click: function($event) {} }
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "uk-box-shadow-small messages-container" }, [

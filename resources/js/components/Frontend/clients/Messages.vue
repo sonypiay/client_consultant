@@ -10,7 +10,7 @@
 
     <div class="uk-container uk-margin-large-top uk-margin-large-bottom">
       <div class="uk-clearfix">
-        <a @click="">Kirim Pesan</a>
+        <a class="uk-float-right uk-icon-button" uk-icon="icon: plus; ratio: 2" @click="" uk-tooltip="Kirim Pesan"></a>
       </div>
       <div class="uk-box-shadow-small messages-container">
         <div class="uk-grid-collapse uk-grid-match" uk-grid>
