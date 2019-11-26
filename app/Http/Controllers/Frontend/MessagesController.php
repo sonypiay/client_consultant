@@ -27,6 +27,7 @@ class MessagesController extends Controller
 
   public function get_message( Request $request, Messages $messages, $id )
   {
+    $readmessage = $messages->readMessage( $id );
     $getmessages  = $messages->select(
       'messages.sender',
       'messages.rcpt',
@@ -42,7 +43,6 @@ class MessagesController extends Controller
     ->orderBy('messages.msg_date', 'asc')
     ->get();
 
-    $readmessage = $messages->readMessage( $id );
 
     $result = [
       'total' => $getmessages->count(),
