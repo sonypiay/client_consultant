@@ -25,10 +25,8 @@ class MessagesController extends Controller
     return response()->json( $res, $res['responseCode'] );
   }
 
-  public function get_message( Request $request, Messages $messages )
+  public function get_message( Request $request, Messages $messages, $id )
   {
-    $client       = $request->client;
-    $consultant   = $request->consultant;
     $getmessages  = $messages->select(
       'messages.sender',
       'messages.rcpt',
@@ -40,10 +38,7 @@ class MessagesController extends Controller
       'conversation_chat.consultant_id'
     )
     ->join('conversation_chat', 'messages.chat_id', '=', 'conversation_chat.chat_id')
-    ->where([
-      ['conversation_chat.client_id', $client],
-      ['conversation_chat.consultant_id', $consultant]
-    ])
+    ->where('conversation_chat.chat_id', $id)
     ->orderBy('messages.msg_date', 'asc')
     ->get();
 

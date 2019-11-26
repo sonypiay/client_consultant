@@ -168,10 +168,9 @@ export default {
     },
     onOpenMessage( data )
     {
-      let param = 'client=' + data.client_id + '&consultant=' + data.consultant_id;
       axios({
         method: 'get',
-        url: this.$root.url + '/consultant/messages/get_message?' + param
+        url: this.$root.url + '/consultant/messages/get_message/' + data.chat_id
       }).then( res => {
         let result = res.data;
         this.getmessages.total = result.total;

@@ -2851,10 +2851,9 @@ __webpack_require__.r(__webpack_exports__);
     onOpenMessage: function onOpenMessage(data) {
       var _this2 = this;
 
-      var param = 'client=' + data.client_id + '&consultant=' + data.consultant_id;
       axios({
         method: 'get',
-        url: this.$root.url + '/client/messages/get_message?' + param
+        url: this.$root.url + '/client/messages/get_message/' + data.chat_id
       }).then(function (res) {
         var result = res.data;
         _this2.getmessages.total = result.total;
@@ -5823,10 +5822,9 @@ __webpack_require__.r(__webpack_exports__);
     onOpenMessage: function onOpenMessage(data) {
       var _this2 = this;
 
-      var param = 'client=' + data.client_id + '&consultant=' + data.consultant_id;
       axios({
         method: 'get',
-        url: this.$root.url + '/consultant/messages/get_message?' + param
+        url: this.$root.url + '/consultant/messages/get_message/' + data.chat_id
       }).then(function (res) {
         var result = res.data;
         _this2.getmessages.total = result.total;
