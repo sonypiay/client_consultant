@@ -2801,6 +2801,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
   data: function data() {
@@ -5656,6 +5659,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -64858,7 +64864,28 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v(_vm._s(sender.consultant_fullname))]
+                              [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(sender.consultant_fullname) +
+                                    "\n                  "
+                                ),
+                                _c(
+                                  "span",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: sender.new_message !== 0,
+                                        expression: "sender.new_message !== 0"
+                                      }
+                                    ],
+                                    staticClass: "uk-float-right new_message"
+                                  },
+                                  [_vm._v(_vm._s(sender.new_message))]
+                                )
+                              ]
                             )
                           ])
                         })
@@ -71114,7 +71141,28 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v(_vm._s(sender.client_fullname))]
+                              [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(sender.client_fullname) +
+                                    "\n                  "
+                                ),
+                                _c(
+                                  "span",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: sender.new_message !== 0,
+                                        expression: "sender.new_message !== 0"
+                                      }
+                                    ],
+                                    staticClass: "uk-float-right new_message"
+                                  },
+                                  [_vm._v(_vm._s(sender.new_message))]
+                                )
+                              ]
                             )
                           ])
                         })

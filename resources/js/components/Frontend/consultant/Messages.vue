@@ -48,7 +48,10 @@
                   </a>
                 </li>
                 <li v-for="sender in getsender.results">
-                  <a @click="onOpenMessage( sender )">{{ sender.client_fullname }}</a>
+                  <a @click="onOpenMessage( sender )">
+                    {{ sender.client_fullname }}
+                    <span v-show="sender.new_message !== 0" class="uk-float-right new_message">{{ sender.new_message }}</span>
+                  </a>
                 </li>
               </ul>
             </nav>

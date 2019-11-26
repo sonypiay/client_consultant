@@ -884,13 +884,24 @@ body {
 .messages-container .nav-message-sender li a {
   background: #ffffff;
   color: #333333;
-  font-weight: 400;
-  font-size: 18px;
+  font-weight: 600;
+  font-size: 14px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
-  text-align: center;
   padding: 8px 16px;
+}
+
+.messages-container .nav-message-sender li a .new_message {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  padding: 3px 8px;
+  background: #25C4F2;
+  border-radius: 2rem;
 }
 
 .messages-container .nav-message-sender li:last-child {

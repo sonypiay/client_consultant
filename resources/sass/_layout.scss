@@ -300,9 +300,15 @@ html, body { font-family: $font-base; }
       a {
         background: #ffffff;
         color: #333333;
-        @include global_font_style( 400, 18px, normal, 0.4px );
-        text-align: center;
+        @include global_font_style( 600, 14px, normal, 0.4px );
         padding: 8px 16px;
+        .new_message {
+          color: #ffffff;
+          @include global_font_style( 700, 12px, normal, 0.4px );
+          padding: 3px 8px;
+          background: $color-base;
+          border-radius: 2rem;
+        }
       }
       border-bottom: 1px solid #f2f2f2;
       &:last-child {
