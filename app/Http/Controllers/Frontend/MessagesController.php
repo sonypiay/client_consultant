@@ -55,28 +55,36 @@ class MessagesController extends Controller
 
   public function get_recipient( Request $request, ConversationChat $conversation )
   {
+    $rcptuser = isset( $request->client ) ? $request->client : ( isset( $request->consultant ) ? $request->consultant : '' );
+
     $getrcpt    = $conversation->select(
       'conversation_chat.chat_id',
       'client_user.client_id',
       'client_user.client_fullname',
       'consultant_user.consultant_id',
       'consultant_user.consultant_fullname',
-      DB::raw('if(messages.is_read = "N", count(messages.id), 0) as new_message')
+      DB::raw('if( messages.rcpt = "' . $rcptuser . '", if( messages.is_read = "N", count(messages.id), 0 ), 0 ) as new_message')
     )
     ->join('client_user', 'conversation_chat.client_id', '=', 'client_user.client_id')
     ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id')
     ->join('messages', 'conversation_chat.chat_id', '=', 'messages.chat_id');
 
-    if( isset( $request->client ) )
+    if( session()->has('isClient') )
     {
-      $client   = $request->client;
-      $getrcpt  = $getrcpt->where('messages.rcpt', $client);
+      $client   = session()->get('clientId');
+      $getrcpt  = $getrcpt->where(function( $query ) use ( $client ) {
+        $query->where('messages.rcpt', $client)
+        ->orWhere('conversation_chat.client_id', $client);
+      });
     }
 
-    if( isset( $request->consultant ) )
+    if( session()->has('isConsultant') )
     {
-      $consultant = $request->consultant;
-      $getrcpt = $getrcpt->where('messages.rcpt', $consultant);
+      $consultant = session()->get('consultantId');
+      $getrcpt  = $getrcpt->where(function( $query ) use ( $consultant ) {
+        $query->where('messages.rcpt', $consultant)
+        ->orWhere('conversation_chat.consultant_id', $consultant);
+      });
     }
 
     $getrcpt = $getrcpt->groupBy('messages.chat_id')
