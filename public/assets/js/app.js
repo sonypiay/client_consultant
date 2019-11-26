@@ -2802,8 +2802,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
   data: function data() {
@@ -5659,8 +5657,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -64977,25 +64973,7 @@ var render = function() {
                                                 ]
                                               )
                                             ]
-                                          ),
-                                          _vm._v(" "),
-                                          message.is_read === "N"
-                                            ? _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "message-read-status"
-                                                },
-                                                [_vm._v("Belum dibaca")]
-                                              )
-                                            : _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "message-read-status"
-                                                },
-                                                [_vm._v("Dibaca")]
-                                              )
+                                          )
                                         ]
                                       )
                                     ]
@@ -71254,25 +71232,7 @@ var render = function() {
                                                 ]
                                               )
                                             ]
-                                          ),
-                                          _vm._v(" "),
-                                          message.is_read === "N"
-                                            ? _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "message-read-status"
-                                                },
-                                                [_vm._v("Belum dibaca")]
-                                              )
-                                            : _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "message-read-status"
-                                                },
-                                                [_vm._v("Dibaca")]
-                                              )
+                                          )
                                         ]
                                       )
                                     ]
