@@ -86,6 +86,31 @@ class Messages extends Model
     ];
   }
 
+  public function readMessage( $id )
+  {
+    $res = [];
+    if( session()->has('isConsultant') )
+    {
+      $res = $this->where([
+        ['chat_id', $id],
+        ['sender', '!=', session()->get('consultantId')]
+      ])
+      ->orderBy('msg_date', 'asc')
+      ->get();
+    }
+
+    if( session()->has('isClient') )
+    {
+      $res = $this->where([
+        ['chat_id', $id],
+        ['sender', '!=', session()->get('clientId')]
+      ])
+      ->orderBy('msg_date', 'asc')
+      ->get();
+    }
+    return $res;
+  }
+
   public function countNewMessage()
   {
     $user_id = 0;

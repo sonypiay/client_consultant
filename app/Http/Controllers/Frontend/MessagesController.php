@@ -42,10 +42,14 @@ class MessagesController extends Controller
     ->orderBy('messages.msg_date', 'asc')
     ->get();
 
+    $readmessage = $messages->readMessage( $id );
+
     $result = [
       'total' => $getmessages->count(),
-      'data' => $getmessages
+      'data' => $getmessages,
+      'read' => $readmessage
     ];
+
     return response()->json( $result, 200 );
   }
 
