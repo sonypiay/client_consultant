@@ -879,7 +879,7 @@ body {
 }
 
 .messages-container .nav-message-sender li {
-  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .messages-container .nav-message-sender li a {
@@ -894,8 +894,8 @@ body {
   padding: 8px 16px;
 }
 
-.messages-container .nav-message-sender li:first-child {
-  border-top: 0;
+.messages-container .nav-message-sender li:last-child {
+  border-bottom: 0;
 }
 
 .messages-container .messages-container-header {

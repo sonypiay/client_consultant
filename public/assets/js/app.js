@@ -2748,6 +2748,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -2764,7 +2771,8 @@ __webpack_require__.r(__webpack_exports__);
         results: [],
         messages: {
           errorMessage: ''
-        }
+        },
+        isopen: false
       }
     };
   },
@@ -2778,8 +2786,27 @@ __webpack_require__.r(__webpack_exports__);
         url: this.$root.url + '/client/messages/get_recipient?' + param
       }).then(function (res) {
         var result = res.data;
+        _this.getsender.total = result.total;
+        _this.getsender.results = result.data;
       })["catch"](function (err) {
         _this.getsender.messages.errorMessage = err.response.statusText;
+      });
+    },
+    onOpenMessage: function onOpenMessage(client, consultant) {
+      var _this2 = this;
+
+      var param = 'client=' + client + '&consultant=' + consultant;
+      axios({
+        method: 'get',
+        url: this.$root.url + '/client/messages/get_message?' + param
+      }).then(function (res) {
+        var result = res.data;
+        _this2.getmessage.total = result.total;
+        _this2.getmessage.results = result.data;
+        _this2.getmessage.isopen = true;
+      })["catch"](function (err) {
+        _this2.getmessage.isopen = true;
+        _this2.getsender.messages.errorMessage = err.response.statusText;
       });
     },
     scrollDownAuto: function scrollDownAuto() {
@@ -64174,8 +64201,10 @@ var render = function() {
                       {
                         staticClass: "uk-nav uk-nav-default nav-message-sender"
                       },
-                      _vm._l(10, function(n) {
-                        return _c("li", [_c("a", [_vm._v("John doe")])])
+                      _vm._l(_vm.getsender.results, function(sender) {
+                        return _c("li", [
+                          _c("a", [_vm._v(_vm._s(sender.consultant_fullname))])
+                        ])
                       }),
                       0
                     )
@@ -64188,17 +64217,24 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "uk-padding messages-container-body" },
-                    _vm._l(15, function(n) {
-                      return _c("div", [
-                        _vm._m(1, true),
-                        _vm._v(" "),
-                        _vm._m(2, true)
-                      ])
-                    }),
-                    0
+                    [
+                      _vm.getmessages.isopen === true
+                        ? _c(
+                            "div",
+                            _vm._l(_vm.getmessages.results, function(message) {
+                              return _c("div", [
+                                _vm._m(1, true),
+                                _vm._v(" "),
+                                _vm._m(2, true)
+                              ])
+                            }),
+                            0
+                          )
+                        : _c("div", { staticClass: "uk-tile" }, [_vm._m(3)])
+                    ]
                   ),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _vm._m(4)
                 ])
               ]
             )
@@ -64268,6 +64304,14 @@ var staticRenderFns = [
           ]
         )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-position-center" }, [
+      _c("h3", [_vm._v("Pesan")])
     ])
   },
   function() {
