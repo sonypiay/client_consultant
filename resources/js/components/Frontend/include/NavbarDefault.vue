@@ -124,6 +124,12 @@
             </ul>
             <ul v-else-if="haslogin.isLogin === true && haslogin.user === 'consultant'" class="uk-navbar-nav navdefault">
               <li>
+                <a :href="$root.url + '/consultant/messages'">
+                  <span uk-icon="comment"></span>
+                  <span class="count-notification">1</span>
+                </a>
+              </li>
+              <li>
                 <a href="#">
                   <span uk-icon="bell"></span>
                   <span v-show="getnotification.total.unread !== 0" class="count-notification">{{ getnotification.total.unread }}</span>

@@ -35,6 +35,7 @@ Vue.component('consultant-viewprofile-page', require('./components/Frontend/cons
 Vue.component('consultant-view-appointment', require('./components/Frontend/consultant/MyAppointment.vue').default);
 Vue.component('consultant-private-event', require('./components/Frontend/consultant/PrivateEvent.vue').default);
 Vue.component('consultant-view-clientlist', require('./components/Frontend/consultant/ClientList.vue').default);
+Vue.component('consultant-view-messages', require('./components/Frontend/consultant/Messages.vue').default);
 
 const app = new Vue({
     el: '#app',

@@ -243,4 +243,23 @@ class PagesController extends Controller
     $data['getconsultant']        = $getconsultant;
     return response()->view('frontend.pages.clients.messages', $data);
   }
+
+  public function consultant_message( Request $request, ClientUser $client, ConsultantUser $consultant )
+  {
+    $getclient = $client->select(
+      'client_user.client_id',
+      'client_user.client_fullname'
+    )
+    ->join('appointment_request', 'client_user.client_id', '=', 'appointment_request.client_id')
+    ->orderBy('client_user.client_fullname', 'asc')
+    ->groupBy('appointment_request.client_id')
+    ->get();
+
+    $data['request']              = $request;
+    $data['hasLogin']['user']     = 'consultant';
+    $data['hasLogin']['isLogin']  = true;
+    $data['getuser']              = $consultant->getProfile();
+    $data['getclient']            = $getclient;
+    return response()->view('frontend.pages.consultant.messages', $data);
+  }
 }

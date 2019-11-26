@@ -17,9 +17,9 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Kepada</label>
             <div class="uk-form-controls">
-              <select class="uk-select gl-input-default" v-model="forms.consultant" @change="filterArray()">
-                <option value="">-- Pilih Konsultan --</option>
-                <option v-for="consultant in getconsultant" :value="consultant.consultant_id">{{ consultant.consultant_fullname }}</option>
+              <select class="uk-select gl-input-default" v-model="forms.client" @change="filterArray()">
+                <option value="">-- Pilih Klien --</option>
+                <option v-for="client in getclient" :value="client.client_id">{{ client.client_fullname }}</option>
               </select>
             </div>
           </div>
@@ -48,7 +48,7 @@
                   </a>
                 </li>
                 <li v-for="sender in getsender.results">
-                  <a @click="onOpenMessage( sender )">{{ sender.consultant_fullname }}</a>
+                  <a @click="onOpenMessage( sender )">{{ sender.client_fullname }}</a>
                 </li>
               </ul>
             </nav>
@@ -76,7 +76,7 @@
                     </div>
                   </div>-->
                   <div class="uk-clearfix uk-margin">
-                    <div class="uk-float-right uk-width-1-2">
+                    <div class="uk-float-left uk-width-1-2">
                       <div class="uk-card uk-card-body uk-card-default uk-card-small">
                         <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
                         <p class="uk-margin-remove-top">{{ message.msg }}</p>
@@ -108,7 +108,7 @@ export default {
   props: [
     'haslogin',
     'getuser',
-    'getconsultant'
+    'getclient'
   ],
   data() {
     return {
@@ -134,7 +134,7 @@ export default {
         }
       },
       forms: {
-        consultant: '',
+        client: '',
         msg: ''
       }
     }
@@ -142,10 +142,10 @@ export default {
   methods: {
     showSenderMessage()
     {
-      let param = 'client=' + this.getuser.client_id;
+      let param = 'consultant=' + this.getuser.consultant_id;
       axios({
         method: 'get',
-        url: this.$root.url + '/client/messages/get_recipient?' + param
+        url: this.$root.url + '/consultant/messages/get_recipient?' + param
       }).then( res => {
         let result = res.data;
         this.getsender.total = result.total;
@@ -159,21 +159,19 @@ export default {
       let param = 'client=' + data.client_id + '&consultant=' + data.consultant_id;
       axios({
         method: 'get',
-        url: this.$root.url + '/client/messages/get_message?' + param
+        url: this.$root.url + '/consultant/messages/get_message?' + param
       }).then( res => {
         let result = res.data;
         this.getmessages.total = result.total;
         this.getmessages.results = result.data;
         this.getmessages.isopen = true;
         this.getmessages.details = {
-          sender: data.client_id,
-          rcpt: data.consultant_id,
-          name: data.consultant_fullname,
+          sender: data.consultant_id,
+          rcpt: data.client_id,
+          name: data.client_fullname,
           id: data.chat_id
         };
-        setTimeout(() => {
-          this.scrollDownAuto();
-        }, 50);
+        setTimeout(() => { this.scrollDownAuto(); }, 50);
       }).catch( err => {
         this.getmessages.isopen = true;
         this.getmessages.messages.errorMessage = err.response.statusText;
@@ -186,7 +184,7 @@ export default {
       let details = this.getmessages.details;
       axios({
         method: 'post',
-        url: this.$root.url + '/client/messages/reply_message/' + details.id,
+        url: this.$root.url + '/consultant/messages/reply_message/' + details.id,
         params: {
           sender: details.sender,
           rcpt: details.rcpt,
@@ -195,9 +193,9 @@ export default {
       }).then( res => {
         let result = res.data;
         let params = {
-          client_id: details.sender,
-          consultant_id: details.rcpt,
-          consultant_fullname: details.name,
+          consultant_id: details.sender,
+          client_id: details.rcpt,
+          client_fullname: details.name,
           chat_id: details.id
         };
         this.onOpenMessage(params);
@@ -219,33 +217,33 @@ export default {
         {
           UIkit.modal('#modal-send-message').show();
           this.forms.msg = '';
-          this.forms.consultant = '';
+          this.forms.client = '';
         }
       }
       else
       {
-        if( this.forms.msg === '' && this.forms.consultant === '' ) return false;
+        if( this.forms.msg === '' && this.forms.client === '' ) return false;
 
         const param = {
           msg: this.forms.msg,
-          consultant: this.forms.consultant,
-          rcpt: this.forms.consultant,
-          client: this.getuser.client_id,
-          sender: this.getuser.client_id
+          consultant: this.getuser.consultant_id,
+          rcpt: this.forms.client,
+          client: this.forms.client,
+          sender: this.getuser.consultant_id
         };
 
         const details = this.getmessages.details;
 
         axios({
           method: 'post',
-          url: this.$root.url + '/client/messages/send_message',
+          url: this.$root.url + '/consultant/messages/send_message',
           params: param
         }).then( res => {
           let result = res.data;
           let params = {
-            client_id: details.sender,
-            consultant_id: details.rcpt,
-            consultant_fullname: details.name,
+            consultant_id: details.sender,
+            client_id: details.rcpt,
+            client_fullname: details.name,
             chat_id: result.chat_id
           };
           setTimeout(() => {
@@ -277,14 +275,14 @@ export default {
     },
     filterArray()
     {
-      let consultant = this.getconsultant;
+      let client = this.getclient;
       let details = this.getmessages.details;
-      consultant.filter(( data ) => {
-        if( data.consultant_id == this.forms.consultant )
+      client.filter(( data ) => {
+        if( data.client_id == this.forms.client )
         {
-          details.sender = this.getuser.client_id;
-          details.rcpt = data.consultant_id;
-          details.name = data.consultant_fullname;
+          details.sender = this.getuser.consultant_id;
+          details.rcpt = data.client_id;
+          details.name = data.client_fullname;
         }
       });
     }
