@@ -138,7 +138,7 @@ export default {
         };
         setTimeout(() => {
           this.scrollDownAuto();
-        }, 100);
+        }, 50);
       }).catch( err => {
         this.getmessages.isopen = true;
         this.getmessages.messages.errorMessage = err.response.statusText;
@@ -179,8 +179,8 @@ export default {
     scrollDownAuto()
     {
       let container = $(".messages-container-body");
-      //container.animate({ scrollTop: container.get(0).scrollHeight }, 50);
-      console.dir(container);
+      container.animate({ scrollTop: container.get(0).scrollHeight }, 50);
+      //console.dir(container);
     }
   },
   mounted() {

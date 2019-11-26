@@ -2822,7 +2822,7 @@ __webpack_require__.r(__webpack_exports__);
         };
         setTimeout(function () {
           _this2.scrollDownAuto();
-        }, 100);
+        }, 50);
       })["catch"](function (err) {
         _this2.getmessages.isopen = true;
         _this2.getmessages.messages.errorMessage = err.response.statusText;
@@ -2863,9 +2863,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     scrollDownAuto: function scrollDownAuto() {
-      var container = $(".messages-container-body"); //container.animate({ scrollTop: container.get(0).scrollHeight }, 50);
-
-      console.dir(container);
+      var container = $(".messages-container-body");
+      container.animate({
+        scrollTop: container.get(0).scrollHeight
+      }, 50); //console.dir(container);
     }
   },
   mounted: function mounted() {
