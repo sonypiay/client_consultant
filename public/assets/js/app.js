@@ -2755,6 +2755,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -2772,7 +2773,16 @@ __webpack_require__.r(__webpack_exports__);
         messages: {
           errorMessage: ''
         },
-        isopen: false
+        isopen: false,
+        details: {
+          sender: '',
+          rcpt: '',
+          name: '',
+          id: ''
+        }
+      },
+      forms: {
+        msg: ''
       }
     };
   },
@@ -2792,33 +2802,74 @@ __webpack_require__.r(__webpack_exports__);
         _this.getsender.messages.errorMessage = err.response.statusText;
       });
     },
-    onOpenMessage: function onOpenMessage(client, consultant) {
+    onOpenMessage: function onOpenMessage(data) {
       var _this2 = this;
 
-      var param = 'client=' + client + '&consultant=' + consultant;
+      var param = 'client=' + data.client_id + '&consultant=' + data.consultant_id;
       axios({
         method: 'get',
         url: this.$root.url + '/client/messages/get_message?' + param
       }).then(function (res) {
         var result = res.data;
-        _this2.getmessage.total = result.total;
-        _this2.getmessage.results = result.data;
-        _this2.getmessage.isopen = true;
+        _this2.getmessages.total = result.total;
+        _this2.getmessages.results = result.data;
+        _this2.getmessages.isopen = true;
+        _this2.getmessages.details = {
+          sender: data.client_id,
+          rcpt: data.consultant_id,
+          name: data.consultant_fullname,
+          id: data.chat_id
+        };
+        setTimeout(function () {
+          _this2.scrollDownAuto();
+        }, 100);
       })["catch"](function (err) {
-        _this2.getmessage.isopen = true;
-        _this2.getsender.messages.errorMessage = err.response.statusText;
+        _this2.getmessages.isopen = true;
+        _this2.getmessages.messages.errorMessage = err.response.statusText;
+      });
+    },
+    onReplyMessage: function onReplyMessage() {
+      var _this3 = this;
+
+      if (this.forms.msg === '') return false;
+      var details = this.getmessages.details;
+      axios({
+        method: 'post',
+        url: this.$root.url + '/client/messages/reply_message/' + details.id,
+        params: {
+          sender: details.sender,
+          rcpt: details.rcpt,
+          msg: this.forms.msg
+        }
+      }).then(function (res) {
+        var result = res.data;
+        console.log(result.responseMessage);
+
+        _this3.onOpenMessage({
+          client_id: details.sender,
+          consultant_id: details.rcpt,
+          name: details.name,
+          id: details.id
+        });
+
+        _this3.forms.msg = '';
+      })["catch"](function (err) {
+        swal({
+          text: err.response.statusText,
+          icon: 'error',
+          dangerMode: true,
+          timer: 3000
+        });
       });
     },
     scrollDownAuto: function scrollDownAuto() {
-      var container = $(".messages-container-body");
-      container.animate({
-        scrollTop: container.get(0).scrollHeight
-      }, 50);
+      var container = $(".messages-container-body"); //container.animate({ scrollTop: container.get(0).scrollHeight }, 50);
+
+      console.dir(container);
     }
   },
   mounted: function mounted() {
     this.showSenderMessage();
-    this.scrollDownAuto();
   }
 });
 
@@ -64192,7 +64243,10 @@ var render = function() {
           _c("div", { staticClass: "uk-box-shadow-small messages-container" }, [
             _c(
               "div",
-              { staticClass: "uk-grid-collapse", attrs: { "uk-grid": "" } },
+              {
+                staticClass: "uk-grid-collapse uk-grid-match",
+                attrs: { "uk-grid": "" }
+              },
               [
                 _c("div", { staticClass: "uk-width-1-5" }, [
                   _c("nav", { staticClass: "nav-message-container" }, [
@@ -64203,7 +64257,17 @@ var render = function() {
                       },
                       _vm._l(_vm.getsender.results, function(sender) {
                         return _c("li", [
-                          _c("a", [_vm._v(_vm._s(sender.consultant_fullname))])
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.onOpenMessage(sender)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(sender.consultant_fullname))]
+                          )
                         ])
                       }),
                       0
@@ -64212,29 +64276,140 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "uk-width-expand" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "uk-padding messages-container-body" },
-                    [
-                      _vm.getmessages.isopen === true
-                        ? _c(
+                  _vm.getmessages.isopen === true
+                    ? _c("div", [
+                        _c("div", { staticClass: "uk-clearfix" }, [
+                          _c(
                             "div",
-                            _vm._l(_vm.getmessages.results, function(message) {
-                              return _c("div", [
-                                _vm._m(1, true),
-                                _vm._v(" "),
-                                _vm._m(2, true)
-                              ])
-                            }),
-                            0
+                            {
+                              staticClass:
+                                "uk-padding-small messages-container-header"
+                            },
+                            [
+                              _c("div", { staticClass: "uk-float-left" }, [
+                                _c("h3", [
+                                  _vm._v(_vm._s(_vm.getmessages.details.name))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(0)
+                            ]
                           )
-                        : _c("div", { staticClass: "uk-tile" }, [_vm._m(3)])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm._m(4)
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "uk-padding messages-container-body" },
+                          _vm._l(_vm.getmessages.results, function(message) {
+                            return _c("div", [
+                              _c(
+                                "div",
+                                { staticClass: "uk-clearfix uk-margin" },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "uk-float-right uk-width-1-2"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "uk-card uk-card-body uk-card-default uk-card-small"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "message-date" },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.$root.formatDate(
+                                                    message.msg_date,
+                                                    "HH:mm, DD MMMM YYYY"
+                                                  )
+                                                )
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass:
+                                                "uk-margin-remove-top"
+                                            },
+                                            [_vm._v(_vm._s(message.msg))]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "uk-padding-small messages-container-footer"
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.forms.msg,
+                                  expression: "forms.msg"
+                                }
+                              ],
+                              staticClass:
+                                "uk-width-1-1 uk-input gl-input-default",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Ketik pesan..."
+                              },
+                              domProps: { value: _vm.forms.msg },
+                              on: {
+                                keyup: function($event) {
+                                  if (
+                                    !$event.type.indexOf("key") &&
+                                    _vm._k(
+                                      $event.keyCode,
+                                      "enter",
+                                      13,
+                                      $event.key,
+                                      "Enter"
+                                    )
+                                  ) {
+                                    return null
+                                  }
+                                  return _vm.onReplyMessage()
+                                },
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.forms,
+                                    "msg",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      ])
+                    : _c("div", { staticClass: "uk-tile uk-tile-default" }, [
+                        _vm._m(1)
+                      ])
                 ])
               ]
             )
@@ -64250,60 +64425,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-clearfix" }, [
-      _c("div", { staticClass: "uk-padding-small messages-container-header" }, [
-        _c("div", { staticClass: "uk-float-left" }, [
-          _c("h3", [_vm._v("John Doe")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "uk-float-right" }, [
-          _c("a", { attrs: { "uk-icon": "more-vertical" } })
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-clearfix uk-margin-bottom" }, [
-      _c("div", { staticClass: "uk-float-left uk-width-1-2" }, [
-        _c(
-          "div",
-          { staticClass: "uk-card uk-card-body uk-card-default uk-card-small" },
-          [
-            _c("div", { staticClass: "message-date" }, [
-              _vm._v("11:20, 20 November 2019")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v("Hallo, how are you today?")
-            ])
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-clearfix uk-margin" }, [
-      _c("div", { staticClass: "uk-float-right uk-width-1-2" }, [
-        _c(
-          "div",
-          { staticClass: "uk-card uk-card-body uk-card-default uk-card-small" },
-          [
-            _c("div", { staticClass: "message-date" }, [
-              _vm._v("11:25, 20 November 2019")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "uk-margin-remove-top" }, [
-              _vm._v("Fine, thanks")
-            ])
-          ]
-        )
-      ])
+    return _c("div", { staticClass: "uk-float-right" }, [
+      _c("a", { attrs: { "uk-icon": "more-vertical" } })
     ])
   },
   function() {
@@ -64311,23 +64434,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "uk-position-center" }, [
-      _c("h3", [_vm._v("Pesan")])
+      _c("span", { attrs: { "uk-icon": "icon: comment; ratio: 3" } }),
+      _vm._v(" "),
+      _c("h2", { staticClass: "uk-margin-remove-top" }, [_vm._v("Pesan")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "uk-padding-small messages-container-footer" },
-      [
-        _c("input", {
-          staticClass: "uk-width-1-1 uk-input gl-input-default",
-          attrs: { type: "text", placeholder: "Ketik pesan..." }
-        })
-      ]
-    )
   }
 ]
 render._withStripped = true
