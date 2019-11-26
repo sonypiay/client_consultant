@@ -17,7 +17,7 @@
           <div class="uk-margin">
             <label class="uk-form-label gl-label">Kepada</label>
             <div class="uk-form-controls">
-              <select class="uk-select gl-input-default" v-model="forms.consultant">
+              <select class="uk-select gl-input-default" v-model="forms.consultant" @change="filterArray()">
                 <option value="">-- Pilih Konsultant --</option>
                 <option v-for="consultant in getconsultant" :value="consultant.consultant_id">{{ consultant.consultant_fullname }}</option>
               </select>
@@ -135,6 +135,7 @@ export default {
       },
       forms: {
         consultant: '',
+        consultant_name: '',
         msg: ''
       }
     }
@@ -228,7 +229,7 @@ export default {
 
         const param = {
           msg: this.forms.msg,
-          consultant_id: this.forms.consultant,
+          consultant: this.forms.consultant,
           rcpt: this.forms.consultant,
           client: this.getuser.client_id,
           sender: this.getuser.client_id
@@ -240,7 +241,21 @@ export default {
           params: param
         }).then( res => {
           let result = res.data;
-          console.log( result );
+          let params = {
+            client_id: details.sender,
+            consultant_id: details.rcpt,
+            consultant_fullname: details.name,
+            chat_id: result.chat_id
+          };
+
+          this.onOpenMessage(params);
+        }).catch( err => {
+          swal({
+            text: err.response.statusText,
+            icon: 'error',
+            dangerMode: true,
+            timer: 3000
+          });
         });
       }
     },
@@ -248,7 +263,20 @@ export default {
     {
       let container = $(".messages-container-body");
       container.animate({ scrollTop: container.get(0).scrollHeight }, 50);
-      //console.dir(container);
+    },
+    filterArray()
+    {
+      let consultant = this.getconsultant;
+      let details = this.getmessages.details;
+      consultant.filter(( data ) => {
+        if( data.consultant_id == this.forms.consultant )
+        {
+          details.sender = this.getuser.client_id;
+          details.rcpt = data.consultant_id;
+          details.name = data.consultant_fullname;
+        }
+      });
+      console.log( details );
     }
   },
   mounted() {

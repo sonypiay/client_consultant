@@ -2816,6 +2816,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       forms: {
         consultant: '',
+        consultant_name: '',
         msg: ''
       }
     };
@@ -2897,6 +2898,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     onSendMessage: function onSendMessage(val) {
+      var _this4 = this;
+
       if (val !== undefined) {
         if (val === 'open') {
           UIkit.modal('#modal-send-message').show();
@@ -2907,7 +2910,7 @@ __webpack_require__.r(__webpack_exports__);
         if (this.forms.msg === '' && this.forms.consultant === '') return false;
         var param = {
           msg: this.forms.msg,
-          consultant_id: this.forms.consultant,
+          consultant: this.forms.consultant,
           rcpt: this.forms.consultant,
           client: this.getuser.client_id,
           sender: this.getuser.client_id
@@ -2918,7 +2921,21 @@ __webpack_require__.r(__webpack_exports__);
           params: param
         }).then(function (res) {
           var result = res.data;
-          console.log(result);
+          var params = {
+            client_id: details.sender,
+            consultant_id: details.rcpt,
+            consultant_fullname: details.name,
+            chat_id: result.chat_id
+          };
+
+          _this4.onOpenMessage(params);
+        })["catch"](function (err) {
+          swal({
+            text: err.response.statusText,
+            icon: 'error',
+            dangerMode: true,
+            timer: 3000
+          });
         });
       }
     },
@@ -2926,7 +2943,21 @@ __webpack_require__.r(__webpack_exports__);
       var container = $(".messages-container-body");
       container.animate({
         scrollTop: container.get(0).scrollHeight
-      }, 50); //console.dir(container);
+      }, 50);
+    },
+    filterArray: function filterArray() {
+      var _this5 = this;
+
+      var consultant = this.getconsultant;
+      var details = this.getmessages.details;
+      consultant.filter(function (data) {
+        if (data.consultant_id == _this5.forms.consultant) {
+          details.sender = _this5.getuser.client_id;
+          details.rcpt = data.consultant_id;
+          details.name = data.consultant_fullname;
+        }
+      });
+      console.log(details);
     }
   },
   mounted: function mounted() {
@@ -64337,23 +64368,28 @@ var render = function() {
                       ],
                       staticClass: "uk-select gl-input-default",
                       on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.forms,
-                            "consultant",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.forms,
+                              "consultant",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            return _vm.filterArray()
+                          }
+                        ]
                       }
                     },
                     [
