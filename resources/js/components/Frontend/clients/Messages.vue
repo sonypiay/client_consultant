@@ -194,13 +194,13 @@ export default {
         }
       }).then( res => {
         let result = res.data;
-        /*this.onOpenMessage({
+        let params = {
           client_id: details.sender,
           consultant_id: details.rcpt,
-          name: details.name,
-          id: details.id
-        });*/
-        console.log( details );
+          consultant_fullname: details.name,
+          chat_id: details.id
+        };
+        this.onOpenMessage(params);
         this.forms.msg = '';
       }).catch( err => {
         swal({

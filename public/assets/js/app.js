@@ -2877,14 +2877,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         var result = res.data;
-        /*this.onOpenMessage({
+        var params = {
           client_id: details.sender,
           consultant_id: details.rcpt,
-          name: details.name,
-          id: details.id
-        });*/
+          consultant_fullname: details.name,
+          chat_id: details.id
+        };
 
-        console.log(details);
+        _this3.onOpenMessage(params);
+
         _this3.forms.msg = '';
       })["catch"](function (err) {
         swal({
