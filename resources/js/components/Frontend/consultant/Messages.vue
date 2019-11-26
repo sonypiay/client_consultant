@@ -71,7 +71,6 @@
                     <div class="uk-float-left uk-width-1-2">
                       <div class="uk-card uk-card-body uk-card-default uk-card-small">
                         <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
-                        <p class="uk-margin-remove-top">{{ message.sender }}</p>
                         <p class="uk-margin-remove-top">{{ message.msg }}</p>
                       </div>
                     </div>
@@ -80,7 +79,6 @@
                     <div class="uk-float-right uk-width-1-2">
                       <div class="uk-card uk-card-body uk-card-default uk-card-small">
                         <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
-                        <p class="uk-margin-remove-top">{{ message.consultant_id }}</p>
                         <p class="uk-margin-remove-top">{{ message.msg }}</p>
                       </div>
                     </div>

@@ -67,15 +67,15 @@
               </div>
               <div class="uk-padding messages-container-body">
                 <div v-for="message in getmessages.results">
-                  <!--<div class="uk-clearfix uk-margin-bottom">
+                  <div v-if="message.sender !== getuser.client_id" class="uk-clearfix uk-margin-bottom">
                     <div class="uk-float-left uk-width-1-2">
                       <div class="uk-card uk-card-body uk-card-default uk-card-small">
-                        <div class="message-date">11:20, 20 November 2019</div>
-                        <p class="uk-margin-remove-top">Hallo, how are you today?</p>
+                        <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
+                        <p class="uk-margin-remove-top">{{ message.msg }}</p>
                       </div>
                     </div>
-                  </div>-->
-                  <div class="uk-clearfix uk-margin">
+                  </div>
+                  <div v-if="message.sender === getuser.client_id" class="uk-clearfix uk-margin">
                     <div class="uk-float-right uk-width-1-2">
                       <div class="uk-card uk-card-body uk-card-default uk-card-small">
                         <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
