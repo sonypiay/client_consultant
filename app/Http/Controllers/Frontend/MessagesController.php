@@ -28,7 +28,7 @@ class MessagesController extends Controller
 
   public function get_message( Request $request, Messages $messages, $id )
   {
-    //$readmessage = $messages->readMessage( $id );
+    $readmessage = $messages->readMessage( $id );
     $getmessages  = $messages->select(
       'messages.sender',
       'messages.rcpt',
