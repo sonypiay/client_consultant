@@ -235,6 +235,8 @@ export default {
           sender: this.getuser.client_id
         };
 
+        const details = this.getmessages.details;
+
         axios({
           method: 'post',
           url: this.$root.url + '/client/messages/send_message',
@@ -247,8 +249,18 @@ export default {
             consultant_fullname: details.name,
             chat_id: result.chat_id
           };
+          setTimeout(() => {
+            this.onOpenMessage(params);
+            this.showSenderMessage();
+            UIkit.modal('#modal-send-message').hide();
+          }, 1000);
 
-          this.onOpenMessage(params);
+          swal({
+            text: 'Pesan berhasil terkirim',
+            icon: 'success',
+            timer: 2000
+          });
+          this.forms.msg = '';
         }).catch( err => {
           swal({
             text: err.response.statusText,
@@ -276,7 +288,6 @@ export default {
           details.name = data.consultant_fullname;
         }
       });
-      console.log( details );
     }
   },
   mounted() {

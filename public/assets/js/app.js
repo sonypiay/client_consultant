@@ -2915,6 +2915,7 @@ __webpack_require__.r(__webpack_exports__);
           client: this.getuser.client_id,
           sender: this.getuser.client_id
         };
+        var details = this.getmessages.details;
         axios({
           method: 'post',
           url: this.$root.url + '/client/messages/send_message',
@@ -2927,8 +2928,19 @@ __webpack_require__.r(__webpack_exports__);
             consultant_fullname: details.name,
             chat_id: result.chat_id
           };
+          setTimeout(function () {
+            _this4.onOpenMessage(params);
 
-          _this4.onOpenMessage(params);
+            _this4.showSenderMessage();
+
+            UIkit.modal('#modal-send-message').hide();
+          }, 1000);
+          swal({
+            text: 'Pesan berhasil terkirim',
+            icon: 'success',
+            timer: 2000
+          });
+          _this4.forms.msg = '';
         })["catch"](function (err) {
           swal({
             text: err.response.statusText,
@@ -2957,7 +2969,6 @@ __webpack_require__.r(__webpack_exports__);
           details.name = data.consultant_fullname;
         }
       });
-      console.log(details);
     }
   },
   mounted: function mounted() {
