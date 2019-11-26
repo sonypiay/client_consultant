@@ -8,6 +8,34 @@
       <div class="uk-container">Pesan</div>
     </div>
 
+    <div id="modal-send-message" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+        <a class="uk-modal-close uk-modal-close-default" uk-close></a>
+        <h3>Kirim Pesan</h3>
+
+        <form class="uk-form-stacked" @submit.prevent="onSendMessage()">
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Kepada</label>
+            <div class="uk-form-controls">
+              <select class="uk-select gl-input-default" v-model="forms.consultant">
+                <option value="">-- Pilih Konsultant --</option>
+                <option v-for="consultant in getconsultant" :value="consultant.consultant_id">{{ consultant.consultant_fullname }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label gl-label">Kepada</label>
+            <div class="uk-form-controls">
+              <textarea class="uk-height-small uk-textarea gl-input-default" v-model="forms.msg" placeholder="Ketik pesan..."></textarea>
+            </div>
+          </div>
+          <div class="uk-margin">
+            <button class="uk-button uk-button-primary gl-button-primary">Kirim Pesan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <div class="uk-container uk-margin-large-top uk-margin-large-bottom">
       <div class="uk-box-shadow-small messages-container">
         <div class="uk-grid-collapse uk-grid-match" uk-grid>
@@ -15,7 +43,7 @@
             <nav class="nav-message-container">
               <ul class="uk-nav uk-nav-default nav-message-sender">
                 <li>
-                  <a @click="">
+                  <a @click="onSendMessage('open')">
                     <span class="uk-width-1-1 uk-button uk-button-primary gl-button-primary">Kirim Pesan</span>
                   </a>
                 </li>
@@ -79,7 +107,8 @@
 export default {
   props: [
     'haslogin',
-    'getuser'
+    'getuser',
+    'getconsultant'
   ],
   data() {
     return {
@@ -105,6 +134,7 @@ export default {
         }
       },
       forms: {
+        consultant: '',
         msg: ''
       }
     }
@@ -164,13 +194,13 @@ export default {
         }
       }).then( res => {
         let result = res.data;
-        console.log( result.responseMessage );
-        this.onOpenMessage({
+        /*this.onOpenMessage({
           client_id: details.sender,
           consultant_id: details.rcpt,
           name: details.name,
           id: details.id
-        });
+        });*/
+        console.log( details );
         this.forms.msg = '';
       }).catch( err => {
         swal({
@@ -180,6 +210,39 @@ export default {
           timer: 3000
         });
       });
+    },
+    onSendMessage( val )
+    {
+      if( val !== undefined )
+      {
+        if( val === 'open' )
+        {
+          UIkit.modal('#modal-send-message').show();
+          this.forms.msg = '';
+          this.forms.consultant = '';
+        }
+      }
+      else
+      {
+        if( this.forms.msg === '' && this.forms.consultant === '' ) return false;
+
+        const param = {
+          msg: this.forms.msg,
+          consultant_id: this.forms.consultant,
+          rcpt: this.forms.consultant,
+          client: this.getuser.client_id,
+          sender: this.getuser.client_id
+        };
+
+        axios({
+          method: 'post',
+          url: this.$root.url + '/client/messages/send_message',
+          params: param
+        }).then( res => {
+          let result = res.data;
+          console.log( result );
+        });
+      }
     },
     scrollDownAuto()
     {

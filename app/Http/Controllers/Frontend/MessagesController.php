@@ -21,7 +21,7 @@ class MessagesController extends Controller
     $rcpt   = $request->rcpt;
     $msg    = $request->msg;
     $messages->sendMessage( $sender, $rcpt, $msg, $id );
-    $res        = ['responseCode' => 200, 'responseMessage' => 'send message success'];
+    $res        = ['responseCode' => 200, 'responseMessage' => 'send message success', 'chat_id' => $id];
     return response()->json( $res, $res['responseCode'] );
   }
 

@@ -50,7 +50,7 @@ class ConversationChat extends Model
     }
 
     $messages->sendMessage( $sender, $rcpt, $msg, $chat_id );
-
+    $res['chat_id'] = $chat_id;
     return $res;
   }
 }
