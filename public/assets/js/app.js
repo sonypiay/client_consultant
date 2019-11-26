@@ -2748,8 +2748,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -2780,14 +2778,20 @@ __webpack_require__.r(__webpack_exports__);
         url: this.$root.url + '/client/messages/get_recipient?' + param
       }).then(function (res) {
         var result = res.data;
-        console.log(result);
       })["catch"](function (err) {
         _this.getsender.messages.errorMessage = err.response.statusText;
       });
+    },
+    scrollDownAuto: function scrollDownAuto() {
+      var container = $(".messages-container-body");
+      container.animate({
+        scrollTop: container.get(0).scrollHeight
+      }, 50);
     }
   },
   mounted: function mounted() {
     this.showSenderMessage();
+    this.scrollDownAuto();
   }
 });
 
@@ -64184,20 +64188,14 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "uk-padding messages-container-body" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "chat uk-margin-remove-top" },
-                        _vm._l(15, function(n) {
-                          return _c("div", [
-                            _vm._m(1, true),
-                            _vm._v(" "),
-                            _vm._m(2, true)
-                          ])
-                        }),
-                        0
-                      )
-                    ]
+                    _vm._l(15, function(n) {
+                      return _c("div", [
+                        _vm._m(1, true),
+                        _vm._v(" "),
+                        _vm._m(2, true)
+                      ])
+                    }),
+                    0
                   ),
                   _vm._v(" "),
                   _vm._m(3)

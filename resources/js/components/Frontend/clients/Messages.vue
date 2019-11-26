@@ -32,22 +32,20 @@
               </div>
             </div>
             <div class="uk-padding messages-container-body">
-              <div class="chat uk-margin-remove-top">
-                <div v-for="n in 15">
-                  <div class="uk-clearfix uk-margin-bottom">
-                    <div class="uk-float-left uk-width-1-2">
-                      <div class="uk-card uk-card-body uk-card-default uk-card-small">
-                        <div class="message-date">11:20, 20 November 2019</div>
-                        <p class="uk-margin-remove-top">Hallo, how are you today?</p>
-                      </div>
+              <div v-for="n in 15">
+                <div class="uk-clearfix uk-margin-bottom">
+                  <div class="uk-float-left uk-width-1-2">
+                    <div class="uk-card uk-card-body uk-card-default uk-card-small">
+                      <div class="message-date">11:20, 20 November 2019</div>
+                      <p class="uk-margin-remove-top">Hallo, how are you today?</p>
                     </div>
                   </div>
-                  <div class="uk-clearfix uk-margin">
-                    <div class="uk-float-right uk-width-1-2">
-                      <div class="uk-card uk-card-body uk-card-default uk-card-small">
-                        <div class="message-date">11:25, 20 November 2019</div>
-                        <p class="uk-margin-remove-top">Fine, thanks</p>
-                      </div>
+                </div>
+                <div class="uk-clearfix uk-margin">
+                  <div class="uk-float-right uk-width-1-2">
+                    <div class="uk-card uk-card-body uk-card-default uk-card-small">
+                      <div class="message-date">11:25, 20 November 2019</div>
+                      <p class="uk-margin-remove-top">Fine, thanks</p>
                     </div>
                   </div>
                 </div>
@@ -64,6 +62,7 @@
 </template>
 
 <script>
+
 export default {
   props: [
     'haslogin',
@@ -96,14 +95,19 @@ export default {
         url: this.$root.url + '/client/messages/get_recipient?' + param
       }).then( res => {
         let result = res.data;
-        console.log( result );
       }).catch( err => {
         this.getsender.messages.errorMessage = err.response.statusText;
       });
+    },
+    scrollDownAuto()
+    {
+      let container = $(".messages-container-body");
+      container.animate({ scrollTop: container.get(0).scrollHeight }, 50);
     }
   },
   mounted() {
     this.showSenderMessage();
+    this.scrollDownAuto();
   }
 }
 </script>
