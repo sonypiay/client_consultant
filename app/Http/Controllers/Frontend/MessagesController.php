@@ -56,6 +56,9 @@ class MessagesController extends Controller
   public function get_recipient( Request $request, ConversationChat $conversation )
   {
     $rcptuser = isset( $request->client ) ? $request->client : ( isset( $request->consultant ) ? $request->consultant : '' );
+    $userRaw  = isset( $request->client ) ? ' or conversation_chat.client_id = "' . $rcptuser . '"' : ( isset( $request->consultant ) ? ' or conversation_chat.consultant_id = "' . $rcptuser . '"' : '' );
+    $rawSql   = 'if( messages.rcpt = "' . $rcptuser . '" ' . $userRaw
+    . ', if( messages.is_read = "N", count(messages.id), 0 ), 0 ) as new_message';
 
     $getrcpt    = $conversation->select(
       'conversation_chat.chat_id',
@@ -63,7 +66,7 @@ class MessagesController extends Controller
       'client_user.client_fullname',
       'consultant_user.consultant_id',
       'consultant_user.consultant_fullname',
-      DB::raw('if( messages.rcpt = "' . $rcptuser . '", if( messages.is_read = "N", count(messages.id), 0 ), 0 ) as new_message')
+      DB::raw($rawSql)
     )
     ->join('client_user', 'conversation_chat.client_id', '=', 'client_user.client_id')
     ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id')
@@ -73,8 +76,7 @@ class MessagesController extends Controller
     {
       $client   = session()->get('clientId');
       $getrcpt  = $getrcpt->where(function( $query ) use ( $client ) {
-        $query->where('messages.rcpt', $client)
-        ->orWhere('conversation_chat.client_id', $client);
+        $query->where('conversation_chat.client_id', $client);
       });
     }
 
@@ -82,8 +84,7 @@ class MessagesController extends Controller
     {
       $consultant = session()->get('consultantId');
       $getrcpt  = $getrcpt->where(function( $query ) use ( $consultant ) {
-        $query->where('messages.rcpt', $consultant)
-        ->orWhere('conversation_chat.consultant_id', $consultant);
+        $query->where('conversation_chat.consultant_id', $consultant);
       });
     }
 
