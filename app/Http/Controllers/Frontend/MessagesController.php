@@ -60,24 +60,27 @@ class MessagesController extends Controller
       'client_user.client_id',
       'client_user.client_fullname',
       'consultant_user.consultant_id',
-      'consultant_user.consultant_fullname'
+      'consultant_user.consultant_fullname',
+      DB::raw('if(messages.is_read = "N", count(messages.id), 0) as new_message')
     )
     ->join('client_user', 'conversation_chat.client_id', '=', 'client_user.client_id')
-    ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id');
+    ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id')
+    ->join('messages', 'conversation_chat.chat_id', '=', 'messages.chat_id');
 
     if( isset( $request->client ) )
     {
       $client   = $request->client;
-      $getrcpt  = $getrcpt->where('conversation_chat.client_id', $client);
+      $getrcpt  = $getrcpt->where('messages.rcpt', $client);
     }
 
     if( isset( $request->consultant ) )
     {
       $consultant = $request->consultant;
-      $getrcpt = $getrcpt->where('conversation_chat.consultant_id', $consultant);
+      $getrcpt = $getrcpt->where('messages.rcpt', $consultant);
     }
 
-    $getrcpt = $getrcpt->orderBy('consultant_user.consultant_fullname', 'asc')
+    $getrcpt = $getrcpt->groupBy('messages.chat_id')
+    ->orderBy('consultant_user.consultant_fullname', 'asc')
     ->get();
 
     $result = [
