@@ -71,8 +71,12 @@
                     <div class="uk-float-left uk-width-1-2">
                       <div class="uk-card uk-card-body uk-card-default uk-card-small message-card-left">
                         <p class="uk-margin-remove-bottom">{{ message.msg }}</p>
-                        <div class="message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
+                        <div class="uk-clearfix">
+                          <div class="uk-float-right message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
+                        </div>
                       </div>
+                      <span v-if="message.is_read === 'N'" class="message-read-status">Belum dibaca</span>
+                      <span v-else class="message-read-status">Dibaca</span>
                     </div>
                   </div>
                   <div v-if="message.sender === getuser.client_id" class="uk-clearfix uk-margin">
@@ -83,6 +87,12 @@
                           <div class="uk-float-right message-date">{{ $root.formatDate( message.msg_date, 'HH:mm, DD MMMM YYYY' ) }}</div>
                         </div>
                       </div>
+                      <span v-if="message.is_read === 'N'" class="message-read-status">
+                        Belum dibaca
+                      </span>
+                      <span v-else class="message-read-status">
+                        Dibaca
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -923,6 +923,24 @@ body {
   border-radius: 6px;
 }
 
+.messages-container .messages-container-body .message-card-left p {
+  font-weight: 400;
+  font-size: 13px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+  color: #666666;
+}
+
+.messages-container .messages-container-body .message-card-left .message-date {
+  color: #666666;
+  font-weight: 400;
+  font-size: 10px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
 .messages-container .messages-container-body .message-card-right {
   background: #25C4F2;
   border-radius: 6px;
@@ -939,6 +957,15 @@ body {
 
 .messages-container .messages-container-body .message-card-right .message-date {
   color: #ffffff;
+  font-weight: 400;
+  font-size: 10px;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.messages-container .messages-container-body .message-read-status {
+  color: #666666;
   font-weight: 400;
   font-size: 10px;
   font-stretch: normal;

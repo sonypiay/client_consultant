@@ -330,6 +330,14 @@ html, body { font-family: $font-base; }
     .message-card-left {
       background: #ffffff;
       border-radius: 6px;
+      p {
+        @include global_font_style( 400, 13px, normal, 0.4px );
+        color: #666666;
+      }
+      .message-date {
+        color: #666666;
+        @include global_font_style( 400, 10px, normal, 0.4px );
+      }
     }
     .message-card-right {
       background: $color-base;
@@ -342,6 +350,10 @@ html, body { font-family: $font-base; }
         color: #ffffff;
         @include global_font_style( 400, 10px, normal, 0.4px );
       }
+    }
+    .message-read-status {
+      color: #666666;
+      @include global_font_style( 400, 10px, normal, 0.4px );
     }
   }
   .messages-container-footer {
