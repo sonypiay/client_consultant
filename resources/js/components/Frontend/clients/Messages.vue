@@ -9,14 +9,16 @@
     </div>
 
     <div class="uk-container uk-margin-large-top uk-margin-large-bottom">
-      <div class="uk-clearfix">
-        <a class="uk-float-right uk-icon-button" uk-icon="icon: plus; ratio: 2" @click="" uk-tooltip="Kirim Pesan"></a>
-      </div>
       <div class="uk-box-shadow-small messages-container">
         <div class="uk-grid-collapse uk-grid-match" uk-grid>
           <div class="uk-width-1-5">
             <nav class="nav-message-container">
               <ul class="uk-nav uk-nav-default nav-message-sender">
+                <li>
+                  <a @click="">
+                    <span class="uk-width-1-1 uk-button uk-button-primary gl-button-primary">Kirim Pesan</span>
+                  </a>
+                </li>
                 <li v-for="sender in getsender.results">
                   <a @click="onOpenMessage( sender )">{{ sender.consultant_fullname }}</a>
                 </li>

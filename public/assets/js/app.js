@@ -2759,6 +2759,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser'],
   data: function data() {
@@ -64246,17 +64248,6 @@ var render = function() {
           staticClass: "uk-container uk-margin-large-top uk-margin-large-bottom"
         },
         [
-          _c("div", { staticClass: "uk-clearfix" }, [
-            _c("a", {
-              staticClass: "uk-float-right uk-icon-button",
-              attrs: {
-                "uk-icon": "icon: plus; ratio: 2",
-                "uk-tooltip": "Kirim Pesan"
-              },
-              on: { click: function($event) {} }
-            })
-          ]),
-          _vm._v(" "),
           _c("div", { staticClass: "uk-box-shadow-small messages-container" }, [
             _c(
               "div",
@@ -64272,22 +64263,37 @@ var render = function() {
                       {
                         staticClass: "uk-nav uk-nav-default nav-message-sender"
                       },
-                      _vm._l(_vm.getsender.results, function(sender) {
-                        return _c("li", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  return _vm.onOpenMessage(sender)
+                      [
+                        _c("li", [
+                          _c("a", { on: { click: function($event) {} } }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "uk-width-1-1 uk-button uk-button-primary gl-button-primary"
+                              },
+                              [_vm._v("Kirim Pesan")]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.getsender.results, function(sender) {
+                          return _c("li", [
+                            _c(
+                              "a",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    return _vm.onOpenMessage(sender)
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v(_vm._s(sender.consultant_fullname))]
-                          )
-                        ])
-                      }),
-                      0
+                              },
+                              [_vm._v(_vm._s(sender.consultant_fullname))]
+                            )
+                          ])
+                        })
+                      ],
+                      2
                     )
                   ])
                 ]),
