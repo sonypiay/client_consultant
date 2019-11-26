@@ -50,7 +50,9 @@
                 <li v-for="sender in getsender.results">
                   <a @click="onOpenMessage( sender )">
                     {{ sender.consultant_fullname }}
-                    <span v-show="sender.new_message !== 0" class="uk-float-right new_message">{{ sender.new_message }}</span>
+                    <span v-for="msg in getsender.new_message.results" v-if="msg.chat_id === sender.chat_id" class="uk-float-right new_message">
+                      {{ msg.total }}
+                    </span>
                   </a>
                 </li>
               </ul>
@@ -130,6 +132,9 @@ export default {
         results: [],
         messages: {
           errorMessage: ''
+        },
+        new_message: {
+          results: []
         }
       },
       getmessages: {
@@ -163,6 +168,7 @@ export default {
         let result = res.data;
         this.getsender.total = result.total;
         this.getsender.results = result.data;
+        this.getsender.new_message.results = result.new_message
       }).catch( err => {
         this.getsender.messages.errorMessage = err.response.statusText;
       });
@@ -184,6 +190,7 @@ export default {
           id: data.chat_id
         };
         setTimeout(() => {
+          this.showSenderMessage();
           this.scrollDownAuto();
         }, 50);
       }).catch( err => {

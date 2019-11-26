@@ -2802,6 +2802,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
   data: function data() {
@@ -2811,6 +2813,9 @@ __webpack_require__.r(__webpack_exports__);
         results: [],
         messages: {
           errorMessage: ''
+        },
+        new_message: {
+          results: []
         }
       },
       getmessages: {
@@ -2845,6 +2850,7 @@ __webpack_require__.r(__webpack_exports__);
         var result = res.data;
         _this.getsender.total = result.total;
         _this.getsender.results = result.data;
+        _this.getsender.new_message.results = result.new_message;
       })["catch"](function (err) {
         _this.getsender.messages.errorMessage = err.response.statusText;
       });
@@ -2867,6 +2873,8 @@ __webpack_require__.r(__webpack_exports__);
           id: data.chat_id
         };
         setTimeout(function () {
+          _this2.showSenderMessage();
+
           _this2.scrollDownAuto();
         }, 50);
       })["catch"](function (err) {
@@ -5774,6 +5782,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getclient'],
   data: function data() {
@@ -5783,6 +5793,9 @@ __webpack_require__.r(__webpack_exports__);
         results: [],
         messages: {
           errorMessage: ''
+        },
+        new_message: {
+          results: []
         }
       },
       getmessages: {
@@ -5817,6 +5830,7 @@ __webpack_require__.r(__webpack_exports__);
         var result = res.data;
         _this.getsender.total = result.total;
         _this.getsender.results = result.data;
+        _this.getsender.new_message.results = result.new_message;
       })["catch"](function (err) {
         _this.getsender.messages.errorMessage = err.response.statusText;
       });
@@ -5839,6 +5853,8 @@ __webpack_require__.r(__webpack_exports__);
           id: data.chat_id
         };
         setTimeout(function () {
+          _this2.showSenderMessage();
+
           _this2.scrollDownAuto();
         }, 50);
       })["catch"](function (err) {
@@ -64866,22 +64882,29 @@ var render = function() {
                                     _vm._s(sender.consultant_fullname) +
                                     "\n                  "
                                 ),
-                                _c(
-                                  "span",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value: sender.new_message !== 0,
-                                        expression: "sender.new_message !== 0"
-                                      }
-                                    ],
-                                    staticClass: "uk-float-right new_message"
-                                  },
-                                  [_vm._v(_vm._s(sender.new_message))]
+                                _vm._l(
+                                  _vm.getsender.new_message.results,
+                                  function(msg) {
+                                    return msg.chat_id === sender.chat_id
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "uk-float-right new_message"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(msg.total) +
+                                                "\n                  "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  }
                                 )
-                              ]
+                              ],
+                              2
                             )
                           ])
                         })
@@ -71125,22 +71148,29 @@ var render = function() {
                                     _vm._s(sender.client_fullname) +
                                     "\n                  "
                                 ),
-                                _c(
-                                  "span",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value: sender.new_message !== 0,
-                                        expression: "sender.new_message !== 0"
-                                      }
-                                    ],
-                                    staticClass: "uk-float-right new_message"
-                                  },
-                                  [_vm._v(_vm._s(sender.new_message))]
+                                _vm._l(
+                                  _vm.getsender.new_message.results,
+                                  function(msg) {
+                                    return msg.chat_id === sender.chat_id
+                                      ? _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "uk-float-right new_message"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(msg.total) +
+                                                "\n                  "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  }
                                 )
-                              ]
+                              ],
+                              2
                             )
                           ])
                         })

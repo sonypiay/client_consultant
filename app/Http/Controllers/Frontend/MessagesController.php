@@ -57,26 +57,23 @@ class MessagesController extends Controller
   {
     $rcptuser = isset( $request->client ) ? $request->client : ( isset( $request->consultant ) ? $request->consultant : '' );
     $userRaw  = isset( $request->client ) ? ' or conversation_chat.client_id = "' . $rcptuser . '"' : ( isset( $request->consultant ) ? ' or conversation_chat.consultant_id = "' . $rcptuser . '"' : '' );
-    $rawSql   = 'if( messages.rcpt = "' . $rcptuser . '" ' . $userRaw
-    . ', if( messages.is_read = "N", count(messages.id), 0 ), 0 ) as new_message';
+    $rawSql   = 'if( messages.sender != "' . $rcptuser . '" and messages.is_read = "N", count(messages.id), 0 ) as new_message';
 
     $getrcpt    = $conversation->select(
       'conversation_chat.chat_id',
       'client_user.client_id',
       'client_user.client_fullname',
       'consultant_user.consultant_id',
-      'consultant_user.consultant_fullname',
-      DB::raw($rawSql)
+      'consultant_user.consultant_fullname'
     )
     ->join('client_user', 'conversation_chat.client_id', '=', 'client_user.client_id')
-    ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id')
-    ->join('messages', 'conversation_chat.chat_id', '=', 'messages.chat_id');
+    ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id');
 
     if( session()->has('isClient') )
     {
       $client   = session()->get('clientId');
       $getrcpt  = $getrcpt->where(function( $query ) use ( $client ) {
-        $query->where('messages.rcpt', $client);
+        $query->where('conversation_chat.client_id', $client);
       });
     }
 
@@ -84,17 +81,33 @@ class MessagesController extends Controller
     {
       $consultant = session()->get('consultantId');
       $getrcpt  = $getrcpt->where(function( $query ) use ( $consultant ) {
-        $query->where('messages.rcpt', $consultant);
+        $query->where('conversation_chat.consultant_id', $consultant);
       });
     }
 
-    $getrcpt = $getrcpt->groupBy('messages.chat_id')
+    $getrcpt = $getrcpt->groupBy('conversation_chat.chat_id')
     ->orderBy('consultant_user.consultant_fullname', 'asc')
     ->get();
 
+    foreach( $getrcpt as $key => $item )
+    {
+      $messages = new Messages;
+      $new_message = $messages->select(
+        'chat_id',
+        DB::raw('count(*) as total')
+      )
+      ->where([
+        ['rcpt', $rcptuser],
+        ['is_read', 'N']
+      ])
+      ->groupBy('chat_id')
+      ->get();
+    }
+
     $result = [
       'total' => $getrcpt->count(),
-      'data' => $getrcpt
+      'data' => $getrcpt,
+      'new_message' => $new_message
     ];
 
     return response()->json( $result, 200 );
