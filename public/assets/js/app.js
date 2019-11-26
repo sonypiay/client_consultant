@@ -8420,7 +8420,8 @@ __webpack_require__.r(__webpack_exports__);
         request: {},
         client: {},
         consultant: {}
-      }
+      },
+      total_message: 0
     };
   },
   methods: {
@@ -8499,10 +8500,26 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err.response.statusText);
       });
+    },
+    showTotalMessage: function showTotalMessage() {
+      var _this4 = this;
+
+      axios({
+        method: 'get',
+        url: this.$root.url + '/' + this.haslogin.user + '/messages/count_messages'
+      }).then(function (res) {
+        var result = res.data;
+        _this4.total_message = result.total;
+      })["catch"](function (err) {
+        console.log(err.response.statusText);
+      });
     }
   },
   mounted: function mounted() {
-    if (this.haslogin.isLogin) this.showNotification();
+    if (this.haslogin.isLogin) {
+      this.showNotification();
+      this.showTotalMessage();
+    }
   }
 });
 
@@ -75598,9 +75615,21 @@ var render = function() {
                           [
                             _c("span", { attrs: { "uk-icon": "comment" } }),
                             _vm._v(" "),
-                            _c("span", { staticClass: "count-notification" }, [
-                              _vm._v("1")
-                            ])
+                            _c(
+                              "span",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.total_message !== 0,
+                                    expression: "total_message !== 0"
+                                  }
+                                ],
+                                staticClass: "count-notification"
+                              },
+                              [_vm._v(_vm._s(_vm.total_message))]
+                            )
                           ]
                         )
                       ]),

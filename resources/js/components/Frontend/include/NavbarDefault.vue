@@ -20,7 +20,7 @@
               <li>
                 <a :href="$root.url + '/client/messages'">
                   <span uk-icon="comment"></span>
-                  <span class="count-notification">1</span>
+                  <span v-show="total_message !== 0" class="count-notification">{{ total_message }}</span>
                 </a>
               </li>
               <li>
@@ -284,7 +284,8 @@ export default {
         request: {},
         client: {},
         consultant: {}
-      }
+      },
+      total_message: 0
     }
   },
   methods: {
@@ -366,10 +367,25 @@ export default {
       }).catch( err => {
         console.log( err.response.statusText );
       });
+    },
+    showTotalMessage()
+    {
+      axios({
+        method: 'get',
+        url: this.$root.url + '/' + this.haslogin.user + '/messages/count_messages'
+      }).then( res => {
+        let result = res.data;
+        this.total_message = result.total;
+      }).catch( err => {
+        console.log( err.response.statusText );
+      });
     }
   },
   mounted() {
-    if( this.haslogin.isLogin ) this.showNotification();
+    if( this.haslogin.isLogin ) {
+      this.showNotification();
+      this.showTotalMessage();
+    }
   }
 }
 </script>
