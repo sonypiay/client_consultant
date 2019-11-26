@@ -5749,6 +5749,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getclient'],
   data: function data() {
@@ -70994,52 +70996,132 @@ var render = function() {
                           { staticClass: "uk-padding messages-container-body" },
                           _vm._l(_vm.getmessages.results, function(message) {
                             return _c("div", [
-                              _c(
-                                "div",
-                                { staticClass: "uk-clearfix uk-margin" },
-                                [
-                                  _c(
+                              message.sender !== _vm.getuser.consultant_id
+                                ? _c(
                                     "div",
                                     {
-                                      staticClass: "uk-float-left uk-width-1-2"
+                                      staticClass:
+                                        "uk-clearfix uk-margin-bottom"
                                     },
                                     [
                                       _c(
                                         "div",
                                         {
                                           staticClass:
-                                            "uk-card uk-card-body uk-card-default uk-card-small"
+                                            "uk-float-left uk-width-1-2"
                                         },
                                         [
                                           _c(
                                             "div",
-                                            { staticClass: "message-date" },
-                                            [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.$root.formatDate(
-                                                    message.msg_date,
-                                                    "HH:mm, DD MMMM YYYY"
-                                                  )
-                                                )
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "p",
                                             {
                                               staticClass:
-                                                "uk-margin-remove-top"
+                                                "uk-card uk-card-body uk-card-default uk-card-small"
                                             },
-                                            [_vm._v(_vm._s(message.msg))]
+                                            [
+                                              _c(
+                                                "div",
+                                                { staticClass: "message-date" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.$root.formatDate(
+                                                        message.msg_date,
+                                                        "HH:mm, DD MMMM YYYY"
+                                                      )
+                                                    )
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "p",
+                                                {
+                                                  staticClass:
+                                                    "uk-margin-remove-top"
+                                                },
+                                                [_vm._v(_vm._s(message.sender))]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "p",
+                                                {
+                                                  staticClass:
+                                                    "uk-margin-remove-top"
+                                                },
+                                                [_vm._v(_vm._s(message.msg))]
+                                              )
+                                            ]
                                           )
                                         ]
                                       )
                                     ]
                                   )
-                                ]
-                              )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              message.sender === _vm.getuser.consultant_id
+                                ? _c(
+                                    "div",
+                                    { staticClass: "uk-clearfix uk-margin" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "uk-float-right uk-width-1-2"
+                                        },
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "uk-card uk-card-body uk-card-default uk-card-small"
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                { staticClass: "message-date" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.$root.formatDate(
+                                                        message.msg_date,
+                                                        "HH:mm, DD MMMM YYYY"
+                                                      )
+                                                    )
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "p",
+                                                {
+                                                  staticClass:
+                                                    "uk-margin-remove-top"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      message.consultant_id
+                                                    )
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "p",
+                                                {
+                                                  staticClass:
+                                                    "uk-margin-remove-top"
+                                                },
+                                                [_vm._v(_vm._s(message.msg))]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
                             ])
                           }),
                           0

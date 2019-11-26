@@ -30,6 +30,8 @@ class MessagesController extends Controller
     $client       = $request->client;
     $consultant   = $request->consultant;
     $getmessages  = $messages->select(
+      'messages.sender',
+      'messages.rcpt',
       'messages.msg',
       'messages.msg_date',
       'messages.is_read',
