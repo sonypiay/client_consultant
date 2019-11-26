@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Database\ConversationChat;
 use App\Database\Messages;
 use App\Http\Controllers\Controller;
+use DB;
 
 class MessagesController extends Controller
 {
@@ -27,7 +28,7 @@ class MessagesController extends Controller
 
   public function get_message( Request $request, Messages $messages, $id )
   {
-    $readmessage = $messages->readMessage( $id );
+    //$readmessage = $messages->readMessage( $id );
     $getmessages  = $messages->select(
       'messages.sender',
       'messages.rcpt',
@@ -46,8 +47,7 @@ class MessagesController extends Controller
 
     $result = [
       'total' => $getmessages->count(),
-      'data' => $getmessages,
-      'read' => $readmessage
+      'data' => $getmessages
     ];
 
     return response()->json( $result, 200 );
