@@ -283,14 +283,53 @@ html, body { font-family: $font-base; }
 }
 
 .messages-container {
+  background: #f9f9f9;
   border: 1px solid #dddddd;
   border-radius: 6px;
+  min-height: 400px;
+  .nav-message-container {
+    background: #ffffff;
+    border-right: 1px solid #dddddd;
+    height: 479px;
+    overflow-y: hidden;
+    &:hover {
+      overflow-y: scroll;
+    }
+  }
   .nav-message-sender {
     li {
       a {
+        background: #ffffff;
         color: #333333;
         @include global_font_style( 400, 18px, normal, 0.4px );
+        text-align: center;
+        padding: 8px 16px;
+      }
+      border-top: 1px solid #f2f2f2;
+      &:first-child {
+        border-top: 0;
       }
     }
+  }
+  .messages-container-header {
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    height: 35px;
+  }
+  .messages-container-body {
+    background: #f9f9f9;
+    height: 260px;
+    overflow-y: hidden;
+    margin-top: 0px;
+    &:hover {
+      overflow-y: scroll;
+    }
+    .chat {
+      height: 100%;
+    }
+  }
+  .messages-container-footer {
+    background: #ffffff;
+    border-top: 1px solid #dddddd;
   }
 }

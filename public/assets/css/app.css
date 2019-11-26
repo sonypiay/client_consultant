@@ -861,16 +861,66 @@ body {
 }
 
 .messages-container {
+  background: #f9f9f9;
   border: 1px solid #dddddd;
   border-radius: 6px;
+  min-height: 400px;
+}
+
+.messages-container .nav-message-container {
+  background: #ffffff;
+  border-right: 1px solid #dddddd;
+  height: 479px;
+  overflow-y: hidden;
+}
+
+.messages-container .nav-message-container:hover {
+  overflow-y: scroll;
+}
+
+.messages-container .nav-message-sender li {
+  border-top: 1px solid #f2f2f2;
 }
 
 .messages-container .nav-message-sender li a {
+  background: #ffffff;
   color: #333333;
   font-weight: 400;
   font-size: 18px;
   font-stretch: normal;
   letter-spacing: 0.4px;
   font-family: "Nunito Sans", sans-serif;
+  text-align: center;
+  padding: 8px 16px;
+}
+
+.messages-container .nav-message-sender li:first-child {
+  border-top: 0;
+}
+
+.messages-container .messages-container-header {
+  background: #ffffff;
+  border-bottom: 1px solid #dddddd;
+  height: 35px;
+}
+
+.messages-container .messages-container-body {
+  background: #f9f9f9;
+  height: 260px;
+  overflow-y: hidden;
+  margin-top: 0px;
+}
+
+.messages-container .messages-container-body:hover {
+  overflow-y: scroll;
+}
+
+.messages-container .messages-container-body .chat {
+  height: 100%;
+}
+
+.messages-container .messages-container-footer {
+  background: #ffffff;
+  border-top: 1px solid #dddddd;
 }
 

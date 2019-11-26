@@ -2718,18 +2718,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['haslogin', 'getuser', 'getconsultant'],
+  props: ['haslogin', 'getuser'],
   data: function data() {
     return {
+      getsender: {
+        total: 0,
+        results: [],
+        messages: {
+          errorMessage: ''
+        }
+      },
       getmessages: {
         total: 0,
-        results: []
+        results: [],
+        messages: {
+          errorMessage: ''
+        }
       }
     };
   },
-  methods: {},
-  mounted: function mounted() {}
+  methods: {
+    showSenderMessage: function showSenderMessage() {
+      var _this = this;
+
+      var param = 'client=' + this.getuser.client_id;
+      axios({
+        method: 'get',
+        url: this.$root.url + '/client/messages/get_recipient?' + param
+      }).then(function (res) {
+        var result = res.data;
+        console.log(result);
+      })["catch"](function (err) {
+        _this.getsender.messages.errorMessage = err.response.statusText;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.showSenderMessage();
+  }
 });
 
 /***/ }),
@@ -64093,8 +64152,6 @@ var render = function() {
         attrs: { haslogin: _vm.haslogin, getuser: _vm.getuser }
       }),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
       _c(
         "div",
         {
@@ -64104,13 +64161,10 @@ var render = function() {
           _c("div", { staticClass: "uk-box-shadow-small messages-container" }, [
             _c(
               "div",
-              {
-                staticClass: "uk-grid-collapse uk-grid-match",
-                attrs: { "uk-grid": "" }
-              },
+              { staticClass: "uk-grid-collapse", attrs: { "uk-grid": "" } },
               [
                 _c("div", { staticClass: "uk-width-1-5" }, [
-                  _c("nav", [
+                  _c("nav", { staticClass: "nav-message-container" }, [
                     _c(
                       "ul",
                       {
@@ -64124,7 +64178,30 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
+                _c("div", { staticClass: "uk-width-expand" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "uk-padding messages-container-body" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "chat uk-margin-remove-top" },
+                        _vm._l(15, function(n) {
+                          return _c("div", [
+                            _vm._m(1, true),
+                            _vm._v(" "),
+                            _vm._m(2, true)
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ])
               ]
             )
           ])
@@ -64139,15 +64216,76 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-padding banner-index_header" }, [
-      _c("div", { staticClass: "uk-container" }, [_vm._v("Pesan")])
+    return _c("div", { staticClass: "uk-clearfix" }, [
+      _c("div", { staticClass: "uk-padding-small messages-container-header" }, [
+        _c("div", { staticClass: "uk-float-left" }, [
+          _c("h3", [_vm._v("John Doe")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "uk-float-right" }, [
+          _c("a", { attrs: { "uk-icon": "more-vertical" } })
+        ])
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-width-expand" }, [_c("div")])
+    return _c("div", { staticClass: "uk-clearfix uk-margin-bottom" }, [
+      _c("div", { staticClass: "uk-float-left uk-width-1-2" }, [
+        _c(
+          "div",
+          { staticClass: "uk-card uk-card-body uk-card-default uk-card-small" },
+          [
+            _c("div", { staticClass: "message-date" }, [
+              _vm._v("11:20, 20 November 2019")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "uk-margin-remove-top" }, [
+              _vm._v("Hallo, how are you today?")
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uk-clearfix uk-margin" }, [
+      _c("div", { staticClass: "uk-float-right uk-width-1-2" }, [
+        _c(
+          "div",
+          { staticClass: "uk-card uk-card-body uk-card-default uk-card-small" },
+          [
+            _c("div", { staticClass: "message-date" }, [
+              _vm._v("11:25, 20 November 2019")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "uk-margin-remove-top" }, [
+              _vm._v("Fine, thanks")
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "uk-padding-small messages-container-footer" },
+      [
+        _c("input", {
+          staticClass: "uk-width-1-1 uk-input gl-input-default",
+          attrs: { type: "text", placeholder: "Ketik pesan..." }
+        })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -89184,14 +89322,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************************!*\
   !*** ./resources/js/components/Frontend/clients/Messages.vue ***!
   \***************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Messages_vue_vue_type_template_id_6059dc15___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Messages.vue?vue&type=template&id=6059dc15& */ "./resources/js/components/Frontend/clients/Messages.vue?vue&type=template&id=6059dc15&");
 /* harmony import */ var _Messages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Messages.vue?vue&type=script&lang=js& */ "./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Messages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Messages_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -89221,7 +89360,7 @@ component.options.__file = "resources/js/components/Frontend/clients/Messages.vu
 /*!****************************************************************************************!*\
   !*** ./resources/js/components/Frontend/clients/Messages.vue?vue&type=script&lang=js& ***!
   \****************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

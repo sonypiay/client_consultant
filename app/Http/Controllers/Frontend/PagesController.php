@@ -227,19 +227,12 @@ class PagesController extends Controller
     return response()->view('frontend.pages.consultant.client_list', $data);
   }
 
-  public function client_messages( Request $request, ConsultantUser $consultant )
+  public function client_messages( Request $request, ClientUser $client )
   {
-    $consultant     = new ConsultantUser;
-    $getconsultant  = $consultant->select(
-      'consultant_id',
-      'consultant_fullname'
-    )->get();
     $data['request']              = $request;
     $data['hasLogin']['user']     = 'client';
     $data['hasLogin']['isLogin']  = true;
-    $data['getuser']              = $consultant->getProfile();
-    $data['getconsultant']        = $getconsultant;
-
+    $data['getuser']              = $client->getProfile();
     return response()->view('frontend.pages.clients.messages', $data);
   }
 }
