@@ -54,7 +54,6 @@ class MessagesController extends Controller
 
   public function get_recipient( Request $request, ConversationChat $conversation )
   {
-    $client     = $request->client;
     $getrcpt    = $conversation->select(
       'conversation_chat.chat_id',
       'client_user.client_id',
@@ -63,9 +62,21 @@ class MessagesController extends Controller
       'consultant_user.consultant_fullname'
     )
     ->join('client_user', 'conversation_chat.client_id', '=', 'client_user.client_id')
-    ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id')
-    ->where('conversation_chat.client_id', $client)
-    ->orderBy('consultant_user.consultant_fullname', 'asc')
+    ->join('consultant_user', 'conversation_chat.consultant_id', '=', 'consultant_user.consultant_id');
+
+    if( isset( $request->client ) )
+    {
+      $client     = $request->client;
+      $getrcpt = $getrcpt->where('conversation_chat.client_id', $client);
+    }
+
+    if( isset( $request->consultant ) )
+    {
+      $consultant = $request->consultant;
+      $getrcpt = $getrcpt->where('conversation_chat.consultant_id', $consultant);
+    }
+
+    $getrcpt = $getrcpt->orderBy('consultant_user.consultant_fullname', 'asc')
     ->get();
 
     $result = [
