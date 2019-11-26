@@ -76,7 +76,7 @@ class MessagesController extends Controller
     {
       $client   = session()->get('clientId');
       $getrcpt  = $getrcpt->where(function( $query ) use ( $client ) {
-        $query->where('conversation_chat.client_id', $client);
+        $query->where('messages.rcpt', $client);
       });
     }
 
@@ -84,7 +84,7 @@ class MessagesController extends Controller
     {
       $consultant = session()->get('consultantId');
       $getrcpt  = $getrcpt->where(function( $query ) use ( $consultant ) {
-        $query->where('conversation_chat.consultant_id', $consultant);
+        $query->where('messages.rcpt', $consultant);
       });
     }
 
