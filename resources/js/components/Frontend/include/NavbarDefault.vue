@@ -126,7 +126,7 @@
               <li>
                 <a :href="$root.url + '/consultant/messages'">
                   <span uk-icon="comment"></span>
-                  <span class="count-notification">1</span>
+                  <span v-show="total_message !== 0" class="count-notification">{{ total_message }}</span>
                 </a>
               </li>
               <li>
@@ -138,17 +138,17 @@
                   <div class="uk-clearfix">
                     <div class="uk-float-left">
                       <a v-if="getnotification.paginate.prev_page_url" @click="showNotification( getnotification.paginate.prev_page_url )">
-                        <span uk-pagination-previous></span>
+                        <span uk-icon="icon: chevron-left; ratio: 0.7"></span>
                       </a>
                       <a v-else>
-                        <span uk-pagination-previous></span>
+                        <span uk-icon="icon: chevron-left; ratio: 0.7"></span>
                       </a>
 
                       <a v-if="getnotification.paginate.next_page_url" @click="showNotification( getnotification.paginate.next_page_url )">
-                        <span uk-pagination-next></span>
+                        <span uk-icon="icon: chevron-right; ratio: 0.7"></span>
                       </a>
                       <a v-else>
-                        <span uk-pagination-next></span>
+                        <span uk-icon="icon: chevron-right; ratio: 0.7"></span>
                       </a>
                     </div>
                     <div class="uk-float-right">
@@ -292,7 +292,7 @@ export default {
     showNotification( p )
     {
       this.getnotification.isLoading = true;
-      let url = this.$root.url + '/' + this.haslogin.user + '/notification';
+      let url = this.$root.url + '/' + this.haslogin.user + '/notification?page=' + this.getnotification.paginate.current_page;
       if( p !== undefined ) url = p;
 
       axios({

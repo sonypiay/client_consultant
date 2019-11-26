@@ -8429,7 +8429,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.getnotification.isLoading = true;
-      var url = this.$root.url + '/' + this.haslogin.user + '/notification';
+      var url = this.$root.url + '/' + this.haslogin.user + '/notification?page=' + this.getnotification.paginate.current_page;
       if (p !== undefined) url = p;
       axios({
         method: 'get',
@@ -76052,9 +76052,21 @@ var render = function() {
                           [
                             _c("span", { attrs: { "uk-icon": "comment" } }),
                             _vm._v(" "),
-                            _c("span", { staticClass: "count-notification" }, [
-                              _vm._v("1")
-                            ])
+                            _c(
+                              "span",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.total_message !== 0,
+                                    expression: "total_message !== 0"
+                                  }
+                                ],
+                                staticClass: "count-notification"
+                              },
+                              [_vm._v(_vm._s(_vm.total_message))]
+                            )
                           ]
                         )
                       ]),
@@ -76109,14 +76121,18 @@ var render = function() {
                                       [
                                         _c("span", {
                                           attrs: {
-                                            "uk-pagination-previous": ""
+                                            "uk-icon":
+                                              "icon: chevron-left; ratio: 0.7"
                                           }
                                         })
                                       ]
                                     )
                                   : _c("a", [
                                       _c("span", {
-                                        attrs: { "uk-pagination-previous": "" }
+                                        attrs: {
+                                          "uk-icon":
+                                            "icon: chevron-left; ratio: 0.7"
+                                        }
                                       })
                                     ]),
                                 _vm._v(" "),
@@ -76135,13 +76151,19 @@ var render = function() {
                                       },
                                       [
                                         _c("span", {
-                                          attrs: { "uk-pagination-next": "" }
+                                          attrs: {
+                                            "uk-icon":
+                                              "icon: chevron-right; ratio: 0.7"
+                                          }
                                         })
                                       ]
                                     )
                                   : _c("a", [
                                       _c("span", {
-                                        attrs: { "uk-pagination-next": "" }
+                                        attrs: {
+                                          "uk-icon":
+                                            "icon: chevron-right; ratio: 0.7"
+                                        }
                                       })
                                     ])
                               ]),
