@@ -89,6 +89,8 @@ class MessagesController extends Controller
     ->orderBy('consultant_user.consultant_fullname', 'asc')
     ->get();
 
+    $new_message = [];
+
     foreach( $getrcpt as $key => $item )
     {
       $messages = new Messages;
@@ -116,6 +118,15 @@ class MessagesController extends Controller
   public function count_messages( Messages $messages )
   {
     $res = $messages->countNewMessage();
+    return response()->json( $res, 200 );
+  }
+
+  public function delete_message( ConversationChat $conversation, $id )
+  {
+    $delete = $conversation->where('chat_id', $id);
+    $delete->delete();
+
+    $res = ['responseCode' => 200, 'responseMessage' => 'delete message success'];
     return response()->json( $res, 200 );
   }
 }

@@ -66,7 +66,16 @@
                     <h3>{{ getmessages.details.name }}</h3>
                   </div>
                   <div class="uk-float-right">
-                    <a uk-icon="more-vertical"></a>
+                    <div class="uk-inline">
+                      <a uk-icon="more-vertical"></a>
+                      <div uk-dropdown="mode: click">
+                        <ul class="uk-nav uk-dropdown-nav">
+                          <li>
+                            <a @click="onDeleteMessage( getmessages.details.id )">Hapus Percakapan</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -304,6 +313,39 @@ export default {
           details.sender = this.getuser.client_id;
           details.rcpt = data.consultant_id;
           details.name = data.consultant_fullname;
+        }
+      });
+    },
+    onDeleteMessage( id )
+    {
+      swal({
+        title: 'Konfirmasi',
+        text: 'Apakah anda ingin menghapus percakapan ini?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            text: 'Hapus',
+            value: true
+          },
+          cancel: 'Batal'
+        }
+      }).then( val => {
+        if( val )
+        {
+          axios({
+            method: 'delete',
+            url: this.$root.url + '/client/messages/delete_message/' + id
+          }).then( res => {
+            setTimeout(() => {
+              this.showSenderMessage();
+              this.getmessages.isopen = false;
+            }, 1000);
+          }).catch( err => {
+            swal({
+              text: err.response.statusText,
+              icon: 'error'
+            });
+          });
         }
       });
     }

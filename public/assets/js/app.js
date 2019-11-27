@@ -2804,6 +2804,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getconsultant'],
   data: function data() {
@@ -2986,6 +2995,40 @@ __webpack_require__.r(__webpack_exports__);
           details.sender = _this5.getuser.client_id;
           details.rcpt = data.consultant_id;
           details.name = data.consultant_fullname;
+        }
+      });
+    },
+    onDeleteMessage: function onDeleteMessage(id) {
+      var _this6 = this;
+
+      swal({
+        title: 'Konfirmasi',
+        text: 'Apakah anda ingin menghapus percakapan ini?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            text: 'Hapus',
+            value: true
+          },
+          cancel: 'Batal'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'delete',
+            url: _this6.$root.url + '/client/messages/delete_message/' + id
+          }).then(function (res) {
+            setTimeout(function () {
+              _this6.showSenderMessage();
+
+              _this6.getmessages.isopen = false;
+            }, 1000);
+          })["catch"](function (err) {
+            swal({
+              text: err.response.statusText,
+              icon: 'error'
+            });
+          });
         }
       });
     }
@@ -5784,6 +5827,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['haslogin', 'getuser', 'getclient'],
   data: function data() {
@@ -5966,6 +6018,40 @@ __webpack_require__.r(__webpack_exports__);
           details.sender = _this5.getuser.consultant_id;
           details.rcpt = data.client_id;
           details.name = data.client_fullname;
+        }
+      });
+    },
+    onDeleteMessage: function onDeleteMessage(id) {
+      var _this6 = this;
+
+      swal({
+        title: 'Konfirmasi',
+        text: 'Apakah anda ingin menghapus percakapan ini?',
+        icon: 'warning',
+        buttons: {
+          confirm: {
+            text: 'Hapus',
+            value: true
+          },
+          cancel: 'Batal'
+        }
+      }).then(function (val) {
+        if (val) {
+          axios({
+            method: 'delete',
+            url: _this6.$root.url + '/consultant/messages/delete_message/' + id
+          }).then(function (res) {
+            setTimeout(function () {
+              _this6.showSenderMessage();
+
+              _this6.getmessages.isopen = false;
+            }, 1000);
+          })["catch"](function (err) {
+            swal({
+              text: err.response.statusText,
+              icon: 'error'
+            });
+          });
         }
       });
     }
@@ -64931,7 +65017,43 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _vm._m(2)
+                              _c("div", { staticClass: "uk-float-right" }, [
+                                _c("div", { staticClass: "uk-inline" }, [
+                                  _c("a", {
+                                    attrs: { "uk-icon": "more-vertical" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { attrs: { "uk-dropdown": "mode: click" } },
+                                    [
+                                      _c(
+                                        "ul",
+                                        {
+                                          staticClass: "uk-nav uk-dropdown-nav"
+                                        },
+                                        [
+                                          _c("li", [
+                                            _c(
+                                              "a",
+                                              {
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.onDeleteMessage(
+                                                      _vm.getmessages.details.id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("Hapus Percakapan")]
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
                             ]
                           )
                         ]),
@@ -65147,7 +65269,7 @@ var render = function() {
                         )
                       ])
                     : _c("div", { staticClass: "uk-tile uk-tile-default" }, [
-                        _vm._m(3)
+                        _vm._m(2)
                       ])
                 ])
               ]
@@ -65178,14 +65300,6 @@ var staticRenderFns = [
         { staticClass: "uk-button uk-button-primary gl-button-primary" },
         [_vm._v("Kirim Pesan")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-float-right" }, [
-      _c("a", { attrs: { "uk-icon": "more-vertical" } })
     ])
   },
   function() {
@@ -71197,7 +71311,45 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _vm._m(2)
+                              _c("div", { staticClass: "uk-float-right" }, [
+                                _c("div", { staticClass: "uk-inline" }, [
+                                  _c("a", {
+                                    attrs: { "uk-icon": "more-vertical" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      attrs: { "uk-dropdown": "mode: click;" }
+                                    },
+                                    [
+                                      _c(
+                                        "ul",
+                                        {
+                                          staticClass: "uk-nav uk-dropdown-nav"
+                                        },
+                                        [
+                                          _c("li", [
+                                            _c(
+                                              "a",
+                                              {
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.onDeleteMessage(
+                                                      _vm.getmessages.details.id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("Hapus Percakapan")]
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
                             ]
                           )
                         ]),
@@ -71413,7 +71565,7 @@ var render = function() {
                         )
                       ])
                     : _c("div", { staticClass: "uk-tile uk-tile-default" }, [
-                        _vm._m(3)
+                        _vm._m(2)
                       ])
                 ])
               ]
@@ -71444,14 +71596,6 @@ var staticRenderFns = [
         { staticClass: "uk-button uk-button-primary gl-button-primary" },
         [_vm._v("Kirim Pesan")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "uk-float-right" }, [
-      _c("a", { attrs: { "uk-icon": "more-vertical" } })
     ])
   },
   function() {

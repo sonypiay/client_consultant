@@ -39,6 +39,7 @@ Route::group(['prefix' => 'client'], function() {
     Route::get('/count_messages', 'Frontend\MessagesController@count_messages');
     Route::post('/send_message', 'Frontend\MessagesController@send_message');
     Route::post('/reply_message/{id}', 'Frontend\MessagesController@reply_message');
+    Route::delete('/delete_message/{id}', 'Frontend\MessagesController@delete_message');
   });
 
   Route::get('/logout', 'Frontend\ClientUserController@logout');
@@ -81,6 +82,7 @@ Route::group(['prefix' => 'consultant'], function() {
     Route::get('/count_messages', 'Frontend\MessagesController@count_messages');
     Route::post('/send_message', 'Frontend\MessagesController@send_message');
     Route::post('/reply_message/{id}', 'Frontend\MessagesController@reply_message');
+    Route::delete('/delete_message/{id}', 'Frontend\MessagesController@delete_message');
   });
 
   Route::get('/event_schedule', 'Frontend\ConsultantUserController@show_event_schedule');
