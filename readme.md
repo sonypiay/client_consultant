@@ -6,7 +6,7 @@
 - MariaDB 10.4.6
 
 ### Step - step
-1. Run composer using command prompt
+1. Open a command prompt
 2. Run ``` composer update ```
 3. Make .env file or copy .env.example to .env and change this line
 ```
