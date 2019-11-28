@@ -18,4 +18,8 @@ DB_USERNAME=YOUR_DB_USERNAME
 DB_PASSWORD=YOUR_DB_PASSWORD
 ```
 4. Run ``` php artisan key:generate ```
+<<<<<<< HEAD
 5. Run ``` php artisan serve ```
+=======
+5. Run ``` php artisan serve ```
+>>>>>>> d6f004ec4d41bb577c4b92a8ac4b6e4d26a23a8c
