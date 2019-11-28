@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Nov 2019 pada 09.46
+-- Waktu pembuatan: 28 Nov 2019 pada 13.40
 -- Versi server: 10.4.6-MariaDB
 -- Versi PHP: 7.2.21
 
@@ -68,49 +68,6 @@ CREATE TABLE `appointment_request` (
   `updated_at` datetime NOT NULL,
   `seqid` smallint(4) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `appointment_request`
---
-
-INSERT INTO `appointment_request` (`apt_id`, `client_id`, `consultant_id`, `created_by`, `request_to`, `schedule_date`, `location`, `service_topic`, `status_request`, `is_solved`, `notes`, `created_at`, `updated_at`, `seqid`) VALUES
-('APT1911180001', 'CL0001', 'CLT0002', 'client', 'consultant', '2019-11-19 10:00:00', 'Tanah Abang, Jakarta Pusat', 'TPC005', 'done', 'Y', '', '2019-11-18 15:44:58', '2019-11-18 20:12:18', 1),
-('APT1911180002', 'CL0001', 'CLT0001', 'client', 'consultant', '2019-11-20 10:00:00', 'Tanah Abang, Jakarta Pusat', 'TPC001', 'done', 'Y', '', '2019-11-18 17:09:16', '2019-11-18 20:01:36', 2),
-('APT1911180003', 'CL0001', 'CLT0001', 'client', 'consultant', '2019-11-21 15:00:00', 'Senayan City, Jakarta Pusat', 'TPC004', 'done', 'Y', '', '2019-11-18 17:10:03', '2019-11-18 20:01:46', 3),
-('APT1911180004', 'CL0001', 'CLT0001', 'consultant', 'client', '2019-11-21 08:00:00', 'Senayan City', 'TPC001', 'done', 'Y', '', '2019-11-18 20:48:46', '2019-11-18 20:58:04', 5),
-('APT1911190006', 'CL0001', 'CLT0001', 'client', 'consultant', '2019-11-19 17:00:00', 'Mall Emporium Pluit, Jakarta Utara', 'TPC003', 'accept', 'P', NULL, '2019-11-19 15:01:37', '2019-11-19 15:02:43', 6),
-('APT1911190007', 'CL0001', 'CLT0002', 'consultant', 'client', '2019-11-19 19:00:00', 'Tanah Abang, Jakarta Pusat', 'TPC001', 'done', 'Y', 'Banyak hal yang dibahas pada pertemuan ini.', '2019-11-19 16:40:13', '2019-11-20 02:22:23', 7),
-('APT1911230008', 'CL0001', 'CLT0001', 'consultant', 'client', '2019-11-25 11:00:00', 'Plaza Indonesia', 'TPC004', 'waiting', 'P', NULL, '2019-11-23 19:32:38', '2019-11-23 19:32:38', 9);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `city`
---
-
-DROP TABLE IF EXISTS `city`;
-CREATE TABLE `city` (
-  `city_id` char(3) NOT NULL,
-  `city_name` varchar(32) NOT NULL,
-  `province_id` char(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `city`
---
-
-INSERT INTO `city` (`city_id`, `city_name`, `province_id`) VALUES
-('BGD', 'Bandung', 'JB'),
-('BGR', 'Bogor', 'JB'),
-('BKS', 'Bekasi', 'JB'),
-('CBN', 'Cirebon', 'JB'),
-('DPK', 'Depok', 'JB'),
-('JKB', 'Jakarta Barat', 'JK'),
-('JKP', 'Jakarta Pusat', 'JK'),
-('KWG', 'Karawang', 'JB'),
-('SRG', 'Serang', 'BT'),
-('TNG', 'Tangerang', 'BT'),
-('TSM', 'Tasikmalaya', 'JB');
 
 -- --------------------------------------------------------
 
@@ -231,20 +188,6 @@ CREATE TABLE `feedbacks` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data untuk tabel `feedbacks`
---
-
-INSERT INTO `feedbacks` (`fd_id`, `review_description`, `feedback`, `rateindex`, `apt_id`, `seqid`, `created_at`, `updated_at`) VALUES
-('FD0001', 'Mantapp!!', 'excellent', 5, 'APT1911110005', 1, '2019-11-13 16:32:24', '2019-11-13 16:32:24'),
-('FD0002', 'Penjelasannya mudah dimengerti', 'good', 4, 'APT1911130009', 2, '2019-11-14 19:36:31', '2019-11-14 19:36:31'),
-('FD0003', 'Nicee!', 'good', 4, 'APT1911140010', 3, '2019-11-14 20:05:54', '2019-11-14 20:05:54'),
-('FD0004', 'Hebat', 'excellent', 5, 'APT1911180002', 4, '2019-11-18 20:04:31', '2019-11-18 20:04:31'),
-('FD0005', 'Hebat', 'excellent', 5, 'APT1911180003', 5, '2019-11-18 20:04:41', '2019-11-18 20:04:41'),
-('FD0006', 'Hebat', 'excellent', 5, 'APT1911180001', 6, '2019-11-18 20:12:28', '2019-11-18 20:12:28'),
-('FD0007', 'Hmm, okelah', 'neutral', 3, 'APT1911180004', 7, '2019-11-18 20:58:21', '2019-11-18 20:58:21'),
-('FD0008', 'Penjelasannya mudah dimengerti', 'good', 4, 'APT1911190007', 8, '2019-11-20 02:22:49', '2019-11-20 02:22:49');
-
 -- --------------------------------------------------------
 
 --
@@ -277,98 +220,6 @@ CREATE TABLE `notification` (
   `notif_read` enum('R','N') DEFAULT NULL,
   `notif_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `notification`
---
-
-INSERT INTO `notification` (`id`, `user_id`, `notif_message`, `parent_id`, `notif_read`, `notif_date`) VALUES
-(1, 'CLT0001', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180001', 'APT1911180001', 'R', '2019-11-18 15:44:58'),
-(2, 'CLT0002', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180001', 'APT1911180001', 'R', '2019-11-18 15:44:58'),
-(3, 'CLT0003', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180001', 'APT1911180001', 'N', '2019-11-18 15:44:58'),
-(4, NULL, 'Konsultasi dengan nomor APT1911180001 diterima', 'APT1911180001', 'N', '2019-11-18 16:16:14'),
-(5, 'CLT0001', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180002', 'APT1911180002', 'R', '2019-11-18 17:09:16'),
-(6, 'CLT0002', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180002', 'APT1911180002', 'R', '2019-11-18 17:09:16'),
-(7, 'CLT0003', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180002', 'APT1911180002', 'N', '2019-11-18 17:09:16'),
-(8, 'CLT0001', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180003', 'APT1911180003', 'R', '2019-11-18 17:10:03'),
-(9, 'CLT0002', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180003', 'APT1911180003', 'R', '2019-11-18 17:10:03'),
-(10, 'CLT0003', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180003', 'APT1911180003', 'N', '2019-11-18 17:10:03'),
-(11, 'CL0001', 'Konsultasi dengan nomor APT1911180003 diterima', 'APT1911180003', 'R', '2019-11-18 17:13:10'),
-(12, 'CL0001', 'Konsultasi dengan nomor APT1911180002 diterima', 'APT1911180002', 'R', '2019-11-18 17:13:15'),
-(13, 'CLT0001', 'Konsultasi dengan nomor APT1911180002 sudah terpecahkan', 'APT1911180002', 'R', '2019-11-18 19:53:45'),
-(14, 'CLT0001', 'Konsultasi dengan nomor APT1911180003 sudah terpecahkan', 'APT1911180003', 'R', '2019-11-18 19:53:51'),
-(15, 'CLT0001', 'Konsultasi dengan nomor APT1911180002 sudah selesai', 'APT1911180002', 'R', '2019-11-18 20:01:36'),
-(16, 'CL0001', 'Konsultasi dengan nomor APT1911180002 sudah selesai', 'APT1911180002', 'R', '2019-11-18 20:01:36'),
-(17, 'CLT0001', 'Konsultasi dengan nomor APT1911180003 sudah selesai', 'APT1911180003', 'R', '2019-11-18 20:01:46'),
-(18, 'CL0001', 'Konsultasi dengan nomor APT1911180003 sudah selesai', 'APT1911180003', 'R', '2019-11-18 20:01:46'),
-(19, 'CLT0002', 'Konsultasi dengan nomor APT1911180001 sudah terpecahkan', 'APT1911180001', 'R', '2019-11-18 20:11:32'),
-(20, 'CL0001', 'Konsultasi dengan nomor APT1911180001 sudah terpecahkan', 'APT1911180001', 'R', '2019-11-18 20:11:32'),
-(21, 'CLT0002', 'Konsultasi dengan nomor APT1911180001 sudah selesai', 'APT1911180001', 'R', '2019-11-18 20:12:18'),
-(22, 'CL0001', 'Konsultasi dengan nomor APT1911180001 sudah selesai', 'APT1911180001', 'R', '2019-11-18 20:12:18'),
-(23, 'CL0001', 'Anda menerima jadwal undangan konsultasi dengan nomor ID APT1911180004', 'APT1911180004', 'R', '2019-11-18 20:13:34'),
-(24, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:23:54'),
-(25, 'CL0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:23:54'),
-(26, 'CL0001', 'Jadwal konsultasi APT1911180004 telah diganti.', 'APT1911180004', 'R', '2019-11-18 20:24:15'),
-(27, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:29:53'),
-(28, 'CL0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:29:53'),
-(29, 'CLT0001', 'Jadwal konsultasi APT1911180004 telah diganti.', 'APT1911180004', 'R', '2019-11-18 20:37:42'),
-(30, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:39:28'),
-(31, 'CL0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:39:28'),
-(32, 'CL0001', 'Jadwal konsultasi APT1911180004 telah diganti.', 'APT1911180004', 'R', '2019-11-18 20:39:50'),
-(33, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:46:03'),
-(34, 'CL0001', 'Konsultasi dengan nomor APT1911180004 ditolak', 'APT1911180004', 'R', '2019-11-18 20:46:03'),
-(35, 'CL0001', 'Jadwal konsultasi APT1911180004 telah diganti.', 'APT1911180004', 'R', '2019-11-18 20:47:06'),
-(36, 'CLT0001', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180004', 'APT1911180004', 'R', '2019-11-18 20:48:46'),
-(37, 'CLT0002', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180004', 'APT1911180004', 'R', '2019-11-18 20:48:46'),
-(38, 'CLT0003', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911180004', 'APT1911180004', 'N', '2019-11-18 20:48:46'),
-(39, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 diterima', 'APT1911180004', 'R', '2019-11-18 20:53:35'),
-(40, 'CL0001', 'Konsultasi dengan nomor APT1911180004 diterima', 'APT1911180004', 'R', '2019-11-18 20:53:35'),
-(41, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 belum terpecahkan', 'APT1911180004', 'R', '2019-11-18 20:54:16'),
-(42, 'CL0001', 'Konsultasi dengan nomor APT1911180004 belum terpecahkan', 'APT1911180004', 'R', '2019-11-18 20:54:16'),
-(43, 'CL0001', 'Jadwal konsultasi APT1911180004 telah diganti.', 'APT1911180004', 'R', '2019-11-18 20:54:28'),
-(44, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 diterima', 'APT1911180004', 'R', '2019-11-18 20:55:42'),
-(45, 'CL0001', 'Konsultasi dengan nomor APT1911180004 diterima', 'APT1911180004', 'R', '2019-11-18 20:55:42'),
-(46, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 sudah terpecahkan', 'APT1911180004', 'R', '2019-11-18 20:57:14'),
-(47, 'CL0001', 'Konsultasi dengan nomor APT1911180004 sudah terpecahkan', 'APT1911180004', 'R', '2019-11-18 20:57:14'),
-(48, 'CLT0001', 'Konsultasi dengan nomor APT1911180004 sudah selesai', 'APT1911180004', 'R', '2019-11-18 20:58:04'),
-(49, 'CL0001', 'Konsultasi dengan nomor APT1911180004 sudah selesai', 'APT1911180004', 'R', '2019-11-18 20:58:04'),
-(50, 'CLT0001', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911190006', 'APT1911190006', 'R', '2019-11-19 15:01:37'),
-(51, 'CLT0002', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911190006', 'APT1911190006', 'R', '2019-11-19 15:01:37'),
-(52, 'CLT0003', 'Klien mengajukan permintaan konsultasi dengan nomor ID APT1911190006', 'APT1911190006', 'N', '2019-11-19 15:01:37'),
-(53, 'CLT0001', 'Konsultasi dengan nomor APT1911190006 diterima', 'APT1911190006', 'R', '2019-11-19 15:02:43'),
-(54, 'CL0001', 'Konsultasi dengan nomor APT1911190006 diterima', 'APT1911190006', 'R', '2019-11-19 15:02:43'),
-(55, 'CL0001', 'Anda menerima jadwal undangan konsultasi dengan nomor ID APT1911190007', 'APT1911190007', 'R', '2019-11-19 16:40:13'),
-(56, 'CLT0002', 'Konsultasi dengan nomor APT1911190007 diterima', 'APT1911190007', 'R', '2019-11-19 16:48:59'),
-(57, 'CL0001', 'Konsultasi dengan nomor APT1911190007 diterima', 'APT1911190007', 'R', '2019-11-19 16:48:59'),
-(58, 'CLT0002', 'Konsultasi dengan nomor APT1911190007 sudah terpecahkan', 'APT1911190007', 'R', '2019-11-20 02:21:15'),
-(59, 'CL0001', 'Konsultasi dengan nomor APT1911190007 sudah terpecahkan', 'APT1911190007', 'R', '2019-11-20 02:21:15'),
-(60, 'CLT0002', 'Konsultasi dengan nomor APT1911190007 sudah selesai', 'APT1911190007', 'R', '2019-11-20 02:22:23'),
-(61, 'CL0001', 'Konsultasi dengan nomor APT1911190007 sudah selesai', 'APT1911190007', 'R', '2019-11-20 02:22:23'),
-(62, 'CL0001', 'Anda menerima jadwal undangan konsultasi dengan nomor ID APT1911200008', 'APT1911200008', 'R', '2019-11-20 03:11:26'),
-(63, 'CL0001', 'Anda menerima jadwal undangan konsultasi dengan nomor ID APT1911230008', 'APT1911230008', 'R', '2019-11-23 19:32:38');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `province`
---
-
-DROP TABLE IF EXISTS `province`;
-CREATE TABLE `province` (
-  `province_id` char(2) NOT NULL,
-  `province_name` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `province`
---
-
-INSERT INTO `province` (`province_id`, `province_name`) VALUES
-('BT', 'Banten'),
-('JB', 'Jawa Barat'),
-('JK', 'DKI Jakarta'),
-('JT', 'Jawa Tengah'),
-('TS', 'TESTING');
 
 -- --------------------------------------------------------
 
@@ -414,13 +265,6 @@ ALTER TABLE `appointment_request`
   ADD UNIQUE KEY `seqid` (`seqid`),
   ADD KEY `fk_req_consultant_idx` (`consultant_id`),
   ADD KEY `fk_req_client_idx` (`client_id`);
-
---
--- Indeks untuk tabel `city`
---
-ALTER TABLE `city`
-  ADD PRIMARY KEY (`city_id`),
-  ADD KEY `fk_city_province_idx` (`province_id`);
 
 --
 -- Indeks untuk tabel `client_user`
@@ -477,12 +321,6 @@ ALTER TABLE `notification`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `province`
---
-ALTER TABLE `province`
-  ADD PRIMARY KEY (`province_id`);
-
---
 -- Indeks untuk tabel `service_topic`
 --
 ALTER TABLE `service_topic`
@@ -503,7 +341,7 @@ ALTER TABLE `admin_user`
 -- AUTO_INCREMENT untuk tabel `appointment_request`
 --
 ALTER TABLE `appointment_request`
-  MODIFY `seqid` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `seqid` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `client_user`
@@ -533,7 +371,7 @@ ALTER TABLE `event_schedule`
 -- AUTO_INCREMENT untuk tabel `feedbacks`
 --
 ALTER TABLE `feedbacks`
-  MODIFY `seqid` smallint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `seqid` smallint(4) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `messages`
@@ -545,7 +383,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT untuk tabel `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `service_topic`
@@ -563,12 +401,6 @@ ALTER TABLE `service_topic`
 ALTER TABLE `appointment_request`
   ADD CONSTRAINT `fk_req_client_idx` FOREIGN KEY (`client_id`) REFERENCES `client_user` (`client_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_req_consultant_idx` FOREIGN KEY (`consultant_id`) REFERENCES `consultant_user` (`consultant_id`) ON DELETE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `city`
---
-ALTER TABLE `city`
-  ADD CONSTRAINT `fk_city_province_idx` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `conversation_chat`
